@@ -1,0 +1,66 @@
+.scroll						{ background: #FFFFFF; font-family: Verdana; font-size: 10pt; color: #000011; font-weight: normal; }
+.negro             { font-family: Verdana ; font-size: 8pt; color: #000000;}
+.negronegrita      { font-family: Verdana; font-size: 8pt; color: #000000; font-weight: bold}
+.rojo              { font-family: Verdana; font-size: 8pt; color: #660000}
+.rojonegrita       { font-family: Verdana; font-size: 8pt; color: #660000; font-weight: bold}
+.blanco            { font-family: Verdana; font-size: 8pt; color: #FFFFFF}
+.blanconegrita     { font-family: Verdana; font-size: 8pt; color: #FFFFFF; font-weight: bold}
+.azul              { font-family: Verdana; font-size: 8pt; color: #000066}
+.azulnegrita       { font-family: Verdana; font-size: 8pt; color: #000066; font-weight: bold}
+.naranja           { font-family: Verdana; font-size: 8pt; color: #FF6600}
+.naranjanegrita    { font-family: Verdana; font-size: 8pt; color: #FF6600; font-weight: bold}
+.verde             { font-family: Verdana; font-size: 8pt; color: #006600}
+.verdenegrita      { font-family: Verdana; font-size: 8pt; color: #006600; font-weight: bold}
+.gris              { font-family: Verdana; font-size: 8pt; color: #ABABAB}
+.grisnegrita       { font-family: Verdana; font-size: 8pt; color: #ABABAB; font-weight: bold}
+.boton		{ font-family: Verdana; font-size: 7pt; color: #000000; font-weight: normal; background-color: #E9E9E9; border: 1 solid #000000; cursor:hand}
+.scroll            { scrollbar-base-color: #ffffff; scrollbar-face-color: #D0CCE7; scrollbar-highlight-color: #D0CCE7; scrollbar-shadow-color: #D0CCE7; scrollbar-3dlight-color: #666699; scrollbar-arrow-color: #666699; scrollbar-track-COLOR: #F4F4F9; scrollbar-darkshadow-color: #666699 }
+.tabla             { font-family: Verdana; font-size: 8 pt; border: 1 solid #666699 }
+.caja		   { font-family: Verdana; font-align: absmiddle; font-size: 8pt; color: #000000; border-top: 1 solid #13144E; padding-left: 8; padding-right: 8; padding-top: 4; padding-bottom: 4 }
+.peque             { font-family: Verdana; font-size: 7pt; color: #000000}
+.campo		   { font-family: Verdana; font-size: 8pt; color: #222222 }
+.resaltado	   { font-family: Verdana; font-size: 8pt; color: #000000; background-color: #FFFFCC }
+.cajacerrada	   { font-family: Verdana; font-align: absmiddle; font-size: 8pt; color: #000000; border-top: 1 solid #F04E23; border-bottom: 1 solid #F04E23; border-left: 1 solid #F04E23; border-right: 1 solid #F04E23; padding-left: 8; padding-right: 8; padding-top: 4; padding-bottom: 4 }
+.titulo		   { font-family: Trebuchet MS, Verdana, Arial; font-size: 10pt; color: #403174; font-weight: bold }
+.subtitulo	   { font-family: Trebuchet MS, Verdana, Arial; font-size: 9pt; color: #403174; font-weight: normal }
+.pd		   { font-family: Verdana, Arial; font-size: 8pt; color: #000000; font-weight: normal; background-color: #E9E8F5; border-top: 1 solid #98AFB9; border-bottom: 1 solid #98AFB9; border-left: 1 solid #98AFB9; border-right: 1 solid #98AFB9; padding-left: 8; padding-right: 8; padding-top: 4; padding-bottom: 4 }
+.menu	           { font-family: Trebuchet MS, Verdana, Arial; font-size: 8pt; color: #000000; font-weight: normal; cursor:hand }
+.tit1              { font-family: Trebuchet MS, Verdana, Arial; font-size: 12pt; color: #F04E23 }
+.tit2              { font-family: Trebuchet MS, Verdana, Arial; font-size: 12pt; color: #C73DA4 }
+.tit3              { font-family: Trebuchet MS, Verdana, Arial; font-size: 12pt; color: #0083CA }
+.imagen            { border: 1 solid #666699 }
+.imagen2            { border: 0 solid #FFFFFF }
+.menu2	           { font-family: Trebuchet MS, Verdana, Arial; font-size: 8pt; color: #FFFFFF; font-weight: normal; cursor:hand; border-top: 1 solid #13144E; }
+.cajacerrada1	   { font-family: Verdana; font-align: absmiddle; font-size: 8pt; color: #000000; border-top: 1 solid #F04E23; border-bottom: 1 solid #F04E23; border-left: 1 solid #F04E23; border-right: 1 solid #F04E23; }
+.cajacerrada2	   { font-family: Verdana; font-align: absmiddle; font-size: 8pt; color: #000000; border-top: 1 solid #C73DA4; border-bottom: 1 solid #C73DA4; border-left: 1 solid #C73DA4; border-right: 1 solid #C73DA4; }
+.cajacerrada3	   { font-family: Verdana; font-align: absmiddle; font-size: 8pt; color: #000000; border-top: 1 solid #0083CA; border-bottom: 1 solid #0083CA; border-left: 1 solid #0083CA; border-right: 1 solid #0083CA; }
+
+.titulo		{ font-family: Trebuchet MS, Verdana, Arial; font-size: 11pt; color: #610051; font-weight: bold }
+.subtitulo	{ font-family: Trebuchet MS, Verdana, Arial; font-size: 10pt; color: #3B4958; font-weight: bold }
+.boton_peq	{ font-family: Verdana; font-size: 7pt; color: #000000; font-weight: normal; background-color: #E9E9E9; border: 1 solid #000000; cursor:hand}
+.cue_fondo	{ background: #FBFBFB; font-family: Verdana; font-size: 10pt; color: #000011; font-weight: normal; scrollbar-base-color: #ffffff; scrollbar-face-color: #D0CCE7; scrollbar-highlight-color: #D0CCE7; scrollbar-shadow-color: #D0CCE7; scrollbar-3dlight-color: #666699; scrollbar-arrow-color: #666699; scrollbar-track-COLOR: #F4F4F9; scrollbar-darkshadow-color: #666699 }
+.cue_fuente	{ font-family: Verdana; font-size: 8pt; color: #000011; font-weight: normal }
+.cue_titulo	{ font-family: Trebuchet MS, Verdana, Arial; font-size: 12pt; color: #55192A; font-weight: bold }
+.cue_celda	{ font-family: Verdana; font-size: 8pt; color: #000000; font-weight: normal; line-height: 125%; background-color: #e3e3e3 }
+.negroindice       { font-family: Verdana; font-size: 8pt; color: #000000; font-weight: normal}
+.rojoindice        { font-family: Verdana; font-size: 8pt; color: #AA0000}
+.azulindice        { font-family: Verdana; font-size: 8pt; color: #0000AA}
+.boton2            { font-family: Verdana; font-size: 7pt; color: #661369; font-weight: normal; background-color: #F3F1D9; border: 1 solid #000000; cursor:hand}
+.tabla             { font-family: Verdana; font-size: 8 pt; border: 1 solid #666699 }
+.rojo2             { font-family: Verdana; font-size: 7pt; color: #CC0000}
+.resaltado	   { font-family: Verdana; font-size: 8pt; color: #000000; background-color: #FFFFCC }
+.celda             { border: 1 solid #666699; background-color: #F0F0E7; font-family: Verdana; font-size: 8pt; color: #000000; font-weight: bold; }
+
+.pestanya	   { font-family: Trebuchet MS, Verdana, Arial; font-size: 10pt; color: #000000; cursor:hand }
+
+A:link {text-decoration:underline;color:#0000cc;} 
+A.rojolink:link {text-decoration:underline;color:#cc0000;}
+A:visited {text-decoration:underline;color:#0000cc;} 
+A.rojolink:visited {text-decoration:underline;color:#cc0000;}
+A:active {text-decoration:underline;color:#0000cc;} 
+A:hover {text-decoration:underline;color:#0000cc;} 
+A.rojolink:active {text-decoration:underline;color:#0000cc;} 
+A.rojolink:hover {text-decoration:underline;color:#0000cc;} 
+
+.invisible	{ overflow: auto; visibility: hidden; display: none;}
+.visible	{ overflow: auto; visibility: visible; display: block;}

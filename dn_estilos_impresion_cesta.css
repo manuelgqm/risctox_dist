@@ -1,0 +1,78 @@
+/*cajas*/
+.dn_ncc_cabecera{padding-left: 10px; margin:0 auto; margin-top: 10px; background:#e0eaf7; color: #5885ba; font-weight: bold; font-family: sans-serif;}
+.dn_ncc_cuerpo{padding: 10px; margin:0 auto; background:#e0eaf7;}
+.dn_ncc_pie{padding: 10px; margin:0 auto; margin-top: -25px; background:#e0eaf7;}
+
+.dn_cabecera_2 {color: #5885ba; font-size: 180%; font-weight: bold; margin-left: -10px; margin-top: -5px;}
+.dn_cabecera_3 {color: #5885ba; font-size: 140%; font-weight: bold;}
+
+.dn_auto_tabla { background: #ffffff; width:98%; }
+.dn_auto_tabla th { text-align:center; width:102px;  }
+.dn_auto_tabla td { vertical-align:middle; width:102px;}
+.dn_auto_tabla a { text-decoration:none;}
+.producto, .productodesp {width:100%; font-weight:bold;  padding:0 15px; background: #cccccc url(imagenes/flechader.gif) left top no-repeat; /*font-family:Georgia, "Times New Roman", Times, serif; */ }
+.productodesp { background: #b2b1e5 url(imagenes/flechaab.gif) left top no-repeat; }
+.componente2 { background: #b1e3e5; width:98%  }
+.toxicidad { text-align:center; width:91px; }
+.xip_tox_1 { background: #7a8c44; }
+.xip_tox_2 { background: #00b8f7; }
+.xip_tox_3 { background: #ffb515; }
+.xip_tox_4 { background: #ff7525; }
+.xip_tox_5 { background: #ff0000; }
+.plegaricon {margin:0 10px; color:#006699;}
+.oculta { display:none;  }
+.muestra { display:inline;  }
+
+/*AUTOEVALUACION*/
+/*Listado de frases R*/
+.frase_r {font-size:70%; text-align: left;}
+
+.titulo_comp {font-weight: bold; font-size:135%; padding-top: 5px;}
+
+/*Componentes*/
+.componente {padding: 10px; margin-top: 5px;}
+.componente_titulo {font-size: 110%; font-weight:bold; margin-bottom: 5px; margin-top: 0px; }
+
+/* AJAX */
+.mensaje_ajax {background: #fff; padding: 5px; text-align: center}
+
+/* VARIOS */
+.boton2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: normal;
+	text-transform: lowercase;
+	color: #006600;
+	text-align: center;
+	cursor: hand;
+}
+
+/* FICHA DE SUSTANCIA */
+
+.ficha_titulo_1 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #7DA7D9;
+	font-weight: bold;
+	margin-top: 2px;
+}
+
+.ficha_titulo_2 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #7DA7D9;
+	font-weight: bold;
+	margin-top: 2px;
+}
+
+.ficha_titulo_3 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 8pt;
+	color: #7DA7D9;
+	font-weight: bold;
+	margin-top: 2px;
+}
+
+#tabla_clasificacion td {
+  padding: 0 5px;  
+}

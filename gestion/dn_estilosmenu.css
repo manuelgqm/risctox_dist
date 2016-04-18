@@ -1,0 +1,103 @@
+.menu1 {
+float:left; width:100%; font-family: verdana, arial, sans-serif; font-size:11px;
+background:url(imagenes/menu1.gif) repeat-x top left; 
+border-top:3px solid #796c49;  border-bottom:3px solid #796c49;
+margin:0 0 20px 0; /* for this demo only */ 
+}
+.menu1 ul {
+padding:0;margin:0;list-style-type:none;
+}
+.menu1 ul li {
+float:left; position:relative; background:url(imagenes/divider1.gif) no-repeat top right;
+}
+.menu1 ul li a, .menu1 ul li a:visited {
+float:left; display:block; text-decoration:none;color:#fff; padding:0px 16px; line-height:25px; height:30px; border-bottom:3px solid #fff; 
+}
+* html .menu1 ul li a, .menu1 ul li a:visited {height:33px; he\ight:30px;}
+
+.menu1 ul li:hover {width:auto;}
+
+.menu1 ul li a.menu1one:hover {border-color:#c00; color:#f88;}
+.menu1 ul li a.menu1two:hover {border-color:#c60; color:#fc0;}
+.menu1 ul li a.menu1three:hover {border-color:#cc0; color:#cc0;}
+.menu1 ul li a.menu1four:hover {border-color:#080; color:#0e0;}
+.menu1 ul li a.menu1five:hover {border-color:#00c; color:#aaf;}
+.menu1 ul li a.menu1six:hover {border-color:#c0c; color:#f8f;}
+.menu1 ul li a.menu1seven:hover {border-color:#c0c; color:#ccc;}
+
+.menu1 ul li:hover a.menu1one {border-color:#c00; color:#f88;}
+.menu1 ul li:hover a.menu1two {border-color:#c60; color:#fc0;}
+.menu1 ul li:hover a.menu1three {border-color:#cc0; color:#cc0;}
+.menu1 ul li:hover a.menu1four {border-color:#080; color:#0e0;}
+.menu1 ul li:hover a.menu1five {border-color:#00c; color:#aaf;}
+.menu1 ul li:hover a.menu1six {border-color:#c0c; color:#f8f;}
+.menu1 ul li:hover a.menu1seven {border-color:#ccc; color:#ccc;}
+
+.menu1 ul li a {font-weight:bold }
+
+.menu1 ul li ul {
+display: none;
+}
+.menu1 table {
+margin:-1px; border-collapse:collapse; font-size:11px;
+}
+
+/* specific to non IE browsers */
+.menu1 ul li:hover ul {
+display:block;position:absolute;top:32px;margin-top:1px; left:0;width:154px;border-bottom:1px solid #000;
+}
+.menu1 ul li:hover ul.endstop {
+left:-92px;
+}
+.menu1 ul li:hover ul li ul {
+display: none;
+}
+.menu1 ul li:hover ul li a {
+display:block;background:#fff;color:#000;height:auto;line-height:15px;padding:4px 16px; width:120px; border:1px solid #000; border-bottom:0; font-weight:normal
+}
+.menu1 ul li:hover ul li a.drop {
+background:#ccd url(imagenes/bullet1.gif) no-repeat 3px 8px;
+}
+.menu1 ul li:hover ul li a:hover {
+color:#000; background: #ccd url(imagenes/bullet1.gif) no-repeat 3px 8px;
+}
+.menu1 ul li:hover ul li a:hover.drop {
+background: #ccd url(../imagenes/bullet1.gif) no-repeat 3px 8px;
+}
+.menu1 ul li:hover ul li:hover ul {
+display:block; position:absolute; left:153px; top:-1px;
+}
+.menu1 ul li:hover ul li:hover ul.left {
+left:-153px;
+}
+
+
+
+/* specific to IE5.5 and IE6 browsers */
+.menu1 ul li a:hover ul {
+display:block;position:absolute;top:33px; t\op:32px; background:#fff;left:0; marg\in-top:1px; border-bottom:1px solid #000;
+}
+.menu1 ul li a:hover ul.endstop {
+left: -92px;
+}
+.menu1 ul li a:hover ul li a {
+display:block;background:#fff;color:#000; height:1px; line-height:15px; padding:4px 16px; width:152px; w\idth:120px; border:1px solid #000; border-bottom:0;
+}
+.menu1 ul li a:hover ul li a.drop {
+background:#ccd url(imagenes/bullet1.gif) no-repeat 3px 8px; padding-bottom:5px;
+}
+.menu1 ul li a:hover ul li a ul {
+visibility:hidden; position:absolute; height:0; width:0;
+}
+.menu1 ul li a:hover ul li a:hover {
+color:#000; background: #ccd url(imagenes/bullet1.gif) no-repeat 3px 8px;
+}
+.menu1 ul li a:hover ul li a:hover.drop {
+ background: #ccd url(../imagenes/bullet1.gif) no-repeat 3px 8px;
+}
+.menu1 ul li a:hover ul li a:hover ul {
+visibility:visible; position:absolute; top:0; t\op:-1px; color:#000; left:153px;
+}
+.menu1 ul li a:hover ul li a:hover ul.left {
+left:-153px;
+}

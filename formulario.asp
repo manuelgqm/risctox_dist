@@ -1,0 +1,1 @@
+<% response.redirect "formulario2.asp" %>

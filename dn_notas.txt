@@ -1,0 +1,328 @@
+﻿###############################################################
+#### TOXICIDAD AGUDA - Asfixiantes simples (riesgo 3)
+###############################################################
+
+Para saber si un *componente* es asfixiantes simple, buscar su id en esta tabla que relaciona el grupo de nombre "Asfixiantes simples" con sus sustancias relacionadas, unida a los componentes por el nombre.
+
+SELECT c.id
+FROM  dn_risc_grupos g INNER JOIN
+   dn_risc_sustancias_por_grupos sxg ON g.id = sxg.id_grupo INNER JOIN
+   dn_risc_sustancias s ON sxg.id_sustancia = s.id INNER JOIN
+  dn_auto_componentes c ON s.nombre = c.nombre
+WHERE (g.nombre = 'Asfixiantes simples') AND (c.id=@id)
+
+??? ¡Buscar también por sinonimo!
+
+###############################################################
+#### TOXICIDAD CRONICA (riesgo 5)
+###############################################################
+
+* SENSIBILIZANTE ???
+
+* CANCERIGENO ???
+
+* MUTAGENO ???
+
+* IDENTIFICADO EN RISCTOX COMO NEUROTOXICO
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_neuro_disruptor.nivel_neurotoxico AS nivel
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_neuro_disruptor ON  dn_risc_sustancias.id = dn_risc_sustancias_neuro_disruptor.id_sustancia
+WHERE (dn_auto_componentes.id = 65) AND (dn_risc_sustancias_neuro_disruptor.nivel_neurotoxico <> '') AND (dn_risc_sustancias_neuro_disruptor.nivel_neurotoxico <> '0')
+Neurotóxico
+??? ¡Buscar también por sinonimos!!!
+
+
+*** IDENTIFICADO EN RISCTOX COMO DE (componente con nivel_disruptor <> '', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_neuro_disruptor.nivel_disruptor AS nivel
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_neuro_disruptor ON  dn_risc_sustancias.id = dn_risc_sustancias_neuro_disruptor.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_neuro_disruptor.nivel_disruptor <> '') AND (dn_risc_sustancias_neuro_disruptor.nivel_disruptor <> '')
+
+Disruptor endocrino
+??? ¡Buscar también por sinonimos!!!
+
+
+###############################################################
+#### ECOTOXICIDAD (riesgo 4)
+###############################################################
+
+**** CLASIFICACION ALEMANA 3 (componente con clasif_mma='3', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_ambiente.clasif_mma AS mma
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_ambiente ON  dn_risc_sustancias.id = dn_risc_sustancias_ambiente.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_ambiente.clasif_mma = '3')
+
+razon = "Clasificación MMA 3"
+
+??? ¡Buscar también por sinonimos!!!
+
+
+*** IDENTIFICADO EN RISCTOX COMO TPB (componente con enlace_tpb <> '', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_ambiente.enlace_tpb AS tpb
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_ambiente ON  dn_risc_sustancias.id = dn_risc_sustancias_ambiente.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_ambiente.enlace_tpb <> '')
+
+razon = "TPB"
+
+
+*** IDENTIFICADO EN RISCTOX COMO DE (componente con nivel_disruptor <> '', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_neuro_disruptor.nivel_disruptor AS nivel
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_neuro_disruptor ON  dn_risc_sustancias.id = dn_risc_sustancias_neuro_disruptor.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_neuro_disruptor.nivel_disruptor <> '') AND (dn_risc_sustancias_neuro_disruptor.nivel_disruptor <> '')
+
+??? ¡Buscar también por sinonimos!!!
+
+
+
+###############################################################
+#### ECOTOXICIDAD (riesgo 3)
+###############################################################
+
+**** CLASIFICACION ALEMANA 2 (componente con clasif_mma='2', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_ambiente.clasif_mma AS mma
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_ambiente ON  dn_risc_sustancias.id = dn_risc_sustancias_ambiente.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_ambiente.clasif_mma = '2')
+
+razon = "Clasificación MMA 2"
+
+??? ¡Buscar también por sinonimos!!!
+
+
+###############################################################
+#### ECOTOXICIDAD (riesgo 2)
+###############################################################
+
+**** CLASIFICACION ALEMANA 1 (componente con clasif_mma='1', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_ambiente.clasif_mma AS mma
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_ambiente ON  dn_risc_sustancias.id = dn_risc_sustancias_ambiente.id_sustancia
+WHERE (dn_auto_componentes.id = @a) AND (dn_risc_sustancias_ambiente.clasif_mma = '1')
+
+razon = "Clasificación MMA 1"
+
+??? ¡Buscar también por sinonimos!!!
+
+
+###############################################################
+#### ECOTOXICIDAD (riesgo 1)
+###############################################################
+
+**** CLASIFICACION ALEMANA nwg (componente con clasif_mma='n', buscando en risctox por nombre)
+
+SELECT dn_auto_componentes.id AS idcomp, dn_auto_componentes.nombre AS nomcomp,  dn_risc_sustancias.id AS idsus, 
+   dn_risc_sustancias.nombre AS nomsus, dn_risc_sustancias_ambiente.clasif_mma AS mma
+FROM dn_auto_componentes INNER JOIN
+   dn_risc_sustancias ON dn_auto_componentes.nombre =  dn_risc_sustancias.nombre INNER JOIN
+  dn_risc_sustancias_ambiente ON  dn_risc_sustancias.id = dn_risc_sustancias_ambiente.id_sustancia
+WHERE (dn_auto_componentes.id = @id) AND (dn_risc_sustancias_ambiente.clasif_mma = 'n')
+
+razon = "Clasificación MMA nwg"
+
+??? ¡Buscar también por sinonimos!!!
+
+
+
+###############################################################
+#### FUEGO Y EXPLOSIÓN (riesgo 3)
+###############################################################
+
+*** PUNTO DE INFLAMACIÓN 21-55ºC (componente con cod_inflamabilidad='1')
+
+SELECT id
+FROM dn_auto_componentes
+WHERE (cod_inflamabilidad = '1') AND (id = @id)
+
+razon = "Punto de inflamación 21-55ºC"
+
+
+###############################################################
+#### FUEGO Y EXPLOSIÓN (riesgo 2)
+###############################################################
+
+*** PUNTO DE INFLAMACIÓN 55-100ºC (componente con cod_inflamabilidad='2')
+
+SELECT id
+FROM dn_auto_componentes
+WHERE (cod_inflamabilidad = '2') AND (id = @id)
+
+razon = "Punto de inflamación 55-100ºC"
+
+
+###############################################################
+#### FUEGO Y EXPLOSIÓN (riesgo 1)
+###############################################################
+
+*** PUNTO DE INFLAMACIÓN mayor de 100ºC (componente con cod_inflamabilidad='3')
+
+SELECT id
+FROM dn_auto_componentes
+WHERE (cod_inflamabilidad = '3') AND (id = @id)
+
+razon = "Punto de inflamación mayor de 100ºC"
+
+
+###############################################################
+#### FACILIDAD DE EXPOSICIÓN (riesgo 5)
+###############################################################
+
+*** GASES (se busca componente con cod_estado='1')
+
+SELECT id
+FROM dn_auto_componentes
+WHERE (cod_estado = '1') AND (id = @id)
+
+razon = "Gas"
+
+
+*** LÍQUIDOS CON PRESIÓN DE VAPOR >250HPA (componente con cod_estado='3' y cod_presion='1')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_presion = '1') AND (id = @id)
+
+razon = "Líquido con presión de vapor > 250hPa"
+
+
+*** LÍQUIDOS QUE SE EVAPORAN A TEMPERATURA AMBIENTE (componente con cod_estado='3' y cod_temperatura='1')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_temperatura = '1') AND (id = @id)
+
+razon = "Líquido que se evapora a temperatura ambiente"
+
+
+*** SÓLIDOS QUE GENERAN POLVO (componente con cod_estado='4')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '4') AND (id = @id)
+
+razon = "Sólido que genera polvo"
+
+
+
+*** AEROSOLES (componente con cod_estado='2')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '2') AND (id = @id)
+
+razon = "Aerosol"
+
+
+###############################################################
+#### FACILIDAD DE EXPOSICIÓN (riesgo 4)
+###############################################################
+
+*** LÍQUIDOS CON PRESIÓN DE VAPOR 50-250HPA (componente con cod_estado='3' y cod_presion='2')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_presion = '2') AND (id = @id)
+
+razon = "Líquido con presión de vapor 50-250hPa"
+
+
+*** LÍQUIDOS QUE SE EVAPORAN ENTRE 30-50ºC (componente con cod_estado='3' y cod_temperatura='2')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_temperatura = '2') AND (id = @id)
+
+razon = "Líquido que se evapora entre 30-50ºC"
+
+
+###############################################################
+#### FACILIDAD DE EXPOSICIÓN (riesgo 3)
+###############################################################
+
+*** LÍQUIDOS CON PRESIÓN DE VAPOR 10-50HPA (componente con cod_estado='3' y cod_presion='3')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_presion = '3') AND (id = @id)
+
+razon = "Líquido con presión de vapor 10-50hPa"
+
+
+*** LÍQUIDOS QUE SE EVAPORAN ENTRE 50-150ºC (componente con cod_estado='3' y cod_temperatura='3')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_temperatura = '3') AND (id = @id)
+
+razon = "Líquido que se evapora entre 50-150ºC"
+
+
+###############################################################
+#### FACILIDAD DE EXPOSICIÓN (riesgo 2)
+###############################################################
+
+*** LÍQUIDOS CON PRESIÓN DE VAPOR 2-10HPA (componente con cod_estado='3' y cod_presion='4')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_presion = '4') AND (id = @id)
+
+razon = "Líquido con presión de vapor 2-10hPa"
+
+
+*** LÍQUIDOS QUE SE EVAPORAN A MÁS DE 150ºC (componente con cod_estado='3' y cod_temperatura='4')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_temperatura = '4') AND (id = @id)
+
+razon = "Líquido que se evapora a más de 150ºC"
+
+
+###############################################################
+#### FACILIDAD DE EXPOSICIÓN (riesgo 1)
+###############################################################
+
+*** LÍQUIDOS CON PRESIÓN DE VAPOR <2HPA (componente con cod_estado='3' y cod_presion='5')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_presion = '5') AND (id = @id)
+
+razon = "Líquido con presión de vapor menor de 2hPa"
+
+
+*** LÍQUIDOS QUE SE EVAPORAN A MÁS DE 200ºC (componente con cod_estado='3' y cod_temperatura='5')
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '3') AND (cod_temperatura = '5') AND (id = @id)
+
+razon = "Líquido que se evapora a más de 200ºC"
+
+
+*** SÓLIDOS QUE NO GENERAN POLVO
+
+SELECT id FROM dn_auto_componentes WHERE (cod_estado = '5') AND (id = @id)
+
+razon = "Sólido que no genera polvo"
+
+
+###############################################################
+#### PROCESO
+###############################################################
+
+Se mira en el *producto*, por el campo cod_proceso
+
+cod '1' -> riesgo 5
+
+	SELECT id FROM dn_auto_productos WHERE cod_proceso='1' AND id=@id
+
+cod '2' -> riesgo 3
+
+	SELECT id FROM dn_auto_productos WHERE cod_proceso='2' AND id=@id
+	Proceso cerrado pero con posibilidad de exposiciÃ³n
+
+cod '3' -> riesgo 1
+
+	SELECT id FROM dn_auto_productos WHERE cod_proceso='3' AND id=@id
+	Equipo estanco / equipo cerrado con extracciÃ³n localizada en los puntos de emisiÃ³n
+

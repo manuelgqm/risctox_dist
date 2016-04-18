@@ -1,0 +1,639 @@
+/* Layout Stylesheet */ 
+body {
+	margin:0px;
+	text-align:center;
+	padding:0;
+	background-color:#FFFFFF;
+	color: #000000;
+	text-align:center;
+	font: 0.8em/1.5em Verdana,"DejaVu Sans","Bitstream Vera Sans",Geneva,sans-serif;
+}
+div#caja { margin:auto; width:708px; text-align: left; }
+div#caja_imprimir {	margin:auto; width:640px;	text-align: left;	}
+div#contenedor { width:778px; margin:auto; }
+div#cuerpo { width:708px;	}
+div#pie {	clear:both;	padding-top:0px; height:230px; color: #ffffff; }
+ 
+/********************/
+ 
+img{ border:none;	left: 20px; vertical-align: middle;}
+a{ color: #009AA6; text-decoration:none; }
+a:hover{ color: #009AA6; text-decoration:underline; }
+h1 {
+	margin:15px;
+	padding:5px;
+	color:#000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	background-color: #C0F5DC;
+}	
+	
+h2 {
+	margin:0;
+	padding:8px 0 4px 10px;
+	color:#000000;
+	font-size:10px;
+}
+
+h3{
+	margin:0px;
+	height:17px;
+	padding:0 0 0 10px;
+	color:#FF6600;
+ }
+h4 {
+ margin:0px; 
+ margin:5px 20px 5px 20px;
+ }
+
+.texto {
+	font-size: 0.9em;
+	color: #666666;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.textorojo {
+	font-family: Helvetica,Verdana,Arial,sans-serif;
+	font-size: 8pt;
+	color: #FF0000;
+}
+
+.textoblanco {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #FFFFFF;
+}	
+	
+.campo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+
+.estilo_enc1 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #000000;
+	font-weight: bold;
+}
+
+.estilo_enc2 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #000000;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.estilo_enc3 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #00AC5A;
+	font-weight: bold;
+	margin-top: 15px;
+}
+
+.estilo_enc4 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #9B9B9B;
+	font-weight: bold;
+}
+
+.textoc {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #006600;
+	text-align: center;
+	padding-left: 10pt;
+	padding-right: 10pt;
+}
+
+.vineta {
+	color: #666666;
+	text-align: left;
+	list-style-type: upper-roman;
+	display: list-item;
+	list-style-position: outside;
+	list-style-image: url(imagenes/vineta.gif);
+	padding-bottom: 8px;
+	padding-right: 15px;
+}
+.vineta_risctox{
+	list-style-type: none;
+}
+.titulo {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #009AA6;
+	font-weight: bold;
+	margin-top: 15px;
+}
+.titulo1 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 1.4em;
+	color: #009AA6;
+	margin-top: 15px;
+}
+.titulo2 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #009AA6;
+	font-weight: bold;
+	margin-top: 15px;
+}
+.titulo3 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 1.8em;
+	color: #009AA6;
+	margin-top: 15px;
+}
+.tituloayuda {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #555555;
+	font-weight: bold;
+	margin-top: 15px;
+}
+.subtitulo {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #9B9B9B;
+	font-weight: bold;
+}
+.subtitulo1 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #333333;
+	font-weight: bold;
+}
+.subtitulo2 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #5B5B5B;
+	font-weight: bold;
+}
+.subtitulo3 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #333333;
+	font-weight: bold;
+}
+.subtitulo4 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 1em;
+	color: #666666;
+}
+.titulo_imprimir {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 11pt;
+	color: #000000;
+	font-weight: bold;
+	margin-top: 15px;
+}
+#menusup {
+	background-color: #3CCE88;
+	width: 708px;
+
+}
+
+#submenusup {
+	background-color: #C0F5DC;
+	width: 708px;
+}
+#menusup1 {
+	background-color: #3CCE88;
+	width: 708px;
+
+}
+
+#submenusup1 {
+	background-color: #C0F5DC;
+	width: 708px;
+}
+#menusup2 {
+	background-color: #B3B3B3;
+	width: 708px;
+
+}
+
+#submenusup2 {
+	background-color: #DBDBDB;
+	width: 708px;
+}
+#menusup3 {
+	background-color: #7DA7D9;
+	width: 708px;
+
+}
+
+#submenusup3 {
+	background-color: #B8D1EE;
+	width: 708px;
+}
+.textmenusup {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-align: center;
+}
+div#identifica {
+	background-color: #00AC5A;
+	float: none;
+	//height: 66px;
+	//width: 125px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #FFFFFF;
+	margin-top: 10px;
+}
+
+div#identifica2 {
+	background-color: #00AC5A;
+	float: none;
+	width: 115px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #FFFFFF;
+	margin-top: 10px;
+}
+
+div#identifica3 {
+	background-color: #7DA7D9;
+	float: none;
+	width: 115px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #FFFFFF;
+	margin-top: 10px;
+}
+.campoform {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	border-top-color: #003082;
+	border-right-color: #003082;
+	border-bottom-color: #003082;
+	border-left-color: #003082;
+}
+div#margen_derecho {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #E7F8F0;
+	float: right;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom-color: #3cce88;
+	border-bottom-style: dashed;
+}
+div#margen_derecho1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #E7F8F0;
+	float: right;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom-color: #3cce88;
+	border-bottom-style: dashed;
+}
+div#margen_derecho2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #EFEFEF;
+	float: right;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom-color: #b3b3b3;
+	border-bottom-style: dashed;
+}
+div#margen_derecho3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #E0EAF7;
+	float: right;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom-color: #7DA7D9;
+	border-bottom-style: dashed;
+}
+div#margen_izquierdo0 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	float: left;
+	height: 100%;
+	width: 145px;
+	display: inline;
+}
+div#margen_izquierdo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #E7F8F0;
+	float: left;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom-color: #3cce88;
+	border-bottom-style: dashed;
+}
+div#margen_izquierdo1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	float: left;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	background-color: #ECECEC;
+	border-bottom: 2px dotted grey;
+	margin-bottom: 10px;
+}
+div#margen_izquierdo2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-color: #ECECEC;
+	float: left;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border-bottom: 2px dotted grey;
+	margin-bottom: 10px;
+}
+div#margen_izquierdo3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-color: #ECECEC;
+	float: left;
+	height: 100%;
+	width: 145px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
+	border: 1;
+	border-bottom: 2px dotted grey;
+	margin-bottom: 10px;
+}
+div#interiortext {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #FFFFFF;
+	background-position: left top;
+	float: left;
+	height: 100%;
+	width: 556px;
+	display: inline;
+} 
+.textsubmenu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+}
+.boton {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: normal;
+	text-transform: lowercase;
+	color: #006600;
+	text-align: center;
+	cursor: hand;
+}
+.nombrecab {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #FFFFFF;
+	text-align: right;
+	top: 20px;
+	right: 20px;
+	padding-right: 20px;
+}
+.agenda {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	text-align: right;
+}
+div#programa {
+	background-color: #E7F8F0;
+	width: 280px;
+	margin-left: 15px;
+	display: inline;
+	float: left;
+	height: 270px;
+}
+div#contcurso {
+	width: 511px;
+	background-color: #E7F8F0;
+	margin-left: 15px;
+	display: block;
+	clear: left;
+	margin-top: 15px;
+}
+div#agenda {
+	background-color: #E7F8F0;
+	margin-left: 15px;
+	display: inline;
+	width: 235px;
+	float: right;
+	height: 270px;
+}
+.agendadia {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-variant: small-caps;
+	text-align: center;
+	background-color: #3CCE88;
+}
+.tema {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000
+	font-weight: bold;
+	padding-left: 25px;
+	padding-right: 15px;
+}
+
+UL {
+	list-style-image: url(imagenes/ico_temap.gif);
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+ 
+UL OL {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	list-style-image: url(imagenes/ico_subtema.gif);
+}
+
+.tabla {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #ECECEC;
+	border-bottom: 2px dotted grey;
+	border-bottom: 2px dotted grey;
+}
+
+.celda {
+	vertical-align: top;
+	border: 1;
+	border-top-color: #3cce88;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+.tabla1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #E7F8F0;
+	border: 1;
+	border-top-color: #3cce88;
+	border-top-style: dashed;
+	border-bottom-color: #3cce88;
+	border-bottom-style: dashed;
+}
+
+.celda1 {
+	vertical-align: top;
+	border: 1;
+	border-top-color: #3cce88;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+.tabla2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #EFEFEF;
+	border: 1;
+	border-top-color: #B3B3B3;
+	border-top-style: dashed;
+	border-bottom-color: #B3B3B3;
+	border-bottom-style: dashed;
+}
+
+.celda2 {
+	vertical-align: top;
+	border: 1;
+	border-top-color: #B3B3B3;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+.celda2d {
+	vertical-align: top;
+	border: 1;
+	border-top-color: #B3B3B3;
+	border-top-style: dotted;
+	border-top-width: 1px;
+}
+
+
+.tabla3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #ECECEC;
+	border-bottom: 2px dashed grey;
+}
+
+.celda3 {
+	vertical-align: top;
+	border-top: 1px solid grey;
+	padding: 6px;
+}
+
+.celdacentro {
+	vertical-align: middle;
+	border: 1;
+	border-top-color: #3cce88;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+.celdaabajo {
+	vertical-align: bottom;
+	border: 1;
+	border-bottom-color: #DDDDDD;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.celda_risctox {
+	vertical-align: top;
+	border: 1;
+	border-top-color: #DDDDDD;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+.celda_imprimir {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000
+	background-color: #FFFFFF;
+	vertical-align: top;
+	border: 1;
+	border-top-color: #DDDDDD;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+.ficharisctox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	border-top: 1px solid #808080;
+	border-bottom: 1px solid #808080
+}
+div#ficha {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #ECECEC;
+}
+
+.mano {
+	cursor: hand;
+}
+
+.marcador_ficha_risctox {
+	text-decoration:none;
+	cursor: hand;
+}
+
+.invisible	{ overflow: auto; visibility: hidden; display: none;}
+.visible	{ overflow: auto; visibility: visible; display: block;}
+.invisible_tab	{ overflow: hidden; visibility: hidden; display: none;}
+.visible_tab	{ overflow: hidden; visibility: visible; display: block;}
+
+
+#nuevo_pie{
+background: url(./imagenes/pie_risctox.gif) left no-repeat;
+height:101px;
+}

@@ -1,0 +1,17 @@
+body { background:#f4f2b8; font: small Verdana, Arial, Helvetica, sans-serif; color: #333;}h1 { font-size:140%;}/*fuentes*/.neg {font-weight:bold; }.pq { font-size:11px;}.exp {color:red;}/*centrado*/.centcontenido {text-align:left;}.centcontenedor {margin:0px auto;}/*cajas*/div#box{width: 18em; padding: 20px; margin:0 auto; background:#e7e5a7;}div#box2{ padding: 20px; margin:0 auto; background:#e7e5a7;}ul#split,ul#split li{margin:0;padding:0;list-style:none}ul#split {margin:20px 20%;}ul#split li{float:left;width:200px;margin:0 10px 10px 0}ul#split h3{ margin:0px;padding: 5px 0 3px;text-align:center;color: #000}ul#split p{margin:0;padding:5px 8px 15px}ul#split div{background:#e7e5a7}li#one h3{background: #C8C866}li#two h3{background: #C8C866}li#three h3{background: #C8C866}fieldset {padding:10px;  margin:18px auto;}/*flashmsg*/#flashmsg {width: 60%; }#flashmsg legend { padding:1px 4px;}.error { background-color:#f35f50;}.advertencia {background-color:#edd745;}.ok {background-color:#339900;}/*varios*/.sinborde, #resultados img {border:0}.margenpq {margin:6px;}.margengr {margin:25px;}.paden {margin-left:4px;}#resultados { font-size:10px; }#resultados tr {background:#eee;}#resultados tr.rayado {background:#dfdfdf }#resultados th {background:#f4f2b8;}#resultados td {padding:0 10px;}#resultados a { text-decoration:none; color:#000; }#resultados a:hover { text-decoration:underline; }
+
+# Para portada de exportador Access
+.subtitulo3 {
+	font-family: "Trebuchet MS", Verdana, Arial;
+	font-size: 10pt;
+	color: #5383BC;
+	font-weight: bold;
+}
+
+.texto {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: #000000;
+	padding-left: 15px;
+	padding-right: 15px;
+}

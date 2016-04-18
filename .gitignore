@@ -1,0 +1,13 @@
+*.swf
+backup/
+pdf/
+*.pdf
+*.zip
+**/.svn
+*.doc
+*.wmv
+*.*~
+*.mdb
+*.smi
+*.*bak*
+*.mht

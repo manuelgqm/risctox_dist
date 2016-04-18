@@ -1,0 +1,1 @@
+<% response.redirect "dn_alternativas_portada.asp" %>

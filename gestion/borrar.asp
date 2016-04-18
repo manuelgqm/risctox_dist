@@ -1,0 +1,1 @@
+<!--#include file="dn_fun_texto.asp"--><%frase="almudena, ni guapa ni buena"frase=corta(frase,8,"meterbrs")response.write frasefrase2="achus, y cruces, y mierda para los andaluces"frase3=metebr (frase2, 8)'response.write "<br>3:" &frase3%>

@@ -1,0 +1,103 @@
+CREATE PROCEDURE dn_autoevaluar
+	@id			int,
+	@tipo		  	bit,
+	@tiporiesgo		varchar(20),
+	@riesgo			tinyint   output, --de 0 a5 
+	@razon			varchar(1000) output
+AS
+
+select @riesgo=0
+select @razon=''
+declare @mirazon varchar (80) --sirve para almacenar cada fila del recordset de razones
+select @mirazon=''
+declare @contador tinyint --contador para llevar la cuenta del riesgo que estamos consultando
+select @contador=5
+
+IF @tipo=0 --PRODUCTOS
+BEGIN
+	IF @tiporiesgo='aguda'
+	BEGIN
+		WHILE @contador > 0
+		BEGIN
+			
+			--CONSULTAMOS PARA frases_r para RIESGO=CONTADOR
+			DECLARE razoncursor CURSOR FOR
+			SELECT razon FROM dn_auto_evaluacion WHERE aguda=@contador
+			     
+			OPEN razoncursor
+			     
+			FETCH NEXT FROM razoncursor INTO @mirazon
+			     
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				if exists (select frases_r from dn_auto_productos where id=@id and  ( (frases_r like '%'  +@mirazon+  ',%' or frases_r like '%' +@mirazon+'')  ) )
+				select @razon=@razon + @mirazon+ ', '
+			    FETCH NEXT FROM razoncursor  INTO @mirazon
+			END
+			CLOSE razoncursor
+			DEALLOCATE razoncursor
+			
+		
+			--CONSULTAMOS RAZONES ADICIONALES razones que no son frases r
+			
+
+			--despues de consultar por todas las 5 (p.e.), si @razon no esta vacia, salimos devolviendo niveltox 5
+			IF not (@razon='') 
+			begin
+				select @riesgo=@contador
+				select @contador=0 --ponemos contador a 0 para que salga del bucle
+			end
+			ELSE --consultamos riesgo inmediatamente inferior
+				select @contador=@contador-1		
+
+		END --while contador
+	END --aguda
+		
+END 
+ELSE --COMPONENTES
+BEGIN
+	IF @tiporiesgo='aguda'
+	BEGIN
+	
+		--RIESGO 5
+		DECLARE razoncursor CURSOR FOR
+		SELECT razon FROM dn_auto_evaluacion WHERE aguda=5
+		     
+		OPEN razoncursor
+		     
+		FETCH NEXT FROM razoncursor INTO @mirazon
+		     
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			if exists (select frases_r from dn_auto_componentes where id=@id and  ( (frases_r like '%'  +@mirazon+  ',%' or frases_r like '%' +@mirazon+'')  ) )
+			select @razon=@razon + @mirazon+ ', '
+		    FETCH NEXT FROM razoncursor  INTO @mirazon
+		END
+		CLOSE razoncursor
+		DEALLOCATE razoncursor
+		END
+	
+		--razones que no son frases r
+		
+		
+		--despues de consultar por todas las 5, si @razon no esta vacia, salimos devolviendo niveltox 5
+		IF not (@razon='') 
+			select @riesgo=5
+		ELSE --RIESGO 4
+		BEGIN
+		
+			if exists (select frases_r from dn_auto_componentes where id=@id and  ( (frases_r like '%R23,%' or frases_r like '%R23')  ) )
+				select @razon=@razon + 'R23, '
+			
+			--despues de consultar por todas las 4, si @razon no esta vacia, salimos devolviendo niveltox 4
+			IF not (@razon='') 
+				select @riesgo=4
+			--ELSE --RIESGO 4
+		
+		END --else4
+
+
+	
+
+END --tipo
+GO

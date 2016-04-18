@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>  
+  <meta content="text/html; charset=windows-1252" http-equiv="content-type">
+
+  
+  <title>Sustancia</title>
+</head><body><form name="sustancia" action="#" method="">
+  
+  <fieldset><legend><strong>Identificaci&oacute;n
+de la sustancia</strong></legend>
+Nombre <span style="color: rgb(255, 0, 0);">(obligatorio,
+max 750 c.)</span><br>  <textarea cols="80" rows="3" name="nombre"></textarea><br>  <br>Nombre en ingl&eacute;s <span style="color: rgb(255, 0, 0);">(max
+750 c.)</span><br>  <textarea cols="80" rows="3" name="nombre_ing"></textarea><br>  <br>Sin&oacute;nimos <span style="color: rgb(255, 0, 0);">(texto
+libre, separados por ; &iquest;o salto
+de linea? Cada uno max 750 c. Van en tabla aparte.)</span><br>  <textarea cols="80" rows="3" name="sinonimos"></textarea><br>  <br>
+Nombres comerciales <span style="color: rgb(255, 0, 0);">(texto
+libre, separados por ; &iquest;o salto
+de linea? Cada uno max 100 c. Van en tabla aparte.)</span><br>  <textarea cols="80" rows="3" name="nombres_comerciales"></textarea><br>  <br>
+
+Notas <span style="color: rgb(255, 0, 0);">(max 1000 c.)</span><br>  <textarea cols="80" rows="3" name="notas"></textarea><br>  <br>  
+  <fieldset><legend><strong>N&ordm;
+Identificaci&oacute;n</strong>&nbsp;</legend>N&uacute;mero
+RD <span style="color: rgb(255, 0, 0);">(max 20 c.) </span><input maxlength="20" size="20" name="num_rd"><br>  <br>N&uacute;mero CE/EINECS <span style="color: rgb(255, 0, 0);">(max
+20 c.) </span><input maxlength="20" size="20" name="num_ce_einecs"><br>  <br>N&uacute;mero CE/ELINCS <span style="color: rgb(255, 0, 0);">(max
+20 c.) </span><input maxlength="20" size="20" name="num_ce_elincs"><br>  <br>N&uacute;mero CAS <span style="color: rgb(255, 0, 0);">(max
+20 c.) </span><input maxlength="20" size="20" name="num_cas"><br>  <br>N&uacute;mero ONU <span style="color: rgb(255, 0, 0);">(max
+20 c.) </span><input maxlength="20" size="20" name="num_onu"><br>  <br>  <span style="color: rgb(255, 0, 0);">(comprobar con
+JavaScript que EINECS y ELINCS son excluyentes; y que debe tener numero
+CAS o numero CE (EINECS o ELINCS), o ambos (CAS y algun CE))</span>
+  </fieldset>  <br>  
+  <fieldset><legend><strong>Informaci&oacute;n
+molecular</strong></legend>F&oacute;rmula molecular <span style="color: rgb(255, 0, 0);">(max 100 c.)</span>&nbsp;<input maxlength="100" size="100" name="formula_molecular"><br>Estructura molecular (file upload) <input name="estructura_molecular" type="file"><br>  <img style="width: 83px; height: 100px;" alt="Estructura molecular" src="estructura_molecular.gif"><input name="estructura_molecular_borrar" value="Borrar la imagen" type="checkbox"> Para eliminar la imagen, seleccione esta
+casilla y guarde la sustancia
+  </fieldset>  <br>  
+  <fieldset><legend><strong>Clasificaci&oacute;n</strong></legend>S&iacute;mbolos:
+  <span style="color: rgb(255, 0, 0);">(max 50c.)</span>
+  <input maxlength="50" size="50" name="simbolos"><br>  <br>  
+  <fieldset><legend><strong>Frases R</strong></legend>
+Clasificaci&oacute;n 01 <input maxlength="100" size="100" name="clasific1"><br>Clasificaci&oacute;n 02 <input maxlength="100" size="100" name="clasific2"><br>Clasificaci&oacute;n 03 <input maxlength="100" size="100" name="clasific3"><br>Clasificaci&oacute;n 04 <input maxlength="100" size="100" name="clasific4"><br>Clasificaci&oacute;n 05 <input maxlength="100" size="100" name="clasific5"><br>Clasificaci&oacute;n 06 <input maxlength="100" size="100" name="clasific6"><br>Clasificaci&oacute;n 07 <input maxlength="100" size="100" name="clasific7"><br>Clasificaci&oacute;n 08 <input maxlength="100" size="100" name="clasific8"><br>Clasificaci&oacute;n 09 <input maxlength="100" size="100" name="clasific9"><br>Clasificaci&oacute;n 10 <input maxlength="100" size="100" name="clasific10"><br>Clasificaci&oacute;n 11 <input maxlength="100" size="100" name="clasific11"><br>Clasificaci&oacute;n 12 <input maxlength="100" size="100" name="clasific12"><br>Clasificaci&oacute;n 13 <input maxlength="100" size="100" name="clasific13"><br>Clasificaci&oacute;n 14 <input maxlength="100" size="100" name="clasific14"><br>Clasificaci&oacute;n 15 <input maxlength="100" size="100" name="clasific15"><br>
+
+  <span style="color: rgb(255, 0, 0);">(max 100c. cada una)</span><br>  </fieldset>  <br>  
+  <fieldset><legend><strong>Frases S</strong></legend>Frases S:&nbsp;<span style="color: rgb(255, 0, 0);">(max 100c.)</span> <input maxlength="200" size="100" name="frases_s">
+  </fieldset>  <br>  
+  <fieldset><legend><strong>Etiquetado RD</strong></legend>
+Concentraci&oacute;n 01&nbsp;<input maxlength="25" size="25" name="conc_1"> &nbsp;Etiquetado
+01&nbsp;<input maxlength="50" size="50" name="eti_conc_1"><br>Concentraci&oacute;n 02&nbsp;<input maxlength="25" size="25" name="conc_2"> &nbsp;Etiquetado
+02&nbsp;<input maxlength="50" size="50" name="eti_conc_2"><br>Concentraci&oacute;n 03&nbsp;<input maxlength="25" size="25" name="conc_3"> &nbsp;Etiquetado
+03&nbsp;<input maxlength="50" size="50" name="eti_conc_3"><br>Concentraci&oacute;n 04&nbsp;<input maxlength="25" size="25" name="conc_4"> &nbsp;Etiquetado
+04&nbsp;<input maxlength="50" size="50" name="eti_conc_4"><br>Concentraci&oacute;n 05&nbsp;<input maxlength="25" size="25" name="conc_5"> &nbsp;Etiquetado
+05&nbsp;<input maxlength="50" size="50" name="eti_conc_5"><br>Concentraci&oacute;n 06&nbsp;<input maxlength="25" size="25" name="conc_6"> &nbsp;Etiquetado
+06&nbsp;<input maxlength="50" size="50" name="eti_conc_6"><br>Concentraci&oacute;n 07&nbsp;<input maxlength="25" size="25" name="conc_7"> &nbsp;Etiquetado
+07&nbsp;<input maxlength="50" size="50" name="eti_conc_7"><br>Concentraci&oacute;n 08&nbsp;<input maxlength="25" size="25" name="conc_8"> &nbsp;Etiquetado
+08&nbsp;<input maxlength="50" size="50" name="eti_conc_8"><br>Concentraci&oacute;n 09&nbsp;<input maxlength="25" size="25" name="conc_9"> &nbsp;Etiquetado
+09&nbsp;<input maxlength="50" size="50" name="eti_conc_9"><br>Concentraci&oacute;n 10 <input maxlength="25" size="25" name="conc_10"> &nbsp;Etiquetado 10 <input maxlength="50" size="50" name="eti_conc_10"><br>Concentraci&oacute;n 11 <input maxlength="25" size="25" name="conc_11"> &nbsp;Etiquetado 11 <input maxlength="50" size="50" name="eti_conc_11"><br>Concentraci&oacute;n&nbsp;12 <input maxlength="25" size="25" name="conc_12"> &nbsp;Etiquetado 12 <input maxlength="50" size="50" name="eti_conc_12"><br>Concentraci&oacute;n 13 <input maxlength="25" size="25" name="conc_13"> &nbsp;Etiquetado 13 <input maxlength="50" size="50" name="eti_conc_13"><br>Concentraci&oacute;n 14 <input maxlength="25" size="25" name="conc_14"> &nbsp;Etiquetado 14 <input maxlength="50" size="50" name="eti_conc_14"><br>Concentraci&oacute;n 15 <input maxlength="25" size="25" name="conc_15"> &nbsp;Etiquetado 15 <input maxlength="50" size="50" name="eti_conc_15"><br>  <br style="color: rgb(255, 0, 0);">  <span style="color: rgb(255, 0, 0);">(concentraciones,
+max 25 c cada; etiquetas, m&aacute;x 50 c cada)</span><br>  </fieldset>
+  </fieldset>  </fieldset></form>
+
+</body>
+</html>
