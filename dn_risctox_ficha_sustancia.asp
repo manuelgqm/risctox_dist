@@ -32,6 +32,14 @@ errores = ""
 id_sustancia = request("id_sustancia")
 id_sustancia = EliminaInyeccionSQL(id_sustancia)
 
+function removeVlbFromNotes(notes)
+	res = notes
+	if (not isnull(notes)) then
+		res = replace(notes, "VLB", "")
+	end if
+	removeVlbFromNotes = res
+end function
+
 function composeSubstanceQuery(id_sustancia)
 	
 	'TODO: nombrar la función con su intención
@@ -51,298 +59,258 @@ function composeSubstanceQuery(id_sustancia)
 end function
 
 sql = composeSubstanceQuery( id_sustancia )
-set objRst=objConnection2.execute(sql)
-if(objRst.eof) then
+
+set substanceRecordset = objConnection2.execute(sql)
+set substance = Server.CreateObject("Scripting.Dictionary")
+
+if(substanceRecordset.eof) then
 	errores="No se ha encontrado la sustancia indicada"
 else
 	' dn_risc_sustancias
-	nombre = objRst("nombre")
-	nombre_ing = elimina_repes(objRst("nombre_ing"), "@")
-
-	num_rd = objRst("num_rd")
-	num_ce_einecs = objRst("num_ce_einecs")
-	num_ce_elincs = objRst("num_ce_elincs")
-	num_cas = objRst("num_cas")
-	cas_alternativos = objRst("cas_alternativos")
-	num_onu = objRst("num_onu")
-
-	num_icsc = objRst("num_icsc")
-	formula_molecular = objRst("formula_molecular")
-	estructura_molecular = objRst("estructura_molecular")
-	simbolos = objRst("simbolos")
-	clasificacion_1 = trim(objRst("clasificacion_1"))
-	clasificacion_2 = trim(objRst("clasificacion_2"))
-	clasificacion_3 = trim(objRst("clasificacion_3"))
-	clasificacion_4 = trim(objRst("clasificacion_4"))
-	clasificacion_5 = trim(objRst("clasificacion_5"))
-	clasificacion_6 = trim(objRst("clasificacion_6"))
-	clasificacion_7 = trim(objRst("clasificacion_7"))
-	clasificacion_8 = trim(objRst("clasificacion_8"))
-	clasificacion_9 = trim(objRst("clasificacion_9"))
-	clasificacion_10 = trim(objRst("clasificacion_10"))
-	clasificacion_11 = trim(objRst("clasificacion_11"))
-	clasificacion_12 = trim(objRst("clasificacion_12"))
-	clasificacion_13 = trim(objRst("clasificacion_13"))
-	clasificacion_14 = trim(objRst("clasificacion_14"))
-	clasificacion_15 = trim(objRst("clasificacion_15"))
-	frases_s = trim(objRst("frases_s"))
-	conc_1 = objRst("conc_1")
-	eti_conc_1 = objRst("eti_conc_1")
-	conc_2 = objRst("conc_2")
-	eti_conc_2 = objRst("eti_conc_2")
-	conc_3 = objRst("conc_3")
-	eti_conc_3 = objRst("eti_conc_3")
-	conc_4 = objRst("conc_4")
-	eti_conc_4 = objRst("eti_conc_4")
-	conc_5 = objRst("conc_5")
-	eti_conc_5 = objRst("eti_conc_5")
-	conc_6 = objRst("conc_6")
-	eti_conc_6 = objRst("eti_conc_6")
-	conc_7 = objRst("conc_7")
-	eti_conc_7 = objRst("eti_conc_7")
-	conc_8 = objRst("conc_8")
-	eti_conc_8 = objRst("eti_conc_8")
-	conc_9 = objRst("conc_9")
-	eti_conc_9 = objRst("eti_conc_9")
-	conc_10 = objRst("conc_10")
-	eti_conc_10 = objRst("eti_conc_10")
-	conc_11 = objRst("conc_11")
-	eti_conc_11 = objRst("eti_conc_11")
-	conc_12 = objRst("conc_12")
-	eti_conc_12 = objRst("eti_conc_12")
-	conc_13 = objRst("conc_13")
-	eti_conc_13 = objRst("eti_conc_13")
-	conc_14 = objRst("conc_14")
-	eti_conc_14 = objRst("eti_conc_14")
-	conc_15 = objRst("conc_15")
-	eti_conc_15 = objRst("eti_conc_15")
-	notas_rd_363 = objRst("notas_rd_363")
-	notas_xml = replace(objRst("notas_xml"), "@", "@ ")
-	frases_r_danesa = trim(objRst("frases_r_danesa"))
-
-
-
-
+	substance.Add "nombre", substanceRecordset("nombre").Value
+	substance.Add "nombre_ing", elimina_repes(substanceRecordset("nombre_ing").Value, "@")
+    
+	substance.Add "num_rd", substanceRecordset("num_rd").Value
+	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
+	substance.Add "num_ce_elincs", substanceRecordset("num_ce_elincs").Value
+	substance.Add "num_cas", substanceRecordset("num_cas").Value
+	substance.Add "cas_alternativos", substanceRecordset("cas_alternativos").Value
+	' substance.Add "num_onu", substanceRecordset("num_onu").Value 'Parece que no se usa
+    
+	substance.Add "num_icsc", substanceRecordset("num_icsc").Value
+	substance.Add "formula_molecular", substanceRecordset("formula_molecular").Value
+	substance.Add "estructura_molecular", substanceRecordset("estructura_molecular").Value
+	substance.Add "simbolos", substanceRecordset("simbolos").Value
+	substance.Add "clasificacion_1", trim(substanceRecordset("clasificacion_1").Value)
+	substance.Add "clasificacion_2", trim(substanceRecordset("clasificacion_2").Value)
+	substance.Add "clasificacion_3", trim(substanceRecordset("clasificacion_3").Value)
+	substance.Add "clasificacion_4", trim(substanceRecordset("clasificacion_4").Value)
+	substance.Add "clasificacion_5", trim(substanceRecordset("clasificacion_5").Value)
+	substance.Add "clasificacion_6", trim(substanceRecordset("clasificacion_6").Value)
+	substance.Add "clasificacion_7", trim(substanceRecordset("clasificacion_7").Value)
+	substance.Add "clasificacion_8", trim(substanceRecordset("clasificacion_8").Value)
+	substance.Add "clasificacion_9", trim(substanceRecordset("clasificacion_9").Value)
+	substance.Add "clasificacion_10", trim(substanceRecordset("clasificacion_10").Value)
+	substance.Add "clasificacion_11", trim(substanceRecordset("clasificacion_11").Value)
+	substance.Add "clasificacion_12", trim(substanceRecordset("clasificacion_12").Value)
+	substance.Add "clasificacion_13", trim(substanceRecordset("clasificacion_13").Value)
+	substance.Add "clasificacion_14", trim(substanceRecordset("clasificacion_14").Value)
+	substance.Add "clasificacion_15", trim(substanceRecordset("clasificacion_15").Value)
+	substance.Add "frases_s", trim(substanceRecordset("frases_s").Value)
+	substance.Add "conc_1", substanceRecordset("conc_1").Value
+	substance.Add "eti_conc_1", substanceRecordset("eti_conc_1").Value
+	substance.Add "conc_2", substanceRecordset("conc_2").Value
+	substance.Add "eti_conc_2", substanceRecordset("eti_conc_2").Value
+	substance.Add "conc_3", substanceRecordset("conc_3").Value
+	substance.Add "eti_conc_3", substanceRecordset("eti_conc_3").Value
+	substance.Add "conc_4", substanceRecordset("conc_4").Value
+	substance.Add "eti_conc_4", substanceRecordset("eti_conc_4").Value
+	substance.Add "conc_5", substanceRecordset("conc_5").Value
+	substance.Add "eti_conc_5", substanceRecordset("eti_conc_5").Value
+	substance.Add "conc_6", substanceRecordset("conc_6").Value
+	substance.Add "eti_conc_6", substanceRecordset("eti_conc_6").Value
+	substance.Add "conc_7", substanceRecordset("conc_7").Value
+	substance.Add "eti_conc_7", substanceRecordset("eti_conc_7").Value
+	substance.Add "conc_8", substanceRecordset("conc_8").Value
+	substance.Add "eti_conc_8", substanceRecordset("eti_conc_8").Value
+	substance.Add "conc_9", substanceRecordset("conc_9").Value
+	substance.Add "eti_conc_9", substanceRecordset("eti_conc_9").Value
+	substance.Add "conc_10", substanceRecordset("conc_10").Value
+	substance.Add "eti_conc_10", substanceRecordset("eti_conc_10").Value
+	substance.Add "conc_11", substanceRecordset("conc_11").Value
+	substance.Add "eti_conc_11", substanceRecordset("eti_conc_11").Value
+	substance.Add "conc_12", substanceRecordset("conc_12").Value
+	substance.Add "eti_conc_12", substanceRecordset("eti_conc_12").Value
+	substance.Add "conc_13", substanceRecordset("conc_13").Value
+	substance.Add "eti_conc_13", substanceRecordset("eti_conc_13").Value
+	substance.Add "conc_14", substanceRecordset("conc_14").Value
+	substance.Add "eti_conc_14", substanceRecordset("eti_conc_14").Value
+	substance.Add "conc_15", substanceRecordset("conc_15").Value
+	substance.Add "eti_conc_15", substanceRecordset("eti_conc_15").Value
+	substance.Add "notas_rd_363", substanceRecordset("notas_rd_363").Value
+	substance.Add "notas_xml", replace(substanceRecordset("notas_xml").Value, "@", "@ ")
+	substance.Add "frases_r_danesa", trim(substanceRecordset("frases_r_danesa").Value)
 
 	' RD1272/2008
-	clasificacion_rd1272_1 = trim(objRst("clasificacion_rd1272_1"))
-	clasificacion_rd1272_2 = trim(objRst("clasificacion_rd1272_2"))
-	clasificacion_rd1272_3 = trim(objRst("clasificacion_rd1272_3"))
-	clasificacion_rd1272_4 = trim(objRst("clasificacion_rd1272_4"))
-	clasificacion_rd1272_5 = trim(objRst("clasificacion_rd1272_5"))
-	clasificacion_rd1272_6 = trim(objRst("clasificacion_rd1272_6"))
-	clasificacion_rd1272_7 = trim(objRst("clasificacion_rd1272_7"))
-	clasificacion_rd1272_8 = trim(objRst("clasificacion_rd1272_8"))
-	clasificacion_rd1272_9 = trim(objRst("clasificacion_rd1272_9"))
-	clasificacion_rd1272_10 = trim(objRst("clasificacion_rd1272_10"))
-	clasificacion_rd1272_11 = trim(objRst("clasificacion_rd1272_11"))
-	clasificacion_rd1272_12 = trim(objRst("clasificacion_rd1272_12"))
-	clasificacion_rd1272_13 = trim(objRst("clasificacion_rd1272_13"))
-	clasificacion_rd1272_14 = trim(objRst("clasificacion_rd1272_14"))
-	clasificacion_rd1272_15 = trim(objRst("clasificacion_rd1272_15"))
-	conc_rd1272_1 = objRst("conc_rd1272_1")
-	eti_conc_rd1272_1 = objRst("eti_conc_rd1272_1")
-	conc_rd1272_2 = objRst("conc_rd1272_2")
-	eti_conc_rd1272_2 = objRst("eti_conc_rd1272_2")
-	conc_rd1272_3 = objRst("conc_rd1272_3")
-	eti_conc_rd1272_3 = objRst("eti_conc_rd1272_3")
-	conc_rd1272_4 = objRst("conc_rd1272_4")
-	eti_conc_rd1272_4 = objRst("eti_conc_rd1272_4")
-	conc_rd1272_5 = objRst("conc_rd1272_5")
-	eti_conc_rd1272_5 = objRst("eti_conc_rd1272_5")
-	conc_rd1272_6 = objRst("conc_rd1272_6")
-	eti_conc_rd1272_6 = objRst("eti_conc_rd1272_6")
-	conc_rd1272_7 = objRst("conc_rd1272_7")
-	eti_conc_rd1272_7 = objRst("eti_conc_rd1272_7")
-	conc_rd1272_8 = objRst("conc_rd1272_8")
-	eti_conc_rd1272_8 = objRst("eti_conc_rd1272_8")
-	conc_rd1272_9 = objRst("conc_rd1272_9")
-	eti_conc_rd1272_9 = objRst("eti_conc_rd1272_9")
-	conc_rd1272_10 = objRst("conc_rd1272_10")
-	eti_conc_rd1272_10 = objRst("eti_conc_rd1272_10")
-	conc_rd1272_11 = objRst("conc_rd1272_11")
-	eti_conc_rd1272_11 = objRst("eti_conc_rd1272_11")
-	conc_rd1272_12 = objRst("conc_rd1272_12")
-	eti_conc_rd1272_12 = objRst("eti_conc_rd1272_12")
-	conc_rd1272_13 = objRst("conc_rd1272_13")
-	eti_conc_rd1272_13 = objRst("eti_conc_rd1272_13")
-	conc_rd1272_14 = objRst("conc_rd1272_14")
-	eti_conc_rd1272_14 = objRst("eti_conc_rd1272_14")
-	conc_rd1272_15 = objRst("conc_rd1272_15")
-	eti_conc_rd1272_15 = objRst("eti_conc_rd1272_15")
-	notas_rd1272 = replace(objRst("notas_rd1272"), "@", "@ ")
-	simbolos_rd1272 = objRst("simbolos_rd1272")
-	clases_categorias_peligro_rd1272 = objRst("clases_categorias_peligro_rd1272")
-
-
-
+	substance.Add "clasificacion_rd1272_1", trim(substanceRecordset("clasificacion_rd1272_1").Value)
+	substance.Add "clasificacion_rd1272_2", trim(substanceRecordset("clasificacion_rd1272_2").Value)
+	substance.Add "clasificacion_rd1272_3", trim(substanceRecordset("clasificacion_rd1272_3").Value)
+	substance.Add "clasificacion_rd1272_4", trim(substanceRecordset("clasificacion_rd1272_4").Value)
+	substance.Add "clasificacion_rd1272_5", trim(substanceRecordset("clasificacion_rd1272_5").Value)
+	substance.Add "clasificacion_rd1272_6", trim(substanceRecordset("clasificacion_rd1272_6").Value)
+	substance.Add "clasificacion_rd1272_7", trim(substanceRecordset("clasificacion_rd1272_7").Value)
+	substance.Add "clasificacion_rd1272_8", trim(substanceRecordset("clasificacion_rd1272_8").Value)
+	substance.Add "clasificacion_rd1272_9", trim(substanceRecordset("clasificacion_rd1272_9").Value)
+	substance.Add "clasificacion_rd1272_10", trim(substanceRecordset("clasificacion_rd1272_10").Value)
+	substance.Add "clasificacion_rd1272_11", trim(substanceRecordset("clasificacion_rd1272_11").Value)
+	substance.Add "clasificacion_rd1272_12", trim(substanceRecordset("clasificacion_rd1272_12").Value)
+	substance.Add "clasificacion_rd1272_13", trim(substanceRecordset("clasificacion_rd1272_13").Value)
+	substance.Add "clasificacion_rd1272_14", trim(substanceRecordset("clasificacion_rd1272_14").Value)
+	substance.Add "clasificacion_rd1272_15", trim(substanceRecordset("clasificacion_rd1272_15").Value)
+	substance.Add "conc_rd1272_1", substanceRecordset("conc_rd1272_1").Value
+	substance.Add "eti_conc_rd1272_1", substanceRecordset("eti_conc_rd1272_1").Value
+	substance.Add "conc_rd1272_2", substanceRecordset("conc_rd1272_2").Value
+	substance.Add "eti_conc_rd1272_2", substanceRecordset("eti_conc_rd1272_2").Value
+	substance.Add "conc_rd1272_3", substanceRecordset("conc_rd1272_3").Value
+	substance.Add "eti_conc_rd1272_3", substanceRecordset("eti_conc_rd1272_3").Value
+	substance.Add "conc_rd1272_4", substanceRecordset("conc_rd1272_4").Value
+	substance.Add "eti_conc_rd1272_4", substanceRecordset("eti_conc_rd1272_4").Value
+	substance.Add "conc_rd1272_5", substanceRecordset("conc_rd1272_5").Value
+	substance.Add "eti_conc_rd1272_5", substanceRecordset("eti_conc_rd1272_5").Value
+	substance.Add "conc_rd1272_6", substanceRecordset("conc_rd1272_6").Value
+	substance.Add "eti_conc_rd1272_6", substanceRecordset("eti_conc_rd1272_6").Value
+	substance.Add "conc_rd1272_7", substanceRecordset("conc_rd1272_7").Value
+	substance.Add "eti_conc_rd1272_7", substanceRecordset("eti_conc_rd1272_7").Value
+	substance.Add "conc_rd1272_8", substanceRecordset("conc_rd1272_8").Value
+	substance.Add "eti_conc_rd1272_8", substanceRecordset("eti_conc_rd1272_8").Value
+	substance.Add "conc_rd1272_9", substanceRecordset("conc_rd1272_9").Value
+	substance.Add "eti_conc_rd1272_9", substanceRecordset("eti_conc_rd1272_9").Value
+	substance.Add "conc_rd1272_10", substanceRecordset("conc_rd1272_10").Value
+	substance.Add "eti_conc_rd1272_10", substanceRecordset("eti_conc_rd1272_10").Value
+	substance.Add "conc_rd1272_11", substanceRecordset("conc_rd1272_11").Value
+	substance.Add "eti_conc_rd1272_11", substanceRecordset("eti_conc_rd1272_11").Value
+	substance.Add "conc_rd1272_12", substanceRecordset("conc_rd1272_12").Value
+	substance.Add "eti_conc_rd1272_12", substanceRecordset("eti_conc_rd1272_12").Value
+	substance.Add "conc_rd1272_13", substanceRecordset("conc_rd1272_13").Value
+	substance.Add "eti_conc_rd1272_13", substanceRecordset("eti_conc_rd1272_13").Value
+	substance.Add "conc_rd1272_14", substanceRecordset("conc_rd1272_14").Value
+	substance.Add "eti_conc_rd1272_14", substanceRecordset("eti_conc_rd1272_14").Value
+	substance.Add "conc_rd1272_15", substanceRecordset("conc_rd1272_15").Value
+	substance.Add "eti_conc_rd1272_15", substanceRecordset("eti_conc_rd1272_15").Value
+	substance.Add "notas_rd1272", replace(substanceRecordset("notas_rd1272").Value, "@", "@ ")
+	substance.Add "simbolos_rd1272", substanceRecordset("simbolos_rd1272").Value
+	substance.Add "clases_categorias_peligro_rd1272", substanceRecordset("clases_categorias_peligro_rd1272").Value
 
 	' dn_risc_sustancias_vl
-	estado_1 = objRst("estado_1")
-	vla_ed_ppm_1 = objRst("vla_ed_ppm_1")
-	vla_ed_mg_m3_1 = objRst("vla_ed_mg_m3_1")
-	vla_ec_ppm_1 = objRst("vla_ec_ppm_1")
-	vla_ec_mg_m3_1 = objRst("vla_ec_mg_m3_1")
-	notas_vla_1 = objRst("notas_vla_1")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_1)) then
-		notas_vla_1 = replace(notas_vla_1, "VLB", "")
-	end if
+	substance.Add "estado_1", substanceRecordset("estado_1").Value
+	substance.Add "vla_ed_ppm_1", substanceRecordset("vla_ed_ppm_1").Value
+	substance.Add "vla_ed_mg_m3_1", substanceRecordset("vla_ed_mg_m3_1").Value
+	substance.Add "vla_ec_ppm_1", substanceRecordset("vla_ec_ppm_1").Value
+	substance.Add "vla_ec_mg_m3_1", substanceRecordset("vla_ec_mg_m3_1").Value
+	substance.Add "notas_vla_1", removeVlbFromNotes(substanceRecordset("notas_vla_1").Value)
 
-	estado_2 = objRst("estado_2")
-	vla_ed_ppm_2 = objRst("vla_ed_ppm_2")
-	vla_ed_mg_m3_2 = objRst("vla_ed_mg_m3_2")
-	vla_ec_ppm_2 = objRst("vla_ec_ppm_2")
-	vla_ec_mg_m3_2 = objRst("vla_ec_mg_m3_2")
-	notas_vla_2 = objRst("notas_vla_2")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_2)) then
-		notas_vla_2 = replace(notas_vla_2, "VLB", "")
-	end if
+	substance.Add "estado_2", substanceRecordset("estado_2").Value
+	substance.Add "vla_ed_ppm_2", substanceRecordset("vla_ed_ppm_2").Value
+	substance.Add "vla_ed_mg_m3_2", substanceRecordset("vla_ed_mg_m3_2").Value
+	substance.Add "vla_ec_ppm_2", substanceRecordset("vla_ec_ppm_2").Value
+	substance.Add "vla_ec_mg_m3_2", substanceRecordset("vla_ec_mg_m3_2").Value
+	substance.Add "notas_vla_2", removeVlbFromNotes(substanceRecordset("notas_vla_2").Value)
 
-	estado_3 = objRst("estado_3")
-	vla_ed_ppm_3 = objRst("vla_ed_ppm_3")
-	vla_ed_mg_m3_3 = objRst("vla_ed_mg_m3_3")
-	vla_ec_ppm_3 = objRst("vla_ec_ppm_3")
-	vla_ec_mg_m3_3 = objRst("vla_ec_mg_m3_3")
-	notas_vla_3 = objRst("notas_vla_3")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_3)) then
-		notas_vla_3 = replace(notas_vla_3, "VLB", "")
-	end if
+	substance.Add "estado_3", substanceRecordset("estado_3").Value
+	substance.Add "vla_ed_ppm_3", substanceRecordset("vla_ed_ppm_3").Value
+	substance.Add "vla_ed_mg_m3_3", substanceRecordset("vla_ed_mg_m3_3").Value
+	substance.Add "vla_ec_ppm_3", substanceRecordset("vla_ec_ppm_3").Value
+	substance.Add "vla_ec_mg_m3_3", substanceRecordset("vla_ec_mg_m3_3").Value
+	substance.Add "notas_vla_3", removeVlbFromNotes(substanceRecordset("notas_vla_3").Value)
 
-	estado_4 = objRst("estado_4")
-	vla_ed_ppm_4 = objRst("vla_ed_ppm_4")
-	vla_ed_mg_m3_4 = objRst("vla_ed_mg_m3_4")
-	vla_ec_ppm_4 = objRst("vla_ec_ppm_4")
-	vla_ec_mg_m3_4 = objRst("vla_ec_mg_m3_4")
-	notas_vla_4 = objRst("notas_vla_4")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_4)) then
-		notas_vla_4 = replace(notas_vla_4, "VLB", "")
-	end if
+	substance.Add "estado_4", substanceRecordset("estado_4").Value
+	substance.Add "vla_ed_ppm_4", substanceRecordset("vla_ed_ppm_4").Value
+	substance.Add "vla_ed_mg_m3_4", substanceRecordset("vla_ed_mg_m3_4").Value
+	substance.Add "vla_ec_ppm_4", substanceRecordset("vla_ec_ppm_4").Value
+	substance.Add "vla_ec_mg_m3_4", substanceRecordset("vla_ec_mg_m3_4").Value
+	substance.Add "notas_vla_4", removeVlbFromNotes(substanceRecordset("notas_vla_4").Value)
+	
+	substance.Add "estado_5", substanceRecordset("estado_5").Value
+	substance.Add "vla_ed_ppm_5", substanceRecordset("vla_ed_ppm_5").Value
+	substance.Add "vla_ed_mg_m3_5", substanceRecordset("vla_ed_mg_m3_5").Value
+	substance.Add "vla_ec_ppm_5", substanceRecordset("vla_ec_ppm_5").Value
+	substance.Add "vla_ec_mg_m3_5", substanceRecordset("vla_ec_mg_m3_5").Value
+	substance.Add "notas_vla_5", removeVlbFromNotes(substanceRecordset("notas_vla_5").Value)
+	
+	substance.Add "estado_6", substanceRecordset("estado_6").Value
+	substance.Add "vla_ed_ppm_6", substanceRecordset("vla_ed_ppm_6").Value
+	substance.Add "vla_ed_mg_m3_6", substanceRecordset("vla_ed_mg_m3_6").Value
+	substance.Add "vla_ec_ppm_6", substanceRecordset("vla_ec_ppm_6").Value
+	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
+	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
+	
+	substance.Add "ib_1", substanceRecordset("ib_1").Value
+	substance.Add "vlb_1", substanceRecordset("vlb_1").Value
+	substance.Add "momento_1", substanceRecordset("momento_1").Value
+	substance.Add "notas_vlb_1", substanceRecordset("notas_vlb_1").Value
 
-	estado_5 = objRst("estado_5")
-	vla_ed_ppm_5 = objRst("vla_ed_ppm_5")
-	vla_ed_mg_m3_5 = objRst("vla_ed_mg_m3_5")
-	vla_ec_ppm_5 = objRst("vla_ec_ppm_5")
-	vla_ec_mg_m3_5 = objRst("vla_ec_mg_m3_5")
-	notas_vla_5 = objRst("notas_vla_5")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_5)) then
-		notas_vla_5 = replace(notas_vla_5, "VLB", "")
-	end if
+	substance.Add "ib_2", substanceRecordset("ib_2").Value
+	substance.Add "vlb_2", substanceRecordset("vlb_2").Value
+	substance.Add "momento_2", substanceRecordset("momento_2").Value
+	substance.Add "notas_vlb_2", substanceRecordset("notas_vlb_2").Value
 
-	estado_6 = objRst("estado_6")
-	vla_ed_ppm_6 = objRst("vla_ed_ppm_6")
-	vla_ed_mg_m3_6 = objRst("vla_ed_mg_m3_6")
-	vla_ec_ppm_6 = objRst("vla_ec_ppm_6")
-	vla_ec_mg_m3_6 = objRst("vla_ec_mg_m3_6")
-	notas_vla_6 = objRst("notas_vla_6")
-	' Parche: quitar "VLB" en notas VLA
-	if (not isnull(notas_vla_6)) then
-		notas_vla_6 = replace(notas_vla_6, "VLB", "")
-	end if
+	substance.Add "ib_3", substanceRecordset("ib_3").Value
+	substance.Add "vlb_3", substanceRecordset("vlb_3").Value
+	substance.Add "momento_3", substanceRecordset("momento_3").Value
+	substance.Add "notas_vlb_3", substanceRecordset("notas_vlb_3").Value
 
-	ib_1 = objRst("ib_1")
-	vlb_1 = objRst("vlb_1")
-	momento_1 = objRst("momento_1")
-	notas_vlb_1 = objRst("notas_vlb_1")
+	substance.Add "ib_4", substanceRecordset("ib_4").Value
+	substance.Add "vlb_4", substanceRecordset("vlb_4").Value
+	substance.Add "momento_4", substanceRecordset("momento_4").Value
+	substance.Add "notas_vlb_4", substanceRecordset("notas_vlb_4").Value
 
-	ib_2 = objRst("ib_2")
-	vlb_2 = objRst("vlb_2")
-	momento_2 = objRst("momento_2")
-	notas_vlb_2 = objRst("notas_vlb_2")
+	substance.Add "ib_5", substanceRecordset("ib_5").Value
+	substance.Add "vlb_5", substanceRecordset("vlb_5").Value
+	substance.Add "momento_5", substanceRecordset("momento_5").Value
+	substance.Add "notas_vlb_5", substanceRecordset("notas_vlb_5").Value
 
-	ib_3 = objRst("ib_3")
-	vlb_3 = objRst("vlb_3")
-	momento_3 = objRst("momento_3")
-	notas_vlb_3 = objRst("notas_vlb_3")
-
-	ib_4 = objRst("ib_4")
-	vlb_4 = objRst("vlb_4")
-	momento_4 = objRst("momento_4")
-	notas_vlb_4 = objRst("notas_vlb_4")
-
-	ib_5 = objRst("ib_5")
-	vlb_5 = objRst("vlb_5")
-	momento_5 = objRst("momento_5")
-	notas_vlb_5 = objRst("notas_vlb_5")
-
-	ib_6 = objRst("ib_6")
-	vlb_6 = objRst("vlb_6")
-	momento_6 = objRst("momento_6")
-	notas_vlb_6 = objRst("notas_vlb_6")
+	substance.Add "ib_6", substanceRecordset("ib_6").Value
+	substance.Add "vlb_6", substanceRecordset("vlb_6").Value
+	substance.Add "momento_6", substanceRecordset("momento_6").Value
+	substance.Add "notas_vlb_6", substanceRecordset("notas_vlb_6").Value
 
 	' Cancer
-	notas_cancer_rd = objRst("notas_cancer_rd")
-	' Parche: quitar las que diga "véase Tabla 3"
-	notas_cancer_rd = replace(notas_cancer_rd, "véase Tabla 3", "")
-
-	grupo_iarc = objRst("grupo_iarc")
-	volumen_iarc = objRst("volumen_iarc")
-	notas_iarc = objRst("notas_iarc")
-	categoria_cancer_otras = objRst("categoria_cancer_otras")
-	fuente = objRst("fuente")
+	substance.Add "notas_cancer_rd", replace(substanceRecordset("notas_cancer_rd").Value, "véase Tabla 3", "")
+	substance.Add "grupo_iarc", substanceRecordset("grupo_iarc").Value
+	substance.Add "volumen_iarc", substanceRecordset("volumen_iarc").Value
+	substance.Add "notas_iarc", substanceRecordset("notas_iarc").Value
+	substance.Add "categoria_cancer_otras", substanceRecordset("categoria_cancer_otras").Value
+	substance.Add "fuente", substanceRecordset("fuente").Value
 
 	' Disruptor endocrino
-	nivel_disruptor = objRst("nivel_disruptor")
-	dim vector_disruptores
-	vector_disruptores = split(nivel_disruptor,",")
+	substance.Add "nivel_disruptor", substanceRecordset("nivel_disruptor").Value
+	'substance.Add "vector_disruptores", split(substance.Item("nivel_disruptor"),",")
 
 
 	' Neurotóxico
-	efecto_neurotoxico=objRst("efecto_neurotoxico")
-	nivel_neurotoxico=objRst("nivel_neurotoxico")
-	fuente_neurotoxico=objRst("fuente_neurotoxico")
+	substance.Add "efecto_neurotoxico", substanceRecordset("efecto_neurotoxico").Value
+	substance.Add "nivel_neurotoxico", substanceRecordset("nivel_neurotoxico").Value
+	substance.Add "fuente_neurotoxico", substanceRecordset("fuente_neurotoxico").Value
 
 	' TPB
-	enlace_tpb = objRst("enlace_tpb")
-	anchor_tpb = objRst("anchor_tpb")
-	fuente_tpb = objRst("fuentes_tpb")
+	substance.Add "enlace_tpb", substanceRecordset("enlace_tpb").Value
+	substance.Add "anchor_tpb", substanceRecordset("anchor_tpb").Value
+	substance.Add "fuente_tpb", substanceRecordset("fuentes_tpb").Value
 
 	' SPL (16/06/2014)
 	' mPmB
-	mpmb = objRst("mpmb")
+	substance.Add "mpmb", substanceRecordset("mpmb").Value
 
 	' Tóxica para el agua
-	directiva_aguas = objRst("directiva_aguas")
-	clasif_mma = objRst("clasif_mma")
-	sustancia_prioritaria = objrst("sustancia_prioritaria")
+	substance.Add "directiva_aguas", substanceRecordset("directiva_aguas").Value
+	substance.Add "clasif_mma", substanceRecordset("clasif_mma").Value
+	substance.Add "sustancia_prioritaria", substanceRecordset("sustancia_prioritaria").Value
 
 	' Contaminante del aire
-	dano_calidad_aire = objRst("dano_calidad_aire")
-	dano_ozono = objRst("dano_ozono")
-	dano_cambio_clima = objRst("dano_cambio_clima")
+	substance.Add "dano_calidad_aire", substanceRecordset("dano_calidad_aire").Value
+	substance.Add "dano_ozono", substanceRecordset("dano_ozono").Value
+	substance.Add "dano_cambio_clima", substanceRecordset("dano_cambio_clima").Value
 
-
-	comentarios_medio_ambiente = objrst("comentarios_ma")
-	toxicidad_suelo = objrst("toxicidad_suelo")
-
-
-
-
+	substance.Add "comentarios_medio_ambiente", substanceRecordset("comentarios_ma").Value
+	'substance.Add "toxicidad_suelo", substanceRecordset("toxicidad_suelo").Value
 
 	' Sustancia prohibida
-	sustancia_prohibida = objrst("sustancia_prohibida")
-	sustancia_restringida = objrst("sustancia_restringida")
-	comentarios = trim(objrst("comentarios_sustancia"))
-	'response.write comentarios
-	'response.write comentarios
+	'substance.Add "sustancia_prohibida", substanceRecordset("sustancia_prohibida").Value
+	'substance.Add "sustancia_restringida", substanceRecordset("sustancia_restringida").Value
+	'substance.Add "comentarios", trim(substanceRecordset("comentarios_sustancia").Value)
 
 	' Cancer Mama
-	cancer_mama = objRst("cancer_mama")
-	cancer_mama_fuente = objRst("cancer_mama_fuente")
+	'substance.Add "cancer_mama", substanceRecordset("cancer_mama").Value
+	substance.Add "cancer_mama_fuente", substanceRecordset("cancer_mama_fuente").Value
 
   	' COP
-  	cop = objRst("cop")
-  	enlace_cop = objRst("enlace_cop")
+  	substance.Add "cop", substanceRecordset("cop").Value
+  	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
 
 
 end if
-objRst.close()
-set objRst=nothing
-
+substanceRecordset.close()
+set substanceRecordset=nothing
 
 ' **** SPL
 ' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
@@ -436,7 +404,6 @@ esta_en_lista_de = esta_en_lista_de or esta_en_lista ("de", id_sustancia)
 esta_en_lista_neurotoxico_rd = esta_en_lista_neurotoxico_rd or esta_en_lista ("neurotoxico_rd", id_sustancia)
 esta_en_lista_neurotoxico_danesa = esta_en_lista_neurotoxico_danesa or  esta_en_lista ("neurotoxico_danesa", id_sustancia)
 esta_en_lista_neurotoxico_nivel = esta_en_lista_neurotoxico_nivel or esta_en_lista ("neurotoxico_nivel", id_sustancia)
-'dn_risc_sustancias_neuro_disruptor.efecto_neurotoxico='OTOTÓXICO'
 esta_en_lista_neurotoxico = esta_en_lista_neurotoxico or esta_en_lista_neurotoxico_rd OR esta_en_lista_neurotoxico_danesa OR esta_en_lista_neurotoxico_nivel OR esta_en_lista ("neurotoxico", id_sustancia)
 
 
@@ -447,7 +414,7 @@ esta_en_lista_eepp = esta_en_lista_eepp or esta_en_lista ("eepp", id_sustancia)
 esta_en_lista_tpb = esta_en_lista_tpb or esta_en_lista ("tpb", id_sustancia)
 
 ' SPL (16/06/2014)
-esta_en_lista_mpmb = mpmb or esta_en_lista_mpmb
+esta_en_lista_mpmb = substance.Item("mpmb") or esta_en_lista_mpmb
 
 esta_en_lista_directiva_aguas =  esta_en_lista_directiva_aguas or esta_en_lista ("directiva_aguas", id_sustancia)
 esta_en_lista_sustancias_prioritarias = esta_en_lista_sustancias_prioritarias or esta_en_lista ("sustancias_prioritarias", id_sustancia)
@@ -502,13 +469,13 @@ esta_en_lista_corap = esta_en_lista_corap or esta_en_lista ("corap", id_sustanci
 
 
 ' Montamos frases R
-frases_r=trim(monta_frases("R", clasificacion_1, clasificacion_2, clasificacion_3, clasificacion_4, clasificacion_5, clasificacion_6, clasificacion_7, clasificacion_8, clasificacion_9, clasificacion_10, clasificacion_11, clasificacion_12, clasificacion_13, clasificacion_14, clasificacion_15))
+frases_r=trim(monta_frases("R", substance.Item("clasificacion_1"), substance.Item("clasificacion_2"), substance.Item("clasificacion_3"), substance.Item("clasificacion_4"), substance.Item("clasificacion_5"), substance.Item("clasificacion_6"), substance.Item("clasificacion_7"), substance.Item("clasificacion_8"), substance.Item("clasificacion_9"), substance.Item("clasificacion_10"), substance.Item("clasificacion_11"), substance.Item("clasificacion_12"), substance.Item("clasificacion_13"), substance.Item("clasificacion_14"), substance.Item("clasificacion_15")))
 
 
 
 'if ((not esta_en_lista_cancer_rd) and (not esta_en_lista_sensibilizante_danesa) or (frases_r = "")) then
 
-if (frases_r = "") and (frases_r_danesa <> "") then
+if (frases_r = "") and (substance.Item("frases_r_danesa") <> "") then
   frases_r_danesa_mostradas=true
 else
   frases_r_danesa_mostradas=false
@@ -796,7 +763,7 @@ sub ap1_identificacion()
 			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Nombre:
 		</td>
 		<td class="texto" valign="middle">
-			<b><%=espaciar(nombre)%></b>
+			<b><%=espaciar(substance.Item("nombre"))%></b>
 		</td>
 	</tr>
 
@@ -829,24 +796,24 @@ sub ap1_identificacion()
 		</tr>
 	<% end if ' hay nombre comercial? %>
 
-	<% if (num_cas <> "") or (num_ce_einecs <> "") or (num_ce_elincs <> "") then %>
+	<% if (substance.Item("num_cas") <> "") or (substance.Item("num_ce_einecs") <> "") or (substance.Item("num_ce_elincs") <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
 				Números de Identificación:
 			</td>
 			<td class="texto" valign="middle">
-				<% if (num_cas <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS</b>: "&num_cas&"<br/>" %>
-				<% if (cas_alternativos <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS alternativos</b>: "&cas_alternativos &"<br/>" %>
+				<% if (substance.Item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS</b>: "&substance.Item("num_cas")&"<br/>" %>
+				<% if (substance.Item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS alternativos</b>: "&substance.Item("cas_alternativos") &"<br/>" %>
 				<%
-					if (num_ce_einecs <> "") then
+					if (substance.Item("num_ce_einecs") <> "") then
 						'Sergio, si empieza por 4 y num_ce_elincs<>'' muestro el num_ce_elincs
-						if (mid(num_ce_einecs,1,1)="4" and num_ce_elincs <> "") then
-							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&num_ce_elincs&"<br/>"
+						if (mid(substance.Item("num_ce_einecs"),1,1)="4" and substance.Item("num_ce_elincs") <> "") then
+							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&substance.Item("num_ce_elincs")&"<br/>"
 						else
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE EINECS</b>: "&num_ce_einecs&"<br/>"
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE EINECS</b>: "&substance.Item("num_ce_einecs")&"<br/>"
 						end if
-					elseif (num_ce_elincs <> "") then
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&num_ce_elincs&"<br/>"
+					elseif (substance.Item("num_ce_elincs") <> "") then
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&substance.Item("num_ce_elincs")&"<br/>"
 					end if
 				%>
 			</td>
@@ -884,7 +851,7 @@ sub ap1_identificacion()
 
 
 	<%
-		if (num_icsc <> "") then
+		if (substance.Item("num_icsc") <> "") then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
@@ -893,12 +860,12 @@ sub ap1_identificacion()
 			<td class="texto" valign="middle">
           <%
 
-            array_icsc=split(num_icsc, "@")
+            array_icsc=split(substance.Item("num_icsc"), "@")
 
             for i=0 to ubound(array_icsc)
-            	num_icsc = cstr(array_icsc(i))
-            	if len(num_icsc)=4 then
-            		centena_icsc = mid(num_icsc,1,2)
+            	substance.Item("num_icsc") = cstr(array_icsc(i))
+            	if len(substance.Item("num_icsc"))=4 then
+            		centena_icsc = mid(substance.Item("num_icsc"),1,2)
             		icsc_max = cstr(clng(centena_icsc&"01"))
             		if icsc_max="1" then icsc_max="0"
             		icsc_min = cstr(clng(centena_icsc)+1) & "00"
@@ -937,7 +904,7 @@ sub ap1_identificacion()
     -->
 	<% 'end if ' hay companias? %>
 
-	<% if (nombre_ing <> "") or (num_rd <> "") or (formula_molecular <> "") or (estructura_molecular <> "") or (notas_xml <> "") or (companias <> "") then %>
+	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top" width="35%">
 				Más información <% plegador "secc-masinformacion", "img-masinformacion" %>
@@ -946,8 +913,8 @@ sub ap1_identificacion()
 
 
 
-        <% if (nombre_ing <> "") then
-            array_nombres_ingleses = split(nombre_ing, "@")
+        <% if (substance.Item("nombre_ing") <> "") then
+            array_nombres_ingleses = split(substance.Item("nombre_ing"), "@")
             if (ubound(array_nombres_ingleses) > 0) then
         %>
               <b>Nombres en inglés</b>:<br/>
@@ -959,18 +926,18 @@ sub ap1_identificacion()
         <%
             else
         %>
-              <b>Nombre inglés</b>: <%= espaciar(nombre_ing) %><br/>
+              <b>Nombre inglés</b>: <%= espaciar(substance.Item("nombre_ing")) %><br/>
         <%
             end if
            end if %>
 
-				<% if (num_rd <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>Nº &iacute;ndice</b>: "&num_rd&"<br/>" %>
-				<% if (formula_molecular <> "") then response.write "<b>Fórmula molecular</b>: "&formula_molecular&"<br/>" %>
-				<% if (estructura_molecular <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/"&estructura_molecular&"' /><br/>" %>
+				<% if (substance.Item("num_rd") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>Nº &iacute;ndice</b>: "&substance.Item("num_rd")&"<br/>" %>
+				<% if (substance.Item("formula_molecular") <> "") then response.write "<b>Fórmula molecular</b>: "&substance.Item("formula_molecular")&"<br/>" %>
+				<% if (substance.Item("estructura_molecular") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/"&substance.Item("estructura_molecular")&"' /><br/>" %>
 
-				<% if (notas_xml <> "") then %>
+				<% if (substance.Item("notas_xml") <> "") then %>
           <a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("ECB")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-          <b>Notas ECB</b>: <%= espaciar(notas_xml) %> <br />
+          <b>Notas ECB</b>: <%= espaciar(substance.Item("notas_xml")) %> <br />
         <% end if %>
 
         <% if (companias <> "") then %>
@@ -994,8 +961,7 @@ end sub ' ap1_identificacion
 
 sub ap2_clasificacion()
 	' Solo mostramos este apartado si hay información para él
-'	if ((simbolos <> "") or (clasificacion_1 <> "") or (clasificacion_2 <> "") or (clasificacion_3 <> "") or (clasificacion_4 <> "") or (clasificacion_5 <> "") or (clasificacion_6 <> "") or (clasificacion_7 <> "") or (clasificacion_8 <> "") or (clasificacion_9 <> "") or (clasificacion_10 <> "") or (clasificacion_11 <> "") or (clasificacion_12 <> "") or (clasificacion_13 <> "") or (clasificacion_14 <> "") or (clasificacion_15 <> "") or (frases_r_danesa <> "") or (notas_rd_363 <> "") or (conc_1 <> "") or (eti_conc_1 <> "") or (conc_2 <> "") or (eti_conc_2 <> "") or (conc_3 <> "") or (eti_conc_3 <> "") or (conc_4 <> "") or (eti_conc_4 <> "") or (conc_5 <> "") or (eti_conc_5 <> "") or (conc_6 <> "") or (eti_conc_6 <> "") or (conc_7 <> "") or (eti_conc_7 <> "") or (conc_8 <> "") or (eti_conc_8 <> "") or (conc_9 <> "") or (eti_conc_9 <> "") or (conc_10 <> "") or (eti_conc_10 <> "") or (conc_11 <> "") or (eti_conc_11 <> "") or (conc_12 <> "") or (eti_conc_12 <> "") or (conc_13 <> "") or (eti_conc_13 <> "") or (conc_14 <> "") or (eti_conc_14 <> "") or (conc_15 <> "") or (eti_conc_15 <> "") or (estado_1 <> "") or (vla_ed_ppm_1 <> "") or (vla_ed_mg_m3_1 <> "") or (vla_ec_ppm_1 <> "") or (vla_ec_mg_m3_1 <> "") or (notas_vla_1 <> "") or (estado_2 <> "") or (vla_ed_ppm_2 <> "") or (vla_ed_mg_m3_2 <> "") or (vla_ec_ppm_2 <> "") or (vla_ec_mg_m3_2 <> "") or (notas_vla_2 <> "") or (estado_3 <> "") or (vla_ed_ppm_3 <> "") or (vla_ed_mg_m3_3 <> "") or (vla_ec_ppm_3 <> "") or (vla_ec_mg_m3_3 <> "") or (notas_vla_3 <> "") or (estado_4 <> "") or (vla_ed_ppm_4 <> "") or (vla_ed_mg_m3_4 <> "") or (vla_ec_ppm_4 <> "") or (vla_ec_mg_m3_4 <> "") or (notas_vla_4 <> "") or (estado_5 <> "") or (vla_ed_ppm_5 <> "") or (vla_ed_mg_m3_5 <> "") or (vla_ec_ppm_5 <> "") or (vla_ec_mg_m3_5 <> "") or (notas_vla_5 <> "") or (estado_6 <> "") or (vla_ed_ppm_6 <> "") or (vla_ed_mg_m3_6 <> "") or (vla_ec_ppm_6  <> "") or (vla_ec_mg_m3_6 <> "") or (notas_vla_6 <> "") or (ib_1 <> "") or  (vlb_1 <> "") or (momento_1 <> "") or (notas_vlb_1 <> "") or (ib_2 <> "") or  (vlb_2 <> "") or (momento_2 <> "") or (notas_vlb_2 <> "") or (ib_3 <> "") or  (vlb_3 <> "") or (momento_3 <> "") or (notas_vlb_3 <> "") or (ib_4 <> "") or  (vlb_4 <> "") or (momento_4 <> "") or (notas_vlb_4 <> "") or (ib_5 <> "") or  (vlb_5 <> "") or (momento_5 <> "") or (notas_vlb_5 <> "") or (ib_6 <> "") or  (vlb_6 <> "") or (momento_6 <> "") or (notas_vlb_6 <> "") or esta_en_lista_cancer_rd or esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista_cancer_otras or esta_en_lista_de or esta_en_lista_neurotoxico or  esta_en_lista_tpb or esta_en_lista_sensibilizante or esta_en_lista_tpr or esta_en_lista_cancer_mama or esta_en_lista_cop or esta_en_lista_prohibidas_embarazadas or esta_en_lista_prohibidas_lactantes) then
-	if ((simbolos <> "") or (clasificacion_1 <> "") or (clasificacion_2 <> "") or (clasificacion_3 <> "") or (clasificacion_4 <> "") or (clasificacion_5 <> "") or (clasificacion_6 <> "") or (clasificacion_7 <> "") or (clasificacion_8 <> "") or (clasificacion_9 <> "") or (clasificacion_10 <> "") or (clasificacion_11 <> "") or (clasificacion_12 <> "") or (clasificacion_13 <> "") or (clasificacion_14 <> "") or (clasificacion_15 <> "") or (frases_r_danesa <> "") or (notas_rd_363 <> "") or (conc_1 <> "") or (eti_conc_1 <> "") or (conc_2 <> "") or (eti_conc_2 <> "") or (conc_3 <> "") or (eti_conc_3 <> "") or (conc_4 <> "") or (eti_conc_4 <> "") or (conc_5 <> "") or (eti_conc_5 <> "") or (conc_6 <> "") or (eti_conc_6 <> "") or (conc_7 <> "") or (eti_conc_7 <> "") or (conc_8 <> "") or (eti_conc_8 <> "") or (conc_9 <> "") or (eti_conc_9 <> "") or (conc_10 <> "") or (eti_conc_10 <> "") or (conc_11 <> "") or (eti_conc_11 <> "") or (conc_12 <> "") or (eti_conc_12 <> "") or (conc_13 <> "") or (eti_conc_13 <> "") or (conc_14 <> "") or (eti_conc_14 <> "") or (conc_15 <> "") or (eti_conc_15 <> "") ) then
+	if ((substance.Item("simbolos") <> "") or (substance.Item("clasificacion_1") <> "") or (substance.Item("clasificacion_2") <> "") or (substance.Item("clasificacion_3") <> "") or (substance.Item("clasificacion_4") <> "") or (substance.Item("clasificacion_5") <> "") or (substance.Item("clasificacion_6") <> "") or (substance.Item("clasificacion_7") <> "") or (substance.Item("clasificacion_8") <> "") or (substance.Item("clasificacion_9") <> "") or (substance.Item("clasificacion_10") <> "") or (substance.Item("clasificacion_11") <> "") or (substance.Item("clasificacion_12") <> "") or (substance.Item("clasificacion_13") <> "") or (substance.Item("clasificacion_14") <> "") or (substance.Item("clasificacion_15") <> "") or (substance.Item("frases_r_danesa") <> "") or (substance.Item("notas_rd_363") <> "") or (substance.Item("conc_1") <> "") or (substance.Item("eti_conc_1") <> "") or (substance.Item("conc_2") <> "") or (substance.Item("eti_conc_2") <> "") or (substance.Item("conc_3") <> "") or (substance.Item("eti_conc_3") <> "") or (substance.Item("conc_4") <> "") or (substance.Item("eti_conc_4") <> "") or (substance.Item("conc_5") <> "") or (substance.Item("eti_conc_5") <> "") or (substance.Item("conc_6") <> "") or (substance.Item("eti_conc_6") <> "") or (substance.Item("conc_7") <> "") or (substance.Item("eti_conc_7") <> "") or (substance.Item("conc_8") <> "") or (substance.Item("eti_conc_8") <> "") or (substance.Item("conc_9") <> "") or (substance.Item("eti_conc_9") <> "") or (substance.Item("conc_10") <> "") or (substance.Item("eti_conc_10") <> "") or (substance.Item("conc_11") <> "") or (substance.Item("eti_conc_11") <> "") or (substance.Item("conc_12") <> "") or (substance.Item("eti_conc_12") <> "") or (substance.Item("conc_13") <> "") or (substance.Item("eti_conc_13") <> "") or (substance.Item("conc_14") <> "") or (substance.Item("eti_conc_14") <> "") or (substance.Item("conc_15") <> "") or (substance.Item("eti_conc_15") <> "") ) then
 
 %>
 	<!-- ################ Clasificación ###################### -->
@@ -1044,8 +1010,7 @@ end sub ' ap2_clasificacion
 
 sub ap2_clasificacion_rd1272()
 	' Solo mostramos este apartado si hay información para él
-'	if ((simbolos_rd1272 <> "") or (clasificacion_rd1272_1 <> "") or (clasificacion_rd1272_2 <> "") or (clasificacion_rd1272_3 <> "") or (clasificacion_rd1272_4 <> "") or (clasificacion_rd1272_5 <> "") or (clasificacion_rd1272_6 <> "") or (clasificacion_rd1272_7 <> "") or (clasificacion_rd1272_8 <> "") or (clasificacion_rd1272_9 <> "") or (clasificacion_rd1272_10 <> "") or (clasificacion_rd1272_11 <> "") or (clasificacion_rd1272_12 <> "") or (clasificacion_rd1272_13 <> "") or (clasificacion_rd1272_14 <> "") or (clasificacion_rd1272_15 <> "") or (conc_rd1272_1 <> "") or (eti_conc_rd1272_1 <> "") or (conc_rd1272_2 <> "") or (eti_conc_rd1272_2 <> "") or (conc_rd1272_3 <> "") or (eti_conc_rd1272_3 <> "") or (conc_rd1272_4 <> "") or (eti_conc_rd1272_4 <> "") or (conc_rd1272_5 <> "") or (eti_conc_rd1272_5 <> "") or (conc_rd1272_6 <> "") or (eti_conc_rd1272_6 <> "") or (conc_rd1272_7 <> "") or (eti_conc_rd1272_7 <> "") or (conc_rd1272_8 <> "") or (eti_conc_rd1272_8 <> "") or (conc_rd1272_9 <> "") or (eti_conc_rd1272_9 <> "") or (conc_rd1272_10 <> "") or (eti_conc_rd1272_10 <> "") or (conc_rd1272_11 <> "") or (eti_conc_rd1272_11 <> "") or (conc_rd1272_12 <> "") or (eti_conc_rd1272_12 <> "") or (conc_rd1272_13 <> "") or (eti_conc_rd1272_13 <> "") or (conc_rd1272_14 <> "") or (eti_conc_rd1272_14 <> "") or (conc_rd1272_15 <> "") or (eti_conc_rd1272_15 <> "") or (estado_1 <> "") or (vla_ed_ppm_1 <> "") or (vla_ed_mg_m3_1 <> "") or (vla_ec_ppm_1 <> "") or (vla_ec_mg_m3_1 <> "") or (notas_vla_1 <> "") or (estado_2 <> "") or (vla_ed_ppm_2 <> "") or (vla_ed_mg_m3_2 <> "") or (vla_ec_ppm_2 <> "") or (vla_ec_mg_m3_2 <> "") or (notas_vla_2 <> "") or (estado_3 <> "") or (vla_ed_ppm_3 <> "") or (vla_ed_mg_m3_3 <> "") or (vla_ec_ppm_3 <> "") or (vla_ec_mg_m3_3 <> "") or (notas_vla_3 <> "") or (estado_4 <> "") or (vla_ed_ppm_4 <> "") or (vla_ed_mg_m3_4 <> "") or (vla_ec_ppm_4 <> "") or (vla_ec_mg_m3_4 <> "") or (notas_vla_4 <> "") or (estado_5 <> "") or (vla_ed_ppm_5 <> "") or (vla_ed_mg_m3_5 <> "") or (vla_ec_ppm_5 <> "") or (vla_ec_mg_m3_5 <> "") or (notas_vla_5 <> "") or (estado_6 <> "") or (vla_ed_ppm_6 <> "") or (vla_ed_mg_m3_6 <> "") or (vla_ec_ppm_6  <> "") or (vla_ec_mg_m3_6 <> "") or (notas_vla_6 <> "") or (ib_1 <> "") or  (vlb_1 <> "") or (momento_1 <> "") or (notas_vlb_1 <> "") or (ib_2 <> "") or  (vlb_2 <> "") or (momento_2 <> "") or (notas_vlb_2 <> "") or (ib_3 <> "") or  (vlb_3 <> "") or (momento_3 <> "") or (notas_vlb_3 <> "") or (ib_4 <> "") or  (vlb_4 <> "") or (momento_4 <> "") or (notas_vlb_4 <> "") or (ib_5 <> "") or  (vlb_5 <> "") or (momento_5 <> "") or (notas_vlb_5 <> "") or (ib_6 <> "") or  (vlb_6 <> "") or (momento_6 <> "") or (notas_vlb_6 <> "") or esta_en_lista_cancer_rd or esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista_cancer_otras or esta_en_lista_de or esta_en_lista_neurotoxico or  esta_en_lista_tpb or esta_en_lista_sensibilizante or esta_en_lista_tpr or esta_en_lista_cancer_mama or esta_en_lista_cop or esta_en_lista_prohibidas_embarazadas or esta_en_lista_prohibidas_lactantes) then
-	if ((simbolos_rd1272 <> "") or (clasificacion_rd1272_1 <> "") or (clasificacion_rd1272_2 <> "") or (clasificacion_rd1272_3 <> "") or (clasificacion_rd1272_4 <> "") or (clasificacion_rd1272_5 <> "") or (clasificacion_rd1272_6 <> "") or (clasificacion_rd1272_7 <> "") or (clasificacion_rd1272_8 <> "") or (clasificacion_rd1272_9 <> "") or (clasificacion_rd1272_10 <> "") or (clasificacion_rd1272_11 <> "") or (clasificacion_rd1272_12 <> "") or (clasificacion_rd1272_13 <> "") or (clasificacion_rd1272_14 <> "") or (clasificacion_rd1272_15 <> "") or (conc_rd1272_1 <> "") or (eti_conc_rd1272_1 <> "") or (conc_rd1272_2 <> "") or (eti_conc_rd1272_2 <> "") or (conc_rd1272_3 <> "") or (eti_conc_rd1272_3 <> "") or (conc_rd1272_4 <> "") or (eti_conc_rd1272_4 <> "") or (conc_rd1272_5 <> "") or (eti_conc_rd1272_5 <> "") or (conc_rd1272_6 <> "") or (eti_conc_rd1272_6 <> "") or (conc_rd1272_7 <> "") or (eti_conc_rd1272_7 <> "") or (conc_rd1272_8 <> "") or (eti_conc_rd1272_8 <> "") or (conc_rd1272_9 <> "") or (eti_conc_rd1272_9 <> "") or (conc_rd1272_10 <> "") or (eti_conc_rd1272_10 <> "") or (conc_rd1272_11 <> "") or (eti_conc_rd1272_11 <> "") or (conc_rd1272_12 <> "") or (eti_conc_rd1272_12 <> "") or (conc_rd1272_13 <> "") or (eti_conc_rd1272_13 <> "") or (conc_rd1272_14 <> "") or (eti_conc_rd1272_14 <> "") or (conc_rd1272_15 <> "") or (eti_conc_rd1272_15 <> "") ) then
+	if ((substance.Item("simbolos_rd1272") <> "") or (substance.Item("clasificacion_rd1272_1") <> "") or (substance.Item("clasificacion_rd1272_2") <> "") or (substance.Item("clasificacion_rd1272_3") <> "") or (substance.Item("clasificacion_rd1272_4") <> "") or (substance.Item("clasificacion_rd1272_5") <> "") or (substance.Item("clasificacion_rd1272_6") <> "") or (substance.Item("clasificacion_rd1272_7") <> "") or (substance.Item("clasificacion_rd1272_8") <> "") or (substance.Item("clasificacion_rd1272_9") <> "") or (substance.Item("clasificacion_rd1272_10") <> "") or (substance.Item("clasificacion_rd1272_11") <> "") or (substance.Item("clasificacion_rd1272_12") <> "") or (substance.Item("clasificacion_rd1272_13") <> "") or (substance.Item("clasificacion_rd1272_14") <> "") or (substance.Item("clasificacion_rd1272_15") <> "") or (substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "") ) then
 
 %>
 	<!-- ################ Clasificación ###################### -->
@@ -1088,14 +1053,14 @@ end sub ' ap2_clasificacion
 ' ##################################################################################
 
 sub ap2_clasificacion_simbolos()
-	if (simbolos <> "") then
+	if (substance.Item("simbolos") <> "") then
 %>
 		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Símbolos</p>
 		<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
 <%
 		' Tiene símbolos, muestro cada uno
-		simbolos = replace(simbolos, ",", ";")
-		array_simbolos = split(simbolos, ";")
+		substance.Item("simbolos") = replace(substance.Item("simbolos"), ",", ";")
+		array_simbolos = split(substance.Item("simbolos"), ";")
 		for i=0 to ubound(array_simbolos)
 			simbolo = trim(array_simbolos(i))
 			imagen = imagen_simbolo(simbolo)
@@ -1116,14 +1081,14 @@ end sub ' ap2_clasificacion_simbolos
 ' ##################################################################################
 
 sub ap2_clasificacion_simbolos_rd1272()
-	if (simbolos_rd1272 <> "") then
+	if (substance.Item("simbolos_rd1272") <> "") then
 %>
 		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Pictogramas y palabras de advertencia</p>
 		<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
 <%
 		' Tiene símbolos, muestro cada uno
-		simbolos = replace(simbolos_rd1272, ",", ";")
-		array_simbolos = split(simbolos, ";")
+		substance.Item("simbolos") = replace(substance.Item("simbolos_rd1272"), ",", ";")
+		array_simbolos = split(substance.Item("simbolos"), ";")
 		for i=0 to ubound(array_simbolos)
 			simbolo = trim(array_simbolos(i))
 			imagen = ""
@@ -1157,7 +1122,7 @@ sub ap2_clasificacion_frases_r()
 	' No incluye las frases R danesas
 
 	' Montamos frases R
-	frases_r=monta_frases("R", clasificacion_1, clasificacion_2, clasificacion_3, clasificacion_4, clasificacion_5, clasificacion_6, clasificacion_7, clasificacion_8, clasificacion_9, clasificacion_10, clasificacion_11, clasificacion_12, clasificacion_13, clasificacion_14, clasificacion_15)
+	frases_r=monta_frases("R", substance.Item("clasificacion_1"), substance.Item("clasificacion_2"), substance.Item("clasificacion_3"), substance.Item("clasificacion_4"), substance.Item("clasificacion_5"), substance.Item("clasificacion_6"), substance.Item("clasificacion_7"), substance.Item("clasificacion_8"), substance.Item("clasificacion_9"), substance.Item("clasificacion_10"), substance.Item("clasificacion_11"), substance.Item("clasificacion_12"), substance.Item("clasificacion_13"), substance.Item("clasificacion_14"), substance.Item("clasificacion_15"))
 
 	if (frases_r <> "") then
 %>
@@ -1173,31 +1138,31 @@ sub ap2_clasificacion_frases_h()
 	' Muestra las frases H segun clasificacion_rd1272_1 hasta clasificacion_rd1272_15
 
 	' Montamos frases H
-	frases_h=monta_frases("H", clasificacion_rd1272_1, clasificacion_rd1272_2, clasificacion_rd1272_3, clasificacion_rd1272_4, clasificacion_rd1272_5, clasificacion_rd1272_6, clasificacion_rd1272_7, clasificacion_rd1272_8, clasificacion_rd1272_9, clasificacion_rd1272_10, clasificacion_rd1272_11, clasificacion_rd1272_12, clasificacion_rd1272_13, clasificacion_rd1272_14, clasificacion_rd1272_15)
+	frases_h=monta_frases("H", substance.Item("clasificacion_rd1272_1"), substance.Item("clasificacion_rd1272_2"), substance.Item("clasificacion_rd1272_3"), substance.Item("clasificacion_rd1272_4"), substance.Item("clasificacion_rd1272_5"), substance.Item("clasificacion_rd1272_6"), substance.Item("clasificacion_rd1272_7"), substance.Item("clasificacion_rd1272_8"), substance.Item("clasificacion_rd1272_9"), substance.Item("clasificacion_rd1272_10"), substance.Item("clasificacion_rd1272_11"), substance.Item("clasificacion_rd1272_12"), substance.Item("clasificacion_rd1272_13"), substance.Item("clasificacion_rd1272_14"), substance.Item("clasificacion_rd1272_15"))
 
 	if (frases_h <> "") then
 %>
 		<p id="ap2_clasificacion_frases_r_titulo" class="ficha_titulo_2" style="margin-bottom: -10px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases H")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases H</p>
 <%
 '		bucle_frases "h", frases_h
-		muestra_clasificacion 1, clasificacion_rd1272_1
-		muestra_clasificacion 2, clasificacion_rd1272_2
-		muestra_clasificacion 3, clasificacion_rd1272_3
-		muestra_clasificacion 4, clasificacion_rd1272_4
-		muestra_clasificacion 5, clasificacion_rd1272_5
-		muestra_clasificacion 6, clasificacion_rd1272_6
-		muestra_clasificacion 7, clasificacion_rd1272_7
-		muestra_clasificacion 8, clasificacion_rd1272_8
-		muestra_clasificacion 9, clasificacion_rd1272_9
-		muestra_clasificacion 10, clasificacion_rd1272_10
-		muestra_clasificacion 11, clasificacion_rd1272_11
-		muestra_clasificacion 12, clasificacion_rd1272_12
-		muestra_clasificacion 13, clasificacion_rd1272_13
-		muestra_clasificacion 14, clasificacion_rd1272_14
-		muestra_clasificacion 15, clasificacion_rd1272_15
+		muestra_clasificacion 1, substance.Item("clasificacion_rd1272_1")
+		muestra_clasificacion 2, substance.Item("clasificacion_rd1272_2")
+		muestra_clasificacion 3, substance.Item("clasificacion_rd1272_3")
+		muestra_clasificacion 4, substance.Item("clasificacion_rd1272_4")
+		muestra_clasificacion 5, substance.Item("clasificacion_rd1272_5")
+		muestra_clasificacion 6, substance.Item("clasificacion_rd1272_6")
+		muestra_clasificacion 7, substance.Item("clasificacion_rd1272_7")
+		muestra_clasificacion 8, substance.Item("clasificacion_rd1272_8")
+		muestra_clasificacion 9, substance.Item("clasificacion_rd1272_9")
+		muestra_clasificacion 10, substance.Item("clasificacion_rd1272_10")
+		muestra_clasificacion 11, substance.Item("clasificacion_rd1272_11")
+		muestra_clasificacion 12, substance.Item("clasificacion_rd1272_12")
+		muestra_clasificacion 13, substance.Item("clasificacion_rd1272_13")
+		muestra_clasificacion 14, substance.Item("clasificacion_rd1272_14")
+		muestra_clasificacion 15, substance.Item("clasificacion_rd1272_15")
 	end if
 	' 23/06/2014 - SPL - Por indicación de Tatiana se pone esta definición.
-	if (trim(clasificacion_rd1272_1)="Expl., ****;") then
+	if (trim(substance.Item("clasificacion_rd1272_1"))="Expl., ****;") then
 		%>
 		<p><b>Explosiva</b>: Peligros físicos que deben confirmarse mediante ensayos</p>
 		<%
@@ -1364,7 +1329,7 @@ sub ap2_clasificacion_frases_r_danesa()
 	' Muestra las frases R danesas
 
 	' Montamos frases R
-	frases_r = monta_frases_r_danesa(frases_r_danesa)
+	frases_r = monta_frases_r_danesa(substance.Item("frases_r_danesa"))
 
 	if (frases_r <> "") then
 %>
@@ -1380,9 +1345,9 @@ end sub
 sub ap2_clasificacion_frases_s
 	' Muestra las frases S
 
-	if (frases_s <> "") then
+	if (substance.Item("frases_s") <> "") then
 		' Eliminamos los paréntesis de las frases S
-		frases_s = replace (frases_s, "(", "")
+		frases_s = replace (substance.Item("frases_s"), "(", "")
 		frases_s = replace (frases_s, ")", "")
 
 %>
@@ -1402,9 +1367,9 @@ end sub
 sub ap2_clasificacion_categorias_peligro
 	' Muestra las frases
 
-	if (clases_categorias_peligro_rd1272 <> "") then
+	if (substance.Item("clases_categorias_peligro_rd1272") <> "") then
 		' Eliminamos los paréntesis
-		clases_categorias_peligro_rd1272 = replace (clases_categorias_peligro_rd1272, "(", "")
+		clases_categorias_peligro_rd1272 = replace (substance.Item("clases_categorias_peligro_rd1272"), "(", "")
 		clases_categorias_peligro_rd1272 = replace (clases_categorias_peligro_rd1272, ")", "")
 
 %>
@@ -1420,10 +1385,10 @@ end sub 'ap2_clasificacion_categorias_peligro
 ' ##################################################################################
 
 sub ap2_clasificacion_notas()
-	if (notas_rd_363 <> "") then
+	if (substance.Item("notas_rd_363") <> "") then
 
 		' Dividimos las notas, separadas por puntos, en un array
-		array_notas = split(notas_rd_363, ".")
+		array_notas = split(substance.Item("notas_rd_363"), ".")
 %>
 	<p id="ap2_clasificacion_notas_titulo" class="ficha_titulo_2">Notas <% plegador "secc-notas", "img-notas" %></p>
 	<p class="texto" >
@@ -1449,10 +1414,10 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_notas_rd1272()
-	if (notas_rd1272 <> "") then
+	if (substance.Item("notas_rd1272") <> "") then
 
 		' Dividimos las notas, separadas por puntos, en un array
-		array_notas = split(notas_rd1272, ".")
+		array_notas = split(substance.Item("notas_rd1272"), ".")
 %>
 	<p id="ap2_clasificacion_notas_titulo" class="ficha_titulo_2">Notas <% plegador "secc-notas-rd1272", "img-notas-rd1272" %></p>
 	<p class="texto" >
@@ -1480,7 +1445,7 @@ end sub
 sub ap2_clasificacion_etiquetado()
 	' Muestra el etiquetado
 
-	if ((conc_1 <> "") or (eti_conc_1 <> "") or (conc_2 <> "") or (eti_conc_2 <> "") or (conc_3 <> "") or (eti_conc_3 <> "") or (conc_4 <> "") or (eti_conc_4 <> "") or (conc_5 <> "") or (eti_conc_5 <> "") or (conc_6 <> "") or (eti_conc_6 <> "") or (conc_7 <> "") or (eti_conc_7 <> "") or (conc_8 <> "") or (eti_conc_8 <> "") or (conc_9 <> "") or (eti_conc_9 <> "") or (conc_10 <> "") or (eti_conc_10 <> "") or (conc_11 <> "") or (eti_conc_11 <> "") or (conc_12 <> "") or (eti_conc_12 <> "") or (conc_13 <> "") or (eti_conc_13 <> "") or (conc_14 <> "") or (eti_conc_14 <> "") or (conc_15 <> "") or (eti_conc_15 <> "")) then
+	if ((substance.Item("conc_1") <> "") or (substance.Item("eti_conc_1") <> "") or (substance.Item("conc_2") <> "") or (substance.Item("eti_conc_2") <> "") or (substance.Item("conc_3") <> "") or (substance.Item("eti_conc_3") <> "") or (substance.Item("conc_4") <> "") or (substance.Item("eti_conc_4") <> "") or (substance.Item("conc_5") <> "") or (substance.Item("eti_conc_5") <> "") or (substance.Item("conc_6") <> "") or (substance.Item("eti_conc_6") <> "") or (substance.Item("conc_7") <> "") or (substance.Item("eti_conc_7") <> "") or (substance.Item("conc_8") <> "") or (substance.Item("eti_conc_8") <> "") or (substance.Item("conc_9") <> "") or (substance.Item("eti_conc_9") <> "") or (substance.Item("conc_10") <> "") or (substance.Item("eti_conc_10") <> "") or (substance.Item("conc_11") <> "") or (substance.Item("eti_conc_11") <> "") or (substance.Item("conc_12") <> "") or (substance.Item("eti_conc_12") <> "") or (substance.Item("conc_13") <> "") or (substance.Item("eti_conc_13") <> "") or (substance.Item("conc_14") <> "") or (substance.Item("eti_conc_14") <> "") or (substance.Item("conc_15") <> "") or (substance.Item("eti_conc_15") <> "")) then
 
 %>
 	<span id="ap2_clasificacion_etiquetado_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=88','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Etiquetado <% plegador "secc-etiquetado", "img-etiquetado" %></span>
@@ -1492,21 +1457,21 @@ sub ap2_clasificacion_etiquetado()
 			<th class="subtitulo3 celdaabajo">Concentración</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
 		</tr>
 <%
-	ap2_clasificacion_etiquetado_fila	"r", conc_1, eti_conc_1
-	ap2_clasificacion_etiquetado_fila	"r", conc_2, eti_conc_2
-	ap2_clasificacion_etiquetado_fila	"r", conc_3, eti_conc_3
-	ap2_clasificacion_etiquetado_fila	"r", conc_4, eti_conc_4
-	ap2_clasificacion_etiquetado_fila	"r", conc_5, eti_conc_5
-	ap2_clasificacion_etiquetado_fila	"r", conc_6, eti_conc_6
-	ap2_clasificacion_etiquetado_fila	"r", conc_7, eti_conc_7
-	ap2_clasificacion_etiquetado_fila	"r", conc_8, eti_conc_8
-	ap2_clasificacion_etiquetado_fila	"r", conc_9, eti_conc_9
-	ap2_clasificacion_etiquetado_fila	"r", conc_10, eti_conc_10
-	ap2_clasificacion_etiquetado_fila	"r", conc_11, eti_conc_11
-	ap2_clasificacion_etiquetado_fila	"r", conc_12, eti_conc_12
-	ap2_clasificacion_etiquetado_fila	"r", conc_13, eti_conc_13
-	ap2_clasificacion_etiquetado_fila	"r", conc_14, eti_conc_14
-	ap2_clasificacion_etiquetado_fila	"r", conc_15, eti_conc_15
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_1"), substance.Item("eti_conc_1")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_2"), substance.Item("eti_conc_2")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_3"), substance.Item("eti_conc_3")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_4"), substance.Item("eti_conc_4")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_5"), substance.Item("eti_conc_5")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_6"), substance.Item("eti_conc_6")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_7"), substance.Item("eti_conc_7")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_8"), substance.Item("eti_conc_8")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_9"), substance.Item("eti_conc_9")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_10"), substance.Item("eti_conc_10")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_11"), substance.Item("eti_conc_11")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_12"), substance.Item("eti_conc_12")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_13"), substance.Item("eti_conc_13")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_14"), substance.Item("eti_conc_14")
+	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_15"), substance.Item("eti_conc_15")
 %>
 	</table>
   </fieldset>
@@ -1521,7 +1486,7 @@ end sub
 sub ap2_clasificacion_etiquetado_rd1272()
 	' Muestra el etiquetado
 
-	if ((conc_rd1272_1 <> "") or (eti_conc_rd1272_1 <> "") or (conc_rd1272_2 <> "") or (eti_conc_rd1272_2 <> "") or (conc_rd1272_3 <> "") or (eti_conc_rd1272_3 <> "") or (conc_rd1272_4 <> "") or (eti_conc_rd1272_4 <> "") or (conc_rd1272_5 <> "") or (eti_conc_rd1272_5 <> "") or (conc_rd1272_6 <> "") or (eti_conc_rd1272_6 <> "") or (conc_rd1272_7 <> "") or (eti_conc_rd1272_7 <> "") or (conc_rd1272_8 <> "") or (eti_conc_rd1272_8 <> "") or (conc_rd1272_9 <> "") or (eti_conc_rd1272_9 <> "") or (conc_rd1272_10 <> "") or (eti_conc_rd1272_10 <> "") or (conc_rd1272_11 <> "") or (eti_conc_rd1272_11 <> "") or (conc_rd1272_12 <> "") or (eti_conc_rd1272_12 <> "") or (conc_rd1272_13 <> "") or (eti_conc_rd1272_13 <> "") or (conc_rd1272_14 <> "") or (eti_conc_rd1272_14 <> "") or (conc_rd1272_15 <> "") or (eti_conc_rd1272_15 <> "")) then
+	if ((substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "")) then
 
 %>
 	<span id="ap2_clasificacion_etiquetado_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=279','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Etiquetado <% plegador "secc-etiquetado_rd1272", "img-etiquetado-rd1272" %></span>
@@ -1529,11 +1494,11 @@ sub ap2_clasificacion_etiquetado_rd1272()
 
   <fieldset id="secc-etiquetado_rd1272" style="display:none; margin: 15px 45px;">
 <%
-	if (conc_rd1272_1+conc_rd1272_2)<>"" then
-		if (conc_rd1272_1)="" then
-			if eti_conc_rd1272_1<>"" then
+	if (substance.Item("conc_rd1272_1")+conc_rd1272_2)<>"" then
+		if (substance.Item("conc_rd1272_1"))="" then
+			if substance.Item("eti_conc_rd1272_1")<>"" then
 %>
-			Factor <%= eti_conc_rd1272_1 %>
+			Factor <%= substance.Item("eti_conc_rd1272_1") %>
 <%
 			end if
 		end if
@@ -1544,28 +1509,28 @@ sub ap2_clasificacion_etiquetado_rd1272()
 			<th class="subtitulo3 celdaabajo">Concentración</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
 		</tr>
 <%
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_1, eti_conc_rd1272_1
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_2, eti_conc_rd1272_2
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_3, eti_conc_rd1272_3
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_4, eti_conc_rd1272_4
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_5, eti_conc_rd1272_5
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_6, eti_conc_rd1272_6
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_7, eti_conc_rd1272_7
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_8, eti_conc_rd1272_8
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_9, eti_conc_rd1272_9
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_10, eti_conc_rd1272_10
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_11, eti_conc_rd1272_11
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_12, eti_conc_rd1272_12
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_13, eti_conc_rd1272_13
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_14, eti_conc_rd1272_14
-	ap2_clasificacion_etiquetado_fila	"h", conc_rd1272_15, eti_conc_rd1272_15
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_1"), substance.Item("eti_conc_rd1272_1")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_2"), substance.Item("eti_conc_rd1272_2")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_3"), substance.Item("eti_conc_rd1272_3")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_4"), substance.Item("eti_conc_rd1272_4")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_5"), substance.Item("eti_conc_rd1272_5")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_6"), substance.Item("eti_conc_rd1272_6")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_7"), substance.Item("eti_conc_rd1272_7")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_8"), substance.Item("eti_conc_rd1272_8")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_9"), substance.Item("eti_conc_rd1272_9")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_10"), substance.Item("eti_conc_rd1272_10")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_11"), substance.Item("eti_conc_rd1272_11")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_12"), substance.Item("eti_conc_rd1272_12")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_13"), substance.Item("eti_conc_rd1272_13")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_14"), substance.Item("eti_conc_rd1272_14")
+	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_15"), substance.Item("eti_conc_rd1272_15")
 %>
 	</table>
 <%
 	else
-		if eti_conc_rd1272_1<>"" then
+		if substance.Item("eti_conc_rd1272_1")<>"" then
 %>
-			Factor <%= eti_conc_rd1272_1 %>
+			Factor <%= substance.Item("eti_conc_rd1272_1") %>
 <%
 		end if
 	end if
@@ -1615,7 +1580,7 @@ end sub
 ' ##################################################################################
 ' VALORES LÍMITE
 sub ap2_clasificacion_vl(id_cajetilla)
-	if ((estado_1 <> "") or (vla_ed_ppm_1 <> "") or (vla_ed_mg_m3_1 <> "") or (vla_ec_ppm_1 <> "") or (vla_ec_mg_m3_1 <> "") or (notas_vla_1 <> "") or (estado_2 <> "") or (vla_ed_ppm_2 <> "") or (vla_ed_mg_m3_2 <> "") or (vla_ec_ppm_2 <> "") or (vla_ec_mg_m3_2 <> "") or (notas_vla_2 <> "") or (estado_3 <> "") or (vla_ed_ppm_3 <> "") or (vla_ed_mg_m3_3 <> "") or (vla_ec_ppm_3 <> "") or (vla_ec_mg_m3_3 <> "") or (notas_vla_3 <> "") or (estado_4 <> "") or (vla_ed_ppm_4 <> "") or (vla_ed_mg_m3_4 <> "") or (vla_ec_ppm_4 <> "") or (vla_ec_mg_m3_4 <> "") or (notas_vla_4 <> "") or (estado_5 <> "") or (vla_ed_ppm_5 <> "") or (vla_ed_mg_m3_5 <> "") or (vla_ec_ppm_5 <> "") or (vla_ec_mg_m3_5 <> "") or (notas_vla_5 <> "") or (estado_6 <> "") or (vla_ed_ppm_6 <> "") or (vla_ed_mg_m3_6 <> "") or (vla_ec_ppm_6  <> "") or (vla_ec_mg_m3_6 <> "") or (notas_vla_6 <> "") or (ib_1 <> "") or  (vlb_1 <> "") or (momento_1 <> "") or (notas_vlb_1 <> "") or (ib_2 <> "") or  (vlb_2 <> "") or (momento_2 <> "") or (notas_vlb_2 <> "") or (ib_3 <> "") or  (vlb_3 <> "") or (momento_3 <> "") or (notas_vlb_3 <> "") or (ib_4 <> "") or  (vlb_4 <> "") or (momento_4 <> "") or (notas_vlb_4 <> "") or (ib_5 <> "") or  (vlb_5 <> "") or (momento_5 <> "") or (notas_vlb_5 <> "") or (ib_6 <> "") or  (vlb_6 <> "") or (momento_6 <> "") or (notas_vlb_6 <> "")) then
+	if ((substance.Item("estado_1") <> "") or (substance.Item("vla_ed_ppm_1") <> "") or (substance.Item("vla_ed_mg_m3_1") <> "") or (substance.Item("vla_ec_ppm_1") <> "") or (substance.Item("vla_ec_mg_m3_1") <> "") or (substance.Item("notas_vla_1") <> "") or (substance.Item("estado_2") <> "") or (substance.Item("vla_ed_ppm_2") <> "") or (substance.Item("vla_ed_mg_m3_2") <> "") or (substance.Item("vla_ec_ppm_2") <> "") or (substance.Item("vla_ec_mg_m3_2") <> "") or (substance.Item("notas_vla_2") <> "") or (substance.Item("estado_3") <> "") or (substance.Item("vla_ed_ppm_3") <> "") or (substance.Item("vla_ed_mg_m3_3") <> "") or (substance.Item("vla_ec_ppm_3") <> "") or (substance.Item("vla_ec_mg_m3_3") <> "") or (substance.Item("notas_vla_3") <> "") or (substance.Item("estado_4") <> "") or (substance.Item("vla_ed_ppm_4") <> "") or (substance.Item("vla_ed_mg_m3_4") <> "") or (substance.Item("vla_ec_ppm_4") <> "") or (substance.Item("vla_ec_mg_m3_4") <> "") or (substance.Item("notas_vla_4") <> "") or (substance.Item("estado_5") <> "") or (substance.Item("vla_ed_ppm_5") <> "") or (substance.Item("vla_ed_mg_m3_5") <> "") or (substance.Item("vla_ec_ppm_5") <> "") or (substance.Item("vla_ec_mg_m3_5") <> "") or (substance.Item("notas_vla_5") <> "") or (substance.Item("estado_6") <> "") or (substance.Item("vla_ed_ppm_6") <> "") or (substance.Item("vla_ed_mg_m3_6") <> "") or (substance.Item("vla_ec_ppm_6")  <> "") or (substance.Item("vla_ec_mg_m3_6") <> "") or (substance.Item("notas_vla_6") <> "") or (substance.Item("ib_1") <> "") or  (substance.Item("vlb_1") <> "") or (substance.Item("momento_1") <> "") or (substance.Item("notas_vlb_1") <> "") or (substance.Item("ib_2") <> "") or  (substance.Item("vlb_2") <> "") or (substance.Item("momento_2") <> "") or (substance.Item("notas_vlb_2") <> "") or (substance.Item("ib_3") <> "") or  (substance.Item("vlb_3") <> "") or (substance.Item("momento_3") <> "") or (substance.Item("notas_vlb_3") <> "") or (substance.Item("ib_4") <> "") or  (substance.Item("vlb_4") <> "") or (substance.Item("momento_4") <> "") or (substance.Item("notas_vlb_4") <> "") or (substance.Item("ib_5") <> "") or  (substance.Item("vlb_5") <> "") or (substance.Item("momento_5") <> "") or (substance.Item("notas_vlb_5") <> "") or (substance.Item("ib_6") <> "") or  (substance.Item("vlb_6") <> "") or (substance.Item("momento_6") <> "") or (substance.Item("notas_vlb_6") <> "")) then
 
 %>
 
@@ -1634,7 +1599,7 @@ sub ap2_clasificacion_vl(id_cajetilla)
 
 <%
 		' VLA
-		if ((estado_1 <> "") or (vla_ed_ppm_1 <> "") or (vla_ed_mg_m3_1 <> "") or (vla_ec_ppm_1 <> "") or (vla_ec_mg_m3_1 <> "") or (notas_vla_1 <> "") or (estado_2 <> "") or (vla_ed_ppm_2 <> "") or (vla_ed_mg_m3_2 <> "") or (vla_ec_ppm_2 <> "") or (vla_ec_mg_m3_2 <> "") or (notas_vla_2 <> "") or (estado_3 <> "") or (vla_ed_ppm_3 <> "") or (vla_ed_mg_m3_3 <> "") or (vla_ec_ppm_3 <> "") or (vla_ec_mg_m3_3 <> "") or (notas_vla_3 <> "") or (estado_4 <> "") or (vla_ed_ppm_4 <> "") or (vla_ed_mg_m3_4 <> "") or (vla_ec_ppm_4 <> "") or (vla_ec_mg_m3_4 <> "") or (notas_vla_4 <> "") or (estado_5 <> "") or (vla_ed_ppm_5 <> "") or (vla_ed_mg_m3_5 <> "") or (vla_ec_ppm_5 <> "") or (vla_ec_mg_m3_5 <> "") or (notas_vla_5 <> "") or (estado_6 <> "") or (vla_ed_ppm_6 <> "") or (vla_ed_mg_m3_6 <> "") or (vla_ec_ppm_6  <> "") or (vla_ec_mg_m3_6 <> "") or (notas_vla_6 <> "")) then
+		if ((substance.Item("estado_1") <> "") or (substance.Item("vla_ed_ppm_1") <> "") or (substance.Item("vla_ed_mg_m3_1") <> "") or (substance.Item("vla_ec_ppm_1") <> "") or (substance.Item("vla_ec_mg_m3_1") <> "") or (substance.Item("notas_vla_1") <> "") or (substance.Item("estado_2") <> "") or (substance.Item("vla_ed_ppm_2") <> "") or (substance.Item("vla_ed_mg_m3_2") <> "") or (substance.Item("vla_ec_ppm_2") <> "") or (substance.Item("vla_ec_mg_m3_2") <> "") or (substance.Item("notas_vla_2") <> "") or (substance.Item("estado_3") <> "") or (substance.Item("vla_ed_ppm_3") <> "") or (substance.Item("vla_ed_mg_m3_3") <> "") or (substance.Item("vla_ec_ppm_3") <> "") or (substance.Item("vla_ec_mg_m3_3") <> "") or (substance.Item("notas_vla_3") <> "") or (substance.Item("estado_4") <> "") or (substance.Item("vla_ed_ppm_4") <> "") or (substance.Item("vla_ed_mg_m3_4") <> "") or (substance.Item("vla_ec_ppm_4") <> "") or (substance.Item("vla_ec_mg_m3_4") <> "") or (substance.Item("notas_vla_4") <> "") or (substance.Item("estado_5") <> "") or (substance.Item("vla_ed_ppm_5") <> "") or (substance.Item("vla_ed_mg_m3_5") <> "") or (substance.Item("vla_ec_ppm_5") <> "") or (substance.Item("vla_ec_mg_m3_5") <> "") or (substance.Item("notas_vla_5") <> "") or (substance.Item("estado_6") <> "") or (substance.Item("vla_ed_ppm_6") <> "") or (substance.Item("vla_ed_mg_m3_6") <> "") or (substance.Item("vla_ec_ppm_6")  <> "") or (substance.Item("vla_ec_mg_m3_6") <> "") or (substance.Item("notas_vla_6") <> "")) then
 %>
 	<span id="ap2_clasificacion_vla_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores Límite Ambientales <% plegador "secc-vla"+id_cajetilla, "img-vla"+id_cajetilla %></span>
 	<fieldset id="secc-vla<%=id_cajetilla%>" style="display:none">
@@ -1657,12 +1622,12 @@ sub ap2_clasificacion_vl(id_cajetilla)
 			<% end if %>
 		</tr>
 <%
-		ap2_clasificacion_vl_a estado_1, vla_ed_ppm_1, vla_ed_mg_m3_1, vla_ec_ppm_1, vla_ec_mg_m3_1, notas_vla_1
-		ap2_clasificacion_vl_a estado_2, vla_ed_ppm_2, vla_ed_mg_m3_2, vla_ec_ppm_2, vla_ec_mg_m3_2, notas_vla_2
-		ap2_clasificacion_vl_a estado_3, vla_ed_ppm_3, vla_ed_mg_m3_3, vla_ec_ppm_3, vla_ec_mg_m3_3, notas_vla_3
-		ap2_clasificacion_vl_a estado_4, vla_ed_ppm_4, vla_ed_mg_m3_4, vla_ec_ppm_4, vla_ec_mg_m3_4, notas_vla_4
-		ap2_clasificacion_vl_a estado_5, vla_ed_ppm_5, vla_ed_mg_m3_5, vla_ec_ppm_5, vla_ec_mg_m3_5, notas_vla_5
-		ap2_clasificacion_vl_a estado_6, vla_ed_ppm_6, vla_ed_mg_m3_6, vla_ec_ppm_6, vla_ec_mg_m3_6, notas_vla_6
+		ap2_clasificacion_vl_a substance.Item("estado_1"), substance.Item("vla_ed_ppm_1"), substance.Item("vla_ed_mg_m3_1"), substance.Item("vla_ec_ppm_1"), substance.Item("vla_ec_mg_m3_1"), substance.Item("notas_vla_1")
+		ap2_clasificacion_vl_a substance.Item("estado_2"), substance.Item("vla_ed_ppm_2"), substance.Item("vla_ed_mg_m3_2"), substance.Item("vla_ec_ppm_2"), substance.Item("vla_ec_mg_m3_2"), substance.Item("notas_vla_2")
+		ap2_clasificacion_vl_a substance.Item("estado_3"), substance.Item("vla_ed_ppm_3"), substance.Item("vla_ed_mg_m3_3"), substance.Item("vla_ec_ppm_3"), substance.Item("vla_ec_mg_m3_3"), substance.Item("notas_vla_3")
+		ap2_clasificacion_vl_a substance.Item("estado_4"), substance.Item("vla_ed_ppm_4"), substance.Item("vla_ed_mg_m3_4"), substance.Item("vla_ec_ppm_4"), substance.Item("vla_ec_mg_m3_4"), substance.Item("notas_vla_4")
+		ap2_clasificacion_vl_a substance.Item("estado_5"), substance.Item("vla_ed_ppm_5"), substance.Item("vla_ed_mg_m3_5"), substance.Item("vla_ec_ppm_5"), substance.Item("vla_ec_mg_m3_5"), substance.Item("notas_vla_5")
+		ap2_clasificacion_vl_a substance.Item("estado_6"), substance.Item("vla_ed_ppm_6"), substance.Item("vla_ed_mg_m3_6"), substance.Item("vla_ec_ppm_6"), substance.Item("vla_ec_mg_m3_6"), substance.Item("notas_vla_6")
 %>
 	</table>
 	</fieldset>
@@ -1677,7 +1642,7 @@ sub ap2_clasificacion_vl(id_cajetilla)
 <%
 
 		' VLB
-		if ((ib_1 <> "") or (vlb_1 <> "") or (momento_1 <> "") or (notas_vlb_1 <> "") or (ib_2 <> "") or (vlb_2 <> "") or (momento_2 <> "") or (notas_vlb_2 <> "") or (ib_3 <> "") or (vlb_3 <> "") or (momento_3 <> "") or (notas_vlb_3 <> "") or (ib_4 <> "") or (vlb_4 <> "") or (momento_4 <> "") or (notas_vlb_4 <> "") or (ib_5 <> "") or (vlb_5 <> "") or (momento_5 <> "") or (notas_vlb_51 <> "") or (ib_6 <> "") or (vlb_6 <> "") or (momento_6 <> "") or (notas_vlb_6 <> "")) then
+		if ((substance.Item("ib_1") <> "") or (substance.Item("vlb_1") <> "") or (substance.Item("momento_1") <> "") or (substance.Item("notas_vlb_1") <> "") or (substance.Item("ib_2") <> "") or (substance.Item("vlb_2") <> "") or (substance.Item("momento_2") <> "") or (substance.Item("notas_vlb_2") <> "") or (substance.Item("ib_3") <> "") or (substance.Item("vlb_3") <> "") or (substance.Item("momento_3") <> "") or (substance.Item("notas_vlb_3") <> "") or (substance.Item("ib_4") <> "") or (substance.Item("vlb_4") <> "") or (substance.Item("momento_4") <> "") or (substance.Item("notas_vlb_4") <> "") or (substance.Item("ib_5") <> "") or (substance.Item("vlb_5") <> "") or (substance.Item("momento_5") <> "") or (notas_vlb_51 <> "") or (substance.Item("ib_6") <> "") or (substance.Item("vlb_6") <> "") or (substance.Item("momento_6") <> "") or (substance.Item("notas_vlb_6") <> "")) then
 %>
 
 		<p id="ap2_clasificacion_vlb_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores Límite Biológicos <% plegador "secc-vlb"+id_cajetilla, "img-vlb"+id_cajetilla %></p>
@@ -1701,12 +1666,12 @@ sub ap2_clasificacion_vl(id_cajetilla)
 			<% end if %>
 			</tr>
 <%
-			ap2_clasificacion_vl_b ib_1, vlb_1, momento_1, notas_vlb_1
-			ap2_clasificacion_vl_b ib_2, vlb_2, momento_2, notas_vlb_2
-			ap2_clasificacion_vl_b ib_3, vlb_3, momento_3, notas_vlb_3
-			ap2_clasificacion_vl_b ib_4, vlb_4, momento_4, notas_vlb_4
-			ap2_clasificacion_vl_b ib_5, vlb_5, momento_5, notas_vlb_5
-			ap2_clasificacion_vl_b ib_6, vlb_6, momento_6, notas_vlb_6
+			ap2_clasificacion_vl_b substance.Item("ib_1"), substance.Item("vlb_1"), substance.Item("momento_1"), substance.Item("notas_vlb_1")
+			ap2_clasificacion_vl_b substance.Item("ib_2"), substance.Item("vlb_2"), substance.Item("momento_2"), substance.Item("notas_vlb_2")
+			ap2_clasificacion_vl_b substance.Item("ib_3"), substance.Item("vlb_3"), substance.Item("momento_3"), substance.Item("notas_vlb_3")
+			ap2_clasificacion_vl_b substance.Item("ib_4"), substance.Item("vlb_4"), substance.Item("momento_4"), substance.Item("notas_vlb_4")
+			ap2_clasificacion_vl_b substance.Item("ib_5"), substance.Item("vlb_5"), substance.Item("momento_5"), substance.Item("notas_vlb_5")
+			ap2_clasificacion_vl_b substance.Item("ib_6"), substance.Item("vlb_6"), substance.Item("momento_6"), substance.Item("notas_vlb_6")
 %>
 		</table>
 		</fieldset>
@@ -1787,7 +1752,7 @@ end sub
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_estado()
-	valores = estado_1 & estado_2 & estado_3 & estado_4 & estado_5 & estado_6
+	valores = substance.Item("estado_1") & substance.Item("estado_2") & substance.Item("estado_3") & substance.Item("estado_4") & substance.Item("estado_5") & substance.Item("estado_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_estado = true
 	else
@@ -1798,7 +1763,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_vla_ed_ppm()
-	valores = vla_ed_ppm_1 & vla_ed_ppm_2 & vla_ed_ppm_3 & vla_ed_ppm_4 & vla_ed_ppm_5 & vla_ed_ppm_6
+	valores = substance.Item("vla_ed_ppm_1") & substance.Item("vla_ed_ppm_2") & substance.Item("vla_ed_ppm_3") & substance.Item("vla_ed_ppm_4") & substance.Item("vla_ed_ppm_5") & substance.Item("vla_ed_ppm_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_vla_ed_ppm = true
 	else
@@ -1809,7 +1774,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_vla_ed_mg_m3()
-	valores = vla_ed_mg_m3_1 & vla_ed_mg_m3_2 & vla_ed_mg_m3_3 & vla_ed_mg_m3_4 & vla_ed_mg_m3_5 & vla_ed_mg_m3_6
+	valores = substance.Item("vla_ed_mg_m3_1") & substance.Item("vla_ed_mg_m3_2") & substance.Item("vla_ed_mg_m3_3") & substance.Item("vla_ed_mg_m3_4") & substance.Item("vla_ed_mg_m3_5") & substance.Item("vla_ed_mg_m3_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_vla_ed_mg_m3 = true
 	else
@@ -1820,7 +1785,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_vla_ec_ppm()
-	valores = vla_ec_ppm_1 & vla_ec_ppm_2 & vla_ec_ppm_3 & vla_ec_ppm_4 & vla_ec_ppm_5 & vla_ec_ppm_6
+	valores = substance.Item("vla_ec_ppm_1") & substance.Item("vla_ec_ppm_2") & substance.Item("vla_ec_ppm_3") & substance.Item("vla_ec_ppm_4") & substance.Item("vla_ec_ppm_5") & substance.Item("vla_ec_ppm_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_vla_ec_ppm = true
 	else
@@ -1831,7 +1796,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_vla_ec_mg_m3()
-	valores = vla_ec_mg_m3_1 & vla_ec_mg_m3_2 & vla_ec_mg_m3_3 & vla_ec_mg_m3_4 & vla_ec_mg_m3_5 & vla_ec_mg_m3_6
+	valores = substance.Item("vla_ec_mg_m3_1") & substance.Item("vla_ec_mg_m3_2") & substance.Item("vla_ec_mg_m3_3") & substance.Item("vla_ec_mg_m3_4") & substance.Item("vla_ec_mg_m3_5") & substance.Item("vla_ec_mg_m3_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_vla_ec_mg_m3 = true
 	else
@@ -1842,7 +1807,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_a_hay_columna_notas_vla()
-	valores = notas_vla_1 & notas_vla_2 & notas_vla_3 & notas_vla_4 & notas_vla_5 & notas_vla_6
+	valores = substance.Item("notas_vla_1") & substance.Item("notas_vla_2") & substance.Item("notas_vla_3") & substance.Item("notas_vla_4") & substance.Item("notas_vla_5") & substance.Item("notas_vla_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_a_hay_columna_notas_vla = true
 	else
@@ -1853,7 +1818,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_b_hay_columna_ib()
-	valores = ib_1 & ib_2 & ib_3 & ib_4 & ib_5 & ib_6
+	valores = substance.Item("ib_1") & substance.Item("ib_2") & substance.Item("ib_3") & substance.Item("ib_4") & substance.Item("ib_5") & substance.Item("ib_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_b_hay_columna_ib = true
 	else
@@ -1864,7 +1829,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_b_hay_columna_vlb()
-	valores = vlb_1 & vlb_2 & vlb_3 & vlb_4 & vlb_5 & vlb_6
+	valores = substance.Item("vlb_1") & substance.Item("vlb_2") & substance.Item("vlb_3") & substance.Item("vlb_4") & substance.Item("vlb_5") & substance.Item("vlb_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_b_hay_columna_vlb = true
 	else
@@ -1875,18 +1840,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_b_hay_columna_momento()
-	valores = momento_1 & momento_2 & momento_3 & momento_4 & momento_5 & momento_6
-	if (valores <> "") then
-		ap2_clasificacion_vl_b_hay_columna_momento = true
-	else
-		ap2_clasificacion_vl_b_hay_columna_momento = false
-	end if
-end function
-
-' ##################################################################################
-
-function ap2_clasificacion_vl_b_hay_columna_momento()
-	valores = momento_1 & momento_2 & momento_3 & momento_4 & momento_5 & momento_6
+	valores = substance.Item("momento_1") & substance.Item("momento_2") & substance.Item("momento_3") & substance.Item("momento_4") & substance.Item("momento_5") & substance.Item("momento_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_b_hay_columna_momento = true
 	else
@@ -1897,7 +1851,7 @@ end function
 ' ##################################################################################
 
 function ap2_clasificacion_vl_b_hay_columna_notas_vlb()
-	valores = notas_vlb_1 & notas_vlb_2 & notas_vlb_3 & notas_vlb_4 & notas_vlb_5 & notas_vlb_6
+	valores = substance.Item("notas_vlb_1") & substance.Item("notas_vlb_2") & substance.Item("notas_vlb_3") & substance.Item("notas_vlb_4") & substance.Item("notas_vlb_5") & substance.Item("notas_vlb_6")
 	if (valores <> "") then
 		ap2_clasificacion_vl_b_hay_columna_notas_vlb = true
 	else
@@ -2064,7 +2018,7 @@ sub ap3_riesgos()
 	end if
 
 
-	if (esta_en_lista_cancer_rd or esta_en_lista_cancer_danesa or esta_en_lista_cancer_iarc or esta_en_lista_cancer_otras or esta_en_lista_cancer_mama or esta_en_lista_de or esta_en_lista_neurotoxico or efecto_neurotoxico="OTOTÓXICO" or esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_reach or esta_en_lista_sensibilizante_danesa or esta_en_lista_tpr or esta_en_lista_tpr_danesa or esta_en_lista_eepp or esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa or esta_en_lista_salud or esta_en_lista_prohibidas_embarazadas or esta_en_lista_prohibidas_lactantes or comentarios_sl <> "") then
+	if (esta_en_lista_cancer_rd or esta_en_lista_cancer_danesa or esta_en_lista_cancer_iarc or esta_en_lista_cancer_otras or esta_en_lista_cancer_mama or esta_en_lista_de or esta_en_lista_neurotoxico or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_reach or esta_en_lista_sensibilizante_danesa or esta_en_lista_tpr or esta_en_lista_tpr_danesa or esta_en_lista_eepp or esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa or esta_en_lista_salud or esta_en_lista_prohibidas_embarazadas or esta_en_lista_prohibidas_lactantes or comentarios_sl <> "") then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -2087,7 +2041,7 @@ sub ap3_riesgos()
 		if (esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa ) then ap3_riesgos_tabla("Mutágeno") end if
 
 		if esta_en_lista_de then ap3_riesgos_tabla("Disruptor endocrino") end if
-		if esta_en_lista_neurotoxico or efecto_neurotoxico="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
+		if esta_en_lista_neurotoxico or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
 		if esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_danesa or esta_en_lista_sensibilizante_reach then ap3_riesgos_tabla("Sensibilizante") end if
 		'if esta_en_lista_sensibilizante_reach then ap3_riesgos_tabla("Sensibilizante para REACH") end if
 		if esta_en_lista_tpr or esta_en_lista_tpr_danesa then ap3_riesgos_tabla("Tóxico para la reproducción") end if
@@ -2140,7 +2094,7 @@ sub ap3_riesgos()
 
 <% ' MEDIO AMBIENTE %>
 <%
-if (esta_en_lista_tpb or esta_en_lista_directiva_aguas or esta_en_lista_alemana or esta_en_lista_sustancias_prioritarias  or esta_en_lista_ozono or esta_en_lista_clima or esta_en_lista_aire or esta_en_lista_cop or comentarios_medio_ambiente <>"" or esta_en_lista_suelos) then %>
+if (esta_en_lista_tpb or esta_en_lista_directiva_aguas or esta_en_lista_alemana or esta_en_lista_sustancias_prioritarias  or esta_en_lista_ozono or esta_en_lista_clima or esta_en_lista_aire or esta_en_lista_cop or substance.Item("comentarios_medio_ambiente") <>"" or esta_en_lista_suelos) then %>
 
 		<!-- ################ Riesgos para el medio ambiente ###################### -->
 		<br />
@@ -2173,7 +2127,7 @@ if (esta_en_lista_tpb or esta_en_lista_directiva_aguas or esta_en_lista_alemana 
 %>
 
 		<%
-		if (comentarios_medio_ambiente <>"") then
+		if (substance.Item("comentarios_medio_ambiente") <>"") then
 		%>
 			<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
 				<tr>
@@ -2196,7 +2150,7 @@ if (esta_en_lista_tpb or esta_en_lista_directiva_aguas or esta_en_lista_alemana 
 
 						<ul>
 							<li>
-							<%=comentarios_medio_ambiente %>
+							<%=substance.Item("comentarios_medio_ambiente") %>
 							</li>
 						</ul>
 
@@ -2407,15 +2361,15 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 <%
 
-      if isNull(cop) then
+      if isNull(substance.Item("cop")) then
 
-        cop = ""
+        substance.Item("cop") = ""
 
       end if
 
 
 
-      array_anexos = split(cop, ";")
+      array_anexos = split(substance.Item("cop"), ";")
 
       for i=0 to ubound(array_anexos)
 
@@ -2429,8 +2383,8 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 %>
 		<%
-	  	if (trim(enlace_cop) <> "") then
-			response.write "<li><a href='"&enlace_cop&"' target='_blank'>Más información</a></li>"
+	  	if (trim(substance.Item("enlace_cop")) <> "") then
+			response.write "<li><a href='"&substance.Item("enlace_cop")&"' target='_blank'>Más información</a></li>"
 		end if
 	  %>
 
@@ -2464,9 +2418,9 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 
 <%
-				if (trim(notas_cancer_rd) <> "") then
+				if (trim(substance.Item("notas_cancer_rd")) <> "") then
 %>
-							<br/><strong>Notas:</strong> <%=notas_cancer_rd%>
+							<br/><strong>Notas:</strong> <%=substance.Item("notas_cancer_rd")%>
 <%
 				end if
 %>
@@ -2495,9 +2449,9 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		%>
 
 		<%
-					if (trim(notas_cancer_rd) <> "") then
+					if (trim(substance.Item("notas_cancer_rd")) <> "") then
 		%>
-						<br/><strong>Notas:</strong> <%=notas_cancer_rd%>
+						<br/><strong>Notas:</strong> <%=substance.Item("notas_cancer_rd")%>
 		<%
 					end if
 		%>
@@ -2518,25 +2472,25 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					<fieldset>
 						<legend class="subtitulo3"><strong>Según IARC <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 		<%
-						if (trim(grupo_iarc) <> "") or (trim(volumen_iarc) <> "") or (trim(notas_iarc) <> "") then
+						if (trim(substance.Item("grupo_iarc")) <> "") or (trim(substance.Item("volumen_iarc")) <> "") or (trim(substance.Item("notas_iarc")) <> "") then
 		%>
 							<blockquote>
 							<table>
 		<%
-							if (trim(grupo_iarc) <> "") then
+							if (trim(substance.Item("grupo_iarc")) <> "") then
 		%>
-								<tr><td class="subtitulo3">Grupo:</td><td><%=trim(replace(ucase(grupo_iarc), "GRUPO", ""))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(grupo_iarc))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></td></tr>
+								<tr><td class="subtitulo3">Grupo:</td><td><%=trim(replace(ucase(substance.Item("grupo_iarc")), "GRUPO", ""))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(substance.Item("grupo_iarc")))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></td></tr>
 		<%
 							end if
 
-							if (trim(volumen_iarc) <> "") then
+							if (trim(substance.Item("volumen_iarc")) <> "") then
 		%>
-								<tr><td class="subtitulo3">Volumen:</td><td><%=volumen_iarc%></td></tr>
+								<tr><td class="subtitulo3">Volumen:</td><td><%=substance.Item("volumen_iarc")%></td></tr>
 		<%
 							end if
-							if (trim(notas_iarc) <> "") then
+							if (trim(substance.Item("notas_iarc")) <> "") then
 		%>
-								<tr><td class="subtitulo3">Notas:</td><td><%=notas_iarc%></td></tr>
+								<tr><td class="subtitulo3">Notas:</td><td><%=substance.Item("notas_iarc")%></td></tr>
 		<%
 							end if
 		%>
@@ -2560,23 +2514,23 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		<%
 
 
-		      if (isNull(categoria_cancer_otras)) then
+		      if (isNull(substance.Item("categoria_cancer_otras"))) then
 
-		        categoria_cancer_otras = ""
-
-		      end if
-
-
-
-		      if (isNull(fuente)) then
-
-		        fuente = ""
+		        substance.Item("categoria_cancer_otras") = ""
 
 		      end if
 
 
-					array_categorias=split(categoria_cancer_otras, ",")
-					array_fuentes=split(fuente, ",")
+
+		      if (isNull(substance.Item("fuente"))) then
+
+		        substance.Item("fuente") = ""
+
+		      end if
+
+
+					array_categorias=split(substance.Item("categoria_cancer_otras"), ",")
+					array_fuentes=split(substance.Item("fuente"), ",")
 
 					' Damos por hecho que hay el mismo numero de categorias y fuentes y que coinciden en orden
 					for i=0 to ubound(array_fuentes)
@@ -2605,9 +2559,9 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		    if (esta_en_lista_cancer_mama) then
 
-		      if (isNull(cancer_mama_fuente)) then
+		      if (isNull(substance.Item("cancer_mama_fuente"))) then
 
-		        cancer_mama_fuente = ""
+		        substance.Item("cancer_mama_fuente") = ""
 
 		      end if
 
@@ -2617,7 +2571,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						<legend class="subtitulo3"><strong>Según SSI (cáncer de mama) <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("SSI")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 						<blockquote>
 						<table>
-							<tr><td class="subtitulo3"><strong>Fuente:</strong><br /><a href="<%= cancer_mama_fuente %>" target="_blank"><%= replace(cancer_mama_fuente, "http://", "") %></a></td></tr>
+							<tr><td class="subtitulo3"><strong>Fuente:</strong><br /><a href="<%= substance.Item("cancer_mama_fuente") %>" target="_blank"><%= replace(substance.Item("cancer_mama_fuente"), "http://", "") %></a></td></tr>
 						</table>
 						</blockquote>
 					</fieldset>
@@ -2704,47 +2658,46 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 		case "Neurotóxico":
 
-        'response.write efecto_neurotoxico&"***"&fuente_neurotoxico
 
         if esta_en_lista_neurotoxico_rd or esta_en_lista_neurotoxico_danesa then
           ' Añadimos SNC a efecto neurotoxico si no existía ya
-          if (efecto_neurotoxico = "") or (IsNull(efecto_neurotoxico)) then
-            efecto_neurotoxico="SNC"
+          if (substance.Item("efecto_neurotoxico") = "") or (IsNull(substance.Item("efecto_neurotoxico"))) then
+            substance.Item("efecto_neurotoxico")="SNC"
           else
-            if (not (inStr(efecto_neurotoxico, "SNC") > 0)) then
-              efecto_neurotoxico = efecto_neurotoxico & "/SNC"
+            if (not (inStr(substance.Item("efecto_neurotoxico"), "SNC") > 0)) then
+              substance.Item("efecto_neurotoxico") = substance.Item("efecto_neurotoxico") & "/SNC"
             end if
           end if
         end if
 
         if esta_en_lista_neurotoxico_rd then
-          if (fuente_neurotoxico = "") or (IsNull(fuente_neurotoxico)) then
-            fuente_neurotoxico = "363"
+          if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
+            substance.Item("fuente_neurotoxico") = "363"
           else
-            fuente_neurotoxico = fuente_neurotoxico & ",363"
+            substance.Item("fuente_neurotoxico") = substance.Item("fuente_neurotoxico") & ",363"
           end if
         end if
 
         if esta_en_lista_neurotoxico_danesa then
-          if (fuente_neurotoxico = "") or (IsNull(fuente_neurotoxico)) then
-            fuente_neurotoxico = "EPA-R67"
+          if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
+            substance.Item("fuente_neurotoxico") = "EPA-R67"
           else
-            fuente_neurotoxico = fuente_neurotoxico & ",EPA-R67"
+            substance.Item("fuente_neurotoxico") = substance.Item("fuente_neurotoxico") & ",EPA-R67"
           end if
         end if
       %>
 
 
-      <% if ((efecto_neurotoxico <> "") or (nivel_neurotoxico <> "") or (fuente_neurotoxico <> "")) then %>
+      <% if ((substance.Item("efecto_neurotoxico") <> "") or (substance.Item("nivel_neurotoxico") <> "") or (substance.Item("fuente_neurotoxico") <> "")) then %>
 			<blockquote>
 			<table>
-			<%	if (efecto_neurotoxico <> "") then %>
+			<%	if (substance.Item("efecto_neurotoxico") <> "") then %>
 				<tr>
 					<td class="subtitulo3" valign="top">Efecto:</td>
 					<td>
 						<%
 							' Separamos el efecto neurotoxico por "/". Ejemplo: "SNC/NEUROTOXICO/OTOTOXICO" se convierte en 3 definiciones, cada una con su ayuda.
-							array_neurotoxico = split(efecto_neurotoxico, "/")
+							array_neurotoxico = split(substance.Item("efecto_neurotoxico"), "/")
 							for i=0 to ubound(array_neurotoxico)
 								efecto = trim(array_neurotoxico(i))
                 efecto = ucase(efecto)
@@ -2760,34 +2713,26 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					</td>
 				</tr>
 			<% end if %>
-			<% if (nivel_neurotoxico <> "") then %>
+			<% if (substance.Item("nivel_neurotoxico") <> "") then %>
 				<tr>
-					<td class="subtitulo3" valign="top">Nivel:</td><td><%=nivel_neurotoxico%>
+					<td class="subtitulo3" valign="top">Nivel:</td><td><%=substance.Item("nivel_neurotoxico")%>
 
-					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Nivel "&nivel_neurotoxico)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Nivel "&substance.Item("nivel_neurotoxico"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 
 					</td>
 			</tr>
 			<% end if %>
-			<% if (fuente_neurotoxico <> "") then %>
+			<% if (substance.Item("fuente_neurotoxico") <> "") then %>
 				<tr>
 					<td class="subtitulo3" valign="top">Fuente:</td>
 					<td>
 					<%
-					array_fuentes=split(fuente_neurotoxico, ",")
+					array_fuentes=split(substance.Item("fuente_neurotoxico"), ",")
 					for i=0 to ubound(array_fuentes)
-						'fuente=dame_definicion(trim(array_fuentes(i)))
-						'response.write fuente&"<br />"
-						'response.write trim(array_fuentes(i))
           				response.write dame_definicion(trim(array_fuentes(i)))
-
-			'trim(array_fuentes(i))
 
 
 			%>
-            <!--
-			 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(array_fuentes(i)))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-			 -->
           <%
             		if (i < ubound(array_fuentes)) then
               			response.write "<br><br> "
@@ -2907,7 +2852,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<table>
 				<tr>
 					<td class="subtitulo3">Más información (en inglés):</td>
-					<td><a href="<%= enlace_tpb %>"><%= corta(anchor_tpb, 70, "puntossuspensivos") %></a></td>
+					<td><a href="<%= substance.Item("enlace_tpb") %>"><%= corta(substance.Item("anchor_tpb"), 70, "puntossuspensivos") %></a></td>
 				</tr>
 				<tr>
 					<td class="subtitulo3" valign="top">Fuente/s:</td>
@@ -2918,8 +2863,8 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
 							next
 						end if
-						if trim(fuente_tpb) <> "" then
-							array_tpb = split(fuente_tpb,",")
+						if trim(substance.Item("fuente_tpb")) <> "" then
+							array_tpb = split(substance.Item("fuente_tpb"),",")
 							for i=0 to ubound(array_tpb)
 								' response.write "<li>"&c&"</li>"
 								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
@@ -2977,7 +2922,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 		case "Tóxica para el agua":
 			response.write "<table>"
-			if (directiva_aguas or esta_en_lista_directiva_aguas) then
+			if (substance.Item("directiva_aguas") or esta_en_lista_directiva_aguas) then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">· Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
@@ -2993,7 +2938,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 			end if
 
-			if (trim(clasif_mma) <> "") and (trim(clasif_mma)<>"nwg")then
+			if (trim(substance.Item("clasif_mma")) <> "") and (trim(substance.Item("clasif_mma"))<>"nwg")then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">
@@ -3002,13 +2947,13 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				</tr>
 				<tr>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><strong>Clasificación</strong>: <%=clasif_mma%>
-					 	<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(parche_definicion(clasif_mma, "MMA"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+					<td><strong>Clasificación</strong>: <%=substance.Item("clasif_mma")%>
+					 	<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(parche_definicion(substance.Item("clasif_mma"), "MMA"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 					</td>
 				</tr>
 <%
 			end if
-			if (sustancia_prioritaria=1)then
+			if (substance.Item("sustancia_prioritaria")=1)then
 %>
 				<tr>
 					<td class="subtitulo3">Posible sustancia prioritaria </td><td></td>
@@ -3022,7 +2967,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 				<table>
 <%
-				if (dano_calidad_aire or esta_en_lista_aire) then
+				if (substance.Item("dano_calidad_aire") or esta_en_lista_aire) then
 %>
 					<tr>
 						<td class="subtitulo3">Calidad del aire:</td>
@@ -3032,7 +2977,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				end if
 %>
 <%
-				if (dano_ozono) then
+				if (substance.Item("dano_ozono")) then
 %>
 					<tr>
 						<td class="subtitulo3">Capa de ozono:</td>
@@ -3042,7 +2987,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				end if
 %>
 <%
-				if (dano_cambio_clima) then
+				if (substance.Item("dano_cambio_clima")) then
 %>
 					<tr>
 						<td class="subtitulo3">Cambio climático:</td>
@@ -3680,7 +3625,7 @@ end sub
 ' Obtiene el nivel cancerígeno de los campos de clasificación
 function dame_nivel_cancerigeno_rd()
 	' Juntamos todas las clasificaciones
-	clasificacion_rd = clasificacion_1 & clasificacion_2 & clasificacion_3 & clasificacion_4 & clasificacion_5 & clasificacion_6 & clasificacion_7 & clasificacion_8 & clasificacion_9 & clasificacion_10 & clasificacion_11 & clasificacion_12 & clasificacion_13 & clasificacion_14 & clasificacion_15
+	clasificacion_rd = substance.Item("clasificacion_1") & substance.Item("clasificacion_2") & substance.Item("clasificacion_3") & substance.Item("clasificacion_4") & substance.Item("clasificacion_5") & substance.Item("clasificacion_6") & substance.Item("clasificacion_7") & substance.Item("clasificacion_8") & substance.Item("clasificacion_9") & substance.Item("clasificacion_10") & substance.Item("clasificacion_11") & substance.Item("clasificacion_12") & substance.Item("clasificacion_13") & substance.Item("clasificacion_14") & substance.Item("clasificacion_15")
 
 	' Sustituimos "Carc. Cat." por "Carc.Cat." para unificar
 	clasificacion_rd = replace(clasificacion_rd, "Carc. Cat.", "Carc.Cat.")
@@ -3704,11 +3649,11 @@ end function
 
 function dame_nivel_cancerigeno_danesa()
 	' Buscamos la primera aparicion de "Carc"
-	posicion = instr(1,frases_r_danesa, "Carc")
+	posicion = instr(1,substance.Item("frases_r_danesa"), "Carc")
 
 	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
 	if (posicion > 0) then
-		dame_nivel_cancerigeno_danesa = mid(frases_r_danesa, posicion+4, 1)
+		dame_nivel_cancerigeno_danesa = mid(substance.Item("frases_r_danesa"), posicion+4, 1)
 	else
 		dame_nivel_cancerigeno_danesa = ""
 	end if
@@ -3718,7 +3663,7 @@ end function
 
 function dame_nivel_mutageno_rd()
 	' Juntamos todas las clasificaciones
-	clasificacion_rd = clasificacion_1 & clasificacion_2 & clasificacion_3 & clasificacion_4 & clasificacion_5 & clasificacion_6 & clasificacion_7 & clasificacion_8 & clasificacion_9 & clasificacion_10 & clasificacion_11 & clasificacion_12 & clasificacion_13 & clasificacion_14 & clasificacion_15
+	clasificacion_rd = substance.Item("clasificacion_1") & substance.Item("clasificacion_2") & substance.Item("clasificacion_3") & substance.Item("clasificacion_4") & substance.Item("clasificacion_5") & substance.Item("clasificacion_6") & substance.Item("clasificacion_7") & substance.Item("clasificacion_8") & substance.Item("clasificacion_9") & substance.Item("clasificacion_10") & substance.Item("clasificacion_11") & substance.Item("clasificacion_12") & substance.Item("clasificacion_13") & substance.Item("clasificacion_14") & substance.Item("clasificacion_15")
 
 	' Sustituimos "Muta. Cat." por "Muta.Cat." para unificar
 	clasificacion_rd = replace(clasificacion_rd, "Muta. Cat.", "Muta.Cat.")
@@ -3743,11 +3688,11 @@ end function
 
 function dame_nivel_mutageno_danesa()
 	' Buscamos la primera aparicion de "Mut"
-	posicion = instr(1,frases_r_danesa, "Mut")
+	posicion = instr(1,substance.Item("frases_r_danesa"), "Mut")
 
 	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
 	if (posicion > 0) then
-		dame_nivel_mutageno_danesa = mid(frases_r_danesa, posicion+3, 1)
+		dame_nivel_mutageno_danesa = mid(substance.Item("frases_r_danesa"), posicion+3, 1)
 	else
 		dame_nivel_mutageno_danesa = ""
 	end if
@@ -3757,7 +3702,7 @@ end function
 
 function dame_nivel_reproduccion_rd()
 	' Juntamos todas las clasificaciones
-	clasificacion_rd = clasificacion_1 & clasificacion_2 & clasificacion_3 & clasificacion_4 & clasificacion_5 & clasificacion_6 & clasificacion_7 & clasificacion_8 & clasificacion_9 & clasificacion_10 & clasificacion_11 & clasificacion_12 & clasificacion_13 & clasificacion_14 & clasificacion_15
+	clasificacion_rd = substance.Item("clasificacion_1") & substance.Item("clasificacion_2") & substance.Item("clasificacion_3") & substance.Item("clasificacion_4") & substance.Item("clasificacion_5") & substance.Item("clasificacion_6") & substance.Item("clasificacion_7") & substance.Item("clasificacion_8") & substance.Item("clasificacion_9") & substance.Item("clasificacion_10") & substance.Item("clasificacion_11") & substance.Item("clasificacion_12") & substance.Item("clasificacion_13") & substance.Item("clasificacion_14") & substance.Item("clasificacion_15")
 
 	' Sustituimos "Repr. Cat." por "Repr.Cat." para unificar
 	clasificacion_rd = replace(clasificacion_rd, "Repr. Cat.", "Repr.Cat.")
