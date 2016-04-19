@@ -20,18 +20,6 @@
 
 on error resume next
 
-
-' Borde para ver las tablas u ocultarlas
-'borde=" border='1'"
-borde=""
-
-' Inicialmente no hay errores...
-errores = ""
-
-' Cogemos el id de la sustancia elegida y traemos sus datos
-id_sustancia = request("id_sustancia")
-id_sustancia = EliminaInyeccionSQL(id_sustancia)
-
 function removeVlbFromNotes(notes)
 	res = notes
 	if (not isnull(notes)) then
@@ -58,14 +46,7 @@ function composeSubstanceQuery(id_sustancia)
 
 end function
 
-sql = composeSubstanceQuery( id_sustancia )
-
-
-set substanceRecordset = objConnection2.execute(sql)
-
-
 function extractSubstance(substanceRecordset)
-
 	set substance = Server.CreateObject("Scripting.Dictionary")
 	
 	' dn_risc_sustancias
@@ -179,7 +160,12 @@ function extractSubstance(substanceRecordset)
 	substance.Add "eti_conc_rd1272_14", substanceRecordset("eti_conc_rd1272_14").Value
 	substance.Add "conc_rd1272_15", substanceRecordset("conc_rd1272_15").Value
 	substance.Add "eti_conc_rd1272_15", substanceRecordset("eti_conc_rd1272_15").Value
-	substance.Add "notas_rd1272", replace(substanceRecordset("notas_rd1272").Value, "@", "@ ")
+	if varType(substanceRecordset("notas_rd1272").Value) = vbNull then 
+		notas_rd1272 = ""
+	else
+		notas_rd1272 = substanceRecordset("notas_rd1272").Value
+	end if
+	substance.Add "notas_rd1272", replace(notas_rd1272, "@", "@ ")
 	substance.Add "simbolos_rd1272", substanceRecordset("simbolos_rd1272").Value
 	substance.Add "clases_categorias_peligro_rd1272", substanceRecordset("clases_categorias_peligro_rd1272").Value
 
@@ -190,6 +176,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "vla_ec_ppm_1", substanceRecordset("vla_ec_ppm_1").Value
 	substance.Add "vla_ec_mg_m3_1", substanceRecordset("vla_ec_mg_m3_1").Value
 	substance.Add "notas_vla_1", removeVlbFromNotes(substanceRecordset("notas_vla_1").Value)
+
 
 	substance.Add "estado_2", substanceRecordset("estado_2").Value
 	substance.Add "vla_ed_ppm_2", substanceRecordset("vla_ed_ppm_2").Value
@@ -308,17 +295,38 @@ function extractSubstance(substanceRecordset)
 	' COP
 	substance.Add "cop", substanceRecordset("cop").Value
 	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
+	
 	set extractSubstance = substance
 end function
 
-if(substanceRecordset.eof) then
-	errores="No se ha encontrado la sustancia indicada"
-else
-	set substance = extractSubstance(substanceRecordset)
-end if
+function findSubstance( id_sustancia, connection )
+	sql = composeSubstanceQuery( id_sustancia )
 
-substanceRecordset.close()
-set substanceRecordset=nothing
+	set substanceRecordset = connection.execute(sql)
+	set substance = extractSubstance(substanceRecordset)
+	substanceRecordset.close()
+	set substanceRecordset=nothing
+	
+	set findSubstance = substance
+
+end function
+
+
+' Borde para ver las tablas u ocultarlas
+'borde=" border='1'"
+borde=""
+
+' Inicialmente no hay errores...
+errores = ""
+
+' Cogemos el id de la sustancia elegida y traemos sus datos
+id_sustancia = request("id_sustancia")
+id_sustancia = EliminaInyeccionSQL(id_sustancia)
+
+set substance = findSubstance( id_sustancia, objConnection2 )
+if(substance.Count = 0 ) then
+	errores = "No se ha encontrado la sustancia indicada"
+end if
 
 ' **** SPL
 ' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
