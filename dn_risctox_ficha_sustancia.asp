@@ -60,23 +60,25 @@ end function
 
 sql = composeSubstanceQuery( id_sustancia )
 
-set substanceRecordset = objConnection2.execute(sql)
-set substance = Server.CreateObject("Scripting.Dictionary")
 
-if(substanceRecordset.eof) then
-	errores="No se ha encontrado la sustancia indicada"
-else
+set substanceRecordset = objConnection2.execute(sql)
+
+
+function extractSubstance(substanceRecordset)
+
+	set substance = Server.CreateObject("Scripting.Dictionary")
+	
 	' dn_risc_sustancias
 	substance.Add "nombre", substanceRecordset("nombre").Value
 	substance.Add "nombre_ing", elimina_repes(substanceRecordset("nombre_ing").Value, "@")
-    
+	
 	substance.Add "num_rd", substanceRecordset("num_rd").Value
 	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
 	substance.Add "num_ce_elincs", substanceRecordset("num_ce_elincs").Value
 	substance.Add "num_cas", substanceRecordset("num_cas").Value
 	substance.Add "cas_alternativos", substanceRecordset("cas_alternativos").Value
 	' substance.Add "num_onu", substanceRecordset("num_onu").Value 'Parece que no se usa
-    
+	
 	substance.Add "num_icsc", substanceRecordset("num_icsc").Value
 	substance.Add "formula_molecular", substanceRecordset("formula_molecular").Value
 	substance.Add "estructura_molecular", substanceRecordset("estructura_molecular").Value
@@ -303,12 +305,18 @@ else
 	'substance.Add "cancer_mama", substanceRecordset("cancer_mama").Value
 	substance.Add "cancer_mama_fuente", substanceRecordset("cancer_mama_fuente").Value
 
-  	' COP
-  	substance.Add "cop", substanceRecordset("cop").Value
-  	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
+	' COP
+	substance.Add "cop", substanceRecordset("cop").Value
+	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
+	set extractSubstance = substance
+end function
 
-
+if(substanceRecordset.eof) then
+	errores="No se ha encontrado la sustancia indicada"
+else
+	set substance = extractSubstance(substanceRecordset)
 end if
+
 substanceRecordset.close()
 set substanceRecordset=nothing
 
