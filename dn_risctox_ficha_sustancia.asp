@@ -37,75 +37,78 @@ if(substance.Count = 0 ) then
 	errores = "No se ha encontrado la sustancia indicada"
 end if
 
-' **** SPL
-' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
-' Leemos todos los grupos relacionados con la sustancia
-sql = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia="&id_sustancia
+call extractSubstanceGroupsListAsociation(objConnection2)
 
-set objRst=objConnection2.execute(sql)
-	' Recorremos todos los grupos
-	do while not objRst.eof
-		call evaluaCamposListaAsociada("cancer_rd",split("notas_cancer_rd",","))
-		call evaluaCamposListaAsociada("cancer_iarc",split("grupo_iarc,volumen_iarc",","))
+sub extractSubstanceGroupsListAsociation(connection)
+	' **** SPL
+	' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
+	' Leemos todos los grupos relacionados con la sustancia
+	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia="&id_sustancia
 
-		call evaluaCamposListaAsociada("cancer_otras",split("categoria_cancer_otras,fuente",","))
-		call evaluaCamposListaAsociada("cancer_mama",split("cancer_mama_fuente",","))
-		call evaluaCamposListaAsociada("neuro_oto",split("efecto_neurotoxico,nivel_neurotoxico,fuente_neurotoxico",","))
-		call evaluaCamposListaAsociada("disruptores",split("nivel_disruptor",","))
+	set substanceGroupsRecordset = connection.execute(sqlQuery)
+		' Recorremos todos los grupos
+		do while not objRst.eof
+			call evaluaCamposListaAsociada("cancer_rd",split("notas_cancer_rd",","))
+			call evaluaCamposListaAsociada("cancer_iarc",split("grupo_iarc,volumen_iarc",","))
 
-
-		call evaluaCamposListaAsociada("tpb",split("enlace_tpb,anchor_tpb,fuentes_tpb",","))
-
-		call evaluaCamposListaAsociada("directiva_aguas",split("clasif_mma",","))
-
-		call evaluaCamposListaAsociada("vla",split("estado_1,ed_ppm_1,ed_mg_m3_1,ec_ppm_1,ec_mg_m3_1,notas_vla_1",","))
-		call evaluaCamposListaAsociada("vla",split("estado_2,ed_ppm_2,ed_mg_m3_2,ec_ppm_2,ec_mg_m3_2,notas_vla_2",","))
-		call evaluaCamposListaAsociada("vla",split("estado_3,ed_ppm_3,ed_mg_m3_3,ec_ppm_3,ec_mg_m3_3,notas_vla_3",","))
-		call evaluaCamposListaAsociada("vla",split("estado_4,ed_ppm_4,ed_mg_m3_4,ec_ppm_4,ec_mg_m3_4,notas_vla_4",","))
-		call evaluaCamposListaAsociada("vla",split("estado_5,ed_ppm_5,ed_mg_m3_5,ec_ppm_5,ec_mg_m3_5,notas_vla_5",","))
-		call evaluaCamposListaAsociada("vla",split("estado_6,ed_ppm_6,ed_mg_m3_6,ec_ppm_6,ec_mg_m3_6,notas_vla_6",","))
-
-		call evaluaCamposListaAsociada("vlb",split("ib_1,vlb_1,momento_1,notas_vlb_1",","))
-		call evaluaCamposListaAsociada("vlb",split("ib_2,vlb_2,momento_2,notas_vlb_2",","))
-		call evaluaCamposListaAsociada("vlb",split("ib_3,vlb_3,momento_3,notas_vlb_3",","))
-		call evaluaCamposListaAsociada("vlb",split("ib_4,vlb_4,momento_4,notas_vlb_4",","))
-		call evaluaCamposListaAsociada("vlb",split("ib_5,vlb_5,momento_5,notas_vlb_5",","))
-		call evaluaCamposListaAsociada("vlb",split("ib_6,vlb_6,momento_6,notas_vlb_6",","))
-
-		call evaluaCamposListaAsociada("cop",split("enlace_cop",","))
-
-		call evaluaCamposListaAsociada("mpmb",split("",","))
-
-		call evaluaCamposListaAsociada("eper",split("",","))
-		call evaluaCamposListaAsociada("eper_agua",split("",","))
-		call evaluaCamposListaAsociada("eper_aire",split("",","))
-		call evaluaCamposListaAsociada("eper_suelo",split("",","))
+			call evaluaCamposListaAsociada("cancer_otras",split("categoria_cancer_otras,fuente",","))
+			call evaluaCamposListaAsociada("cancer_mama",split("cancer_mama_fuente",","))
+			call evaluaCamposListaAsociada("neuro_oto",split("efecto_neurotoxico,nivel_neurotoxico,fuente_neurotoxico",","))
+			call evaluaCamposListaAsociada("disruptores",split("nivel_disruptor",","))
 
 
-		call evaluaCamposListaAsociada("prohibidas",split("comentario_prohibida",","))
-		call evaluaCamposListaAsociada("restringidas",split("comentario_restringida",","))
+			call evaluaCamposListaAsociada("tpb",split("enlace_tpb,anchor_tpb,fuentes_tpb",","))
 
-		call evaluaCamposListaAsociada("prohibidas_embarazadas",split("comentario_prohibida",","))
-		call evaluaCamposListaAsociada("prohibidas_lactantes",split("comentario_prohibida",","))
-		call evaluaCamposListaAsociada("candidatas_reach",split("",","))
-		call evaluaCamposListaAsociada("autorizacion_reach",split("",","))
+			call evaluaCamposListaAsociada("directiva_aguas",split("clasif_mma",","))
 
-		call evaluaCamposListaAsociada("biocidas_autorizadas",split("fuente,pureza_minima,condiciones,usos",","))
-		call evaluaCamposListaAsociada("biocidas_prohibidas",split("fuente,fecha_limite,usos",","))
+			call evaluaCamposListaAsociada("vla",split("estado_1,ed_ppm_1,ed_mg_m3_1,ec_ppm_1,ec_mg_m3_1,notas_vla_1",","))
+			call evaluaCamposListaAsociada("vla",split("estado_2,ed_ppm_2,ed_mg_m3_2,ec_ppm_2,ec_mg_m3_2,notas_vla_2",","))
+			call evaluaCamposListaAsociada("vla",split("estado_3,ed_ppm_3,ed_mg_m3_3,ec_ppm_3,ec_mg_m3_3,notas_vla_3",","))
+			call evaluaCamposListaAsociada("vla",split("estado_4,ed_ppm_4,ed_mg_m3_4,ec_ppm_4,ec_mg_m3_4,notas_vla_4",","))
+			call evaluaCamposListaAsociada("vla",split("estado_5,ed_ppm_5,ed_mg_m3_5,ec_ppm_5,ec_mg_m3_5,notas_vla_5",","))
+			call evaluaCamposListaAsociada("vla",split("estado_6,ed_ppm_6,ed_mg_m3_6,ec_ppm_6,ec_mg_m3_6,notas_vla_6",","))
 
-		call evaluaCamposListaAsociada("pesticidas_autorizadas",split("fuente,plazo_renovacion,pureza_minima,usos",","))
-		call evaluaCamposListaAsociada("pesticidas_prohibidas",split("fuente,exenciones",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_1,vlb_1,momento_1,notas_vlb_1",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_2,vlb_2,momento_2,notas_vlb_2",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_3,vlb_3,momento_3,notas_vlb_3",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_4,vlb_4,momento_4,notas_vlb_4",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_5,vlb_5,momento_5,notas_vlb_5",","))
+			call evaluaCamposListaAsociada("vlb",split("ib_6,vlb_6,momento_6,notas_vlb_6",","))
 
-		call evaluaCamposListaAsociada("alergeno",split("",","))
+			call evaluaCamposListaAsociada("cop",split("enlace_cop",","))
 
-		call evaluaCamposListaAsociada("calidad_aire",split("",","))
-		
-		call evaluaCamposListaAsociada( "corap", split("", ",") )
+			call evaluaCamposListaAsociada("mpmb",split("",","))
 
-		objRst.movenext
-	loop
-objRst.close()
+			call evaluaCamposListaAsociada("eper",split("",","))
+			call evaluaCamposListaAsociada("eper_agua",split("",","))
+			call evaluaCamposListaAsociada("eper_aire",split("",","))
+			call evaluaCamposListaAsociada("eper_suelo",split("",","))
 
+
+			call evaluaCamposListaAsociada("prohibidas",split("comentario_prohibida",","))
+			call evaluaCamposListaAsociada("restringidas",split("comentario_restringida",","))
+
+			call evaluaCamposListaAsociada("prohibidas_embarazadas",split("comentario_prohibida",","))
+			call evaluaCamposListaAsociada("prohibidas_lactantes",split("comentario_prohibida",","))
+			call evaluaCamposListaAsociada("candidatas_reach",split("",","))
+			call evaluaCamposListaAsociada("autorizacion_reach",split("",","))
+
+			call evaluaCamposListaAsociada("biocidas_autorizadas",split("fuente,pureza_minima,condiciones,usos",","))
+			call evaluaCamposListaAsociada("biocidas_prohibidas",split("fuente,fecha_limite,usos",","))
+
+			call evaluaCamposListaAsociada("pesticidas_autorizadas",split("fuente,plazo_renovacion,pureza_minima,usos",","))
+			call evaluaCamposListaAsociada("pesticidas_prohibidas",split("fuente,exenciones",","))
+
+			call evaluaCamposListaAsociada("alergeno",split("",","))
+
+			call evaluaCamposListaAsociada("calidad_aire",split("",","))
+			
+			call evaluaCamposListaAsociada( "corap", split("", ",") )
+
+			substanceGroupsRecordset.movenext
+		loop
+	substanceGroupsRecordset.close()
+end sub
 
 ' **** /SPL
 
@@ -3500,17 +3503,15 @@ function aplana(byval cadena)
   aplana = cadena
 end function
 
-
-
 sub evaluaCamposListaAsociada(lista,camposArray())
 	dim c, q, x
-	if objRst("asoc_"&lista) then
+	if substanceGroupsRecordset("asoc_"&lista) then
 		execute("esta_en_lista_"&lista&"=1")
 		for i = 0 to UBound(camposArray)
 			c = camposArray(i)
 			execute( "q= " & c )
-			x = objRst( "asoc_" & lista & "_" & c )
-			if inStr(q, x) = 0 then execute(c&" = "&c& "& "", " & objRst("asoc_"&lista&"_"&c) & """")
+			x = substanceGroupsRecordset( "asoc_" & lista & "_" & c )
+			if inStr(q, x) = 0 then execute(c&" = "&c& "& "", " & substanceGroupsRecordset("asoc_"&lista&"_"&c) & """")
 		next
 	else
 		execute("esta_en_lista_"&lista&"=0")
@@ -3518,5 +3519,3 @@ sub evaluaCamposListaAsociada(lista,camposArray())
 end sub
 
 %>
-
-
