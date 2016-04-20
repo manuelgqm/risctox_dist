@@ -42,70 +42,67 @@ call extractSubstanceGroupsListAsociation(id_sustancia, objConnection2)
 sub extractSubstanceGroupsListAsociation(id_sustancia, connection)
 	' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
 	
-	' sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
-	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & "order by asoc_cancer_iarc desc"'MOCK
+	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
+	' sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " order by asoc_cancer_otras desc"'MOCK
 	
 	set substanceGroupsRecordset = connection.execute(sqlQuery)
 		' Recorremos todos los grupos
 		do while not substanceGroupsRecordset.eof
+
 			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_rd", Array("notas_cancer_rd"))
 			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_iarc", Array("grupo_iarc","volumen_iarc"))
-			response.write("aqui")
-			response.write(substance.Item("asoc_cancer_iarc_volumen_iarc"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_otras", Array("categoria_cancer_otras","fuente"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_mama", Array("cancer_mama_fuente"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "neuro_oto", Array("efecto_neurotoxico,nivel_neurotoxico,fuente_neurotoxico"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "disruptores", Array("nivel_disruptor"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "tpb", Array("enlace_tpb","anchor_tpb","fuentes_tpb"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "directiva_aguas", Array("clasif_mma"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_1","ed_ppm_1", "ed_mg_m3_1", "ec_ppm_1", "ec_mg_m3_1", "notas_vla_1"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_2", "ed_ppm_2", "ed_mg_m3_2", "ec_ppm_2", "ec_mg_m3_2", "notas_vla_2"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_3", "ed_ppm_3", "ed_mg_m3_3", "ec_ppm_3", "ec_mg_m3_3", "notas_vla_3"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_4", "ed_ppm_4", "ed_mg_m3_4", "ec_ppm_4", "ec_mg_m3_4", "notas_vla_4"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_5", "ed_ppm_5", "ed_mg_m3_5", "ec_ppm_5", "ec_mg_m3_5", "notas_vla_5"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vla", Array("estado_6", "ed_ppm_6", "ed_mg_m3_6", "ec_ppm_6", "ec_mg_m3_6", "notas_vla_6"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_1", "vlb_1", "momento_1", "notas_vlb_1"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_2", "vlb_2", "momento_2", "notas_vlb_2"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_3", "vlb_3", "momento_3", "notas_vlb_3"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_4", "vlb_4", "momento_4", "notas_vlb_4"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_5", "vlb_5", "momento_5", "notas_vlb_5"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "vlb", Array("ib_6", "vlb_6", "momento_6", "notas_vlb_6"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cop", Array("enlace_cop"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "mpmb", Array(""))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "eper", Array(""))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "eper_agua", Array(""))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "eper_aire", Array(""))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "eper_suelo", Array(""))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "prohibidas", Array("comentario_prohibida"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "restringidas", Array("comentario_restringida"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "prohibidas_embarazadas", Array("comentario_prohibida"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "prohibidas_lactantes", Array("comentario_prohibida"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "candidatas_reach", Array(""))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "autorizacion_reach", Array(""))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "biocidas_autorizadas", Array("fuente", "pureza_minima", "condiciones", "usos"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "biocidas_prohibidas", Array("fuente", "fecha_limite", "usos"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "pesticidas_autorizadas", Array("fuente", "plazo_renovacion", "pureza_minima", "usos"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "pesticidas_prohibidas", Array("fuente", "exenciones"))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "alergeno", Array(""))
+
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "calidad_aire", Array(""))
 			
-			response.end
-
-			call evaluaCamposListaAsociada("cancer_otras",split("categoria_cancer_otras,fuente",","))
-			call evaluaCamposListaAsociada("cancer_mama",split("cancer_mama_fuente",","))
-			call evaluaCamposListaAsociada("neuro_oto",split("efecto_neurotoxico,nivel_neurotoxico,fuente_neurotoxico",","))
-			call evaluaCamposListaAsociada("disruptores",split("nivel_disruptor",","))
-
-			call evaluaCamposListaAsociada("tpb",split("enlace_tpb,anchor_tpb,fuentes_tpb",","))
-
-			call evaluaCamposListaAsociada("directiva_aguas",split("clasif_mma",","))
-
-			call evaluaCamposListaAsociada("vla",split("estado_1,ed_ppm_1,ed_mg_m3_1,ec_ppm_1,ec_mg_m3_1,notas_vla_1",","))
-			call evaluaCamposListaAsociada("vla",split("estado_2,ed_ppm_2,ed_mg_m3_2,ec_ppm_2,ec_mg_m3_2,notas_vla_2",","))
-			call evaluaCamposListaAsociada("vla",split("estado_3,ed_ppm_3,ed_mg_m3_3,ec_ppm_3,ec_mg_m3_3,notas_vla_3",","))
-			call evaluaCamposListaAsociada("vla",split("estado_4,ed_ppm_4,ed_mg_m3_4,ec_ppm_4,ec_mg_m3_4,notas_vla_4",","))
-			call evaluaCamposListaAsociada("vla",split("estado_5,ed_ppm_5,ed_mg_m3_5,ec_ppm_5,ec_mg_m3_5,notas_vla_5",","))
-			call evaluaCamposListaAsociada("vla",split("estado_6,ed_ppm_6,ed_mg_m3_6,ec_ppm_6,ec_mg_m3_6,notas_vla_6",","))
-
-			call evaluaCamposListaAsociada("vlb",split("ib_1,vlb_1,momento_1,notas_vlb_1",","))
-			call evaluaCamposListaAsociada("vlb",split("ib_2,vlb_2,momento_2,notas_vlb_2",","))
-			call evaluaCamposListaAsociada("vlb",split("ib_3,vlb_3,momento_3,notas_vlb_3",","))
-			call evaluaCamposListaAsociada("vlb",split("ib_4,vlb_4,momento_4,notas_vlb_4",","))
-			call evaluaCamposListaAsociada("vlb",split("ib_5,vlb_5,momento_5,notas_vlb_5",","))
-			call evaluaCamposListaAsociada("vlb",split("ib_6,vlb_6,momento_6,notas_vlb_6",","))
-
-			call evaluaCamposListaAsociada("cop",split("enlace_cop",","))
-
-			call evaluaCamposListaAsociada("mpmb",split("",","))
-
-			call evaluaCamposListaAsociada("eper",split("",","))
-			call evaluaCamposListaAsociada("eper_agua",split("",","))
-			call evaluaCamposListaAsociada("eper_aire",split("",","))
-			call evaluaCamposListaAsociada("eper_suelo",split("",","))
-
-			call evaluaCamposListaAsociada("prohibidas",split("comentario_prohibida",","))
-			call evaluaCamposListaAsociada("restringidas",split("comentario_restringida",","))
-
-			call evaluaCamposListaAsociada("prohibidas_embarazadas",split("comentario_prohibida",","))
-			call evaluaCamposListaAsociada("prohibidas_lactantes",split("comentario_prohibida",","))
-			call evaluaCamposListaAsociada("candidatas_reach",split("",","))
-			call evaluaCamposListaAsociada("autorizacion_reach",split("",","))
-
-			call evaluaCamposListaAsociada("biocidas_autorizadas",split("fuente,pureza_minima,condiciones,usos",","))
-			call evaluaCamposListaAsociada("biocidas_prohibidas",split("fuente,fecha_limite,usos",","))
-
-			call evaluaCamposListaAsociada("pesticidas_autorizadas",split("fuente,plazo_renovacion,pureza_minima,usos",","))
-			call evaluaCamposListaAsociada("pesticidas_prohibidas",split("fuente,exenciones",","))
-
-			call evaluaCamposListaAsociada("alergeno",split("",","))
-
-			call evaluaCamposListaAsociada("calidad_aire",split("",","))
-			
-			call evaluaCamposListaAsociada( "corap", split("", ",") )
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset,  "corap", Array(""))
 
 			substanceGroupsRecordset.movenext
 		loop
@@ -3506,25 +3503,27 @@ function aplana(byval cadena)
 end function
 
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
-	dim currentSubstanceGroupKey, lastSubstanceGroupValue, currentSubstanceGroupValue 
+	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue 
 
 	call estaEnLista(substanceGroupsRecordset, listName)
 	
 	if substanceGroupsRecordset("asoc_" & listName ) then
 		for i = 0 to UBound(groupKeysArray)
 			currentGroupKey = groupKeysArray(i)
-			
-			currentSubstanceGroupKey = "asoc_" & listName & "_" & currentGroupKey
-			currentSubstanceGroupValue = substanceGroupsRecordset( currentSubstanceGroupKey )
-			
-			if inStr(lastSubstanceGroupValue, currentSubstanceGroupValue) = 0 then
-				substance.Item(currentSubstanceGroupKey) = substance.Item(currentSubstanceGroupKey) & ", " & substanceGroupsRecordset(currentSubstanceGroupKey)
+			substanceGroupFieldName = "asoc_" & listName & "_" & currentGroupKey
+			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
+	
+			if inStr(lcase(substance.Item(currentGroupKey)), lcase(currentSubstanceGroupValue)) = 0 then
+				if listName = "cancer_otras" then
+					response.write(currentGroupKey & " " & substance.Item(currentGroupKey))
+					response.end
+				end if
+				substance.Item(currentGroupKey) = substance.Item(currentGroupKey) & ", " & currentSubstanceGroupValue
 			end if
 
-			lastSubstanceGroupValue = currentGroupKey
+			lastSubstanceGroupValue = substance.Item(currentGroupKey)
 		next
 	end if
-	
 	set evaluaCamposListaAsociada = substance
 end function
 
