@@ -37,25 +37,28 @@ if(substance.Count = 0 ) then
 	errores = "No se ha encontrado la sustancia indicada"
 end if
 
-call extractSubstanceGroupsListAsociation(objConnection2)
+call extractSubstanceGroupsListAsociation(id_sustancia, objConnection2)
 
-sub extractSubstanceGroupsListAsociation(connection)
-	' **** SPL
+sub extractSubstanceGroupsListAsociation(id_sustancia, connection)
 	' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
-	' Leemos todos los grupos relacionados con la sustancia
-	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia="&id_sustancia
-
+	
+	' sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
+	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & "order by asoc_cancer_iarc desc"'MOCK
+	
 	set substanceGroupsRecordset = connection.execute(sqlQuery)
 		' Recorremos todos los grupos
-		do while not objRst.eof
-			call evaluaCamposListaAsociada("cancer_rd",split("notas_cancer_rd",","))
-			call evaluaCamposListaAsociada("cancer_iarc",split("grupo_iarc,volumen_iarc",","))
+		do while not substanceGroupsRecordset.eof
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_rd", Array("notas_cancer_rd"))
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, "cancer_iarc", Array("grupo_iarc","volumen_iarc"))
+			response.write("aqui")
+			response.write(substance.Item("asoc_cancer_iarc_volumen_iarc"))
+			
+			response.end
 
 			call evaluaCamposListaAsociada("cancer_otras",split("categoria_cancer_otras,fuente",","))
 			call evaluaCamposListaAsociada("cancer_mama",split("cancer_mama_fuente",","))
 			call evaluaCamposListaAsociada("neuro_oto",split("efecto_neurotoxico,nivel_neurotoxico,fuente_neurotoxico",","))
 			call evaluaCamposListaAsociada("disruptores",split("nivel_disruptor",","))
-
 
 			call evaluaCamposListaAsociada("tpb",split("enlace_tpb,anchor_tpb,fuentes_tpb",","))
 
@@ -83,7 +86,6 @@ sub extractSubstanceGroupsListAsociation(connection)
 			call evaluaCamposListaAsociada("eper_agua",split("",","))
 			call evaluaCamposListaAsociada("eper_aire",split("",","))
 			call evaluaCamposListaAsociada("eper_suelo",split("",","))
-
 
 			call evaluaCamposListaAsociada("prohibidas",split("comentario_prohibida",","))
 			call evaluaCamposListaAsociada("restringidas",split("comentario_restringida",","))
@@ -3503,19 +3505,31 @@ function aplana(byval cadena)
   aplana = cadena
 end function
 
-sub evaluaCamposListaAsociada(lista,camposArray())
-	dim c, q, x
-	if substanceGroupsRecordset("asoc_"&lista) then
-		execute("esta_en_lista_"&lista&"=1")
-		for i = 0 to UBound(camposArray)
-			c = camposArray(i)
-			execute( "q= " & c )
-			x = substanceGroupsRecordset( "asoc_" & lista & "_" & c )
-			if inStr(q, x) = 0 then execute(c&" = "&c& "& "", " & substanceGroupsRecordset("asoc_"&lista&"_"&c) & """")
-		next
+function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
+	dim currentSubstanceGroupKey, lastSubstanceGroupValue, currentSubstanceGroupValue 
+
+	if substanceGroupsRecordset("asoc_" & listName ) then
+		execute("esta_en_lista_" & listName & " = 1")
 	else
-		execute("esta_en_lista_"&lista&"=0")
+		execute("esta_en_lista_" & listName & " = 0")
 	end if
-end sub
+	
+	if substanceGroupsRecordset("asoc_" & listName ) then
+		for i = 0 to UBound(groupKeysArray)
+			currentGroupKey = groupKeysArray(i)
+			
+			currentSubstanceGroupKey = "asoc_" & listName & "_" & currentGroupKey
+			currentSubstanceGroupValue = substanceGroupsRecordset( currentSubstanceGroupKey )
+			
+			if inStr(lastSubstanceGroupValue, currentSubstanceGroupValue) = 0 then
+				substance.Item(currentSubstanceGroupKey) = substance.Item(currentSubstanceGroupKey) & ", " & substanceGroupsRecordset(currentSubstanceGroupKey)
+			end if
+
+			lastSubstanceGroupValue = currentGroupKey
+		next
+	end if
+	
+	set evaluaCamposListaAsociada = substance
+end function
 
 %>
