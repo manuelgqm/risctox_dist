@@ -3508,11 +3508,7 @@ end function
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
 	dim currentSubstanceGroupKey, lastSubstanceGroupValue, currentSubstanceGroupValue 
 
-	if substanceGroupsRecordset("asoc_" & listName ) then
-		execute("esta_en_lista_" & listName & " = 1")
-	else
-		execute("esta_en_lista_" & listName & " = 0")
-	end if
+	call estaEnLista(substanceGroupsRecordset, listName)
 	
 	if substanceGroupsRecordset("asoc_" & listName ) then
 		for i = 0 to UBound(groupKeysArray)
@@ -3531,5 +3527,13 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 	
 	set evaluaCamposListaAsociada = substance
 end function
+
+sub estaEnLista(substanceGroupsRecordset, listName)
+	if substanceGroupsRecordset("asoc_" & listName ) then
+		execute("esta_en_lista_" & listName & " = 1")
+	else
+		execute("esta_en_lista_" & listName & " = 0")
+	end if
+end sub
 
 %>
