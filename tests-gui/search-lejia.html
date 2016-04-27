@@ -164,12 +164,307 @@
 <tr>
 	<td>verifyText</td>
 	<td>id=secc-masinformacion</td>
-	<td>*Nº índice: 017-011-00-1*</td>
+	<td>*017-011-00-1*</td>
 </tr>
 <tr>
 	<td>verifyText</td>
 	<td>id=secc-masinformacion</td>
-	<td>*Fórmula molecular: ClHO.Na*</td>
+	<td>*ClHO.Na*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_frases_r_titulo</td>
+	<td>Frases R</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R34: Provoca quemaduras.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R31: En contacto con ácidos libera gases tóxicos.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R31: En contacto con ácidos libera gases tóxicos.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R50: Muy tóxico para los organismos acuáticos.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_frases_s_titulo</td>
+	<td>*Frases S*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S1/2: Consérvese bajo llave y manténgase fuera del alcance de los niños.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S28: En caso de contacto con la piel, lávese inmediata y abundantemente con ... (productos a especificar por el fabricante).*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S45: En caso de accidente o malestar, acúdase inmediatamente al médico (si es posible, muéstrele la etiqueta).*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S50: No mezclar con ... (a especificar por el fabricante).*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S61: Evítese su liberación al medio ambiente. Recábense instrucciones específicas de la ficha de datos de seguridad.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_notas_titulo</td>
+	<td>Notas</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-notas &gt; b</td>
+	<td>Nota B</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_etiquetado_titulo</td>
+	<td>Etiquetado</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//fieldset[@id='secc-etiquetado']/table/tbody/tr[2]/td</td>
+	<td>C &gt;= 5 %</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//fieldset[@id='secc-etiquetado']/table/tbody/tr[2]/td[2]</td>
+	<td>R31</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#tabla_clasificacionm_rd1272 &gt; tbody &gt; tr &gt; td.celdaabajo &gt; table &gt; tbody &gt; tr &gt; td.titulo3</td>
+	<td>CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//p[@id='ap2_clasificacion_frases_r_titulo'])[2]</td>
+	<td>Frases H</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote</td>
+	<td>*H314: Provoca quemaduras graves en la piel y lesiones oculares graves.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote</td>
+	<td>*Corr. cut. (Cat. 1B): Corrosión o irritación cutáneas*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[2]</td>
+	<td>*H400: Muy tóxico para los organismos acuáticos.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[2]</td>
+	<td>*Acuático agudo. (Cat. 1): Peligroso para el medio ambiente acuático*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[3]</td>
+	<td>EUH031: En contacto con ácidos libera gases tóxicos</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//p[@id='ap2_clasificacion_notas_titulo'])[2]</td>
+	<td>Notas</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-notas-rd1272 &gt; b</td>
+	<td>Nota B</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//span[@id='ap2_clasificacion_etiquetado_titulo'])[2]</td>
+	<td>Etiquetado</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//fieldset[@id='secc-etiquetado_rd1272']/table/tbody/tr[2]/td</td>
+	<td>C &gt;= 5 %</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//fieldset[@id='secc-etiquetado_rd1272']/table/tbody/tr[2]/td[2]</td>
+	<td>EUH031</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr/td/table/tbody/tr/td</td>
+	<td>Otras alteraciones para la salud y sistemas y órganos afectados</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=strong</td>
+	<td>*Sistemas a los que afecta:*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=td &gt; table &gt; tbody &gt; tr &gt; td &gt; ul &gt; li</td>
+	<td>Cardiocirculatorio</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//tr[@id='secc-salud']/td/table/tbody/tr/td[2]/strong</td>
+	<td>*Otros efectos:*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//tr[@id='secc-salud']/td/table/tbody/tr/td[2]/ul/li</td>
+	<td>*Piel y mucosas*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//tr[@id='secc-salud']/td/table/tbody/tr/td[2]/ul/li[2]</td>
+	<td>*Efectos neurotóxicos*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//div[@id='ficha']/table[2]/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td)[5]</td>
+	<td>Sustancia biocida prohibida</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Más información</td>
+	<td>Más información</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//div[@id='ficha']/table[2]/tbody/tr/td/table[2]/tbody/tr/td/table/tbody/tr/td)[3]</td>
+	<td>Sustancia pesticida autorizada</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-Sustanciapesticidaautorizada &gt; blockquote &gt; table &gt; tbody &gt; tr &gt; td.subtitulo3 &gt; a</td>
+	<td>Más información</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//div[@id='ficha']/table[2]/tbody/tr/td/table/tbody/tr/td)[16]</td>
+	<td>Alternativas</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=exact:¿Conoces lo que usas?</td>
+	<td>¿Conoces lo que usas?</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Catálogo de experiencias sindicales de sustitución</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Estudio medioambiental del sector de la madera y el mueble</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Estudio medioambiental del sector químico</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Experiencias sindicales: sustitución de tóxicos en el sector de la limpieza</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Guía de mejores técnicas disponibles en España del sector textil</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Guía sindical para la eliminación de tóxicos del sector de limpiezas: disruptores endocrinos: un nuevo riesgo tóxico</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=La Ley de Prevención y Control Integrados de la Contaminación en el sector textil</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Prevención da contaminación no sector da industria conserveira de peixes e mariscos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Prevención da contaminación no sector enerxético: centrais térmicas</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Reducción del uso de tóxicos en la limpieza: capacitación de trabajadoras de limpieza para prevenir riesgos químicos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Sector aceitunas y encurtidos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Sector conserva vegetal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Seminario Compras Verdes: la contratación de servicios y productos con criterios ambientales: documento de síntesis</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Sustitución de ANTIGHOST en limpieza de pantallas de serigrafía industria textil</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Sustitución de limpiador de planchas de serigrafía</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=Sustitución de productos de limpieza con cancerígenos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>name=imprimir</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>name=enviar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=center &gt; input[name=&quot;volver&quot;]</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>
