@@ -2240,7 +2240,6 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		<%
 
-
 		      if (isNull(substance.Item("categoria_cancer_otras"))) then
 
 		        substance.Item("categoria_cancer_otras") = ""
@@ -2254,7 +2253,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		        substance.Item("fuente") = ""
 
 		      end if
-
+			  
 
 					array_categorias=split(substance.Item("categoria_cancer_otras"), ",")
 					array_fuentes=split(substance.Item("fuente"), ",")
@@ -3503,26 +3502,31 @@ function aplana(byval cadena)
 end function
 
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
-	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue 
+	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
 
 	call estaEnLista(substanceGroupsRecordset, listName)
 	
 	if substanceGroupsRecordset("asoc_" & listName ) then
 		for i = 0 to UBound(groupKeysArray)
 			currentGroupKey = groupKeysArray(i)
+			currentSubstanceValue = substance.Item(currentGroupKey)
+			if varType(currentSubstanceValue) = 1 then currentSubstanceValue = ""
 			substanceGroupFieldName = "asoc_" & listName & "_" & currentGroupKey
 			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
+			if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
 	
-			if inStr(lcase(substance.Item(currentGroupKey)), lcase(currentSubstanceGroupValue)) = 0 then
-				if listName = "cancer_otras" then
-					response.write(currentGroupKey & " " & substance.Item(currentGroupKey))
-					response.end
+			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
+				if currentSubstanceValue <> "" then 
+					currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
+				else
+					currentSubstanceValue = currentSubstanceGroupValue
 				end if
-				substance.Item(currentGroupKey) = substance.Item(currentGroupKey) & ", " & currentSubstanceGroupValue
 			end if
 
-			lastSubstanceGroupValue = substance.Item(currentGroupKey)
+			lastSubstanceGroupValue = currentSubstanceValue
+			substance.Item(currentGroupKey) = currentSubstanceValue
 		next
+		
 	end if
 	set evaluaCamposListaAsociada = substance
 end function
