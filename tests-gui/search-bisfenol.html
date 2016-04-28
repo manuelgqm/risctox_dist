@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>name=nombre</td>
-	<td>bisfenol</td>
+	<td>bisfenol a</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>name=tipobus</td>
-	<td>label=parte del nombre</td>
+	<td>label=nombre exacto</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -32,34 +32,289 @@
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>css=p.neg</td>
-	<td>*111*</td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td</td>
-	<td>*Bisfenol*</td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td</td>
-	<td>*etanodiamida*</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=4,4´-(1-metildecilideno)bisfenol</td>
+	<td>selectWindow</td>
+	<td>null</td>
 	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>css=td.texto</td>
-	<td>*metildecilideno*</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>id=img-masinformacion</td>
 	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-listanegra</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-mas_clasificacion-363</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-frasess</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-mas_clasificacion-rd1272</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-fraseh-1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-fraseh-2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-fraseh-3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-fraseh-4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-vlasecc-vla</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-Disruptorendocrino</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-Sensibilizante</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-Toxicoparalareproduccion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-enfEnfermedadesprofesionalescausadasporagentesquimicos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-mas_informacion_salud_laboral</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-mas_informacion_medio_ambiente</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-Sustanciabajoevaluacion.CoRAP</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=img-alternativas</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=td.texto &gt; b</td>
+	<td>4, 4' - isopropilidendifenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>2, 2 - bis (4 - hidroxifenil) propan</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[2]/td[2]/ul/li[2]</td>
+	<td>Bisfenol A</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[3]/td[2]</td>
+	<td>*CAS: 80-05-7*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[3]/td[2]</td>
+	<td>*CE EINECS: 201-245-8*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[4]/td[2]</td>
+	<td>*fenoles, homologos y sus derivados halogenados: Pentaclorofenol, Hidroxibenzonitrilo*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[5]/td[2]</td>
+	<td>*adhesivo, antioxidante, estabilizante, plastificante*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='ficha']/table[2]/tbody/tr[6]/td[2]</td>
+	<td>0634</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-masinformacion</td>
+	<td>*4, 4' - isopropylidenediphenol, bisphenol A*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//td[@id='secc-masinformacion']/ul/li[2]</td>
+	<td>*BPA*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-masinformacion</td>
+	<td>*Nº índice: 604-030-00-0*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-masinformacion</td>
+	<td>*Fórmula molecular: C15H16O2*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_lista_negra_titulo</td>
+	<td>Sustancia incluida en la Lista negra de ISTAS</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-listanegra</td>
+	<td>Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: disruptora endocrina, sensibilizante, tóxica para la reproducción</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=td.titulo3</td>
+	<td>CLASIFICACIÓN (RD 363/1995)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_frases_r_titulo</td>
+	<td>Frases R</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R62: Posible riesgo de perjudicar la fertilidad.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R37: Irrita las vías respiratorias.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R41: Riesgo de lesiones oculares graves.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R43: Posibilidad de sensibilización en contacto con la piel.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=blockquote</td>
+	<td>*R52: Nocivo para los organismos acuáticos.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_frases_s_titulo</td>
+	<td>Frases S</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S2: Manténgase fuera del alcance de los niños.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S26: En caso de contacto con los ojos, lávense inmediata y abundantemente con agua y acúdase a un médico.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S36/37: Úsense indumentaria y guantes de protección adecuados.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S39: Úsese protección para los ojos/la cara.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S46: En caso de ingestión, acúdase inmediatamente al médico y muéstrele la etiqueta o el envase.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-frasess</td>
+	<td>*S61: Evítese su liberación al medio ambiente. Recábense instrucciones específicas de la ficha de datos de seguridad.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#tabla_clasificacionm_rd1272 &gt; tbody &gt; tr &gt; td.celdaabajo &gt; table &gt; tbody &gt; tr &gt; td.titulo3</td>
+	<td>*CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//p[@id='ap2_clasificacion_frases_r_titulo'])[2]</td>
+	<td>Frases H</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote</td>
+	<td>*H361f***: Se sospecha que perjudica a la fertilidad.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-categpeligro-1</td>
+	<td>Repr. (Cat. 2): Toxicidad para la reproducción</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[2]</td>
+	<td>*H335: Puede irritar las vías respiratorias.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-categpeligro-2</td>
+	<td>STOT única (Cat. 3): Toxicidad específica en determinados órganos (exposición única)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[3]</td>
+	<td>*H318: Provoca lesiones oculares graves.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-categpeligro-3</td>
+	<td>Les. oc. (Cat. 1): Lesiones oculares graves o irritación ocular</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='secc-clasificacion-rd1272']/tbody/tr/td[2]/blockquote[4]</td>
+	<td>*H317: Puede provocar una reacción alérgica en la piel.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=secc-categpeligro-4</td>
+	<td>*Sens. cut. (Cat. 1): Sensibilización respiratoria o cutánea*</td>
 </tr>
 </tbody></table>
 </body>
