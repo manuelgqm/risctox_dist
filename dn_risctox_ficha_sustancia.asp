@@ -2048,7 +2048,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 <%
 		case "Sustancia bajo evaluación. CoRAP":
 %>
-			<a href="index.asp?idpagina=1194"><img src="../imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
+			<a href="index.asp?idpagina=1194"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
 	end select
 
