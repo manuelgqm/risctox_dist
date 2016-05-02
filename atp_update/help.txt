@@ -1,0 +1,5 @@
+Tareas
+
+pasamos el PDF de la ATP a excel con el servicio web http://www.pdftoexcel.org/
+devolvemos el excel a Sara Perez para que deje solo las filas que se van a actualizar
+normalizamos el archivo para la importación
