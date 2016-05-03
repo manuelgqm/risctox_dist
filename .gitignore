@@ -12,3 +12,5 @@ pdf/
 *.smi
 *.*bak*
 *.mht
+*.LOG
+Thumbs.db
