@@ -42,10 +42,8 @@ call extractSubstanceGroupsListAsociation(id_sustancia, objConnection2)
 sub extractSubstanceGroupsListAsociation(id_sustancia, connection)
 	' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
 	
-	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
-	' sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " order by asoc_cancer_otras desc"'MOCK
+	set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
 	
-	set substanceGroupsRecordset = connection.execute(sqlQuery)
 		' Recorremos todos los grupos
 		do while not substanceGroupsRecordset.eof
 
@@ -108,6 +106,15 @@ sub extractSubstanceGroupsListAsociation(id_sustancia, connection)
 		loop
 	substanceGroupsRecordset.close()
 end sub
+
+function requestSubstanceGroups(id_sustancia, connection)
+	dim sqlQuery
+	
+	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
+	
+	set requestSubstanceGroups = connection.execute(sqlQuery)
+	
+end function
 
 ' **** /SPL
 
