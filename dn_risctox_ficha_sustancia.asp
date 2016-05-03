@@ -59,8 +59,20 @@ end function
 ' Recorremos todos los grupos
 function extractSubstanceGroups(substanceGroupsRecordset)
 	set substanceGroups = Server.CreateObject("Scripting.Dictionary")
-	set lists = Server.CreateObject("Scripting.Dictionary")
+	set substanceLists = getSubstanceLists()
 	
+	do while not substanceGroupsRecordset.eof
+		for each list in substanceLists.keys
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, substanceLists.Item(list))
+		next
+
+		substanceGroupsRecordset.movenext
+	loop
+	
+end function
+
+function getSubstanceLists()
+	set lists = Server.CreateObject("Scripting.Dictionary")
 	lists.Add "cancer_rd", Array("notas_cancer_rd")
 	lists.Add "cancer_iarc", Array("grupo_iarc","volumen_iarc")
 	lists.Add "cancer_otras", Array("categoria_cancer_otras","fuente")
@@ -90,15 +102,7 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 	lists.Add "alergeno", Array("")
 	lists.Add "calidad_aire", Array("")
 	lists.Add  "corap", Array("")
-	
-	do while not substanceGroupsRecordset.eof
-		for each list in lists.keys
-			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, lists.Item(list))
-		next
-
-		substanceGroupsRecordset.movenext
-	loop
-	
+	set getSubstanceLists = lists
 end function
 
 ' **** /SPL
