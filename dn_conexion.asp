@@ -1,14 +1,10 @@
 <!--#include file="EliminaInyeccionSQL.asp"-->
 <%
-' CONEXIÓN A LAS BASES DE DATOS.
-' Hay dos conexiones, una a la base antigua y otra a la nueva.
-' SERVER=lwda329.servidoresdns.net
-
 ' ############################
 ' MODO: PRUEBAS O PRODUCCION
 ' ############################
-modo = "pruebas"
-' modo = "produccion"
+'modo = "pruebas"
+modo = "produccion"
 session("modo")=modo
 
 if (modo = "produccion" or modo = "pruebas") then
@@ -28,27 +24,22 @@ set objConnection = Server.CreateObject("ADODB.Connection")
 'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 ' OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 ' OBJConnection.connectionstring="driver={sql server};server=HP-LOLO\SQLEXPRESS;database=istas_risctox;UID=istas_SQL;PWD=***REMOVED***"
-OBJConnection.connectionstring = "Provider=SQLOLEDB; Data Source=HP-LOLO\SQLEXPRESS; Initial Catalog=istas_risctox; User ID=istas_SQL; Password=***REMOVED***"
 
-OBJConnection.Open
+Set wshShell = CreateObject( "WScript.Shell" )
+localConnectionString = wshShell.ExpandEnvironmentStrings( "%istas_risctox_dbConnectionString%" )
+set wshShell = Nothing
 
-' ############################################################
-' ### Base nueva (depende de pruebas o produccion)
-' ############################################################
-set objConnection2 = Server.CreateObject("ADODB.Connection")
-
-if (modo = "pruebas") then
-  OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=HP-LOLO\SQLEXPRESS; Initial Catalog=istas_risctox; User ID=istas_SQL; Password=***REMOVED***"
-elseif (modo = "produccion") then
-  'usuario: qc507
-  'contraseña: sql
-  'servidor: osiris.servidoresdns.net
-
-  'objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
-  'OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-  OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+if localConnectionString <> "" then
+	connectionString = localConnectionString
+else
+	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 end if
 
+OBJConnection.connectionstring = connectionString
+OBJConnection.Open
+
+set objConnection2 = Server.CreateObject("ADODB.Connection")
+OBJConnection2.connectionstring = connectionString
 
 ' CAMBIO DEL TIEMPO DE CONEXION POR DEFECTO, PARA ALARGARLO
 segundos=120
