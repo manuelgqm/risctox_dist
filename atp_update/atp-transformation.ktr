@@ -69,7 +69,7 @@
   <created_date>2016&#x2f;05&#x2f;05 13&#x3a;59&#x3a;43.114</created_date>
   <modified_user>-</modified_user>
   <modified_date>2016&#x2f;05&#x2f;05 13&#x3a;59&#x3a;43.114</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -97,7 +97,7 @@
     </attributes>
   </connection>
   <connection>
-    <name>istas_risctox</name>
+    <name>istas_risctox_local</name>
     <server>hp-lolo</server>
     <type>MSSQL</type>
     <access>Native</access>
@@ -123,8 +123,9 @@
     </attributes>
   </connection>
   <order>
+  <hop> <from>parse data</from><to>insert in risctox_atp_update</to><enabled>Y</enabled> </hop>
+  <hop> <from>set cas &#x26; ec nulls</from><to>parse data</to><enabled>Y</enabled> </hop>
   <hop> <from>ATP7-source</from><to>set cas &#x26; ec nulls</to><enabled>Y</enabled> </hop>
-  <hop> <from>set cas &#x26; ec nulls</from><to>parse fields</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>ATP7-source</name>
@@ -153,7 +154,12 @@
     <accept_field/>
     <accept_stepname/>
     <file>
-      <name>C&#x3a;&#x5c;inetpub&#x5c;wwwroot&#x5c;istas&#x5c;risctox&#x5c;atp_update&#x5c;ATP7.xls</name>
+      <name>C&#x3a;&#x5c;inetpub&#x5c;wwwroot&#x5c;istas&#x5c;risctox&#x5c;atp_update&#x5c;ATP7_source_formated.xls</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+      <name/>
       <filemask/>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -280,6 +286,18 @@
         <decimal/>
         <group/>
       </field>
+      <field>
+        <name>notas</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
     </fields>
     <sheets>
       <sheet>
@@ -308,43 +326,14 @@
     <spreadsheet_type>JXL</spreadsheet_type>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>55</xloc>
-      <yloc>150</yloc>
+      <xloc>42</xloc>
+      <yloc>89</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>set cas &#x26; ec nulls</name>
-    <type>NullIf</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>cas</name>
-        <value>&#x2014;</value>
-        </field>
-      <field>
-        <name>ec</name>
-        <value>&#x2014;</value>
-        </field>
-      </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>185</xloc>
-      <yloc>149</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>parse fields</name>
+    <name>parse data</name>
     <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
@@ -457,15 +446,44 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>316</xloc>
-      <yloc>151</yloc>
+      <xloc>314</xloc>
+      <yloc>89</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Entrada Tabla</name>
-    <type>TableInput</type>
+    <name>set cas &#x26; ec nulls</name>
+    <type>NullIf</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>cas</name>
+        <value>&#x2014;</value>
+        </field>
+      <field>
+        <name>ec</name>
+        <value>&#x2014;</value>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>171</xloc>
+      <yloc>89</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>insert in risctox_atp_update</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -474,17 +492,77 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>istas_risctox</connection>
-    <sql>SELECT&#xd;&#xa;  id&#xd;&#xa;, nombre&#xd;&#xa;, nombre_ing&#xd;&#xa;, num_rd&#xd;&#xa;, num_ce_einecs&#xd;&#xa;, num_ce_elincs&#xd;&#xa;, num_cas&#xd;&#xa;, num_onu&#xd;&#xa;, num_icsc&#xd;&#xa;, formula_molecular&#xd;&#xa;, estructura_molecular&#xd;&#xa;, simbolos&#xd;&#xa;, clasificacion_1&#xd;&#xa;, clasificacion_2&#xd;&#xa;, clasificacion_3&#xd;&#xa;, clasificacion_4&#xd;&#xa;, clasificacion_5&#xd;&#xa;, clasificacion_6&#xd;&#xa;, clasificacion_7&#xd;&#xa;, clasificacion_8&#xd;&#xa;, clasificacion_9&#xd;&#xa;, clasificacion_10&#xd;&#xa;, clasificacion_11&#xd;&#xa;, clasificacion_12&#xd;&#xa;, clasificacion_13&#xd;&#xa;, clasificacion_14&#xd;&#xa;, clasificacion_15&#xd;&#xa;, frases_s&#xd;&#xa;, conc_1&#xd;&#xa;, eti_conc_1&#xd;&#xa;, conc_2&#xd;&#xa;, eti_conc_2&#xd;&#xa;, conc_3&#xd;&#xa;, eti_conc_3&#xd;&#xa;, conc_4&#xd;&#xa;, eti_conc_4&#xd;&#xa;, conc_5&#xd;&#xa;, eti_conc_5&#xd;&#xa;, conc_6&#xd;&#xa;, eti_conc_6&#xd;&#xa;, conc_7&#xd;&#xa;, eti_conc_7&#xd;&#xa;, conc_8&#xd;&#xa;, eti_conc_8&#xd;&#xa;, conc_9&#xd;&#xa;, eti_conc_9&#xd;&#xa;, conc_10&#xd;&#xa;, eti_conc_10&#xd;&#xa;, conc_11&#xd;&#xa;, eti_conc_11&#xd;&#xa;, conc_12&#xd;&#xa;, eti_conc_12&#xd;&#xa;, conc_13&#xd;&#xa;, eti_conc_13&#xd;&#xa;, conc_14&#xd;&#xa;, eti_conc_14&#xd;&#xa;, conc_15&#xd;&#xa;, eti_conc_15&#xd;&#xa;, notas_rd_363&#xd;&#xa;, notas_xml&#xd;&#xa;, notas_cancer_rd&#xd;&#xa;, frases_r_danesa&#xd;&#xa;, negra&#xd;&#xa;, sustancia_prohibida&#xd;&#xa;, sustancia_restringida&#xd;&#xa;, comentarios&#xd;&#xa;, cas_alternativos&#xd;&#xa;, clasificacion_rd1272_1&#xd;&#xa;, clasificacion_rd1272_2&#xd;&#xa;, clasificacion_rd1272_3&#xd;&#xa;, clasificacion_rd1272_4&#xd;&#xa;, clasificacion_rd1272_5&#xd;&#xa;, clasificacion_rd1272_6&#xd;&#xa;, clasificacion_rd1272_7&#xd;&#xa;, clasificacion_rd1272_8&#xd;&#xa;, clasificacion_rd1272_9&#xd;&#xa;, clasificacion_rd1272_10&#xd;&#xa;, clasificacion_rd1272_11&#xd;&#xa;, clasificacion_rd1272_12&#xd;&#xa;, clasificacion_rd1272_13&#xd;&#xa;, clasificacion_rd1272_14&#xd;&#xa;, clasificacion_rd1272_15&#xd;&#xa;, conc_rd1272_1&#xd;&#xa;, eti_conc_rd1272_1&#xd;&#xa;, conc_rd1272_2&#xd;&#xa;, eti_conc_rd1272_2&#xd;&#xa;, conc_rd1272_3&#xd;&#xa;, eti_conc_rd1272_3&#xd;&#xa;, conc_rd1272_4&#xd;&#xa;, eti_conc_rd1272_4&#xd;&#xa;, conc_rd1272_5&#xd;&#xa;, eti_conc_rd1272_5&#xd;&#xa;, conc_rd1272_6&#xd;&#xa;, eti_conc_rd1272_6&#xd;&#xa;, conc_rd1272_7&#xd;&#xa;, eti_conc_rd1272_7&#xd;&#xa;, conc_rd1272_8&#xd;&#xa;, eti_conc_rd1272_8&#xd;&#xa;, conc_rd1272_9&#xd;&#xa;, eti_conc_rd1272_9&#xd;&#xa;, conc_rd1272_10&#xd;&#xa;, eti_conc_rd1272_10&#xd;&#xa;, conc_rd1272_11&#xd;&#xa;, eti_conc_rd1272_11&#xd;&#xa;, conc_rd1272_12&#xd;&#xa;, eti_conc_rd1272_12&#xd;&#xa;, conc_rd1272_13&#xd;&#xa;, eti_conc_rd1272_13&#xd;&#xa;, conc_rd1272_14&#xd;&#xa;, eti_conc_rd1272_14&#xd;&#xa;, conc_rd1272_15&#xd;&#xa;, eti_conc_rd1272_15&#xd;&#xa;, notas_rd1272&#xd;&#xa;, simbolos_rd1272&#xd;&#xa;, clases_categorias_peligro_rd1272&#xd;&#xa;, notas_xml_ing&#xd;&#xa;FROM dn_risc_sustancias&#xd;&#xa;</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <connection>istas_risctox_local</connection>
+    <schema/>
+    <table>risctox_atp_substance_updates</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>identificacion</column_name>
+          <stream_name>identificacion</stream_name>
+        </field>
+        <field>
+          <column_name>categoria_peligro</column_name>
+          <stream_name>categoria_peligro</stream_name>
+        </field>
+        <field>
+          <column_name>clas_fraseh</column_name>
+          <stream_name>clas_fraseh</stream_name>
+        </field>
+        <field>
+          <column_name>pictograma</column_name>
+          <stream_name>pictograma</stream_name>
+        </field>
+        <field>
+          <column_name>etiq_fraseh</column_name>
+          <stream_name>etiq_fraseh</stream_name>
+        </field>
+        <field>
+          <column_name>etiq_fraseh_ad</column_name>
+          <stream_name>etiq_fraseh_ad</stream_name>
+        </field>
+        <field>
+          <column_name>limites</column_name>
+          <stream_name>limites</stream_name>
+        </field>
+        <field>
+          <column_name>num_ce_einecs</column_name>
+          <stream_name>ec</stream_name>
+        </field>
+        <field>
+          <column_name>num_cas</column_name>
+          <stream_name>cas</stream_name>
+        </field>
+        <field>
+          <column_name>num_rd</column_name>
+          <stream_name>indice</stream_name>
+        </field>
+        <field>
+          <column_name>notas</column_name>
+          <stream_name>notas</stream_name>
+        </field>
+        <field>
+          <column_name>num_ce_elincs</column_name>
+          <stream_name>ec</stream_name>
+        </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>328</xloc>
-      <yloc>267</yloc>
+      <xloc>467</xloc>
+      <yloc>92</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
