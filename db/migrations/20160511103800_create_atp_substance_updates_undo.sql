@@ -1,0 +1,4 @@
+BEGIN TRANSACTION
+GO
+DROP TABLE istas_risctox.dbo.risctox_atp_substance_updates
+COMMIT
