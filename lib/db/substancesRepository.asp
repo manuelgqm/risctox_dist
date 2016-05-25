@@ -23,6 +23,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "num_ce_elincs", substanceRecordset("num_ce_elincs").Value
 	substance.Add "num_cas", substanceRecordset("num_cas").Value
 	substance.Add "cas_alternativos", substanceRecordset("cas_alternativos").Value
+	
 	' substance.Add "num_onu", substanceRecordset("num_onu").Value 'Parece que no se usa
 	
 	substance.Add "num_icsc", substanceRecordset("num_icsc").Value
@@ -76,8 +77,9 @@ function extractSubstance(substanceRecordset)
 	substance.Add "conc_15", substanceRecordset("conc_15").Value
 	substance.Add "eti_conc_15", substanceRecordset("eti_conc_15").Value
 	substance.Add "notas_rd_363", substanceRecordset("notas_rd_363").Value
-	substance.Add "notas_xml", replace(substanceRecordset("notas_xml").Value, "@", "@ ")
+	substance.Add "notas_xml", replaceValidated(substanceRecordset("notas_xml").Value, "@", "@ ")
 	substance.Add "frases_r_danesa", trim(substanceRecordset("frases_r_danesa").Value)
+	
 
 	' RD1272/2008
 	substance.Add "clasificacion_rd1272_1", trim(substanceRecordset("clasificacion_rd1272_1").Value)
@@ -130,7 +132,7 @@ function extractSubstance(substanceRecordset)
 	else
 		notas_rd1272 = substanceRecordset("notas_rd1272").Value
 	end if
-	substance.Add "notas_rd1272", replace(notas_rd1272, "@", "@ ")
+	substance.Add "notas_rd1272", replaceValidated(substanceRecordset("notas_rd1272"), "@", "@ ")
 	substance.Add "simbolos_rd1272", substanceRecordset("simbolos_rd1272").Value
 	substance.Add "clases_categorias_peligro_rd1272", substanceRecordset("clases_categorias_peligro_rd1272").Value
 
@@ -209,7 +211,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "notas_vlb_6", substanceRecordset("notas_vlb_6").Value
 
 	' Cancer
-	substance.Add "notas_cancer_rd", replace(substanceRecordset("notas_cancer_rd").Value, "véase Tabla 3", "")
+	substance.Add "notas_cancer_rd", replaceValidated(substanceRecordset("notas_cancer_rd").Value, "véase Tabla 3", "")
 	substance.Add "grupo_iarc", substanceRecordset("grupo_iarc").Value
 	substance.Add "volumen_iarc", substanceRecordset("volumen_iarc").Value
 	substance.Add "notas_iarc", substanceRecordset("notas_iarc").Value
@@ -260,7 +262,7 @@ function extractSubstance(substanceRecordset)
 	' COP
 	substance.Add "cop", substanceRecordset("cop").Value
 	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
-	
+
 	set extractSubstance = substance
 end function
 
@@ -282,9 +284,16 @@ end function
 function removeVlbFromNotes(notes)
 	res = notes
 	if (not isnull(notes)) then
-		res = replace(notes, "VLB", "")
+		res = replaceValidated(notes, "VLB", "")
 	end if
 	
 	removeVlbFromNotes = res
+end function
+
+function replaceValidated(sourceString, targetString, replaceString)
+	output = ""
+	if (not isNull(sourceString)) then output = replaceValidated(sourceString, targetString, replaceString)
+	
+	replaceValidated = output
 end function
 %>
