@@ -292,7 +292,7 @@ end function
 
 function replaceValidated(sourceString, targetString, replaceString)
 	output = ""
-	if (not isNull(sourceString)) then output = replaceValidated(sourceString, targetString, replaceString)
+	if (not isNull(sourceString)) then output = replace(sourceString, targetString, replaceString)
 	
 	replaceValidated = output
 end function
