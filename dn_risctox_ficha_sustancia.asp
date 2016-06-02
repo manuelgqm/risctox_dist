@@ -902,6 +902,7 @@ sub muestra_clasificacion(numero, clasificacion)
 		clas_cat_peligro = trim(array_clasificacion(0))
 		if ubound(array_clasificacion)>0 then
 			frase = trim(array_clasificacion(1))
+		else frase = trim(array_clasificacion(0))
 		end if
 %>
 	    <blockquote style="margin-left: 10px; margin-bottom: -20px;">
@@ -918,7 +919,9 @@ sub muestra_clasificacion(numero, clasificacion)
  			else
 %>
 	        <b><%=frase%></b>: <%= descripcion %>
-	        <a href="javascript:toggle('<%= "secc-categpeligro-"+CStr(numero) %>', '<%= "img-fraseh-"+CStr(numero) %>');"><img src="imagenes/desplegar.gif" align="absmiddle" id="<%= "img-fraseh-"+CStr(numero) %>" alt="Pulse para ver el etiquetado" title="Pulse para ver el etiquetado" /></a>
+					<% if ubound(array_clasificacion)>0 then %>
+						<a href="javascript:toggle('<%= "secc-categpeligro-"+CStr(numero) %>', '<%= "img-fraseh-"+CStr(numero) %>');"><img src="imagenes/desplegar.gif" align="absmiddle" id="<%= "img-fraseh-"+CStr(numero) %>" alt="Pulse para ver el etiquetado" title="Pulse para ver el etiquetado" /></a>
+					<% end if %>
 	        <br/>
     		<blockquote style="margin-left: 30px; margin-top: 12px; display:none" id="secc-categpeligro-<%=numero%>">
 <%
