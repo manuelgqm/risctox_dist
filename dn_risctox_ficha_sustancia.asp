@@ -9,7 +9,7 @@
 '----- Registrar la visita
 	idpagina = 627	'--- página Resultado de la búsqueda, sólo para registrar estadísticas
 	call recordVisit(idpagina)
-	on error resume next
+	' on error resume next
 
 ' Borde para ver las tablas u ocultarlas
 'borde=" border='1'"
@@ -27,13 +27,11 @@ if(substance.Count = 0 ) then
 	errores = "No se ha encontrado la sustancia indicada"
 end if
 
-
 ' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
 set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, objConnection2)
 set substance = addSubstanceAllAssociatedFields(substance, substanceGroupsRecordset)
 substanceGroupsRecordset.close()
 set substanceGroupsRecordset = nothing
-
 
 function requestSubstanceGroups(id_sustancia, connection)
 	dim sqlQuery
@@ -3172,7 +3170,7 @@ end sub
 ' ##################################################################################
 sub ap6_sectores()
 
-	sql="SELECT DISTINCT s.numero_cnae AS codigo, s.nombre AS nombre, s.id AS id_sector FROM dn_alter_sectores AS s LEFT OUTER JOIN dn_risc_sustancias_por_sectores AS sps ON s.id = sps.id_sector WHERE sps.id_sustancia="&id_sustancia&" ORDER BY s.codigo"
+	sql="SELECT DISTINCT s.numero_cnae AS codigo, s.nombre AS nombre, s.id AS id_sector FROM dn_alter_sectores AS s LEFT OUTER JOIN dn_risc_sustancias_por_sectores AS sps ON s.id = sps.id_sector WHERE sps.id_sustancia="&id_sustancia&" ORDER BY numero_cnae"
 
   ' Mejora: incluimos solo los sectores que contienen documentos asociados
   'sql="SELECT DISTINCT s.numero_cnae AS codigo, s.nombre AS nombre, s.id AS id_sector FROM dn_alter_sectores AS s LEFT OUTER JOIN dn_risc_sustancias_por_sectores AS sps ON s.id = sps.id_sector INNER JOIN dn_alter_ficheros_por_sectores AS fps ON sps.id_sector = fps.id_sector WHERE sps.id_sustancia="&id_sustancia&" ORDER BY s.codigo"
