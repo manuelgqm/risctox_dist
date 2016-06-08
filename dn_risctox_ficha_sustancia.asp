@@ -27,15 +27,13 @@ if(substance.Count = 0 ) then
 	errores = "No se ha encontrado la sustancia indicada"
 end if
 
-call extractSubstanceGroupsListAsociation(id_sustancia, objConnection2)
 
-sub extractSubstanceGroupsListAsociation(id_sustancia, connection)
-	' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
-	set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
-	set substanceGroups = extractSubstanceGroups(substanceGroupsRecordset)
-	set substanceGroupsRecordset = nothing
-	substanceGroupsRecordset.close()
-end sub
+' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
+set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, objConnection2)
+set substance = addSubstanceAllAssociatedFields(substance, substanceGroupsRecordset)
+substanceGroupsRecordset.close()
+set substanceGroupsRecordset = nothing
+
 
 function requestSubstanceGroups(id_sustancia, connection)
 	dim sqlQuery
@@ -47,7 +45,7 @@ function requestSubstanceGroups(id_sustancia, connection)
 end function
 
 ' Recorremos todos los grupos
-function extractSubstanceGroups(substanceGroupsRecordset)
+function addSubstanceAllAssociatedFields(substance, substanceGroupsRecordset)
 	set substanceGroups = Server.CreateObject("Scripting.Dictionary")
 	set substanceLists = getSubstanceLists()
 	
@@ -58,7 +56,7 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 
 		substanceGroupsRecordset.movenext
 	loop
-	
+	set addSubstanceAllAssociatedFields = substance
 end function
 
 function getSubstanceLists()
