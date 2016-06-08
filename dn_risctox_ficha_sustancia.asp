@@ -3504,19 +3504,24 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 		currentSubstanceValue = substance.Item(currentGroupKey)
 		if varType(currentSubstanceValue) = 1 then currentSubstanceValue = ""
 		substanceGroupFieldName = fieldName & "_" & currentGroupKey
-		currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
-		if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
-
-		if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
-			if currentSubstanceValue <> "" then 
-				currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
-			else
-				currentSubstanceValue = currentSubstanceGroupValue
-			end if
-		end if
 		
-		lastSubstanceGroupValue = currentSubstanceValue
-		substance.Item(currentGroupKey) = currentSubstanceValue
+		if FieldExists(substanceGroupsRecordset, substanceGroupFieldName) then
+		
+			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
+
+			if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
+
+			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
+				if currentSubstanceValue <> "" then 
+					currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
+				else
+					currentSubstanceValue = currentSubstanceGroupValue
+				end if
+			end if
+			
+			lastSubstanceGroupValue = currentSubstanceValue
+			substance.Item(currentGroupKey) = currentSubstanceValue
+		end if
 	next
 		
 	set evaluaCamposListaAsociada = substance
