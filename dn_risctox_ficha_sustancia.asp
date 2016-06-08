@@ -9,7 +9,6 @@
 '----- Registrar la visita
 	idpagina = 627	'--- página Resultado de la búsqueda, sólo para registrar estadísticas
 	call recordVisit(idpagina)
-	' on error resume next
 
 ' Borde para ver las tablas u ocultarlas
 'borde=" border='1'"
