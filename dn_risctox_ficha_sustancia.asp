@@ -3492,8 +3492,11 @@ end function
 
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
 	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
-
-	if substanceGroupsRecordset("asoc_" & listName ) then
+	dim fieldName
+	fieldName = "asoc_" & listName
+	if not FieldExists(substanceGroupsRecordset, fieldName) then
+		set evaluaCamposListaAsociada = substance
+	else
 		for i = 0 to UBound(groupKeysArray)
 			currentGroupKey = groupKeysArray(i)
 			currentSubstanceValue = substance.Item(currentGroupKey)
@@ -3517,4 +3520,13 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 	end if
 	set evaluaCamposListaAsociada = substance
 end function
+
+Function FieldExists(ByVal rs, ByVal fieldName) 
+
+    On Error Resume Next
+    FieldExists = rs.Fields(fieldName).name <> ""
+    If Err <> 0 Then FieldExists = False
+    Err.Clear
+
+End Function
 %>
