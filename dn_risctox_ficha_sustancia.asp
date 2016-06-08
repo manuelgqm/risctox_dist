@@ -1,5 +1,6 @@
 <!--#include file="dn_restringida.asp"-->
-<!--#include file="dn_conexion.asp"-->
+<!--#include file="EliminaInyeccionSQL.asp"-->
+<!--#include file="config/dbConnection.asp"-->
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="lib/db/substancesRepository.asp"-->
