@@ -3,23 +3,12 @@
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="lib/db/substancesRepository.asp"-->
+<!--#include file="lib/visitsRecorder.asp"-->
 
 <%
 '----- Registrar la visita
 	idpagina = 627	'--- página Resultado de la búsqueda, sólo para registrar estadísticas
-	IP = Request.ServerVariables("REMOTE_ADDR")
-	Set MiBrowser = Server.CreateObject("MSWC.BrowserType")
-	navegador = MiBrowser.Browser
-	if session("id_ecogente")<>"" then
-		usuario = session("id_ecogente")
-	else
-		usuario = 0
-	end if
-	orden = "INSERT INTO WEBISTAS_VISITAS (fecha,hora,IP,navegador,idpagina,idgente) VALUES ('"&date()&"','"&time()&"','"&IP&"','"&navegador&"',"&idpagina&","&usuario&")"
-	Set objRecordset = Server.CreateObject ("ADODB.Recordset")
-	Set objRecordset = OBJConnection.Execute(orden)
-
-on error resume next
+	call recordVisit(idpagina)
 
 ' Borde para ver las tablas u ocultarlas
 'borde=" border='1'"
