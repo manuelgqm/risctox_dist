@@ -9,6 +9,7 @@
 '----- Registrar la visita
 	idpagina = 627	'--- página Resultado de la búsqueda, sólo para registrar estadísticas
 	call recordVisit(idpagina)
+	on error resume next
 
 ' Borde para ver las tablas u ocultarlas
 'borde=" border='1'"
@@ -3492,8 +3493,6 @@ end function
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
 	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
 
-	call estaEnLista(substanceGroupsRecordset, listName)
-	
 	if substanceGroupsRecordset("asoc_" & listName ) then
 		for i = 0 to UBound(groupKeysArray)
 			currentGroupKey = groupKeysArray(i)
@@ -3518,13 +3517,4 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 	end if
 	set evaluaCamposListaAsociada = substance
 end function
-
-sub estaEnLista(substanceGroupsRecordset, listName)
-	if substanceGroupsRecordset("asoc_" & listName ) then
-		execute("esta_en_lista_" & listName & " = 1")
-	else
-		execute("esta_en_lista_" & listName & " = 0")
-	end if
-end sub
-
 %>
