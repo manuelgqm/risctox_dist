@@ -1,3 +1,10 @@
+<!--#include file="dn_restringida.asp"-->
+<!--#include file="EliminaInyeccionSQL.asp"-->
+<!--#include file="config/dbConnection.asp"-->
+<!--#include file="adovbs.inc"-->
+<!--#include file="dn_funciones_comunes.asp"-->
+<!--#include file="dn_funciones_texto.asp"-->
+
 <!--#include file="lib/visitsRecorder.asp"-->
 <%
 '+++++++ XIP +++++
@@ -35,12 +42,6 @@ FUNCTION vistaprevia(texto)
 
 '+++fin xip +++++
 %>
-<!--#include file="adovbs.inc"-->
-<!--#include file="dn_conexion.asp"-->
-<!--#include file="dn_funciones_comunes.asp"-->
-<!--#include file="dn_funciones_texto.asp"-->
-
-<!--#include file="dn_restringida.asp"-->
 
 <%
 'si busc está vacio, mostramos formulario; si es 1, han dado a "buscar"; si es dos, han dado a paginación
