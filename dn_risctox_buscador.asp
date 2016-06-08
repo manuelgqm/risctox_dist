@@ -1,10 +1,7 @@
+<!--#include file="lib/visitsRecorder.asp"-->
 <%
 '+++++++ XIP +++++
-	'----- Si es restringida y no estás identificado no puedes entrar
-	'if session("Id_Ecogente")="" then response.redirect "acceso.asp?idpagina="&idpagina
 	id_ecogente = session("id_ecogente")
-	'---- ATENCIÓN: ponerlo cuando publiquemos en abierto
-	'id_ecogente = 1
 
 	idpagina = 626	'--- página buscador, sólo para registrar estadísticas
 
@@ -60,18 +57,7 @@ busc = EliminaInyeccionSQL(busc)
 	set objR = OBJConnection.Execute(sql)
 	numeracion = objR("numeracion")
 
-	'----- Registrar la visita
-	IP = Request.ServerVariables("REMOTE_ADDR")
-	Set MiBrowser = Server.CreateObject("MSWC.BrowserType")
-	navegador = MiBrowser.Browser
-	if session("id_ecogente")<>"" then
-		usuario = session("id_ecogente")
-	else
-		usuario = 0
-	end if
-	orden = "INSERT INTO WEBISTAS_VISITAS (fecha,hora,IP,navegador,idpagina,idgente) VALUES ('"&date()&"','"&time()&"','"&IP&"','"&navegador&"',"&idpagina&","&usuario&")"
-	Set objRecordset = Server.CreateObject ("ADODB.Recordset")
-	Set objRecordset = OBJConnection.Execute(orden)
+	call recordVisit(idpagina)
 
 %>
 
