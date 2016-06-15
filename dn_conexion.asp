@@ -1,5 +1,9 @@
 <!--#include file="EliminaInyeccionSQL.asp"-->
 <%
+' CONEXIÓN A LAS BASES DE DATOS.
+' Hay dos conexiones, una a la base antigua y otra a la nueva.
+' SERVER=lwda329.servidoresdns.net
+
 ' ############################
 ' MODO: PRUEBAS O PRODUCCION
 ' ############################
@@ -7,7 +11,7 @@
 modo = "produccion"
 session("modo")=modo
 
-if (modo = "produccion" or modo = "pruebas") then
+if (modo = "produccion") then
   on error resume next
 end if
 
@@ -22,23 +26,35 @@ set objConnection = Server.CreateObject("ADODB.Connection")
 'OBJConnection.Open "DSN=istas.net.base;UID=qc507;PWD=sql"
 'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
 'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-' OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-' OBJConnection.connectionstring="driver={sql server};server=HP-LOLO\SQLEXPRESS;database=istas_risctox;UID=istas_SQL;PWD=***REMOVED***"
 
+' ############################################################
+' ### Base nueva (depende de pruebas o produccion)
+' ############################################################
+set objConnection2 = Server.CreateObject("ADODB.Connection")
+
+if (modo = "pruebas") then
+  objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=lwda680.servidoresdns.net; Initial Catalog=qbk243; User ID=qbk243; Password=***REMOVED***"
+elseif (modo = "produccion") then
+  'usuario: qc507
+  'contraseña: sql
+  'servidor: osiris.servidoresdns.net
+
+  'objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
+  'OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+  OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+end if
+
+'Set up testing enviroment
+Session.CodePage = 1252
 Set wshShell = CreateObject( "WScript.Shell" )
 localConnectionString = wshShell.ExpandEnvironmentStrings( "%istas_risctox_dbConnectionString%" )
 set wshShell = Nothing
-
-if localConnectionString <> "" then
+if localConnectionString <> "%istas_risctox_dbConnectionString%" then
 	connectionString = localConnectionString
 else
 	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 end if
-
 OBJConnection.connectionstring = connectionString
-OBJConnection.Open
-
-set objConnection2 = Server.CreateObject("ADODB.Connection")
 OBJConnection2.connectionstring = connectionString
 
 ' CAMBIO DEL TIEMPO DE CONEXION POR DEFECTO, PARA ALARGARLO
@@ -52,6 +68,7 @@ objConnection2.CommandTimeout=segundos
 ' ES NECESARIO PARA QUE DOS LECTURAS CONSECUTIVAS DE UN RECORDSET NO VACÍE EL MISMO
 objConnection2.CursorLocation = adUseClient
 
+OBJConnection.Open
 objConnection2.Open
 %>
 
