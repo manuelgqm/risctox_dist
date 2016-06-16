@@ -7,20 +7,6 @@
 <!--#include file="dn_conexion.asp"-->
 
 <%
-
-	'response.write Instr(request.servervariables("PATH_INFO"),"17.13.81.22")
-	'response.write request.servervariables("SERVER_NAME")
-
-	' if (request.servervariables("SERVER_NAME") = "217.13.81.22") then
-		if (request("idpagina")<>"") then
-			' response.redirect("http://www.istas.net/risctox/index.asp?idpagina="&request("idpagina"))
-			response.redirect("index.asp?idpagina="&request("idpagina"))
-		else
-			' response.redirect("http://www.istas.net/risctox/index.asp")
-		end if
-	' end if
-
-
 	'usuario = request.cookies("webistas")
 
 	'if cstr(usuario)="" then
