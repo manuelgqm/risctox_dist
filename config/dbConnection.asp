@@ -28,7 +28,7 @@ Set wshShell = CreateObject( "WScript.Shell" )
 localConnectionString = wshShell.ExpandEnvironmentStrings( "%istas_risctox_dbConnectionString%" )
 set wshShell = Nothing
 
-if localConnectionString <> "" then
+if localConnectionString <> "%istas_risctox_dbConnectionString%" then
 	connectionString = localConnectionString
 else
 	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
