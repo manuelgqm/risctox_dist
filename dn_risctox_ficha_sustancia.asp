@@ -2350,12 +2350,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 			<blockquote>
 			<table>
-			<% if (nivel_disruptor <> "") then %>
+			<% if (substance.Item("nivel_disruptor") <> "") then %>
 				<tr>
 					<td class="subtitulo3" valign="top">Fuente:</td>
 					<td>
 					<%
-					array_niveles=split(nivel_disruptor, ",")
+					array_niveles=split(substance.Item("nivel_disruptor"), ",")
 					for i=0 to ubound(array_niveles)
 						nivel=dame_definicion(trim(array_niveles(i)))
 						response.write nivel&"<br /><br />"
