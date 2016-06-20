@@ -247,6 +247,26 @@
 	<td>*S61: Evítese su liberación al medio ambiente. Recábense instrucciones específicas de la ficha de datos de seguridad.*</td>
 </tr>
 <tr>
+	<td>verifyElementPresent</td>
+	<td>css=img[title=&quot;T+; Muy tóxico&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_simbolos_cuerpo</td>
+	<td>*T+; Muy tóxico*</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=img[title=&quot;N; Peligroso para el medio ambiente&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=ap2_clasificacion_simbolos_cuerpo</td>
+	<td>* N; Peligroso para el medio ambiente*</td>
+</tr>
+<tr>
 	<td>verifyText</td>
 	<td>css=#secc-notas &gt; b</td>
 	<td>Nota A</td>
@@ -255,6 +275,41 @@
 	<td>verifyText</td>
 	<td>//blockquote[@id='secc-notas']/b[2]</td>
 	<td>Nota E</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=img[title=&quot;GHS06; Toxicidad aguda (oral, cutánea, por inhalación)&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-clasificacion-rd1272 &gt; tbody &gt; tr &gt; td &gt; #ap2_clasificacion_simbolos_cuerpo</td>
+	<td>*Toxicidad aguda (oral, cutánea, por inhalación)*</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=img[title=&quot;GHS08; Toxicidad crónica&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-clasificacion-rd1272 &gt; tbody &gt; tr &gt; td &gt; #ap2_clasificacion_simbolos_cuerpo</td>
+	<td>* Toxicidad crónica*</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=img[title=&quot;GHS09; Peligroso para el medio ambiente acuático&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=#secc-clasificacion-rd1272 &gt; tbody &gt; tr &gt; td &gt; #ap2_clasificacion_simbolos_cuerpo</td>
+	<td>* Peligroso para el medio ambiente acuático*</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=#secc-clasificacion-rd1272 &gt; tbody &gt; tr &gt; td &gt; #ap2_clasificacion_simbolos_cuerpo &gt; b</td>
+	<td></td>
 </tr>
 <tr>
 	<td>verifyText</td>
@@ -363,8 +418,23 @@
 </tr>
 <tr>
 	<td>verifyText</td>
+	<td>css=blockquote &gt; strong</td>
+	<td>Nivel cancerígeno:</td>
+</tr>
+<tr>
+	<td>verifyText</td>
 	<td>css=fieldset &gt; blockquote</td>
-	<td>Nivel cancerígeno: 1B</td>
+	<td>*1B*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=fieldset &gt; blockquote</td>
+	<td>*Nivel cancerígeno:*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=fieldset &gt; blockquote</td>
+	<td>*véase Tabla 3*</td>
 </tr>
 <tr>
 	<td>verifyText</td>
