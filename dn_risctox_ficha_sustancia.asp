@@ -7,27 +7,16 @@
 <!--#include file="lib/visitsRecorder.asp"-->
 
 <%
-'----- Registrar la visita
-	idpagina = 627	'--- página Resultado de la búsqueda, sólo para registrar estadísticas
-	call recordVisit(idpagina)
-
-' Borde para ver las tablas u ocultarlas
-'borde=" border='1'"
-borde=""
-
-' Inicialmente no hay errores...
+idpagina = 627
+call recordVisit(idpagina)
 errores = ""
 
-' Cogemos el id de la sustancia elegida y traemos sus datos
 id_sustancia = request("id_sustancia")
 id_sustancia = EliminaInyeccionSQL(id_sustancia)
 
 set substance = findSubstance( id_sustancia, objConnection2 )
-if(substance.Count = 0 ) then
-	errores = "No se ha encontrado la sustancia indicada"
-end if
+if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
-' A continuación buscamos la relación de la sustancia con grupos que tengan información de listas asociadas y se la añadimos a los campos
 set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, objConnection2)
 set substance = addSubstanceAllAssociatedFields(substance, substanceGroupsRecordset)
 substanceGroupsRecordset.close()
@@ -35,18 +24,17 @@ set substanceGroupsRecordset = nothing
 
 function requestSubstanceGroups(id_sustancia, connection)
 	dim sqlQuery
-	
+
 	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
-	
+
 	set requestSubstanceGroups = connection.execute(sqlQuery)
-	
+
 end function
 
-' Recorremos todos los grupos
 function addSubstanceAllAssociatedFields(substance, substanceGroupsRecordset)
 	set substanceGroups = Server.CreateObject("Scripting.Dictionary")
 	set substanceLists = getSubstanceLists()
-	
+
 	do while not substanceGroupsRecordset.eof
 		for each list in substanceLists.keys
 			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, substanceLists.Item(list))
@@ -2238,7 +2226,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		        substance.Item("fuente") = ""
 
 		      end if
-			  
+
 
 					array_categorias=split(substance.Item("categoria_cancer_otras"), ",")
 					array_fuentes=split(substance.Item("fuente"), ",")
@@ -3490,40 +3478,40 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
 	dim fieldName
 	fieldName = "asoc_" & listName
-	
+
 	if not FieldExists(substanceGroupsRecordset, fieldName) then
 		set evaluaCamposListaAsociada = substance
 	end if
-	
+
 	for i = 0 to UBound(groupKeysArray)
 		currentGroupKey = groupKeysArray(i)
 		currentSubstanceValue = substance.Item(currentGroupKey)
 		if varType(currentSubstanceValue) = 1 then currentSubstanceValue = ""
 		substanceGroupFieldName = fieldName & "_" & currentGroupKey
-		
+
 		if FieldExists(substanceGroupsRecordset, substanceGroupFieldName) then
-		
+
 			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
 
 			if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
 
 			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
-				if currentSubstanceValue <> "" then 
+				if currentSubstanceValue <> "" then
 					currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
 				else
 					currentSubstanceValue = currentSubstanceGroupValue
 				end if
 			end if
-			
+
 			lastSubstanceGroupValue = currentSubstanceValue
 			substance.Item(currentGroupKey) = currentSubstanceValue
 		end if
 	next
-		
+
 	set evaluaCamposListaAsociada = substance
 end function
 
-Function FieldExists(ByVal rs, ByVal fieldName) 
+Function FieldExists(ByVal rs, ByVal fieldName)
 
     On Error Resume Next
     FieldExists = rs.Fields(fieldName).name <> ""
