@@ -6,26 +6,26 @@ function findSubstance( id_sustancia, connection )
 	set substance = extractSubstance(substanceRecordset)
 	substanceRecordset.close()
 	set substanceRecordset=nothing
-	
+
 	set findSubstance = substance
 end function
 
 ' PRIVATE
 function extractSubstance(substanceRecordset)
 	set substance = Server.CreateObject("Scripting.Dictionary")
-	
+
 	' dn_risc_sustancias
 	substance.Add "nombre", substanceRecordset("nombre").Value
 	substance.Add "nombre_ing", elimina_repes(substanceRecordset("nombre_ing").Value, "@")
-	
+
 	substance.Add "num_rd", substanceRecordset("num_rd").Value
 	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
 	substance.Add "num_ce_elincs", substanceRecordset("num_ce_elincs").Value
 	substance.Add "num_cas", substanceRecordset("num_cas").Value
 	substance.Add "cas_alternativos", substanceRecordset("cas_alternativos").Value
-	
+
 	' substance.Add "num_onu", substanceRecordset("num_onu").Value 'Parece que no se usa
-	
+
 	substance.Add "num_icsc", substanceRecordset("num_icsc").Value
 	substance.Add "formula_molecular", substanceRecordset("formula_molecular").Value
 	substance.Add "estructura_molecular", substanceRecordset("estructura_molecular").Value
@@ -79,7 +79,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "notas_rd_363", substanceRecordset("notas_rd_363").Value
 	substance.Add "notas_xml", replaceValidated(substanceRecordset("notas_xml").Value, "@", "@ ")
 	substance.Add "frases_r_danesa", trim(substanceRecordset("frases_r_danesa").Value)
-	
+
 
 	' RD1272/2008
 	substance.Add "clasificacion_rd1272_1", trim(substanceRecordset("clasificacion_rd1272_1").Value)
@@ -127,7 +127,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "eti_conc_rd1272_14", substanceRecordset("eti_conc_rd1272_14").Value
 	substance.Add "conc_rd1272_15", substanceRecordset("conc_rd1272_15").Value
 	substance.Add "eti_conc_rd1272_15", substanceRecordset("eti_conc_rd1272_15").Value
-	if varType(substanceRecordset("notas_rd1272").Value) = vbNull then 
+	if varType(substanceRecordset("notas_rd1272").Value) = vbNull then
 		notas_rd1272 = ""
 	else
 		notas_rd1272 = substanceRecordset("notas_rd1272").Value
@@ -165,21 +165,21 @@ function extractSubstance(substanceRecordset)
 	substance.Add "vla_ec_ppm_4", substanceRecordset("vla_ec_ppm_4").Value
 	substance.Add "vla_ec_mg_m3_4", substanceRecordset("vla_ec_mg_m3_4").Value
 	substance.Add "notas_vla_4", removeVlbFromNotes(substanceRecordset("notas_vla_4").Value)
-	
+
 	substance.Add "estado_5", substanceRecordset("estado_5").Value
 	substance.Add "vla_ed_ppm_5", substanceRecordset("vla_ed_ppm_5").Value
 	substance.Add "vla_ed_mg_m3_5", substanceRecordset("vla_ed_mg_m3_5").Value
 	substance.Add "vla_ec_ppm_5", substanceRecordset("vla_ec_ppm_5").Value
 	substance.Add "vla_ec_mg_m3_5", substanceRecordset("vla_ec_mg_m3_5").Value
 	substance.Add "notas_vla_5", removeVlbFromNotes(substanceRecordset("notas_vla_5").Value)
-	
+
 	substance.Add "estado_6", substanceRecordset("estado_6").Value
 	substance.Add "vla_ed_ppm_6", substanceRecordset("vla_ed_ppm_6").Value
 	substance.Add "vla_ed_mg_m3_6", substanceRecordset("vla_ed_mg_m3_6").Value
 	substance.Add "vla_ec_ppm_6", substanceRecordset("vla_ec_ppm_6").Value
 	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
 	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
-	
+
 	substance.Add "ib_1", substanceRecordset("ib_1").Value
 	substance.Add "vlb_1", substanceRecordset("vlb_1").Value
 	substance.Add "momento_1", substanceRecordset("momento_1").Value
@@ -211,7 +211,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "notas_vlb_6", substanceRecordset("notas_vlb_6").Value
 
 	' Cancer
-	substance.Add "notas_cancer_rd", replaceValidated(substanceRecordset("notas_cancer_rd").Value, "véase Tabla 3", "")
+	substance.Add "notas_cancer_rd", replaceValidated(substanceRecordset("notas_cancer_rd").Value, "vï¿½ase Tabla 3", "")
 	substance.Add "grupo_iarc", substanceRecordset("grupo_iarc").Value
 	substance.Add "volumen_iarc", substanceRecordset("volumen_iarc").Value
 	substance.Add "notas_iarc", substanceRecordset("notas_iarc").Value
@@ -223,7 +223,7 @@ function extractSubstance(substanceRecordset)
 	'substance.Add "vector_disruptores", split(substance.Item("nivel_disruptor"),",")
 
 
-	' Neurotóxico
+	' Neurotï¿½xico
 	substance.Add "efecto_neurotoxico", substanceRecordset("efecto_neurotoxico").Value
 	substance.Add "nivel_neurotoxico", substanceRecordset("nivel_neurotoxico").Value
 	substance.Add "fuente_neurotoxico", substanceRecordset("fuente_neurotoxico").Value
@@ -237,7 +237,7 @@ function extractSubstance(substanceRecordset)
 	' mPmB
 	substance.Add "mpmb", substanceRecordset("mpmb").Value
 
-	' Tóxica para el agua
+	' Tï¿½xica para el agua
 	substance.Add "directiva_aguas", substanceRecordset("directiva_aguas").Value
 	substance.Add "clasif_mma", substanceRecordset("clasif_mma").Value
 	substance.Add "sustancia_prioritaria", substanceRecordset("sustancia_prioritaria").Value
@@ -281,19 +281,80 @@ function composeSubstanceQuery(id_sustancia)
 	composeSubstanceQuery = sql
 end function
 
+function addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
+	dim substanceLists, substanceGroupsRecordset
+
+	set substanceLists = collectSubstanceLists()
+	set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
+
+	do while not substanceGroupsRecordset.eof
+		for each list in substanceLists.keys
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, substanceLists.Item(list))
+		next
+		substanceGroupsRecordset.movenext
+	loop
+
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
+
+	set addSubstanceGroupsAssociatedFields = substance
+end function
+
+function requestSubstanceGroups(id_sustancia, connection)
+	dim sqlQuery
+
+	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
+
+	set requestSubstanceGroups = connection.execute(sqlQuery)
+end function
+
 function removeVlbFromNotes(notes)
 	res = notes
 	if (not isnull(notes)) then
 		res = replaceValidated(notes, "VLB", "")
 	end if
-	
+
 	removeVlbFromNotes = res
 end function
 
 function replaceValidated(sourceString, targetString, replaceString)
 	output = ""
 	if (not isNull(sourceString)) then output = replace(sourceString, targetString, replaceString)
-	
+
 	replaceValidated = output
+end function
+
+function collectSubstanceLists()
+	set lists = Server.CreateObject("Scripting.Dictionary")
+	lists.Add "cancer_rd", Array("notas_cancer_rd")
+	lists.Add "cancer_iarc", Array("grupo_iarc","volumen_iarc")
+	lists.Add "cancer_otras", Array("categoria_cancer_otras","fuente")
+	lists.Add "cancer_mama", Array("cancer_mama_fuente")
+	lists.Add "neuro_oto", Array("efecto_neurotoxico","nivel_neurotoxico","fuente_neurotoxico")
+	lists.Add "disruptores", Array("nivel_disruptor")
+	lists.Add "tpb", Array("enlace_tpb","anchor_tpb","fuentes_tpb")
+	lists.Add "directiva_aguas", Array("clasif_mma")
+	lists.Add "vla", Array("estado_1","ed_ppm_1", "ed_mg_m3_1", "ec_ppm_1", "ec_mg_m3_1", "notas_vla_1",	"estado_2", "ed_ppm_2", "ed_mg_m3_2", "ec_ppm_2", "ec_mg_m3_2", "notas_vla_2", "estado_3", "ed_ppm_3", "ed_mg_m3_3", "ec_ppm_3", "ec_mg_m3_3", "notas_vla_3", "estado_4", "ed_ppm_4", "ed_mg_m3_4", "ec_ppm_4", "ec_mg_m3_4", "notas_vla_4", "estado_5", "ed_ppm_5", "ed_mg_m3_5", "ec_ppm_5", "ec_mg_m3_5", "notas_vla_5", "estado_6", "ed_ppm_6", "ed_mg_m3_6", "ec_ppm_6", "ec_mg_m3_6", "notas_vla_6")
+	lists.Add "vlb", Array("ib_1", "vlb_1", "momento_1", "notas_vlb_1", "ib_2", "vlb_2", "momento_2", "notas_vlb_2", "ib_3", "vlb_3", "momento_3", "notas_vlb_3", "ib_4", "vlb_4", "momento_4", "notas_vlb_4", "ib_5", "vlb_5", "momento_5", "notas_vlb_5", "ib_6", "vlb_6", "momento_6", "notas_vlb_6")
+	lists.Add "cop", Array("enlace_cop")
+	lists.Add "mpmb", Array("")
+	lists.Add "eper", Array("")
+	lists.Add "eper_agua", Array("")
+	lists.Add "eper_aire", Array("")
+	lists.Add "eper_suelo", Array("")
+	lists.Add "prohibidas", Array("comentario_prohibida")
+	lists.Add "restringidas", Array("comentario_restringida")
+	lists.Add "prohibidas_embarazadas", Array("comentario_prohibida")
+	lists.Add "prohibidas_lactantes", Array("comentario_prohibida")
+	lists.Add "candidatas_reach", Array("")
+	lists.Add "autorizacion_reach", Array("")
+	lists.Add "biocidas_autorizadas", Array("fuente", "pureza_minima", "condiciones", "usos")
+	lists.Add "biocidas_prohibidas", Array("fuente", "fecha_limite", "usos")
+	lists.Add "pesticidas_autorizadas", Array("fuente", "plazo_renovacion", "pureza_minima", "usos")
+	lists.Add "pesticidas_prohibidas", Array("fuente", "exenciones")
+	lists.Add "alergeno", Array("")
+	lists.Add "calidad_aire", Array("")
+	lists.Add  "corap", Array("")
+	set collectSubstanceLists = lists
 end function
 %>
