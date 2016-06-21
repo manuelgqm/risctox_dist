@@ -19,8 +19,45 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 ' **** /SPL
 
 ' Comprobamos si está en cada lista, para no tener que buscar varias veces
-dim substanceLists()
-esta_en_lista_cancer_rd = esta_en_lista ("cancer_rd", id_sustancia)
+Function in_array(element, arr)
+  in_array = False
+  For i=0 To Ubound(arr)
+     If Trim(arr(i)) = Trim(element) Then
+        in_array = True
+        Exit Function
+     End If
+  Next
+End Function
+
+dim listsContainingSubstance()
+dim substanceLists
+substanceLists = Array( _
+  "cancer_rd", "cancer_danesa", "mutageno_rd", "mutageno_danesa", _
+  "cancer_iarc", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama", _
+  "tpr", "tpr_danesa", "de", "neurotoxico_rd", "neurotoxico_danesa", _
+  "neurotoxico_nivel", "neurotoxico" , "sensibilizante", "sensibilizante_danesa", _
+  "sensibilizante_reach", "eepp", "tpb", "directiva_aguas", _
+  "sustancias_prioritarias", "alemana", "aire", "ozono", "clima", _
+  "suelos", "cov", "vertidos", "lpcic", "lpcic-agua", "lpcic-aire", _
+  "lpcic-suelo", "residuos", "accidentes", "emisiones", "salud", _
+  "prohibidas", "restringidas", "cop", "prohibidas_embarazadas", _
+  "prohibidas_lactantes", "candidatas_reach", "autorizacion_reach", _
+  "biocidas_autorizadas", "biocidas_prohibidas", "pesticidas_autorizadas", _
+  "pesticidas_prohibidas", "corap" _
+)
+dim size
+size = 0
+for i = 0 to uBound(substanceLists)
+  listName = substanceLists(i)
+  'response.write listName & "<br>"
+  if esta_en_lista(listName, id_sustancia) then
+    redim preserve listsContainingSubstance(size)
+    listsContainingSubstance(size) = listName
+    size = size + 1
+  end if
+next
+
+esta_en_lista_cancer_rd = in_array("cancer_rd", listsContainingSubstance)
 esta_en_lista_cancer_danesa = esta_en_lista ("cancer_danesa", id_sustancia)
 esta_en_lista_mutageno_rd = esta_en_lista ("mutageno_rd", id_sustancia)
 esta_en_lista_mutageno_danesa = esta_en_lista ("mutageno_danesa", id_sustancia)
