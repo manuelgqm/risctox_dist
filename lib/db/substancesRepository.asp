@@ -9,7 +9,7 @@ function findSubstance( id_sustancia, connection )
 	set substanceRecordset=nothing
 
 	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
-	
+
 	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
 
 	set findSubstance = substance
@@ -287,14 +287,14 @@ function composeSubstanceQuery(id_sustancia)
 end function
 
 function addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
-	dim substanceLists, substanceGroupsRecordset
+	dim substanceTables, substanceGroupsRecordset
 
-	set substanceLists = collectSubstanceLists()
+	set substanceTables = collectSubstanceTables()
 	set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
 
 	do while not substanceGroupsRecordset.eof
-		for each list in substanceLists.keys
-			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, substanceLists.Item(list))
+		for each list in substanceTables.keys
+			set substance = evaluaCamposListaAsociada(substance, substanceGroupsRecordset, list, substanceTables.Item(list))
 		next
 		substanceGroupsRecordset.movenext
 	loop
@@ -329,7 +329,7 @@ function replaceValidated(sourceString, targetString, replaceString)
 	replaceValidated = output
 end function
 
-function collectSubstanceLists()
+function collectSubstanceTables()
 	set lists = Server.CreateObject("Scripting.Dictionary")
 	lists.Add "cancer_rd", Array("notas_cancer_rd")
 	lists.Add "cancer_iarc", Array("grupo_iarc","volumen_iarc")
@@ -360,6 +360,6 @@ function collectSubstanceLists()
 	lists.Add "alergeno", Array("")
 	lists.Add "calidad_aire", Array("")
 	lists.Add  "corap", Array("")
-	set collectSubstanceLists = lists
+	set collectSubstanceTables = lists
 end function
 %>

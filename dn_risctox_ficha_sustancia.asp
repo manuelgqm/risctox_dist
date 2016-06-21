@@ -19,13 +19,14 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 ' **** /SPL
 
 ' Comprobamos si está en cada lista, para no tener que buscar varias veces
-esta_en_lista_cancer_rd = esta_en_lista_cancer_rd or esta_en_lista ("cancer_rd", id_sustancia)
-esta_en_lista_cancer_danesa = esta_en_lista_cancer_danesa or esta_en_lista ("cancer_danesa", id_sustancia)
-esta_en_lista_mutageno_rd = esta_en_lista_mutageno_rd or esta_en_lista ("mutageno_rd", id_sustancia)
-esta_en_lista_mutageno_danesa = esta_en_lista_mutageno_danesa or esta_en_lista ("mutageno_danesa", id_sustancia)
-esta_en_lista_cancer_iarc = esta_en_lista_cancer_iarc or esta_en_lista ("cancer_iarc", id_sustancia)
-esta_en_lista_cancer_iarc_excepto_grupo_3 = esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista ("cancer_iarc_excepto_grupo_3", id_sustancia)
-esta_en_lista_cancer_otras = esta_en_lista_cancer_otras or esta_en_lista ("cancer_otras", id_sustancia)
+dim substanceLists()
+esta_en_lista_cancer_rd = esta_en_lista ("cancer_rd", id_sustancia)
+esta_en_lista_cancer_danesa = esta_en_lista ("cancer_danesa", id_sustancia)
+esta_en_lista_mutageno_rd = esta_en_lista ("mutageno_rd", id_sustancia)
+esta_en_lista_mutageno_danesa = esta_en_lista ("mutageno_danesa", id_sustancia)
+esta_en_lista_cancer_iarc = esta_en_lista ("cancer_iarc", id_sustancia)
+esta_en_lista_cancer_iarc_excepto_grupo_3 = esta_en_lista ("cancer_iarc_excepto_grupo_3", id_sustancia)
+esta_en_lista_cancer_otras = esta_en_lista ("cancer_otras", id_sustancia)
 
 esta_en_lista_cancer_mama = esta_en_lista_cancer_mama or esta_en_lista ("cancer_mama", id_sustancia)
 esta_en_lista_tpr = esta_en_lista_tpr or esta_en_lista ("tpr", id_sustancia)
@@ -389,15 +390,15 @@ end function
 function formatHtmlUnorderedList(elements)
 	dim list, i
 	list = ""
-	
+
 	if not isArray(elements) then formatHtmlUnorderedList = list
-	
+
 	list = list & "<ul>"
 	for i = 0 to Ubound(elements)
 		list = list & "<li>" & h(espaciar(elements(i))) & "</li>"
 	next
 	list = list & "</ul>"
-	
+
 	formatHtmlUnorderedList = list
 end function
 
