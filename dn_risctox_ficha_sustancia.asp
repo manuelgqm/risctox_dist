@@ -18,10 +18,6 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 
 ' **** /SPL
 
-
-' Sinonimos
-sinonimos = dameSinonimos(id_sustancia)
-
 ' Comprobamos si está en cada lista, para no tener que buscar varias veces
 esta_en_lista_cancer_rd = esta_en_lista_cancer_rd or esta_en_lista ("cancer_rd", id_sustancia)
 esta_en_lista_cancer_danesa = esta_en_lista_cancer_danesa or esta_en_lista ("cancer_danesa", id_sustancia)
@@ -390,6 +386,21 @@ end function
 
 ' ##########################################################################
 
+function formatHtmlUnorderedList(elements)
+	dim list, i
+	list = ""
+	
+	if not isArray(elements) then formatHtmlUnorderedList = list
+	
+	list = list & "<ul>"
+	for i = 0 to Ubound(elements)
+		list = list & "<li>" & h(espaciar(elements(i))) & "</li>"
+	next
+	list = list & "</ul>"
+	
+	formatHtmlUnorderedList = list
+end function
+
 sub ap1_identificacion()
 %>
 	<tr>
@@ -402,14 +413,14 @@ sub ap1_identificacion()
 	</tr>
 
 	<%
-	if (sinonimos<>"") then
+	if ( isArray(substance.Item("sinonimos")) ) then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
 				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Sinónimos:
 			</td>
 			<td class="texto" valign="middle">
-				<%=sinonimos%>
+				<%=formatHtmlUnorderedList(substance.Item("sinonimos"))%>
 			</td>
 		</tr>
 	<%

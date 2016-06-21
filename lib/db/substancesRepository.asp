@@ -1,3 +1,4 @@
+<!--#include file="synonymsRepository.asp"-->
 <%
 function findSubstance( id_sustancia, connection )
 	sql = composeSubstanceQuery( id_sustancia )
@@ -8,6 +9,8 @@ function findSubstance( id_sustancia, connection )
 	set substanceRecordset=nothing
 
 	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
+	
+	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
 
 	set findSubstance = substance
 end function
@@ -213,7 +216,7 @@ function extractSubstance(substanceRecordset)
 	substance.Add "notas_vlb_6", substanceRecordset("notas_vlb_6").Value
 
 	' Cancer
-	substance.Add "notas_cancer_rd", replaceValidated(substanceRecordset("notas_cancer_rd").Value, "vï¿½ase Tabla 3", "")
+	substance.Add "notas_cancer_rd", replaceValidated(substanceRecordset("notas_cancer_rd").Value, "v?ase Tabla 3", "")
 	substance.Add "grupo_iarc", substanceRecordset("grupo_iarc").Value
 	substance.Add "volumen_iarc", substanceRecordset("volumen_iarc").Value
 	substance.Add "notas_iarc", substanceRecordset("notas_iarc").Value
@@ -225,7 +228,7 @@ function extractSubstance(substanceRecordset)
 	'substance.Add "vector_disruptores", split(substance.Item("nivel_disruptor"),",")
 
 
-	' Neurotï¿½xico
+	' Neurot?xico
 	substance.Add "efecto_neurotoxico", substanceRecordset("efecto_neurotoxico").Value
 	substance.Add "nivel_neurotoxico", substanceRecordset("nivel_neurotoxico").Value
 	substance.Add "fuente_neurotoxico", substanceRecordset("fuente_neurotoxico").Value
@@ -239,7 +242,7 @@ function extractSubstance(substanceRecordset)
 	' mPmB
 	substance.Add "mpmb", substanceRecordset("mpmb").Value
 
-	' Tï¿½xica para el agua
+	' Tóxica para el agua
 	substance.Add "directiva_aguas", substanceRecordset("directiva_aguas").Value
 	substance.Add "clasif_mma", substanceRecordset("clasif_mma").Value
 	substance.Add "sustancia_prioritaria", substanceRecordset("sustancia_prioritaria").Value
