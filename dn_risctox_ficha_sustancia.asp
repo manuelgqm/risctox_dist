@@ -1,23 +1,20 @@
 <!--#include file="dn_restringida.asp"-->
-<!--#include file="EliminaInyeccionSQL.asp"-->
 <!--#include file="config/dbConnection.asp"-->
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="lib/db/substancesRepository.asp"-->
 <!--#include file="lib/visitsRecorder.asp"-->
+<!--#include file="lib/urlManipulations.asp"-->
 
 <%
 idpagina = 627
 call recordVisit(idpagina)
 errores = ""
 
-id_sustancia = request("id_sustancia")
-id_sustancia = EliminaInyeccionSQL(id_sustancia)
+id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
 set substance = findSubstance( id_sustancia, objConnection2 )
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
-
-set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, objConnection2)
 
 ' **** /SPL
 
