@@ -1,6 +1,7 @@
 <%
 function isSubstanceInList(byval lista, byval id_sustancia, connection)
 	const frasesRCancer = "R40, R45, R49, R40/20, R40/21, R40/22, R40/20/21, R40/20/22, R40/21/22, R40/20/21/22"
+	const frasesRMutageno = "R46, R68, R68/20, R68/21, R68/22, R68/20/21, R68/20/22, R68/21/22, R68/20/21/22"
 	const frasesRTpr = "R60, R61, R62, R63"
 	const frasesRNeurotoxico = "R67"
 	dim isSubstanceInListResult
@@ -20,11 +21,11 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 
 		case "mutageno_rd": ' Mutágeno según RD
 			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
 
 		case "mutageno_danesa": ' Mutágeno según lista danesa
 		campos="sus.frases_r_danesa"
-		sqlQuery="select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer)
+		sqlQuery="select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
 
 		case "cancer_iarc": ' Cancerígena según IARC
       sqlQuery = whereClause( _
