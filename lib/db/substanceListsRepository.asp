@@ -1,4 +1,36 @@
 <%
+function obtainFeaturedLists(id_sustancia, connection)
+	dim substanceLists
+	substanceLists = Array( _
+		"cancer_rd", "cancer_danesa", "mutageno_rd", "mutageno_danesa", _
+		"cancer_iarc", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama", _
+		"tpr", "tpr_danesa", "de", "neurotoxico_rd", "neurotoxico_danesa", _
+		"neurotoxico_nivel", "neurotoxico" , "sensibilizante", "sensibilizante_danesa", _
+		"sensibilizante_reach", "eepp", "tpb", "directiva_aguas", _
+		"sustancias_prioritarias", "alemana", "aire", "ozono", "clima", _
+		"suelos", "cov", "vertidos", "lpcic", "lpcic-agua", "lpcic-aire", _
+		"lpcic-suelo", "residuos", "accidentes", "emisiones", "salud", _
+		"prohibidas", "restringidas", "cop", "prohibidas_embarazadas", _
+		"prohibidas_lactantes", "candidatas_reach", "autorizacion_reach", _
+		"biocidas_autorizadas", "biocidas_prohibidas", "pesticidas_autorizadas", _
+		"pesticidas_prohibidas", "corap" _
+	)
+
+	dim listsContainingSubstance()
+	dim size
+	size = 0
+	for i = 0 to uBound(substanceLists)
+	  listName = substanceLists(i)
+	  if isSubstanceInList(listName, id_sustancia, objConnection2) then
+	    redim preserve listsContainingSubstance(size)
+	    listsContainingSubstance(size) = listName
+	    size = size + 1
+	  end if
+	next
+	obtainFeaturedLists = listsContainingSubstance
+
+end function
+
 function isSubstanceInList(byval lista, byval id_sustancia, connection)
 	const frasesRCancer = "R40, R45, R49, R40/20, R40/21, R40/22, R40/20/21, R40/20/22, R40/21/22, R40/20/21/22"
 	const frasesRMutageno = "R46, R68, R68/20, R68/21, R68/22, R68/20/21, R68/20/22, R68/21/22, R68/20/21/22"

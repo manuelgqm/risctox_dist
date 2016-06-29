@@ -1,4 +1,5 @@
 <!--#include file="synonymsRepository.asp"-->
+<!--#include file="substanceListsRepository.asp"-->
 <%
 function findSubstance( id_sustancia, connection )
 	sql = composeSubstanceQuery( id_sustancia )
@@ -11,6 +12,7 @@ function findSubstance( id_sustancia, connection )
 	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
 
 	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
+	substance.Add "featuredLists", obtainFeaturedLists(id_sustancia, connection)
 
 	set findSubstance = substance
 end function

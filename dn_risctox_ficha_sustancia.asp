@@ -3,7 +3,6 @@
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="lib/db/substancesRepository.asp"-->
-<!--#include file="lib/db/substanceListsRepository.asp"-->
 <!--#include file="lib/visitsRecorder.asp"-->
 <!--#include file="lib/urlManipulations.asp"-->
 
@@ -17,9 +16,6 @@ id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 set substance = findSubstance( id_sustancia, objConnection2 )
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
-' **** /SPL
-
-' Comprobamos si está en cada lista, para no tener que buscar varias veces
 Function in_array(element, arr)
   in_array = False
   For i=0 To Ubound(arr)
@@ -30,32 +26,8 @@ Function in_array(element, arr)
   Next
 End Function
 
-dim listsContainingSubstance()
-dim substanceLists
-substanceLists = Array( _
-  "cancer_rd", "cancer_danesa", "mutageno_rd", "mutageno_danesa", _
-  "cancer_iarc", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama", _
-  "tpr", "tpr_danesa", "de", "neurotoxico_rd", "neurotoxico_danesa", _
-  "neurotoxico_nivel", "neurotoxico" , "sensibilizante", "sensibilizante_danesa", _
-  "sensibilizante_reach", "eepp", "tpb", "directiva_aguas", _
-  "sustancias_prioritarias", "alemana", "aire", "ozono", "clima", _
-  "suelos", "cov", "vertidos", "lpcic", "lpcic-agua", "lpcic-aire", _
-  "lpcic-suelo", "residuos", "accidentes", "emisiones", "salud", _
-  "prohibidas", "restringidas", "cop", "prohibidas_embarazadas", _
-  "prohibidas_lactantes", "candidatas_reach", "autorizacion_reach", _
-  "biocidas_autorizadas", "biocidas_prohibidas", "pesticidas_autorizadas", _
-  "pesticidas_prohibidas", "corap" _
-)
-dim size
-size = 0
-for i = 0 to uBound(substanceLists)
-  listName = substanceLists(i)
-  if isSubstanceInList(listName, id_sustancia, objConnection2) then
-    redim preserve listsContainingSubstance(size)
-    listsContainingSubstance(size) = listName
-    size = size + 1
-  end if
-next
+dim listsContainingSubstance
+listsContainingSubstance = substance.Item("featuredLists")
 
 esta_en_lista_cancer_rd = in_array("cancer_rd", listsContainingSubstance)
 esta_en_lista_cancer_danesa = in_array("cancer_danesa", listsContainingSubstance)
@@ -74,14 +46,11 @@ esta_en_lista_neurotoxico_danesa = in_array("neurotoxico_danesa", listsContainin
 esta_en_lista_neurotoxico_nivel = in_array("neurotoxico_nivel", listsContainingSubstance)
 esta_en_lista_neurotoxico = esta_en_lista_neurotoxico_rd OR esta_en_lista_neurotoxico_danesa OR esta_en_lista_neurotoxico_nivel OR in_array("neurotoxico", listsContainingSubstance)
 
-
 esta_en_lista_sensibilizante = in_array("sensibilizante", listsContainingSubstance)
 esta_en_lista_sensibilizante_danesa = in_array("sensibilizante_danesa", listsContainingSubstance)
 esta_en_lista_sensibilizante_reach = in_array("sensibilizante_reach", listsContainingSubstance)
 esta_en_lista_eepp = in_array("eepp", listsContainingSubstance)
 esta_en_lista_tpb = in_array("tpb", listsContainingSubstance)
-
-' SPL (16/06/2014)
 esta_en_lista_mpmb = substance.Item("mpmb")
 
 esta_en_lista_directiva_aguas = in_array("directiva_aguas", listsContainingSubstance)
