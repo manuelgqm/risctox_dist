@@ -3,6 +3,7 @@
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="lib/db/substancesRepository.asp"-->
+<!--#include file="lib/db/substanceListsRepository.asp"-->
 <!--#include file="lib/visitsRecorder.asp"-->
 <!--#include file="lib/urlManipulations.asp"-->
 
@@ -49,8 +50,9 @@ dim size
 size = 0
 for i = 0 to uBound(substanceLists)
   listName = substanceLists(i)
-  'response.write listName & "<br>"
-  if esta_en_lista(listName, id_sustancia) then
+  if isSubstanceInList(listName, id_sustancia, objConnection2) then
+  'if esta_en_lista(listName, id_sustancia) then
+    'response.write listName & "<br>"
     redim preserve listsContainingSubstance(size)
     listsContainingSubstance(size) = listName
     size = size + 1
@@ -66,7 +68,7 @@ esta_en_lista_cancer_iarc_excepto_grupo_3 = esta_en_lista ("cancer_iarc_excepto_
 esta_en_lista_cancer_otras = esta_en_lista ("cancer_otras", id_sustancia)
 
 esta_en_lista_cancer_mama = esta_en_lista_cancer_mama or esta_en_lista ("cancer_mama", id_sustancia)
-esta_en_lista_tpr = esta_en_lista_tpr or esta_en_lista ("tpr", id_sustancia)
+esta_en_lista_tpr = in_array("tpr", listsContainingSubstance)
 esta_en_lista_tpr_danesa = esta_en_lista_tpr_danesa or esta_en_lista ("tpr_danesa", id_sustancia)
 esta_en_lista_de = esta_en_lista_de or esta_en_lista ("de", id_sustancia)
 esta_en_lista_neurotoxico_rd = esta_en_lista_neurotoxico_rd or esta_en_lista ("neurotoxico_rd", id_sustancia)
