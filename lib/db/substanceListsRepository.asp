@@ -40,35 +40,35 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 	isSubstanceInListResult = false
 
 	select case lista
-		case "cancer_rd": ' Cancerigeno segÃºn RD
+		case "cancer_rd": ' Cancerigeno según RD
       campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
       sqlQuery = parentesis_where( _
         "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer) _
       ) &_
       " OR (" & monta_condicion_grupo("asoc_cancer_rd") & ") )"
 
-		case "cancer_danesa": ' Cancerigeno segÃºn lista danesa
+		case "cancer_danesa": ' Cancerigeno según lista danesa
       campos="sus.frases_r_danesa"
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer)
 
-		case "mutageno_rd": ' MutÃ¡geno segÃºn RD
+		case "mutageno_rd": ' Mutágeno según RD
 			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
 			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
 
-		case "mutageno_danesa": ' MutÃ¡geno segÃºn lista danesa
+		case "mutageno_danesa": ' Mutágeno según lista danesa
 		campos="sus.frases_r_danesa"
 		sqlQuery="select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
 
-		case "cancer_iarc": ' CancerÃ­gena segÃºn IARC
+		case "cancer_iarc": ' Cancerígena según IARC
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_iarc ON (sus.id=dn_risc_sustancias_iarc.id_sustancia) WHERE (dn_risc_sustancias_iarc.grupo_iarc<>'')" _
 			) & _
 			" OR (" & groupByClause("asoc_cancer_iarc") & ") )"
 
-		case "cancer_iarc_excepto_grupo_3": ' CancerÃ­gena segÃºn IARC, excepto Grupo 3
+		case "cancer_iarc_excepto_grupo_3": ' Cancerígena según IARC, excepto Grupo 3
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_iarc ON (sus.id=dn_risc_sustancias_iarc.id_sustancia) WHERE (dn_risc_sustancias_iarc.grupo_iarc<>'' AND dn_risc_sustancias_iarc.grupo_iarc NOT LIKE '%3%')"
 
-		case "cancer_otras": ' CancerÃ­gena segÃºn otras fuentes
+		case "cancer_otras": ' Cancerígena según otras fuentes
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_cancer_otras ON (sus.id=dn_risc_sustancias_cancer_otras.id_sustancia) WHERE (dn_risc_sustancias_cancer_otras.categoria_cancer_otras<>'')" _
 			) & _
@@ -81,7 +81,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			" OR (" & groupByClause("asoc_cancer_otras") & ") )" &_
 			" AND dn_risc_sustancias_cancer_otras.categoria_cancer_otras not like '%G-A4%'"
 
-		case "cancer_mama": ' CancerÃ­gena mama
+		case "cancer_mama": ' Cancerígena mama
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) LEFT OUTER JOIN dn_risc_sustancias_mama_cop ON (sus.id=dn_risc_sustancias_mama_cop.id_sustancia) WHERE (dn_risc_sustancias_mama_cop.cancer_mama=1)" _
 			) & _
@@ -93,17 +93,17 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			) & _
 			" OR (" & groupByClause("asoc_cop") & ") )"
 
-		case "salud": ' Efectos para la salud y Ã³rganos afectados
+		case "salud": ' Efectos para la salud y órganos afectados
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_salud AS sal ON (sus.id=sal.id_sustancia) WHERE (sal.cardiocirculatorio=1 OR sal.rinyon=1 OR sal.respiratorio=1 OR sal.reproductivo=1 OR sal.piel_sentidos=1 OR sal.neuro_toxicos=1 OR sal.musculo_esqueletico=1 OR sal.sistema_inmunitario=1 OR sal.higado_gastrointestinal=1 OR sal.sistema_endocrino=1 OR sal.embrion=1 OR sal.cancer=1)"
 
-		case "tpr": ' TÃ³xicos para la reproducciÃ³n
+		case "tpr": ' Tóxicos para la reproducción
 			campos = "sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRTpr) _
 			) & _
 			" OR (" & groupByClause("asoc_reproduccion") & ") )"
 
-		case "tpr_danesa": ' TÃ³xicos para la reproducciÃ³n segÃºn lista danesa
+		case "tpr_danesa": ' Tóxicos para la reproducción según lista danesa
 			campos = "sus.frases_r_danesa"
 			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRTpr)
 
@@ -113,7 +113,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			) & _
 			" OR (" & groupByClause("asoc_disruptores") & ") )"
 
-		case "neurotoxico": ' NeurÃ³toxico RD, Danesa o nivel
+		case "neurotoxico": ' Neurótoxico RD, Danesa o nivel
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & " (" & groupByClause("asoc_neuro_oto") & ") "
 
 		case "neurotoxico_rd":
@@ -122,7 +122,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 		case "neurotoxico_danesa":
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRNeurotoxico)
 
-		case "neurotoxico_nivel": ' NeurÃ³toxico Danesa
+		case "neurotoxico_nivel": ' Neurótoxico Danesa
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_neuro_disruptor ON (sus.id=dn_risc_sustancias_neuro_disruptor.id_sustancia) WHERE (dn_risc_sustancias_neuro_disruptor.nivel_neurotoxico<>'')"
 
 		case "sensibilizante": ' Sensibilizante
@@ -130,12 +130,12 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			campos = "sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRSensibilizante)
 
-		case "sensibilizante_danesa": ' Sensibilizante segÃºn lista danesa
+		case "sensibilizante_danesa": ' Sensibilizante según lista danesa
 			const frasesRSensibilizanteDanesa = "R42, R43, R42/43"
 			campos="sus.frases_r_danesa"
     	sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE "&monta_condicion(campos, frasesRSensibilizanteDanesa)
 
-	  case "sensibilizante_reach": ' Sensibilizante segÃºn reach
+	  case "sensibilizante_reach": ' Sensibilizante según reach
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) LEFT OUTER JOIN dn_risc_sensibilizantes_reach AS sen ON (sus.id=sen.id_sustancia)  WHERE (sus.id<>'' AND sen.id_sustancia <> '')" ) _
 			 & " OR (" & groupByClause("asoc_alergenos") & ") )"
@@ -143,7 +143,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 		case "eepp": ' Enfermedades profesionales relacionadas
       sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON (sus.id=spg.id_sustancia) LEFT OUTER JOIN dn_risc_grupos_por_enfermedades AS gpe ON (spg.id_grupo=gpe.id_grupo) LEFT OUTER JOIN dn_risc_sustancias_por_enfermedades AS spe ON sus.id = spe.id_sustancia WHERE ((sus.id<>'' AND (spe.id_enfermedad IS NOT NULL) OR (gpe.id_enfermedad IS NOT NULL)))"
 
-		case "tpb": ' TÃ³xicas, persistentes y bioacumulativas
+		case "tpb": ' Tóxicas, persistentes y bioacumulativas
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_ambiente ON (sus.id=dn_risc_sustancias_ambiente.id_sustancia) WHERE (dn_risc_sustancias_ambiente.anchor_tpb<>'')" ) _
 			& " OR (" & groupByClause("asoc_tpb") & ") )"
@@ -169,7 +169,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			) & _
 		 " OR (" & groupByClause("asoc_capa_ozono") & ") )"
 
-		case "clima": ' Cambio climÃ¡tico
+		case "clima": ' Cambio climático
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_ambiente ON (sus.id=dn_risc_sustancias_ambiente.id_sustancia) WHERE (dn_risc_sustancias_ambiente.dano_cambio_clima=1)" _
 			) & _
@@ -217,7 +217,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			) & _
 		 " OR (" & groupByClause("asoc_seveso") & ") )"
 
-		case "emisiones": ' Emisiones atmosfÃ©ricas
+		case "emisiones": ' Emisiones atmosféricas
       sqlQuery = whereClause( _
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_ambiente ON (sus.id=dn_risc_sustancias_ambiente.id_sustancia) WHERE (dn_risc_sustancias_ambiente.emisiones_atmosfera=1)" _
 			) & _
@@ -318,14 +318,14 @@ end function
 
 ' PRIVATE
 function whereClause(byval cadena)
-  ' AÃ±ade otro parÃ©ntesis al principio del WHERE
+  ' Añade otro paréntesis al principio del WHERE
   cadena = ucase(cadena)
   whereClause = replace(cadena, "WHERE", "WHERE (")
 end function
 
 function groupByClause(check_lista)
-  ' Devuelve una cadena para incluir sustancias asociadas a travÃ©s de grupo en las listas de risctox
-  ' Se le debe indicar por parÃ¡metro el nombre del checkbox correspondiente a la lista en el formulario de grupo
+  ' Devuelve una cadena para incluir sustancias asociadas a través de grupo en las listas de risctox
+  ' Se le debe indicar por parámetro el nombre del checkbox correspondiente a la lista en el formulario de grupo
   ' de la herramienta (ejemplo, "asoc_cop")
 
    groupByClause = "sus.id IN (SELECT DISTINCT spg.id_sustancia FROM dn_risc_grupos AS g INNER JOIN dn_risc_sustancias_por_grupos AS spg ON spg.id_grupo = g.id WHERE g." & check_lista & "=1)"
@@ -334,7 +334,7 @@ end function
 
 function buildCondition(byval campos, byval frases)
   ' Helper para montar la parte de SQL donde se buscan frases R en los campos clasificacion_xx y/o frases_r_danesa,
-  ' indicando en quÃ© campos buscar (separados por comas) y quÃ© frases (tambien separados por comas)
+  ' indicando en qué campos buscar (separados por comas) y qué frases (tambien separados por comas)
 
   ' Ejemplo:
   ' buildCondition("sus.clasificacion_1, sus_clasificacion_2, sus_clasificacion_3", "R42, R43, R42/43") devuelve:
@@ -344,7 +344,7 @@ function buildCondition(byval campos, byval frases)
   array_campos = split(campos, ",")
   array_frases = split(frases, ",")
 
-  ' Bucleamos para ir montando la condiciÃ³n
+  ' Bucleamos para ir montando la condición
   condicion = ""
   for c=0 to ubound(array_campos)
     ' Para cada campo montamos la variante de frase limpia o acabada en punto y coma
