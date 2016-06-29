@@ -51,8 +51,6 @@ size = 0
 for i = 0 to uBound(substanceLists)
   listName = substanceLists(i)
   if isSubstanceInList(listName, id_sustancia, objConnection2) then
-  'if esta_en_lista(listName, id_sustancia) then
-    'response.write listName & "<br>"
     redim preserve listsContainingSubstance(size)
     listsContainingSubstance(size) = listName
     size = size + 1
@@ -60,84 +58,73 @@ for i = 0 to uBound(substanceLists)
 next
 
 esta_en_lista_cancer_rd = in_array("cancer_rd", listsContainingSubstance)
-esta_en_lista_cancer_danesa = esta_en_lista ("cancer_danesa", id_sustancia)
-esta_en_lista_mutageno_rd = esta_en_lista ("mutageno_rd", id_sustancia)
-esta_en_lista_mutageno_danesa = esta_en_lista ("mutageno_danesa", id_sustancia)
-esta_en_lista_cancer_iarc = esta_en_lista ("cancer_iarc", id_sustancia)
-esta_en_lista_cancer_iarc_excepto_grupo_3 = esta_en_lista ("cancer_iarc_excepto_grupo_3", id_sustancia)
-esta_en_lista_cancer_otras = esta_en_lista ("cancer_otras", id_sustancia)
+esta_en_lista_cancer_danesa = in_array("cancer_danesa", listsContainingSubstance)
+esta_en_lista_mutageno_rd = in_array("mutageno_rd", listsContainingSubstance)
+esta_en_lista_mutageno_danesa = in_array("mutageno_danesa", listsContainingSubstance)
+esta_en_lista_cancer_iarc = in_array("cancer_iarc", listsContainingSubstance)
+esta_en_lista_cancer_iarc_excepto_grupo_3 = in_array("cancer_iarc_excepto_grupo_3", listsContainingSubstance)
+esta_en_lista_cancer_otras = in_array("cancer_otras", listsContainingSubstance)
 
-esta_en_lista_cancer_mama = esta_en_lista_cancer_mama or esta_en_lista ("cancer_mama", id_sustancia)
+esta_en_lista_cancer_mama = in_array("cancer_mama", listsContainingSubstance)
 esta_en_lista_tpr = in_array("tpr", listsContainingSubstance)
-esta_en_lista_tpr_danesa = esta_en_lista_tpr_danesa or esta_en_lista ("tpr_danesa", id_sustancia)
-esta_en_lista_de = esta_en_lista_de or esta_en_lista ("de", id_sustancia)
-esta_en_lista_neurotoxico_rd = esta_en_lista_neurotoxico_rd or esta_en_lista ("neurotoxico_rd", id_sustancia)
-esta_en_lista_neurotoxico_danesa = esta_en_lista_neurotoxico_danesa or  esta_en_lista ("neurotoxico_danesa", id_sustancia)
-esta_en_lista_neurotoxico_nivel = esta_en_lista_neurotoxico_nivel or esta_en_lista ("neurotoxico_nivel", id_sustancia)
-esta_en_lista_neurotoxico = esta_en_lista_neurotoxico or esta_en_lista_neurotoxico_rd OR esta_en_lista_neurotoxico_danesa OR esta_en_lista_neurotoxico_nivel OR esta_en_lista ("neurotoxico", id_sustancia)
+esta_en_lista_tpr_danesa = in_array("tpr_danesa", listsContainingSubstance)
+esta_en_lista_de = in_array("de", listsContainingSubstance)
+esta_en_lista_neurotoxico_rd = in_array("neurotoxico_rd", listsContainingSubstance)
+esta_en_lista_neurotoxico_danesa = in_array("neurotoxico_danesa", listsContainingSubstance)
+esta_en_lista_neurotoxico_nivel = in_array("neurotoxico_nivel", listsContainingSubstance)
+esta_en_lista_neurotoxico = esta_en_lista_neurotoxico_rd OR esta_en_lista_neurotoxico_danesa OR esta_en_lista_neurotoxico_nivel OR in_array("neurotoxico", listsContainingSubstance)
 
 
-esta_en_lista_sensibilizante = esta_en_lista_sensibilizante or esta_en_lista ("sensibilizante", id_sustancia)
-esta_en_lista_sensibilizante_danesa = esta_en_lista_sensibilizante_danesa or esta_en_lista ("sensibilizante_danesa", id_sustancia)
-esta_en_lista_sensibilizante_reach = esta_en_lista_sensibilizante_reach or esta_en_lista_alergenos or esta_en_lista ("sensibilizante_reach", id_sustancia) 'en_lista_alergenos es el equivalente a sensibilizantes_reach para grupos.
-esta_en_lista_eepp = esta_en_lista_eepp or esta_en_lista ("eepp", id_sustancia)
-esta_en_lista_tpb = esta_en_lista_tpb or esta_en_lista ("tpb", id_sustancia)
+esta_en_lista_sensibilizante = in_array("sensibilizante", listsContainingSubstance)
+esta_en_lista_sensibilizante_danesa = in_array("sensibilizante_danesa", listsContainingSubstance)
+esta_en_lista_sensibilizante_reach = in_array("sensibilizante_reach", listsContainingSubstance)
+esta_en_lista_eepp = in_array("eepp", listsContainingSubstance)
+esta_en_lista_tpb = in_array("tpb", listsContainingSubstance)
 
 ' SPL (16/06/2014)
-esta_en_lista_mpmb = substance.Item("mpmb") or esta_en_lista_mpmb
+esta_en_lista_mpmb = substance.Item("mpmb")
 
-esta_en_lista_directiva_aguas =  esta_en_lista_directiva_aguas or esta_en_lista ("directiva_aguas", id_sustancia)
-esta_en_lista_sustancias_prioritarias = esta_en_lista_sustancias_prioritarias or esta_en_lista ("sustancias_prioritarias", id_sustancia)
-esta_en_lista_alemana = esta_en_lista_alemana or esta_en_lista ("alemana", id_sustancia)
+esta_en_lista_directiva_aguas = in_array("directiva_aguas", listsContainingSubstance)
+esta_en_lista_sustancias_prioritarias = in_array("sustancias_prioritarias", listsContainingSubstance)
+esta_en_lista_alemana = in_array("alemana", listsContainingSubstance)
 
-esta_en_lista_aire = esta_en_lista_aire  or esta_en_lista_calidad_aire or esta_en_lista ("aire", id_sustancia)
-esta_en_lista_ozono = esta_en_lista_ozono or esta_en_lista ("ozono", id_sustancia)
-esta_en_lista_clima = esta_en_lista_clima  or esta_en_lista ("clima", id_sustancia)
-'esta_en_lista_aire = esta_en_lista_aire  or esta_en_lista ("aire", id_sustancia)
+esta_en_lista_aire = in_array("aire", listsContainingSubstance)
+esta_en_lista_ozono = in_array("ozono", listsContainingSubstance)
+esta_en_lista_clima = in_array("clima", listsContainingSubstance)
+esta_en_lista_suelos = in_array("suelos", listsContainingSubstance)
 
-esta_en_lista_suelos = esta_en_lista_suelos or esta_en_lista ("suelos", id_sustancia)
+esta_en_lista_cov = in_array("cov", listsContainingSubstance)
+esta_en_lista_vertidos = in_array("vertidos", listsContainingSubstance)
+esta_en_lista_lpcic = in_array("lpcic", listsContainingSubstance)
+esta_en_lista_lpcic_agua = in_array("lpcic-agua", listsContainingSubstance)
+esta_en_lista_lpcic_aire = in_array("lpcic-aire", listsContainingSubstance)
+esta_en_lista_lpcic_suelo = in_array("lpcic-suelo", listsContainingSubstance)
+esta_en_lista_residuos = in_array("residuos", listsContainingSubstance)
+esta_en_lista_accidentes = in_array("accidentes", listsContainingSubstance)
+esta_en_lista_emisiones = in_array("emisiones", listsContainingSubstance)
+esta_en_lista_salud = in_array("salud", listsContainingSubstance)
 
-esta_en_lista_cov = esta_en_lista_cov or esta_en_lista ("cov", id_sustancia)
-esta_en_lista_vertidos = esta_en_lista_vertidos or esta_en_lista ("vertidos", id_sustancia)
-' Como las listas en grupos tienen diferente nombre, en este caso el 'or' es entre listas diferentes
-esta_en_lista_lpcic = esta_en_lista ("lpcic", id_sustancia) or esta_en_lista_eper
-esta_en_lista_lpcic_agua = esta_en_lista ("lpcic-agua", id_sustancia) or esta_en_lista_eper_agua
-esta_en_lista_lpcic_aire = esta_en_lista ("lpcic-aire", id_sustancia) or esta_en_lista_eper_aire
-esta_en_lista_lpcic_suelo = esta_en_lista ("lpcic-suelo", id_sustancia) or esta_en_lista_eper_suelo
-esta_en_lista_residuos = esta_en_lista_residuos or esta_en_lista ("residuos", id_sustancia)
-esta_en_lista_accidentes = esta_en_lista_accidentes or esta_en_lista ("accidentes", id_sustancia)
-esta_en_lista_emisiones = esta_en_lista_emisiones or esta_en_lista ("emisiones", id_sustancia)
-esta_en_lista_salud = esta_en_lista_salud or esta_en_lista ("salud", id_sustancia)
+esta_en_lista_prohibidas = in_array("prohibidas", listsContainingSubstance)
+esta_en_lista_restringidas = in_array("restringidas", listsContainingSubstance)
 
-esta_en_lista_prohibidas = esta_en_lista_prohibidas or esta_en_lista ("prohibidas", id_sustancia)
-esta_en_lista_restringidas = esta_en_lista_restringidas or esta_en_lista ("restringidas", id_sustancia)
+esta_en_lista_cop = in_array("cop", listsContainingSubstance)
 
+esta_en_lista_prohibidas_embarazadas = in_array("prohibidas_embarazadas", listsContainingSubstance)
+esta_en_lista_prohibidas_lactantes = in_array("prohibidas_lactantes", listsContainingSubstance)
 
-esta_en_lista_cop = esta_en_lista_cop or esta_en_lista ("cop", id_sustancia)
+esta_en_lista_candidatas_reach = in_array("candidatas_reach", listsContainingSubstance)
+esta_en_lista_autorizacion_reach = in_array("autorizacion_reach", listsContainingSubstance)
 
+esta_en_lista_biocidas_autorizadas = in_array("biocidas_autorizadas", listsContainingSubstance)
+esta_en_lista_biocidas_prohibidas = in_array("biocidas_prohibidas", listsContainingSubstance)
+esta_en_lista_pesticidas_autorizadas = in_array("pesticidas_autorizadas", listsContainingSubstance)
+esta_en_lista_pesticidas_prohibidas = in_array("pesticidas_prohibidas", listsContainingSubstance)
 
-'--SPL
-esta_en_lista_prohibidas_embarazadas = esta_en_lista_prohibidas_embarazadas or esta_en_lista ("prohibidas_embarazadas", id_sustancia)
-
-esta_en_lista_prohibidas_lactantes = esta_en_lista_prohibidas_lactantes or esta_en_lista ("prohibidas_lactantes", id_sustancia)
-
-esta_en_lista_candidatas_reach = esta_en_lista_candidatas_reach or esta_en_lista ("candidatas_reach", id_sustancia)
-esta_en_lista_autorizacion_reach = esta_en_lista_autorizacion_reach or esta_en_lista ("autorizacion_reach", id_sustancia)
-
-esta_en_lista_biocidas_autorizadas = esta_en_lista_biocidas_autorizadas or esta_en_lista ("biocidas_autorizadas", id_sustancia)
-esta_en_lista_biocidas_prohibidas = esta_en_lista_biocidas_prohibidas or esta_en_lista ("biocidas_prohibidas", id_sustancia)
-esta_en_lista_pesticidas_autorizadas = esta_en_lista_pesticidas_autorizadas or esta_en_lista ("pesticidas_autorizadas", id_sustancia)
-esta_en_lista_pesticidas_prohibidas = esta_en_lista_pesticidas_prohibidas or esta_en_lista ("pesticidas_prohibidas", id_sustancia)
-
-esta_en_lista_corap = esta_en_lista_corap or esta_en_lista ("corap", id_sustancia)
+esta_en_lista_corap = in_array("corap", listsContainingSubstance)
 
 '--/SPL
 ' Condiciones para mostrar las frases R danesas en Clasificacion
-
 ' Se mostrarán si existen las frases R danesas y NO existen las de RD
-
-
-
 ' Montamos frases R
 frases_r=trim(monta_frases("R", substance.Item("clasificacion_1"), substance.Item("clasificacion_2"), substance.Item("clasificacion_3"), substance.Item("clasificacion_4"), substance.Item("clasificacion_5"), substance.Item("clasificacion_6"), substance.Item("clasificacion_7"), substance.Item("clasificacion_8"), substance.Item("clasificacion_9"), substance.Item("clasificacion_10"), substance.Item("clasificacion_11"), substance.Item("clasificacion_12"), substance.Item("clasificacion_13"), substance.Item("clasificacion_14"), substance.Item("clasificacion_15")))
 
