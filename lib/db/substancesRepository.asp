@@ -31,8 +31,6 @@ function extractSubstance(substanceRecordset)
 	substance.Add "num_cas", substanceRecordset("num_cas").Value
 	substance.Add "cas_alternativos", substanceRecordset("cas_alternativos").Value
 
-	' substance.Add "num_onu", substanceRecordset("num_onu").Value 'Parece que no se usa
-
 	substance.Add "num_icsc", substanceRecordset("num_icsc").Value
 	substance.Add "formula_molecular", substanceRecordset("formula_molecular").Value
 	substance.Add "estructura_molecular", substanceRecordset("estructura_molecular").Value
@@ -86,7 +84,6 @@ function extractSubstance(substanceRecordset)
 	substance.Add "notas_rd_363", substanceRecordset("notas_rd_363").Value
 	substance.Add "notas_xml", replaceValidated(substanceRecordset("notas_xml").Value, "@", "@ ")
 	substance.Add "frases_r_danesa", trim(substanceRecordset("frases_r_danesa").Value)
-
 
 	' RD1272/2008
 	substance.Add "clasificacion_rd1272_1", trim(substanceRecordset("clasificacion_rd1272_1").Value)
@@ -150,7 +147,6 @@ function extractSubstance(substanceRecordset)
 	substance.Add "vla_ec_ppm_1", substanceRecordset("vla_ec_ppm_1").Value
 	substance.Add "vla_ec_mg_m3_1", substanceRecordset("vla_ec_mg_m3_1").Value
 	substance.Add "notas_vla_1", removeVlbFromNotes(substanceRecordset("notas_vla_1").Value)
-
 
 	substance.Add "estado_2", substanceRecordset("estado_2").Value
 	substance.Add "vla_ed_ppm_2", substanceRecordset("vla_ed_ppm_2").Value
@@ -227,8 +223,6 @@ function extractSubstance(substanceRecordset)
 
 	' Disruptor endocrino
 	substance.Add "nivel_disruptor", substanceRecordset("nivel_disruptor").Value
-	'substance.Add "vector_disruptores", split(substance.Item("nivel_disruptor"),",")
-
 
 	' Neurot?xico
 	substance.Add "efecto_neurotoxico", substanceRecordset("efecto_neurotoxico").Value
@@ -240,7 +234,6 @@ function extractSubstance(substanceRecordset)
 	substance.Add "anchor_tpb", substanceRecordset("anchor_tpb").Value
 	substance.Add "fuente_tpb", substanceRecordset("fuentes_tpb").Value
 
-	' SPL (16/06/2014)
 	' mPmB
 	substance.Add "mpmb", substanceRecordset("mpmb").Value
 
@@ -255,15 +248,8 @@ function extractSubstance(substanceRecordset)
 	substance.Add "dano_cambio_clima", substanceRecordset("dano_cambio_clima").Value
 
 	substance.Add "comentarios_medio_ambiente", substanceRecordset("comentarios_ma").Value
-	'substance.Add "toxicidad_suelo", substanceRecordset("toxicidad_suelo").Value
-
-	' Sustancia prohibida
-	'substance.Add "sustancia_prohibida", substanceRecordset("sustancia_prohibida").Value
-	'substance.Add "sustancia_restringida", substanceRecordset("sustancia_restringida").Value
-	'substance.Add "comentarios", trim(substanceRecordset("comentarios_sustancia").Value)
 
 	' Cancer Mama
-	'substance.Add "cancer_mama", substanceRecordset("cancer_mama").Value
 	substance.Add "cancer_mama_fuente", substanceRecordset("cancer_mama_fuente").Value
 
 	' COP
