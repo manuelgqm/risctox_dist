@@ -94,14 +94,7 @@ esta_en_lista_corap = in_array("corap", listsContainingSubstance)
 '--/SPL
 ' Condiciones para mostrar las frases R danesas en Clasificacion
 ' Se mostrarán si existen las frases R danesas y NO existen las de RD
-' Montamos frases R
-frases_r=trim(monta_frases("R", substance.Item("clasificacion_1"), substance.Item("clasificacion_2"), substance.Item("clasificacion_3"), substance.Item("clasificacion_4"), substance.Item("clasificacion_5"), substance.Item("clasificacion_6"), substance.Item("clasificacion_7"), substance.Item("clasificacion_8"), substance.Item("clasificacion_9"), substance.Item("clasificacion_10"), substance.Item("clasificacion_11"), substance.Item("clasificacion_12"), substance.Item("clasificacion_13"), substance.Item("clasificacion_14"), substance.Item("clasificacion_15")))
-
-
-
-'if ((not esta_en_lista_cancer_rd) and (not esta_en_lista_sensibilizante_danesa) or (frases_r = "")) then
-
-if (frases_r = "") and (substance.Item("frases_r_danesa") <> "") then
+if (substance.Item("frasesR") = "") and (substance.Item("frases_r_danesa") <> "") then
   frases_r_danesa_mostradas=true
 else
   frases_r_danesa_mostradas=false
@@ -763,13 +756,12 @@ sub ap2_clasificacion_frases_r()
 	' No incluye las frases R danesas
 
 	' Montamos frases R
-	frases_r=monta_frases("R", substance.Item("clasificacion_1"), substance.Item("clasificacion_2"), substance.Item("clasificacion_3"), substance.Item("clasificacion_4"), substance.Item("clasificacion_5"), substance.Item("clasificacion_6"), substance.Item("clasificacion_7"), substance.Item("clasificacion_8"), substance.Item("clasificacion_9"), substance.Item("clasificacion_10"), substance.Item("clasificacion_11"), substance.Item("clasificacion_12"), substance.Item("clasificacion_13"), substance.Item("clasificacion_14"), substance.Item("clasificacion_15"))
 
-	if (frases_r <> "") then
+	if (substance.Item("frasesR") <> "") then
 %>
 		<p id="ap2_clasificacion_frases_r_titulo" class="ficha_titulo_2" style="margin-bottom: -10px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases R")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases R</p>
 <%
-		bucle_frases "r", frases_r
+		bucle_frases "r", substance.Item("frasesR")
 	end if
 end sub
 
@@ -1530,7 +1522,7 @@ end sub
 sub ap2_clasificacion_lista_negra()
 	' Muestra el etiquetado
 
-	if (esta_en_lista_cancer_rd or esta_en_lista_cancer_danesa or esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista_cancer_otras_excepto_grupo_4 or esta_en_lista_de or (esta_en_lista_neurotoxico and (instr(frases_r,"R67")=0)) or  esta_en_lista_tpb or esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_danesa or esta_en_lista_sensibilizante_reach or esta_en_lista_tpr or esta_en_lista_tpr_danesa or esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa or esta_en_lista_cancer_mama or esta_en_lista_cop) or (instr(frases_r,"R33")<>0) or (instr(frases_r,"R53")<>0) or (instr(frases_r,"R50-53")<>0) or (instr(frases_r,"R51-53")<>0) or (instr(frases_r,"R52-53")<>0) or (instr(frases_r,"R58")<>0) then
+	if (esta_en_lista_cancer_rd or esta_en_lista_cancer_danesa or esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista_cancer_otras_excepto_grupo_4 or esta_en_lista_de or (esta_en_lista_neurotoxico and (instr(substance.Item("frasesR"),"R67")=0)) or  esta_en_lista_tpb or esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_danesa or esta_en_lista_sensibilizante_reach or esta_en_lista_tpr or esta_en_lista_tpr_danesa or esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa or esta_en_lista_cancer_mama or esta_en_lista_cop) or (instr(substance.Item("frasesR"),"R33")<>0) or (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) or (instr(substance.Item("frasesR"),"R58")<>0) then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
@@ -1599,7 +1591,7 @@ sub ap2_clasificacion_lista_negra()
 			end if
 		end if
 
-		if (instr(frases_r,"R33")<>0) then
+		if (instr(substance.Item("frasesR"),"R33")<>0) then
 			if (razones = "") then
 				razones = "bioacumulativa"
 			else
@@ -1607,7 +1599,7 @@ sub ap2_clasificacion_lista_negra()
 			end if
 		end if
 
-		if (instr(frases_r,"R58")<>0) then
+		if (instr(substance.Item("frasesR"),"R58")<>0) then
 			if (razones = "") then
 				razones = "Puede provocar a largo plazo efectos negativos en el medio ambiente"
 			else
@@ -1633,7 +1625,7 @@ sub ap2_clasificacion_lista_negra()
 			end if
 		end if
 
-		if (instr(frases_r,"R53")<>0) or (instr(frases_r,"R50-53")<>0) or (instr(frases_r,"R51-53")<>0) or (instr(frases_r,"R52-53")<>0) then
+		if (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) then
 			if (razones = "") then
 				razones = "Puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
 			else
