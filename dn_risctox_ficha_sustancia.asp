@@ -964,14 +964,11 @@ end sub
 sub ap2_clasificacion_frases_r_danesa()
 	' Muestra las frases R danesas
 
-	' Montamos frases R
-	frases_r = monta_frases_r_danesa(substance.Item("frases_r_danesa"))
-
-	if (frases_r <> "") then
+	if (substance.Item("frases_r_danesa") <> "") then
 %>
 	<p id="ap2_clasificacion_frases_r_danesa_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases R según la lista danesa de la EPA")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases R según clasificación de la EPA danesa</p>
 <%
-		bucle_frases "r", frases_r
+		bucle_frases "r", joinFrasesRDanesa(substance.Item("frases_r_danesa"))
 	end if
 end sub
 
