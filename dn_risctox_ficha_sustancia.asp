@@ -585,7 +585,7 @@ sub ap1_identificacion()
 		<td valign="top" colspan="2">
 			<!-- Lista negra -->
 
-			<% ap2_clasificacion_lista_negra() %>
+			<% ap2_clasificacion_lista_negra(substance) %>
 		</td>
 	</tr>
 <%
@@ -1516,7 +1516,7 @@ end sub
 
 ' ##################################################################################
 
-sub ap2_clasificacion_lista_negra()
+sub ap2_clasificacion_lista_negra(substance)
 	' Muestra el etiquetado
 
 	if (esta_en_lista_cancer_rd or esta_en_lista_cancer_danesa or esta_en_lista_cancer_iarc_excepto_grupo_3 or esta_en_lista_cancer_otras_excepto_grupo_4 or esta_en_lista_de or (esta_en_lista_neurotoxico and (instr(substance.Item("frasesR"),"R67")=0)) or  esta_en_lista_tpb or esta_en_lista_sensibilizante or esta_en_lista_sensibilizante_danesa or esta_en_lista_sensibilizante_reach or esta_en_lista_tpr or esta_en_lista_tpr_danesa or esta_en_lista_mutageno_rd or esta_en_lista_mutageno_danesa or esta_en_lista_cancer_mama or esta_en_lista_cop) or (instr(substance.Item("frasesR"),"R33")<>0) or (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) or (instr(substance.Item("frasesR"),"R58")<>0) then
