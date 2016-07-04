@@ -615,7 +615,7 @@ sub ap2_clasificacion()
 					<% ap2_clasificacion_simbolos() %>
 				</td>
 				<td valign="top">
-					<% ap2_clasificacion_frases_r() %>
+					<% ap2_clasificacion_frases_r(substance) %>
 					<%
 
 		        if frases_r_danesa_mostradas then
@@ -751,7 +751,7 @@ end sub ' ap2_clasificacion_simbolos_rd1272
 
 ' ##################################################################################
 
-sub ap2_clasificacion_frases_r()
+sub ap2_clasificacion_frases_r(substance)
 	' Muestra las frases R segun clasificacion_1 hasta clasificacion_15
 	' No incluye las frases R danesas
 
