@@ -619,7 +619,7 @@ sub ap2_clasificacion()
 					<%
 
 		        if frases_r_danesa_mostradas then
-		          ap2_clasificacion_frases_r_danesa()
+		          ap2_clasificacion_frases_r_danesa(substance)
 		        end if
 		      %>
 					<% ap2_clasificacion_frases_s() %>
@@ -961,7 +961,7 @@ end sub
 
 ' ##################################################################################
 
-sub ap2_clasificacion_frases_r_danesa()
+sub ap2_clasificacion_frases_r_danesa(substance)
 	' Muestra las frases R danesas
 
 	if (substance.Item("frases_r_danesa") <> "") then
@@ -2089,7 +2089,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					end if
 		%>
 		        <div id="frases_r_danesa_cancer" style="display:none"><br />
-		        <% ap2_clasificacion_frases_r_danesa() %>
+		        <% ap2_clasificacion_frases_r_danesa(substance) %>
 		        </div>
 
 						</blockquote>
@@ -2256,7 +2256,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				%>
 
         <div id="frases_r_danesa_mutageno" style="display:none"><br />
-        <% ap2_clasificacion_frases_r_danesa() %>
+        <% ap2_clasificacion_frases_r_danesa(substance) %>
         </div>
 
 				</blockquote>
@@ -2398,7 +2398,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		      %>
 		        <div id="frases_r_danesa_sensibilizante" style="display:none"><br />
 		        <blockquote>
-		        <% ap2_clasificacion_frases_r_danesa() %>
+		        <% ap2_clasificacion_frases_r_danesa(substance) %>
 		        </blockquote>
 		        </div>
 		      <%
@@ -2450,7 +2450,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	%>
 	        <div id="frases_r_danesa_tpr" style="display:none"><br />
 	        <blockquote>
-	        <% ap2_clasificacion_frases_r_danesa() %>
+	        <% ap2_clasificacion_frases_r_danesa(substance) %>
 	        </blockquote>
 	        </div>
 	          </fieldset>
