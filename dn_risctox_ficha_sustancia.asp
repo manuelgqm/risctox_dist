@@ -2492,8 +2492,8 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				<tr>
 					<td class="subtitulo3" valign="top">Fuente/s:</td>
 					<td class="subtitulo3"><%
-						if trim(fuentes_tpb) <> "" then
-							array_tpb = split(fuentes_tpb,",")
+						if trim(substance.Item("fuentes_tpb")) <> "" then
+							array_tpb = split(substance.Item("fuentes_tpb"),",")
 							for i=0 to ubound(array_tpb)
 								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
 							next
