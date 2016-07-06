@@ -18,16 +18,6 @@ MySubstance.find id_sustancia, objConnection2
 Set substance = MySubstance.fields
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
-Function in_array(element, arr)
-	in_array = False
-	For i=0 To Ubound(arr)
-		If Trim(arr(i)) = Trim(element) Then
-			in_array = True
-			Exit Function
-		End If
-	Next
-End Function
-
 esta_en_lista_neurotoxico = MySubstance.inList("neurotoxico_rd") OR MySubstance.inList("neurotoxico_danesa") OR MySubstance.inList("neurotoxico_nivel") OR MySubstance.inList("neurotoxico")
 esta_en_lista_mpmb = substance.Item("mpmb")
 
@@ -237,7 +227,6 @@ function dameUsos(byval id_sustancia)
 	lista = ""
 
   sql="SELECT DISTINCT u.id AS id_uso, u.nombre AS nombre_uso, u.descripcion AS descripcion_uso FROM dn_risc_usos AS u LEFT OUTER JOIN dn_risc_grupos_por_usos AS gpu ON u.id = gpu.id_uso LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpu.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_usos AS spu ON spu.id_uso = u.id WHERE spg.id_sustancia="&id_sustancia&" OR spu.id_sustancia="&id_sustancia&" ORDER BY u.nombre"
-  'response.write sql
 
 	set objRst=objConnection2.execute(sql)
 
@@ -296,24 +285,6 @@ function dameCompanias(byval id_sustancia)
 
 	dameCompanias = lista
 end function
-
-' ##########################################################################
-'' Deprecated. Se usa la definida en dn_funciones_comunes.asp
-
-
-''function dameNombreComercial (byval id_sustancia)
-''	nombre_comercial = ""
-''	sql = "SELECT nombre FROM dn_risc_nombres_comerciales WHERE ''id_sustancia="&id_sustancia
-''	set objRst=objConnection2.execute(sql)
-''	if (not objRst.eof) then
-''		nombre_comercial = objRst("nombre")
-''	end if
-''	objRst.close()
-''	set objRst=nothing
-''	dameNombreComercial = nombre_comercial
-''end function
-
-' ##########################################################################
 
 function formatHtmlUnorderedList(elements)
 	dim list, i
@@ -447,7 +418,6 @@ sub ap1_identificacion()
 
           %>
 
-              <!--<a href="http://www.mtas.es/insht/ipcsnspn/nspn<%= array_icsc(i) %>.htm" target="_blank"><%= array_icsc(i) %></a> -->
               <a href="http://www.insht.es/InshtWeb/Contenidos/Documentacion/FichasTecnicas/FISQ/Ficheros/<%=icsc_max%>a<%=icsc_min%>/nspn<%= array_icsc(i) %>.pdf" target="_blank"><%= array_icsc(i) %></a>
 
           <%
@@ -464,19 +434,7 @@ sub ap1_identificacion()
 
 	<%
 		companias = dameCompanias(id_sustancia)
-		'if (companias <> "") then
 	%>
-    <!--
-		<tr>
-			<td class="subtitulo3" align="right" valign="top" width="50%">
-				Compañías productoras/distribuidoras:
-			</td>
-			<td class="texto" valign="middle">
-				<%=companias%>
-			</td>
-		</tr>
-    -->
-	<% 'end if ' hay companias? %>
 
 	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
 		<tr>
@@ -577,11 +535,6 @@ sub ap2_clasificacion()
 	end if
 end sub ' ap2_clasificacion
 
-
-
-
-
-
 sub ap2_clasificacion_rd1272()
 	' Solo mostramos este apartado si hay información para él
 	if ((substance.Item("simbolos_rd1272") <> "") or (substance.Item("clasificacion_rd1272_1") <> "") or (substance.Item("clasificacion_rd1272_2") <> "") or (substance.Item("clasificacion_rd1272_3") <> "") or (substance.Item("clasificacion_rd1272_4") <> "") or (substance.Item("clasificacion_rd1272_5") <> "") or (substance.Item("clasificacion_rd1272_6") <> "") or (substance.Item("clasificacion_rd1272_7") <> "") or (substance.Item("clasificacion_rd1272_8") <> "") or (substance.Item("clasificacion_rd1272_9") <> "") or (substance.Item("clasificacion_rd1272_10") <> "") or (substance.Item("clasificacion_rd1272_11") <> "") or (substance.Item("clasificacion_rd1272_12") <> "") or (substance.Item("clasificacion_rd1272_13") <> "") or (substance.Item("clasificacion_rd1272_14") <> "") or (substance.Item("clasificacion_rd1272_15") <> "") or (substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "") ) then
@@ -618,11 +571,6 @@ sub ap2_clasificacion_rd1272()
 <%
 	end if
 end sub ' ap2_clasificacion
-
-
-
-
-
 
 ' ##################################################################################
 
@@ -925,7 +873,6 @@ sub ap2_clasificacion_frases_s
 
 %>
 	<p id="ap2_clasificacion_frases_s_titulo" class="ficha_titulo_2" style="margin-top: 14px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases S")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases S <% plegador "secc-frasess", "img-frasess" %></p>
-		<!-- <%= frases_s %> <a onclick="window.open('busca_frases_s.asp?id=<%= frases_s %>', 'fr','width=300,height=200,scrollbars=yes,resizable=yes')" style="text-decoration:none; cursor:pointer;"><img src="imagenes/ayuda.gif" border="0" align="absmiddle" alt="busca Frases S"></a> -->
 
 		<% bucle_frases_s frases_s%>
 
@@ -1161,7 +1108,6 @@ sub ap2_clasificacion_vl(id_cajetilla)
   	<tr>
 		<td class="celdaabajo" colspan="2" align="center">
 			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"> VALORES L&Iacute;MITE DE EXPOSICI&Oacute;N PROFESIONAL
-<!--			<a href="javascript:toggle('secc-mas_valores_limite', 'img-mas_valores_limite');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_valores_limite" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>-->
 			</td></tr></table>
 		</td>
 	</tr>
@@ -1553,7 +1499,6 @@ sub ap2_clasificacion_lista_negra(substance)
 		end if
 
 		' SPL (16/06/20014)
-'		if num_cas="87-68-3" or num_cas="133-49-3" or num_cas="75-74-1" then
 		if esta_en_lista_mpmb then
 			if (razones = "") then
 				razones = "Muy persistente y muy bioacumulativa"
@@ -1610,13 +1555,11 @@ sub ap3_riesgos()
 
 <%
 		if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc") or MySubstance.inList("cancer_otras") or MySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("Cancerígeno") end if
-		'response.write MySubstance.inList("mutageno_rd") & MySubstance.inList("mutageno_danesa")
 		if (MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
 
 		if MySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
 		if esta_en_lista_neurotoxico or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
 		if MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
-		'if MySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante para REACH") end if
 		if MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
 		if MySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
     	if MySubstance.inList("salud") then ap7_salud() end if
@@ -2273,8 +2216,6 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 							for i=0 to ubound(array_neurotoxico)
 								efecto = trim(array_neurotoxico(i))
                 efecto = ucase(efecto)
-                'efecto = quitartildes(efecto)
-                'efecto = montartildes(efecto)
 						%>
 
 						<%= efecto %> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(efecto)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
@@ -2438,7 +2379,6 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						if trim(substance.Item("fuente_tpb")) <> "" then
 							array_tpb = split(substance.Item("fuente_tpb"),",")
 							for i=0 to ubound(array_tpb)
-								' response.write "<li>"&c&"</li>"
 								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
 							next
 						end if
@@ -2681,7 +2621,6 @@ sub ap3_riesgos_enfermedades()
 
 	' Se agrupan por listado, cada listado en una ficha blanca y dentro cada enfermedad
 	sql_enf = "select distinct enf.id, enf.listado, enf.nombre, enf.sintomas, enf.actividades FROM dn_risc_enfermedades AS enf LEFT OUTER JOIN dn_risc_grupos_por_enfermedades AS gpe ON enf.id = gpe.id_enfermedad LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpe.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_enfermedades AS spe ON spe.id_enfermedad = enf.id WHERE spg.id_sustancia="&id_sustancia&" OR spe.id_sustancia="&id_sustancia&" ORDER BY enf.listado, enf.nombre"
-	'response.write "<br />"&sql_enf
 	set objRstEnf=objConnection2.execute(sql_enf)
 	if (not objRstEnf.eof) then
 		listado_antiguo = ""
@@ -2789,10 +2728,6 @@ if MySubstance.inList("lpcic-suelo") then total = total +1 end if
 if MySubstance.inList("residuos") then total = total +1 end if
 if MySubstance.inList("accidentes") then total = total +1 end if
 if MySubstance.inList("emisiones") then total = total +1 end if
-'if MySubstance.inList("prohibidas") then total = total + 1
-'if MySubstance.inList("restringidas") then total = total + 1
-
-'response.write total
 
 mitad = round(total / 2)
 ' Ajustamos la mitad para arriba si es impar
@@ -2967,13 +2902,8 @@ end sub ' ap4_normativa_restriccion_prohibicion
 
 ' ##################################################################################
 sub ap5_alternativas()
-'	sql_enf = "select distinct enf.id, enf.listado, enf.nombre, enf.sintomas, enf.actividades FROM dn_risc_enfermedades AS enf LEFT OUTER JOIN dn_risc_grupos_por_enfermedades AS gpe ON enf.id = gpe.id_enfermedad LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpe.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_enfermedades AS spe ON spe.id_enfermedad = enf.id WHERE spg.id_sustancia="&id_sustancia&" OR spe.id_sustancia="&id_sustancia&" ORDER BY enf.listado, enf.nombre"
-
-'	sql="SELECT DISTINCT id_fichero, titulo FROM dn_alter_ficheros_por_sustancias INNER JOIN dn_alter_ficheros ON dn_alter_ficheros_por_sustancias.id_fichero = dn_alter_ficheros.id WHERE id_sustancia="&id_sustancia&" ORDER BY titulo"
 
 	sql="SELECT DISTINCT f.id AS id_fichero, f.titulo FROM dn_alter_ficheros AS f LEFT OUTER JOIN dn_alter_ficheros_por_sustancias AS fps ON f.id = fps.id_fichero LEFT OUTER JOIN dn_alter_ficheros_por_grupos AS fpg ON f.id = fpg.id_fichero LEFT OUTER JOIN dn_risc_grupos AS g ON fpg.id_grupo = g.id LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON g.id = spg.id_grupo WHERE fps.id_sustancia="&id_sustancia&" OR spg.id_sustancia = "& id_sustancia&" ORDER BY titulo"
-
-  'response.write sql
 
 	set objRst=objConnection2.execute(sql)
 	if (not objRst.eof) then
@@ -3032,11 +2962,6 @@ end sub
 sub ap6_sectores()
 
 	sql="SELECT DISTINCT s.numero_cnae AS codigo, s.nombre AS nombre, s.id AS id_sector FROM dn_alter_sectores AS s LEFT OUTER JOIN dn_risc_sustancias_por_sectores AS sps ON s.id = sps.id_sector WHERE sps.id_sustancia="&id_sustancia&" ORDER BY numero_cnae"
-
-  ' Mejora: incluimos solo los sectores que contienen documentos asociados
-  'sql="SELECT DISTINCT s.numero_cnae AS codigo, s.nombre AS nombre, s.id AS id_sector FROM dn_alter_sectores AS s LEFT OUTER JOIN dn_risc_sustancias_por_sectores AS sps ON s.id = sps.id_sector INNER JOIN dn_alter_ficheros_por_sectores AS fps ON sps.id_sector = fps.id_sector WHERE sps.id_sustancia="&id_sustancia&" ORDER BY s.codigo"
-
-  'response.write sql
 
 	set objRst=objConnection2.execute(sql)
 	if (not objRst.eof) then
@@ -3107,8 +3032,6 @@ end sub
 sub ap7_salud()
 
 	sql="SELECT cardiocirculatorio, rinyon, respiratorio, reproductivo, piel_sentidos, neuro_toxicos, musculo_esqueletico, sistema_inmunitario, higado_gastrointestinal, sistema_endocrino, embrion, cancer, comentarios FROM dn_risc_sustancias_salud WHERE id_sustancia="&id_sustancia&" AND (cardiocirculatorio=1 OR rinyon=1 OR respiratorio=1 OR reproductivo=1 OR piel_sentidos=1 OR neuro_toxicos=1 OR musculo_esqueletico=1 OR sistema_inmunitario=1 OR higado_gastrointestinal=1 OR sistema_endocrino=1 OR embrion=1 OR cancer=1)"
-
-  'response.write sql
 
 	set objRst=objConnection2.execute(sql)
 	if (not objRst.eof) then
