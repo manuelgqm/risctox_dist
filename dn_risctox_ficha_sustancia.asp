@@ -15,7 +15,7 @@ id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
 set MySubstance = new SubstanceClass
 MySubstance.find id_sustancia, objConnection2
-Set substance = MySubstance.collection
+Set substance = MySubstance.fields
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
 Function in_array(element, arr)
