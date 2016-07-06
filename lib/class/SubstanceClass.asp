@@ -27,5 +27,27 @@ Class SubstanceClass
 		find = id_sustancia
 	end function
 
+	Public function inList(listName)
+		dim result
+		result = false
+
+		if listName = "" Then
+			inList = result
+		end if
+		result = in_array(listName, Me.fields.Item("featuredLists"))
+
+		inList = result
+	end function
+
+	Private function in_array(element, arr)
+	  in_array = False
+	  For i=0 To Ubound(arr)
+	     If Trim(arr(i)) = Trim(element) Then
+	        in_array = True
+	        Exit Function
+	     End If
+	  Next
+End Function
+
 End Class
 %>
