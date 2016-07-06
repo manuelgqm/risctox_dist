@@ -2,7 +2,7 @@
 <!--#include file="config/dbConnection.asp"-->
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
-<!--#include file="lib/db/substancesRepository.asp"-->
+<!--#include file="lib/class/SubstanceClass.asp"-->
 <!--#include file="lib/visitsRecorder.asp"-->
 <!--#include file="lib/urlManipulations.asp"-->
 
@@ -13,7 +13,9 @@ errores = ""
 
 id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
-set substance = findSubstance( id_sustancia, objConnection2 )
+set MySubstance = new SubstanceClass
+MySubstance.find id_sustancia, objConnection2
+Set substance = MySubstance.collection
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
 Function in_array(element, arr)
