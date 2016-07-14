@@ -62,6 +62,10 @@ Class SubstanceClass
 		presentInLists = result
 	end function
 
+	public function inMpmbList()
+		inMpmbList = Me.Fields.Item("mpmb")
+	end function
+
 	Private function in_array(element, arr)
 	  in_array = False
 	  For i=0 To Ubound(arr)

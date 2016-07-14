@@ -20,8 +20,6 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 
 dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
 
-esta_en_lista_mpmb = substance.Item("mpmb")
-
 '--/SPL
 ' Condiciones para mostrar las frases R danesas en Clasificacion
 ' Se mostrarán si existen las frases R danesas y NO existen las de RD
@@ -1500,7 +1498,7 @@ sub ap2_clasificacion_lista_negra(substance)
 		end if
 
 		' SPL (16/06/20014)
-		if esta_en_lista_mpmb then
+		if MySubstance.inMpmbList() then
 			if (razones = "") then
 				razones = "Muy persistente y muy bioacumulativa"
 			else
@@ -1633,7 +1631,7 @@ if (MySubstance.inList("tpb") or MySubstance.inList("directiva_aguas") or MySubs
 		end if
 		' SPL (16/06/20014)
 '		if num_cas="87-68-3" or num_cas="133-49-3" or num_cas="75-74-1" then
-		if esta_en_lista_mpmb then
+		if MySubstance.inMpmbList() then
 			ap3_riesgos_tabla("mPmB")
 		end if
 		if (MySubstance.inList("directiva_aguas") or MySubstance.inList("alemana")) then ap3_riesgos_tabla("Tóxica para el agua") end if
