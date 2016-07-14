@@ -33,10 +33,33 @@ Class SubstanceClass
 
 		if listName = "" Then
 			inList = result
+			exit function
 		end if
 		result = in_array(listName, Me.fields.Item("featuredLists"))
 
 		inList = result
+	end function
+
+	public function presentInLists(lists)
+		dim result
+		result = false
+
+		if not isArray(lists) then
+			presentInLists = result
+			exit function
+		end if
+
+		dim i, list
+		for i = 0 to Ubound(lists)
+			list = lists(i)
+			result = Me.inList(list)
+			if result then 
+				presentInLists = true
+				exit function
+			end if
+		next
+
+		presentInLists = result
 	end function
 
 	Private function in_array(element, arr)
