@@ -118,9 +118,11 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & " (" & groupByClause("asoc_neuro_oto") & ") "
 
 		case "neurotoxico_rd":
+			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
 			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRNeurotoxico)
 
 		case "neurotoxico_danesa":
+			campos="sus.frases_r_danesa"
 			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRNeurotoxico)
 
 		case "neurotoxico_nivel": ' Neurótoxico Danesa
