@@ -5,6 +5,7 @@
 Class SubstanceClass
 	Private mNombre
 	Private mFields
+	Private mFieldsShown
 
 	Public property Get nombre()
 		nombre = mNombre
@@ -18,6 +19,13 @@ Class SubstanceClass
 	End property
 	Public property Let Fields(pData)
 		set mFields = pData
+	End property
+
+	Public property Get fieldsShown()
+		fieldsShown = mFieldsShown
+	End property
+	Public property Let fieldsShown(pData)
+		mFieldsShown = pData
 	End property
 
 	Public function find(id_sustancia, connection)
@@ -66,15 +74,53 @@ Class SubstanceClass
 		inMpmbList = Me.Fields.Item("mpmb")
 	end function
 
-	Private function in_array(element, arr)
-	  in_array = False
-	  For i=0 To Ubound(arr)
-	     If Trim(arr(i)) = Trim(element) Then
-	        in_array = True
-	        Exit Function
-	     End If
-	  Next
-End Function
+	public function addShown(fieldName)
+		Me.fieldsShown = arrayPush(Me.fieldsShown, fieldName)
+	end function
+
+	public function showed(fieldName)
+		isShown = in_array(fieldName, Me.fieldsShown)
+	end function
+
+	Private function in_array(element, arrayParameter)
+		in_array = false
+
+		if not isArray(arrayParameter) then
+			in_array = false
+			exit function
+		end if
+		For i = 0 To Ubound(arrayParameter)
+			If Trim(arrayParameter(i)) = Trim(element) Then 
+				in_array = true
+				Exit Function
+			end if
+		Next
+	End Function
+
+	private function arrayPush(arrayParameter, valueParameter) 
+		dim uba
+		dim result()
+
+		uba = getUBound(arrayParameter) 
+		redim preserve result(uba + 1) 
+		result(uba + 1) = valueParameter
+
+		arrayPush = result
+	end function
+
+	function getUbound(arrayParameter) 
+		dim result
+		result = -1 
+		
+		on error resume next
+		if not vartype(arrayParameter) = 8204 then 
+			getUbound = result
+			exit function
+		end if
+		result = ubound(arrayParameter) 
+
+		getUbound = result
+	end function 
 
 End Class
 %>

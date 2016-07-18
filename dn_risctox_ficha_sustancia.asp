@@ -23,10 +23,8 @@ dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd
 '--/SPL
 ' Condiciones para mostrar las frases R danesas en Clasificacion
 ' Se mostrarán si existen las frases R danesas y NO existen las de RD
-if (substance.Item("frasesR") = "") and (substance.Item("frases_r_danesa") <> "") then
-  frases_r_danesa_mostradas=true
-else
-  frases_r_danesa_mostradas=false
+if (MySubstance.fields.Item("frasesR") = "") and (MySubstance.fields.Item("frases_r_danesa") <> "") then
+	MySubstance.addShown("frases_r_danesa")
 end if
 %>
 
@@ -515,7 +513,7 @@ sub ap2_clasificacion()
 					<% ap2_clasificacion_frases_r(substance) %>
 					<%
 
-		        if frases_r_danesa_mostradas then
+		        if MySubstance.showed("frases_r_danesa") then
 		          ap2_clasificacion_frases_r_danesa(substance)
 		        end if
 		      %>
@@ -3250,7 +3248,7 @@ sub plegador_texto(byval id_bloque, byval texto, byval clase)
   ' Solo se emplea para el plegador de frases R danesas, en caso de que no se hayan mostrado ya.
   id_bloque=aplana(id_bloque)
 
-  if (frases_r_danesa_mostradas) then
+  if (MySubstance.showed("frases_r_danesa")) then
 %>
   <%=texto%>
 <%
