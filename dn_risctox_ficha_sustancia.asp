@@ -182,37 +182,38 @@ cerrarconexion
 
 <%
 ' ##########################################################################
-function dameGrupos(byval id_sustancia)
+function dameGrupos(substance)
 	' Devuelve lista de grupos para la sustancia indicada
+	dim lista, i
+	dim subtanceGroupsLastId, substanceGroups
 
 	lista = ""
+	substanceGroups = substance.item("grupos")
 
-	sql="SELECT dn_risc_grupos.id AS id_grupo, nombre, descripcion FROM dn_risc_sustancias_por_grupos INNER JOIN dn_risc_grupos ON dn_risc_sustancias_por_grupos.id_grupo = dn_risc_grupos.id WHERE id_sustancia="&id_sustancia&" ORDER BY nombre"
-	set objRst=objConnection2.execute(sql)
-	if (not objRst.eof) then
-		do while (not objRst.eof)
-      id_grupo = objRst("id_grupo")
-      nombre = objRst("nombre")
-      descripcion = objRst("descripcion")
-      if (descripcion <> "") then
-        ' Montamos enlace para abrir ventana emergente de descripción
-        enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=grupos&id="&id_grupo&"','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
-      else
-        ' No hay descripción
-        enlace_descripcion = ""
-      end if
-
-			if (lista = "") then
-				lista = objRst("nombre")&enlace_descripcion
-			else
-				lista = lista&", "&objRst("nombre")&enlace_descripcion
-			end if
-
-			objRst.movenext
-		loop
+	if not isArray(substanceGroups) then
+		dameGrupos = lista
+		exit function
 	end if
-	objRst.close()
-	set objRst=nothing
+
+	substanceGroupsLastId = ubound(substanceGroups)
+	dim enlace_descripcion : enlace_descripcion = ""
+	for i = 0 to substanceGroupsLastId
+		set substanceGroup = substanceGroups(i)
+		id_grupo = substanceGroup.item("id_grupo")
+		nombre = substanceGroup.item("nombre")
+		descripcion = substanceGroup.item("descripcion")
+		if (descripcion <> "") then
+			' Montamos enlace para abrir ventana emergente de descripción
+			enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=grupos&id=" & id_grupo & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
+		end if
+
+		if (lista = "") then
+			lista = nombre & enlace_descripcion
+		else
+			lista = lista & ", " & nombre & enlace_descripcion
+		end if
+
+	next
 
 	dameGrupos = lista
 end function
@@ -363,7 +364,7 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = dameGrupos(id_sustancia)
+		grupos = dameGrupos(substance)
 		if (grupos <> "") then
 	%>
 		<tr>
