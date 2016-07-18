@@ -254,7 +254,13 @@ function extractSubstance(substanceRecordset, connection)
 	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
 	substance.Add "featuredLists", obtainFeaturedLists(id_sustancia, connection)
 
-	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
+	substance.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
+
+	set substance = addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
+
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
 
 	set extractSubstance = substance
 end function
@@ -274,11 +280,10 @@ function composeSubstanceQuery(id_sustancia)
 	composeSubstanceQuery = sql
 end function
 
-function addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
-	dim substanceTables, substanceGroupsRecordset
+function addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
+	dim substanceTables
 
 	set substanceTables = collectSubstanceTables()
-	set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
 
 	do while not substanceGroupsRecordset.eof
 		for each list in substanceTables.keys
@@ -287,18 +292,37 @@ function addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
 		substanceGroupsRecordset.movenext
 	loop
 
-	substanceGroupsRecordset.close()
-	set substanceGroupsRecordset = nothing
-
 	set addSubstanceGroupsAssociatedFields = substance
 end function
 
 function requestSubstanceGroups(id_sustancia, connection)
 	dim sqlQuery
 
-	sqlQuery = "SELECT gr.* FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia
+	sqlQuery = "SELECT gr.*, gr.id AS id_grupo FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " ORDER BY nombre"
 
 	set requestSubstanceGroups = connection.execute(sqlQuery)
+end function
+
+function extractSubstanceGroups(substanceGroupsRecordset)
+	dim result : result = Array()
+	dim group
+
+	if substanceGroupsRecordset.Eof then
+		exctratSubstanceGroups = result
+		exit function
+	end if
+	do while not substanceGroupsRecordset.Eof
+		set group = Server.CreateObject("Scripting.Dictionary")
+		group.add "id_grupo", substanceGroupsRecordset("id_grupo").value
+		group.add "nombre", substanceGroupsRecordset("nombre").value
+		group.add "descripcion", substanceGroupsRecordset("descripcion").value
+		result = arrayPush(result, group)
+		set group = nothing
+		substanceGroupsRecordset.MoveNext	
+	loop
+	if substanceGroupsRecordset.Eof then substanceGroupsRecordset.MoveFirst
+
+	extractSubstanceGroups = result
 end function
 
 function removeVlbFromNotes(notes)
@@ -447,5 +471,15 @@ function extractFrase(c,f, tipo)
 		' La clasificacion es vacía, devolvemos la frase tal cual
 		extractFrase = f
 	end if
+end function
+
+function arrayPush(arrayParameter, dictionaryParameter) 
+	dim result : result = arrayParameter
+	dim newId : newId = ubound(arrayParameter) + 1
+
+	redim preserve result(newId) 
+	set result(newId) = dictionaryParameter
+
+	arrayPush = result
 end function
 %>
