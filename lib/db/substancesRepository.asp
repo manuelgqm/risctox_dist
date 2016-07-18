@@ -3,22 +3,15 @@
 <%
 function findSubstance( id_sustancia, connection )
 	sql = composeSubstanceQuery( id_sustancia )
-
 	set substanceRecordset = connection.execute(sql)
-	set substance = extractSubstance(substanceRecordset)
+	set substance = extractSubstance(substanceRecordset, connection)
 	substanceRecordset.close()
 	set substanceRecordset=nothing
-
-	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
-
-	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
-	substance.Add "featuredLists", obtainFeaturedLists(id_sustancia, connection)
-
 	set findSubstance = substance
 end function
 
 ' PRIVATE
-function extractSubstance(substanceRecordset)
+function extractSubstance(substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
 
 	' dn_risc_sustancias
@@ -257,6 +250,11 @@ function extractSubstance(substanceRecordset)
 	substance.Add "enlace_cop", substanceRecordset("enlace_cop").Value
 
 	substance.Add "frasesR", joinFrases("R", substance)
+
+	substance.Add "sinonimos", obtainSynonyms(id_sustancia, connection)
+	substance.Add "featuredLists", obtainFeaturedLists(id_sustancia, connection)
+
+	set substance = addSubstanceGroupsAssociatedFields(substance, id_sustancia, connection)
 
 	set extractSubstance = substance
 end function
