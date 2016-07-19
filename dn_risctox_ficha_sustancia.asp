@@ -3259,43 +3259,6 @@ function aplana(byval cadena)
   aplana = cadena
 end function
 
-function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray())
-	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
-	dim fieldName
-	fieldName = "asoc_" & listName
-
-	if not FieldExists(substanceGroupsRecordset, fieldName) then
-		set evaluaCamposListaAsociada = substance
-	end if
-
-	for i = 0 to UBound(groupKeysArray)
-		currentGroupKey = groupKeysArray(i)
-		currentSubstanceValue = substance.Item(currentGroupKey)
-		if varType(currentSubstanceValue) = 1 then currentSubstanceValue = ""
-		substanceGroupFieldName = fieldName & "_" & currentGroupKey
-
-		if FieldExists(substanceGroupsRecordset, substanceGroupFieldName) then
-
-			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
-
-			if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
-
-			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
-				if currentSubstanceValue <> "" then
-					currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
-				else
-					currentSubstanceValue = currentSubstanceGroupValue
-				end if
-			end if
-
-			lastSubstanceGroupValue = currentSubstanceValue
-			substance.Item(currentGroupKey) = currentSubstanceValue
-		end if
-	next
-
-	set evaluaCamposListaAsociada = substance
-end function
-
 Function FieldExists(ByVal rs, ByVal fieldName)
 
     On Error Resume Next
