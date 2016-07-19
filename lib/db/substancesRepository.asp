@@ -260,7 +260,7 @@ function extractSubstance(substanceRecordset, connection)
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
 
-	substance.Add "aplicaciones", findSubstanceUses(id_sustancia, connection)
+	substance.Add "aplicaciones", findSubstanceApplications(id_sustancia, connection)
 
 	set extractSubstance = substance
 end function
@@ -325,16 +325,16 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 	extractSubstanceGroups = result
 end function
 
-function findSubstanceUses(id_sustancia, connection)
-	dim sqlQuery, substanceUsesRecordset
+function findSubstanceApplications(id_sustancia, connection)
+	dim sqlQuery, substanceApplicationsRecordset
 
-	sqlQuery = composeSubtanceUsesQuery(id_sustancia)
-	set substanceUsesRecordset = connection.execute(sqlQuery)
-	findSubstanceUses = extractSubstanceUses(substanceUsesRecordset)
+	sqlQuery = composeSubtanceApplicationsQuery(id_sustancia)
+	set substanceApplicationsRecordset = connection.execute(sqlQuery)
+	findSubstanceApplications = extractSubstanceApplications(substanceApplicationsRecordset)
 
 end function
 
-function composeSubtanceUsesQuery(id_sustancia)
+function composeSubtanceApplicationsQuery(id_sustancia)
 	dim result
 	result = "SELECT DISTINCT u.id AS id_uso, u.nombre AS nombre_uso, u.descripcion AS descripcion_uso FROM dn_risc_usos AS u " &_
 				"LEFT OUTER JOIN dn_risc_grupos_por_usos AS gpu " &_
@@ -346,29 +346,29 @@ function composeSubtanceUsesQuery(id_sustancia)
 				"WHERE spg.id_sustancia = " & id_sustancia & " OR spu.id_sustancia = " & id_sustancia & " " &_
 				"ORDER BY u.nombre"
 
-	composeSubtanceUsesQuery = result
+	composeSubtanceApplicationsQuery = result
 end function
 
-function extractSubstanceUses(substanceUsesRecordset)
+function extractSubstanceApplications(substanceApplicationsRecordset)
 	dim result : result = Array()
-	dim substanceUse
+	dim substanceApplication
 
-	if substanceUsesRecordset.Eof then
-		exctratSubstanceUses = result
+	if substanceApplicationsRecordset.Eof then
+		extractSubstanceApplications = result
 		exit function
 	end if
-	do while not substanceUsesRecordset.Eof
-		set substanceUse = Server.CreateObject("Scripting.Dictionary")
-		substanceUse.add "id_uso", substanceUsesRecordset("id_uso").value
-		substanceUse.add "nombre_uso", substanceUsesRecordset("nombre_uso").value
-		substanceUse.add "descripcion_uso", substanceUsesRecordset("descripcion_uso").value
-		result = arrayPush(result, substanceUse)
-		set substanceUse = nothing
-		substanceUsesRecordset.MoveNext	
+	do while not substanceApplicationsRecordset.Eof
+		set substanceApplication = Server.CreateObject("Scripting.Dictionary")
+		substanceApplication.add "id_uso", substanceApplicationsRecordset("id_uso").value
+		substanceApplication.add "nombre_uso", substanceApplicationsRecordset("nombre_uso").value
+		substanceApplication.add "descripcion_uso", substanceApplicationsRecordset("descripcion_uso").value
+		result = arrayPush(result, substanceApplication)
+		set substanceApplication = nothing
+		substanceApplicationsRecordset.MoveNext	
 	loop
-	if substanceUsesRecordset.Eof then substanceUsesRecordset.MoveFirst
+	if substanceApplicationsRecordset.Eof then substanceApplicationsRecordset.MoveFirst
 
-	extractSubstanceUses = result
+	extractSubstanceApplications = result
 end function
 	
 function removeVlbFromNotes(notes)

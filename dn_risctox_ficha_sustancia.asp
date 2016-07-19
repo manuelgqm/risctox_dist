@@ -184,7 +184,6 @@ cerrarconexion
 ' ##########################################################################
 function formatHtmlGlosarioLinks(substanceGroups)
 	dim lista, i
-	dim substanceGroupsLastId
 
 	lista = ""
 
@@ -193,7 +192,7 @@ function formatHtmlGlosarioLinks(substanceGroups)
 		exit function
 	end if
 
-	substanceGroupsLastId = ubound(substanceGroups)
+	dim substanceGroupsLastId : substanceGroupsLastId = ubound(substanceGroups)
 	dim enlace_descripcion : enlace_descripcion = ""
 	for i = 0 to substanceGroupsLastId
 		set substanceGroup = substanceGroups(i)
@@ -217,44 +216,38 @@ function formatHtmlGlosarioLinks(substanceGroups)
 end function
 
 ' ##########################################################################
-function dameUsos(byval id_sustancia)
-	' Devuelve lista de usos para la sustancia indicada
+function formatHtmlApplicationsLinks(substanceApplications)
+	dim lista :	lista = ""
 
-	lista = ""
+	if not isArray(substanceApplications) then
+		formatHtmlApplicationsLinks = lista
+		exit function
+	end if 
 
-  sql="SELECT DISTINCT u.id AS id_uso, u.nombre AS nombre_uso, u.descripcion AS descripcion_uso FROM dn_risc_usos AS u LEFT OUTER JOIN dn_risc_grupos_por_usos AS gpu ON u.id = gpu.id_uso LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpu.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_usos AS spu ON spu.id_uso = u.id WHERE spg.id_sustancia="&id_sustancia&" OR spu.id_sustancia="&id_sustancia&" ORDER BY u.nombre"
+	dim i
+	dim substanceApplicationsLastId : substanceApplicationsLastId = ubound(substanceApplications)
+	dim substanceApplication
+	for i = 0 to substanceApplicationsLastId
+		set substanceApplication = substanceApplications(i)
+		id_uso = substanceApplication.Item("id_uso")
+		nombre_uso = substanceApplication.Item("nombre_uso")
+		descripcion = substanceApplication.Item("descripcion_uso")
 
-	set objRst=objConnection2.execute(sql)
+		if (descripcion <> "") then
+			enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=usos&id=" & id_uso & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>" & nombre_uso & "</a>"
+		else
+			enlace_descripcion = nombre_uso
+		end if
 
-	if (not objRst.eof) then
+		if (lista = "") then
+			lista = enlace_descripcion
+		else
+			lista = lista&", "&enlace_descripcion
+		end if
 
-		do while (not objRst.eof)
+	next
 
-      id_uso = objRst("id_uso")
-      nombre_uso = objRst("nombre_uso")
-      descripcion = objRst("descripcion_uso")
-
-      if (descripcion <> "") then
-        ' Montamos enlace para abrir ventana emergente de descripción
-        enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=usos&id="&id_uso&"','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>"&nombre_uso&"</a>"
-      else
-        ' No hay descripción
-        enlace_descripcion = nombre_uso
-      end if
-
-			if (lista = "") then
-				lista = enlace_descripcion
-			else
-				lista = lista&", "&enlace_descripcion
-			end if
-
-			objRst.movenext
-		loop
-	end if
-	objRst.close()
-	set objRst=nothing
-
-	dameUsos = lista
+	formatHtmlApplicationsLinks = lista
 end function
 
 ' ##########################################################################
@@ -376,7 +369,7 @@ sub ap1_identificacion()
 	<% end if ' hay grupos? %>
 
 	<%
-		usos = dameUsos(id_sustancia)
+		usos = formatHtmlApplicationsLinks(substance.Item("aplicaciones"))
 		if (usos <> "") then
 	%>
 		<tr>
