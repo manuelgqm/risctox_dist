@@ -182,16 +182,14 @@ cerrarconexion
 
 <%
 ' ##########################################################################
-function dameGrupos(substance)
-	' Devuelve lista de grupos para la sustancia indicada
+function formatHtmlGlosarioLinks(substanceGroups)
 	dim lista, i
-	dim subtanceGroupsLastId, substanceGroups
+	dim substanceGroupsLastId
 
 	lista = ""
-	substanceGroups = substance.item("grupos")
 
 	if not isArray(substanceGroups) then
-		dameGrupos = lista
+		formatHtmlGroupsLinks = lista
 		exit function
 	end if
 
@@ -215,7 +213,7 @@ function dameGrupos(substance)
 
 	next
 
-	dameGrupos = lista
+	formatHtmlGlosarioLinks = lista
 end function
 
 ' ##########################################################################
@@ -364,7 +362,7 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = dameGrupos(substance)
+		grupos = formatHtmlGlosarioLinks(substance.item("grupos"))
 		if (grupos <> "") then
 	%>
 		<tr>
