@@ -256,11 +256,11 @@ function extractSubstance(substanceRecordset, connection)
 
 	dim substanceGroupsRecordset : set substanceGroupsRecordset = requestSubstanceGroups(id_sustancia, connection)
 	substance.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
-
 	set substance = addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
-
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
+
+	substance.Add "aplicaciones", findSubstanceUses(id_sustancia, connection)
 
 	set extractSubstance = substance
 end function
@@ -325,6 +325,52 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 	extractSubstanceGroups = result
 end function
 
+function findSubstanceUses(id_sustancia, connection)
+	dim sqlQuery, substanceUsesRecordset
+
+	sqlQuery = composeSubtanceUsesQuery(id_sustancia)
+	set substanceUsesRecordset = connection.execute(sqlQuery)
+	findSubstanceUses = extractSubstanceUses(substanceUsesRecordset)
+
+end function
+
+function composeSubtanceUsesQuery(id_sustancia)
+	dim result
+	result = "SELECT DISTINCT u.id AS id_uso, u.nombre AS nombre_uso, u.descripcion AS descripcion_uso FROM dn_risc_usos AS u " &_
+				"LEFT OUTER JOIN dn_risc_grupos_por_usos AS gpu " &_
+					"ON u.id = gpu.id_uso " &_
+				"LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg " &_
+					"ON gpu.id_grupo = spg.id_grupo " &_
+				"LEFT OUTER JOIN dn_risc_sustancias_por_usos AS spu " &_
+					"ON spu.id_uso = u.id " &_
+				"WHERE spg.id_sustancia = " & id_sustancia & " OR spu.id_sustancia = " & id_sustancia & " " &_
+				"ORDER BY u.nombre"
+
+	composeSubtanceUsesQuery = result
+end function
+
+function extractSubstanceUses(substanceUsesRecordset)
+	dim result : result = Array()
+	dim substanceUse
+
+	if substanceUsesRecordset.Eof then
+		exctratSubstanceUses = result
+		exit function
+	end if
+	do while not substanceUsesRecordset.Eof
+		set substanceUse = Server.CreateObject("Scripting.Dictionary")
+		substanceUse.add "id_uso", substanceUsesRecordset("id_uso").value
+		substanceUse.add "nombre_uso", substanceUsesRecordset("nombre_uso").value
+		substanceUse.add "descripcion_uso", substanceUsesRecordset("descripcion_uso").value
+		result = arrayPush(result, substanceUse)
+		set substanceUse = nothing
+		substanceUsesRecordset.MoveNext	
+	loop
+	if substanceUsesRecordset.Eof then substanceUsesRecordset.MoveFirst
+
+	extractSubstanceUses = result
+end function
+	
 function removeVlbFromNotes(notes)
 	res = notes
 	if (not isnull(notes)) then
@@ -482,4 +528,24 @@ function arrayPush(arrayParameter, dictionaryParameter)
 
 	arrayPush = result
 end function
+
+sub printSusbtance(substance)
+	for each key in substance.keys
+		response.write key & ": "
+		if isArray(substance.item(key)) then
+			for k = 0 to ubound(substance.item(key))
+				if vartype(substance.item(key)(k)) = 9 then
+					for each u in substance.item(key)(k)
+						response.write substance.item(key)(k).item(u) 
+					next	
+				else
+					response.write substance.item(key)(k) & ","
+				end if
+			next
+		else
+			response.write substance.item(key)
+		end if
+		response.write "<br>"
+	next
+end sub
 %>
