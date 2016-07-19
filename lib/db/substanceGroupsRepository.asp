@@ -17,7 +17,7 @@ end function
 function getRecordsetSubstanceGroups(id_sustancia, connection)
 	dim sqlQuery
 
-	sqlQuery = "SELECT gr.*, gr.id AS id_grupo FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " ORDER BY nombre"
+	sqlQuery = "SELECT gr.*, gr.id AS item_id, gr.nombre as name, gr.descripcion as description FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " ORDER BY nombre"
 
 	set getRecordsetSubstanceGroups = connection.execute(sqlQuery)
 end function
@@ -32,12 +32,12 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 	end if
 	do while not substanceGroupsRecordset.Eof
 		set group = Server.CreateObject("Scripting.Dictionary")
-		group.add "id_grupo", substanceGroupsRecordset("id_grupo").value
-		group.add "nombre", substanceGroupsRecordset("nombre").value
-		group.add "descripcion", substanceGroupsRecordset("descripcion").value
+		group.add "item_id", substanceGroupsRecordset("item_id").value
+		group.add "name", substanceGroupsRecordset("name").value
+		group.add "description", substanceGroupsRecordset("description").value
 		result = arrayPush(result, group)
 		set group = nothing
-		substanceGroupsRecordset.MoveNext	
+		substanceGroupsRecordset.MoveNext
 	loop
 	if substanceGroupsRecordset.Eof then substanceGroupsRecordset.MoveFirst
 

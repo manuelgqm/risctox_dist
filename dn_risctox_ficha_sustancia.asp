@@ -177,80 +177,36 @@ Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target=
 cerrarconexion
 %>
 
-
-
-
 <%
-' ##########################################################################
-function formatHtmlGlosarioLinks(substanceGroups)
-	dim lista, i
+function formatHtmlGlossaryLinks(elements, glossaryType)
+	dim result : result = ""
 
-	lista = ""
-
-	if not isArray(substanceGroups) then
-		formatHtmlGroupsLinks = lista
+	if not isArray(elements) then
+		formatHtmlGlossaryLinks = result
 		exit function
 	end if
 
-	dim substanceGroupsLastId : substanceGroupsLastId = ubound(substanceGroups)
-	dim enlace_descripcion : enlace_descripcion = ""
-	for i = 0 to substanceGroupsLastId
-		set substanceGroup = substanceGroups(i)
-		id_grupo = substanceGroup.item("id_grupo")
-		nombre = substanceGroup.item("nombre")
-		descripcion = substanceGroup.item("descripcion")
-		if (descripcion <> "") then
-			' Montamos enlace para abrir ventana emergente de descripción
-			enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=grupos&id=" & id_grupo & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
-		end if
-
-		if (lista = "") then
-			lista = nombre & enlace_descripcion
-		else
-			lista = lista & ", " & nombre & enlace_descripcion
-		end if
-
-	next
-
-	formatHtmlGlosarioLinks = lista
-end function
-
-' ##########################################################################
-function formatHtmlApplicationsLinks(substanceApplications)
-	dim lista :	lista = ""
-
-	if not isArray(substanceApplications) then
-		formatHtmlApplicationsLinks = lista
-		exit function
-	end if 
-
 	dim i
-	dim substanceApplicationsLastId : substanceApplicationsLastId = ubound(substanceApplications)
-	dim substanceApplication
-	for i = 0 to substanceApplicationsLastId
-		set substanceApplication = substanceApplications(i)
-		id_uso = substanceApplication.Item("id_uso")
-		nombre_uso = substanceApplication.Item("nombre_uso")
-		descripcion = substanceApplication.Item("descripcion_uso")
-
-		if (descripcion <> "") then
-			enlace_descripcion = " <a onclick=window.open('dn_glosario.asp?tabla=usos&id=" & id_uso & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>" & nombre_uso & "</a>"
-		else
-			enlace_descripcion = nombre_uso
+	dim elementsLastId : elementsLastId = ubound(elements)
+	dim descriptionLink
+	for i = 0 to elementsLastId
+		descriptionLink = ""
+		set substanceGroup = elements(i)
+		item_id = substanceGroup.item("item_id")
+		name = substanceGroup.item("name")
+		description = substanceGroup.item("description")
+		if (description <> "") then
+			descriptionLink = " <a onclick=window.open('dn_glosario.asp?tabla=" & glossaryType & "&id=" & item_id & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
 		end if
 
-		if (lista = "") then
-			lista = enlace_descripcion
-		else
-			lista = lista&", "&enlace_descripcion
-		end if
+		result = result & name & descriptionLink
+		if not(i + 1 > elementsLastId) then result = result & ", "
 
 	next
 
-	formatHtmlApplicationsLinks = lista
+	formatHtmlGlossaryLinks = result
 end function
 
-' ##########################################################################
 function dameCompanias(byval id_sustancia)
 	' Devuelve lista de compañías para la sustancia indicada
 
@@ -355,7 +311,7 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = formatHtmlGlosarioLinks(substance.item("grupos"))
+		grupos = formatHtmlGlossaryLinks(substance.item("grupos"), "grupos")
 		if (grupos <> "") then
 	%>
 		<tr>
@@ -369,7 +325,7 @@ sub ap1_identificacion()
 	<% end if ' hay grupos? %>
 
 	<%
-		usos = formatHtmlApplicationsLinks(substance.Item("aplicaciones"))
+		usos = formatHtmlGlossaryLinks(substance.Item("aplicaciones"), "usos")
 		if (usos <> "") then
 	%>
 		<tr>

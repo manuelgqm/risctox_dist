@@ -11,7 +11,7 @@ end function
 ' PRIVATE
 function composeSubtanceApplicationsQuery(id_sustancia)
 	dim result
-	result = "SELECT DISTINCT u.id AS id_uso, u.nombre AS nombre_uso, u.descripcion AS descripcion_uso FROM dn_risc_usos AS u " &_
+	result = "SELECT DISTINCT u.id AS item_id, u.nombre AS name, u.descripcion AS description FROM dn_risc_usos AS u " &_
 				"LEFT OUTER JOIN dn_risc_grupos_por_usos AS gpu " &_
 					"ON u.id = gpu.id_uso " &_
 				"LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg " &_
@@ -34,9 +34,9 @@ function extractSubstanceApplications(substanceApplicationsRecordset)
 	end if
 	do while not substanceApplicationsRecordset.Eof
 		set substanceApplication = Server.CreateObject("Scripting.Dictionary")
-		substanceApplication.add "id_uso", substanceApplicationsRecordset("id_uso").value
-		substanceApplication.add "nombre_uso", substanceApplicationsRecordset("nombre_uso").value
-		substanceApplication.add "descripcion_uso", substanceApplicationsRecordset("descripcion_uso").value
+		substanceApplication.add "item_id", substanceApplicationsRecordset("item_id").value
+		substanceApplication.add "name", substanceApplicationsRecordset("name").value
+		substanceApplication.add "description", substanceApplicationsRecordset("description").value
 		result = arrayPush(result, substanceApplication)
 		set substanceApplication = nothing
 		substanceApplicationsRecordset.MoveNext	
