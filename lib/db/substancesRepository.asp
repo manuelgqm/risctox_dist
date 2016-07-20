@@ -2,6 +2,7 @@
 <!--#include file="substanceListsRepository.asp"-->
 <!--#include file="substanceGroupsRepository.asp"-->
 <!--#include file="substanceApplicationsRepository.asp"-->
+<!--#include file="substanceCompaniesRepository.asp"-->
 <%
 function findSubstance( id_sustancia, connection )
 	sql = composeSubstanceQuery( id_sustancia )
@@ -263,6 +264,7 @@ function extractSubstance(substanceRecordset, connection)
 	set substanceGroupsRecordset = nothing
 
 	substance.Add "aplicaciones", findSubstanceApplications(id_sustancia, connection)
+	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
 	set extractSubstance = substance
 end function

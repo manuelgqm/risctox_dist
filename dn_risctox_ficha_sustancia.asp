@@ -207,28 +207,26 @@ function formatHtmlGlossaryLinks(elements, glossaryType)
 	formatHtmlGlossaryLinks = result
 end function
 
-function dameCompanias(byval id_sustancia)
-	' Devuelve lista de compañías para la sustancia indicada
+function formatHtmlCompaniesLinksString(companies)
+	dim result : result = ""
 
-	lista = ""
-
-	sql="SELECT dn_risc_companias.id as idcomp, nombre FROM dn_risc_sustancias_por_companias INNER JOIN dn_risc_companias ON dn_risc_sustancias_por_companias.id_compania = dn_risc_companias.id WHERE id_sustancia="&id_sustancia&" ORDER BY nombre"
-	set objRst=objConnection2.execute(sql)
-	if (not objRst.eof) then
-		do while (not objRst.eof)
-			if (lista = "") then
-				lista = "<a onclick=window.open('dn_risctox_ficha_compania.asp?id="&objRst("idcomp")&"','comp','width=600,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>"&objRst("nombre")&"</a>"
-			else
-				lista = lista&", <a onclick=window.open('dn_risctox_ficha_compania.asp?id="&objRst("idcomp")&"','comp','width=600,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>"&objRst("nombre")&"</a>"
-			end if
-
-			objRst.movenext
-		loop
+	if not isArray(companies) then
+		formatHtmlCompaniesLinksString = result
+		exit function
 	end if
-	objRst.close()
-	set objRst=nothing
 
-	dameCompanias = lista
+	dim i
+	dim companiesLastId : companiesLastId = ubound(companies)
+	dim name, id, company
+	for i = 0 to companiesLastId
+		set company = companies(i)
+		id = company.Item("item_id")
+		name = company.Item("name")
+		result = result & "<a onclick=window.open('dn_risctox_ficha_compania.asp?id=" & id & "','comp','width=600,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>" &name & "</a>"
+		if not(i + 1 > companiesLastId) then result = result & ", "
+	next
+
+	formatHtmlCompaniesLinksString = result
 end function
 
 function formatHtmlUnorderedList(elements)
@@ -378,7 +376,7 @@ sub ap1_identificacion()
 
 
 	<%
-		companias = dameCompanias(id_sustancia)
+		companias = formatHtmlCompaniesLinksString(substance.Item("compañias"))
 	%>
 
 	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
