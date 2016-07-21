@@ -27,7 +27,7 @@ function extractSubstanceCompanies(substanceCompaniesRecordset)
 		set substanceCompany = Server.CreateObject("Scripting.Dictionary")
 		substanceCompany.add "item_id", substanceCompaniesRecordset("item_id").value
 		substanceCompany.add "name", substanceCompaniesRecordset("name").value
-		result = arrayPush(result, substanceCompany)
+		result = arrayPushDictionary(result, substanceCompany)
 		set substanceCompany = nothing
 		substanceCompaniesRecordset.MoveNext	
 	loop

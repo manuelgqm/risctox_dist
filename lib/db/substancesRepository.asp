@@ -1,3 +1,4 @@
+<!--#include file="../arrayManipulations.asp"-->
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceListsRepository.asp"-->
 <!--#include file="substanceGroupsRepository.asp"-->
@@ -396,16 +397,6 @@ function extractFrase(c,f, tipo)
 		' La clasificacion es vacía, devolvemos la frase tal cual
 		extractFrase = f
 	end if
-end function
-
-function arrayPush(arrayParameter, dictionaryParameter) 
-	dim result : result = arrayParameter
-	dim newId : newId = ubound(arrayParameter) + 1
-
-	redim preserve result(newId) 
-	set result(newId) = dictionaryParameter
-
-	arrayPush = result
 end function
 
 sub printSusbtance(substance)

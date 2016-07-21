@@ -35,7 +35,7 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 		group.add "item_id", substanceGroupsRecordset("item_id").value
 		group.add "name", substanceGroupsRecordset("name").value
 		group.add "description", substanceGroupsRecordset("description").value
-		result = arrayPush(result, group)
+		result = arrayPushDictionary(result, group)
 		set group = nothing
 		substanceGroupsRecordset.MoveNext
 	loop

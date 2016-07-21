@@ -36,7 +36,7 @@ function extractSubstanceApplications(substanceApplicationsRecordset)
 		substanceApplication.add "item_id", substanceApplicationsRecordset("item_id").value
 		substanceApplication.add "name", substanceApplicationsRecordset("name").value
 		substanceApplication.add "description", substanceApplicationsRecordset("description").value
-		result = arrayPush(result, substanceApplication)
+		result = arrayPushDictionary(result, substanceApplication)
 		set substanceApplication = nothing
 		substanceApplicationsRecordset.MoveNext	
 	loop
