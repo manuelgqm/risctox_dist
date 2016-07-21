@@ -20,7 +20,6 @@ function composeSubtanceApplicationsQuery(id_sustancia)
 					"ON spu.id_uso = u.id " &_
 				"WHERE spg.id_sustancia = " & id_sustancia & " OR spu.id_sustancia = " & id_sustancia & " " &_
 				"ORDER BY u.nombre"
-
 	composeSubtanceApplicationsQuery = result
 end function
 

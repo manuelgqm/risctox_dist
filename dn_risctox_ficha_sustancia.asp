@@ -178,33 +178,38 @@ cerrarconexion
 %>
 
 <%
-function formatHtmlGlossaryLinks(elements, glossaryType)
+function formatHtmlGlossaryLinksString(elements, glossaryType)
 	dim result : result = ""
-
 	if not isArray(elements) then
-		formatHtmlGlossaryLinks = result
+		formatHtmlGlossaryLinksString = result
 		exit function
 	end if
 
 	dim i
-	dim elementsLastId : elementsLastId = ubound(elements)
 	dim descriptionLink
+	dim element
+	dim elementsLastId : elementsLastId = ubound(elements)
 	for i = 0 to elementsLastId
-		descriptionLink = ""
-		set substanceGroup = elements(i)
-		item_id = substanceGroup.item("item_id")
-		name = substanceGroup.item("name")
-		description = substanceGroup.item("description")
-		if (description <> "") then
-			descriptionLink = " <a onclick=window.open('dn_glosario.asp?tabla=" & glossaryType & "&id=" & item_id & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
-		end if
-
-		result = result & name & descriptionLink
+		set element = elements(i)
+		descriptionLink = getDescriptionLink(element)
+		result = result & element.Item("name") & descriptionLink
 		if not(i + 1 > elementsLastId) then result = result & ", "
-
 	next
 
-	formatHtmlGlossaryLinks = result
+	formatHtmlGlossaryLinksString = result
+end function
+
+function getDescriptionLink(element)
+	dim result : result = ""
+
+	if element.Item("description") = "" then
+		getDescriptionLink = result
+		exit function
+	end if
+
+	result = " <a onclick=window.open('dn_glosario.asp?tabla=" & glossaryType & "&id=" & element.Item("item_id") & "','def','width=500,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>"
+
+	getDescriptionLink = result
 end function
 
 function formatHtmlCompaniesLinksString(companies)
@@ -309,7 +314,7 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = formatHtmlGlossaryLinks(substance.item("grupos"), "grupos")
+		grupos = formatHtmlGlossaryLinksString(substance.item("grupos"), "grupos")
 		if (grupos <> "") then
 	%>
 		<tr>
@@ -323,7 +328,7 @@ sub ap1_identificacion()
 	<% end if ' hay grupos? %>
 
 	<%
-		usos = formatHtmlGlossaryLinks(substance.Item("aplicaciones"), "usos")
+		usos = formatHtmlGlossaryLinksString(substance.Item("aplicaciones"), "usos")
 		if (usos <> "") then
 	%>
 		<tr>
