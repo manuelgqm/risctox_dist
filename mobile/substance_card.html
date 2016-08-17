@@ -21,14 +21,20 @@
     	ul.base-ul{ padding-left: 0px }
     	ul.base-ul>li{ list-style: none; margin-left: 0px; padding-top: 3px }
     	.peligro{ background-color: red; color: white }
+    	body{background-color: #E0EAF7}
+    	.card-title{
+    		color: white; 
+    		background-color: #097db0; 
+    		padding-left: 20px;
+    		font-size: 16pt;
+    	}
     </style>
   </head>
   
   <body>
 	<div id="container" class="text-left">
-		<h3 class="text-center">Risctox <span id="name">formaldeído</span></h3>
+		<div class="card-title">Risctox <span id="name">formaldeído</span></div>
 		<div class="well well-sm">
-			<h4 class="text-info">IDENTIFICACIÓN</h4>
 			<div class="row">
 				<div class="col-xs-4 text-muted">Sinónimos:</div>
 				<div class="col-xs-8">
@@ -37,11 +43,11 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-4 text-muted">CAS:</div>
-				<div class="col-xs-8"><b>50-00-0</b></div>
+				<div class="col-xs-8">50-00-0</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-4 text-muted">EINECS:</div>
-				<div class="col-xs-8"><b>200-001-8</b></div>
+				<div class="col-xs-8">200-001-8</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-4 text-muted">Número índice:</div>
@@ -51,20 +57,18 @@
 				<div class="col-xs-4 text-muted">Lista negra ISTAS:</div>
 				<div class="col-xs-8">cancerígena, mutágena, neurotóxica, sensibilizante</div>
 			</div>
-		</div>
 
-		<div class="well well-sm">
-			<h5 class="text-info">Clasificación y etiquetado 1272/2008</h5>
+			<h5 class="text-info">Clasificación y etiquetado reglamento 1272/2008</h5>
 			<div class="row">
-				<div class="col-xs-4 text-muted small">
+				<div class="col-xs-3 text-muted small">
 					<ul class="base-ul">
 						<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_sensibilizacion_respiratoria.png" class="pictogramaImg">Toxicidad crónica</li>
 						<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_toxicidad_aguda.png" class="pictogramaImg">Toxicidad aguda (oral, cutánea, por inhalación)</li>
 						<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_corrosivo_metales.png" class="pictogramaImg">Corrosivo</li>
-						<li class="peligro">Peligro</li>
+						<li class="button-danger">Peligro</li>
 					</ul>
 				</div>
-				<div class="col-xs-8">
+				<div class="col-xs-9">
 					<ul class="base-ul small">
 						<li><b>H350: </b><span>Puede provocar cáncer</span></li>
 						<li><b>H341: </b><span>Se sospecha que provoca defectos genéticos</span></li>
@@ -74,20 +78,56 @@
 						<li><b>H314: </b><span>Provoca quemaduras graves en la piel y lesiones oculares graves</span></li>
 						<li><b>H317:</b><span>Puede provocar una reacción alérgica en la piel</span></li>
 					</ul>
+					<b class="small">Notas:</b><span id="notas"> D y B</span>
+					<table class="table-condensed small">
+						<thead>
+							<tr>
+								<th>Concentración</th>
+								<th>Etiquetado</th>
+							</tr>
+						</thead>
+						<tr>
+							<td>C >= 25 %</td>
+							<td>Corr. cut., 1B; H314</td>
+						</tr>
+						<tr>
+							<td>C >= 5 %</td>
+							<td>STOT única, 3; H335</td>
+						</tr>
+						<tr>
+							<td>C >= 0,2 %</td>
+							<td>Sens. cut., 1; H317</td>
+						</tr>
+					</table>
 				</div>
 			</div>
-		</div>
-		<!--
+			<table class="table small">
+				<thead>
+					<tr>
+						<th>Valor límite ambiental de exposición profesional de corta duración</th>
+						<th>Notas</th>
+					</tr>
+				</thead>
+				<tr>
+					<td>
+						0.3 ppm<br />
+						0.37 mg/m3
+					</td>
+					<td>Sen, y</td>
+				</tr>
+			</table>
 			<div class="row">
 				<div class="col-xs-4 text-muted">Grupos:</div>
 				<div class="col-xs-8">aldehidos</div>
 			</div>
-			<p>
-				<span class="text-muted">Usos:</span><br />
-				<small>
+			<div class="row">
+				<div class="col-xs-4 text-muted">Usos:</div>
+				<div class="col-xs-8 small">
 					adhesivo, biocida, conservante, desengrasante, desinfectante, <a href="#">disolvente</a>, endurecedor, fungicida, impermeabilizante, limpiador, lubricante, microbiocida, pesticida, protector de madera, refrigerante
-				</small>
-			</p>
+				</div>
+			</div>
+		</div>
+		<!--
 			<p>
 				<span class="text-muted">Ficha Int. de Seguridad Química (INSHT):</span><br />
 				<a href="#">0275</a> <a href="#">0695</a>
