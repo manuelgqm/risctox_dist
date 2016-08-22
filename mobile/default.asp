@@ -1,3 +1,11 @@
+<%@LANGUAGE="VBSCRIPT" LCID="1034" CODEPAGE="65001"%>
+<%
+	Option Explicit
+	Response.ContentType = "text/html"
+	Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+	Response.CodePage = 65001
+	Response.CharSet = "UTF-8"
+%>
 <!DOCTYPE html>
 <html lang="es">
   <head>
