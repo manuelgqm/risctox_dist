@@ -24,24 +24,5 @@
     <![endif]-->
   </head>
   <body>
-	<div id="container" class="text-center">
-		<div class="jumbotron">
-			<h1>Base de datos Risctox</h1>
-			<p>Información sobre peligros y toxicidad para más de 100.000 sustancias químicas</p>
-		</div>
-		<div class="well well-lg">
-			<form action="substance_card.html" role="form">
-				<div class="form-group">
-					<label for="substance-name">Sustancia</label>
-					<input name="subtance-name" type="text" class="form-control" />
-				</div>
-				<div class="form-group">
-					<label for="substance-number">Número CAS, CE o RD</label>
-					<input name="substance-number" type="text" class="form-control" />
-				</div>
-				<button type="submit" class="btn btn-primary">Mostrar</button>
-			</form>
-		</div>
-	</div>
   </body>
 </html>
