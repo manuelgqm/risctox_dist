@@ -9,6 +9,6 @@ requirejs.config({
 	}	,
 	map: {'*': {'css' : 'require-css/css.min'}}
 });
-define(['app/view/substance-finder', 'css!app/view/style/layout'], function( view ){
-	view.render('finder');
+define(['app/view/substance-card', 'css!app/view/style/layout'], function( view ){
+	view.render('card');
 });

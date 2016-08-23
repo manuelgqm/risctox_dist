@@ -1,7 +1,8 @@
 define(['knockout',
 		'app/viewModel/substance-card',
 		'text!./template/substance-card.html',
-		'css!./style/substance-card'
+		'css!./style/substance-card', 
+		'bootstrap'
 		], 
 	function(ko, viewModel, template){
 		return {
