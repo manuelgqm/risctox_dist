@@ -1,8 +1,8 @@
-define(function(){
+define(['app/view/substance-card'], function(cardView){
 	return {
 		id: 957597,
 		findSubstance: function(){
-			document.forms[0].submit();
+			cardView.render('card');
 		}
 	}
 })

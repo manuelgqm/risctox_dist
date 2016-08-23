@@ -3,9 +3,9 @@ define(['app/viewModel/substance-finder',
 		'knockout'], 
 	function(viewModel, template, ko){
 		return {
-			render: function( domElement ){
+			render: function( domID ){
 				document.body.innerHTML = template;
-				ko.applyBindings(viewModel);
+				ko.applyBindings(viewModel, document.getElementById(domID));
 			}
 		}
 	}

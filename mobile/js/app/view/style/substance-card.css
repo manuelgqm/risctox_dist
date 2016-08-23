@@ -1,0 +1,16 @@
+.pictogramaImg{ width: 50px }
+ul.base-ul{ padding-left: 0px }
+ul.base-ul>li{ list-style: none; margin-left: 0px; padding-top: 3px }
+.peligro{ background-color: red; color: white }
+body{background-color: #E0EAF7}
+.card-title{
+	color: white; 
+	background: #097db0 url("../image/header-background.jpg") right/60px no-repeat;
+	padding-left: 10px;
+	font-size: 16pt;
+}
+.dropdown-content{
+	padding: 5px; 
+	font-size: 9pt; line
+	-height: 14px;
+	font-weight: normal;
