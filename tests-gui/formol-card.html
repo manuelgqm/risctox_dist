@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/istas/risctox/mobile" />
+<title>formol-card</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">formol-card</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://localhost/istas/risctox/mobile</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.card-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=name</td>
+	<td>formaldehído</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.col-xs-8.small</td>
+	<td>formaldehído (concentracion 90 por 100), formaldehído . . . %, formol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[2]/div[2]</td>
+	<td>50-00-0</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[3]/div[2]</td>
+	<td>200-001-8</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[4]/div[2]</td>
+	<td>605-001-00-5</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[5]/div[2]</td>
+	<td>cancerígena, mutágena, neurotóxica, sensibilizante</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.col-xs-9</td>
+	<td>*H350: Puede provocar cáncer*H341: Se sospecha que provoca defectos genéticos*H301: Tóxico en caso de ingestión*H311: Tóxico en contacto con la piel*H331: Tóxico en caso de inhalación*H314: Provoca quemaduras graves en la piel y lesiones oculares graves*H317: Puede provocar una reacción alérgica en la piel*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=notas</td>
+	<td>*B*D*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.col-xs-9</td>
+	<td>*C &gt;= 25 %*C &gt;= 5 %*C &gt;= 0,2 %*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[6]/div[2]/table/tbody/tr/td[2]</td>
+	<td>Corr. cut., 1B; H314*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[6]/div[2]/table/tbody/tr[2]/td[2]</td>
+	<td>STOT única, 3; H335</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[6]/div[2]/table/tbody/tr[3]/td[2]</td>
+	<td>Sens. cut., 1; H317</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=table.table.small &gt; tbody &gt; tr &gt; td</td>
+	<td>*0.3 ppm*0.37 mg/m3*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/table/tbody/tr/td[2]</td>
+	<td>*Sen*y*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=grupos</td>
+	<td>aldehidos</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=usos</td>
+	<td>*adhesivo, biocida, conservante, desengrasante, desinfectante, disolvente, endurecedor, fungicida, impermeabilizante, limpiador, lubricante, microbiocida, pesticida, protector de madera, refrigerante*</td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div/div/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=span.dropdown-menu.dropdown-content</td>
+	<td>Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div[2]/div/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div[3]/div/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>Catálogo europeo de sustancias químicas comercializadas. Dicho inventario establece la lista definitiva de todas las sustancias que en principio se encontraban en el mercado comunitario al 18 de septiembre de 1981.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div[4]/div/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>El número índice es el número de identificación asignado a la sustancia en el anexo VI del Reglamento 1272/2008 (conocido como CLP) de clasificación, etiquetado y envasado de sustancias y mezclas peligrosas</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div[5]/div/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>La lista negra incluye aquellas sustancias cuyos posibles daños a la salud y al medio ambiente son tan importantes que debemos evitar su uso o presencia en los lugares de trabajo y su vertido al medio ambiente. Estas sustancias, cuya eliminación será prioritaria, son: Cancerígenas, Mutágenas, Tóxicas para la Reproducción, Disruptores Endocrinos, Sensibilizantes, Neurotóxicos, Tóxicas, Persistentes y Bioacumulativas, muy persistent y muy bioacumulativas, Que pueden provocar a largo plazo efectos negativos en el medio ambiente acuático</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/h5/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/h5/div/span[2]</td>
+	<td>*Incluye las indicaciones de peligro (frases H) asignadas a las sustancias incluidas en el Anexo VI del Reglamento 1272/2008 (CLP).* Los grupos de sustancias incluidos en el Reglamento 1272/2008, Ej. compuestos de berilio, se han desglosado en la relación de sustancias que forman este grupo y se les han asignado las frases H y los pictogramas y palabras de advertencia pertenecientes al grupo.*Las sustancias que pertenecen a 2 grupos, Ej. cromato de mercurio, se han clasificado asignando las frases de mayor riesgo de cada grupo o sus combinaciones, según los criterios del Reglamento CLP.*</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/div[6]/div[2]/ul/li/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>*Indicación de peligro: es una frase que, asignada a una clase o categoría de peligro, describe la naturaleza de los peligros de una sustancia o mezcla peligrosas, incluyendo cuando proceda el grado de peligro.*Listado completo de frases H*</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//span[@id='notas']/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>Ciertas sustancias que pueden experimentar una polimerización o descomposición espontáneas, se comercializan en una forma estabilizada, y así figuran en la parte 3. No obstante, en algunas ocasiones, dichas sustancias se comercializan en una forma no estabilizada. En este caso, el proveedor deberá especificar en la etiqueta el nombre de la sustancia seguido de la palabra «no estabilizada».</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/table/thead/tr/th/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>Es el valor de referencia para la Exposición de Corta Duración (EC), que es la concentración media del agente químico en la zona de respiración del trabajador, medida o calculada para cualquier período de 15 minutos a lo largo de la jornada laboral, excepto para aquellos agentes químicos para los que se especifique un período de referencia inferior, en la lista de Valores Límite.Lo habitual es determinar las EC de interés, es decir, las del período o períodos de máxima exposición, tomando muestras de 15 minutos de duración en cada uno de ellos. El VLA-EC no debe ser superado por ninguna EC a lo largo de la jornada laboral.Para aquellos agentes químicos que tienen efectos agudos reconocidos pero cuyos principales efectos tóxicos son de naturaleza crónica, el VLA-EC constituye un complemento del VLA-ED y, por tanto, la exposición a estos agentes habrá de valorarse en relación con ambos límites.En cambio, a los agentes químicos de efectos principalmente agudos como, por ejemplo, los gases irritantes, sólo se les asigna para su valoración un VLA-EC.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/table/tbody/tr/td[2]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>*Sensibilizante.*Véase Apartado 7.*</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/div[2]/table/tbody/tr/td[2]/div[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.dropdown.open &gt; span.dropdown-menu.dropdown-content</td>
+	<td>Reclasificado, recientemente, por la International Agency for Research on Cancer (IARC) de grupo 2A (probablemente carcinogénico en humanos) a grupo 1 (carcinogénico en humanos).</td>
+</tr>
+</tbody></table>
+</body>
+</html>

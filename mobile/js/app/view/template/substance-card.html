@@ -1,27 +1,25 @@
 <div id="card" class="text-left">
-	<div class="card-title">Risctox <span id="name">formaldeído</span></div>
+	<div class="card-title">Risctox <span id="name" data-bind="text: name"></span></div>
 	<div class="well well-sm">
 		<div class="row">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
 					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-					<span class="dropdown-menu dropdown-content">Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX</span>
+					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.synonyms"></span>
 				</div>
 				Sinónimos:
 			</div>
-			<div class="col-xs-8">
-				<small>formaldehído (concentracion 90 por 100), formaldehído . . . %, formol</small>
-			</div>
+			<div class="col-xs-8 small" data-bind="text: synonyms"></div>
 		</div>
 		<div class="row">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
 					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-					<span class="dropdown-menu dropdown-content">Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional</span>
+					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.cas"></span>
 				</div>
 				CAS:
 			</div>
-			<div class="col-xs-8">50-00-0</div>
+			<div class="col-xs-8" data-bind="text: cas"></div>
 		</div>
 		<div class="row">
 			<div class="col-xs-4 text-muted">
@@ -67,9 +65,9 @@
 		<div class="row">
 			<div class="col-xs-3 text-muted small">
 				<ul class="base-ul">
-					<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_sensibilizacion_respiratoria.png" class="pictogramaImg">Toxicidad crónica</li>
-					<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_toxicidad_aguda.png" class="pictogramaImg">Toxicidad aguda (oral, cutánea, por inhalación)</li>
-					<li><img src="http://risctox.istas.net/imagenes/pictogramas/pictograma_corrosivo_metales.png" class="pictogramaImg">Corrosivo</li>
+					<li><img src="../imagenes/pictogramas/pictograma_sensibilizacion_respiratoria.png" class="pictogramaImg">Toxicidad crónica</li>
+					<li><img src="../imagenes/pictogramas/pictograma_toxicidad_aguda.png" class="pictogramaImg">Toxicidad aguda (oral, cutánea, por inhalación)</li>
+					<li><img src="../imagenes/pictogramas/pictograma_corrosivo_metales.png" class="pictogramaImg">Corrosivo</li>
 					<li class="button-danger">Peligro</li>
 				</ul>
 			</div>
@@ -169,4 +167,4 @@
 		</p>
 
 	</div><!-- div#well -->
-</div><!-- div#container -->
+</div><!-- div#card -->
