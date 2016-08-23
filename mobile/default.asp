@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Risctox mobile home page</title>
     <link href="../bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
 	<script data-main="js/substance-finder" src="js/lib/require-2.2.0.js"></script>
