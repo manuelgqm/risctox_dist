@@ -16,7 +16,7 @@
     <link href="../bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
-	<script data-main="js/substance-finder" src="js/lib/require-2.2.0.js"></script>
+	 <script data-main="js/main" src="js/lib/require-2.2.0.js"></script>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
