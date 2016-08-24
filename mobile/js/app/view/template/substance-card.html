@@ -118,31 +118,33 @@
 					<th>
 						<div class="dropdown" style="display:inline">
 							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-							<span class="dropdown-menu dropdown-content">Es el valor de referencia para la Exposición de Corta Duración (EC), que es la concentración media del agente químico en la zona de respiración del trabajador, medida o calculada para cualquier período de 15 minutos a lo largo de la jornada laboral, excepto para aquellos agentes químicos para los que se especifique un período de referencia inferior, en la lista de Valores Límite.Lo habitual es determinar las EC de interés, es decir, las del período o períodos de máxima exposición, tomando muestras de 15 minutos de duración en cada uno de ellos. El VLA-EC no debe ser superado por ninguna EC a lo largo de la jornada laboral.Para aquellos agentes químicos que tienen efectos agudos reconocidos pero cuyos principales efectos tóxicos son de naturaleza crónica, el VLA-EC constituye un complemento del VLA-ED y, por tanto, la exposición a estos agentes habrá de valorarse en relación con ambos límites.En cambio, a los agentes químicos de efectos principalmente agudos como, por ejemplo, los gases irritantes, sólo se les asigna para su valoración un VLA-EC.</span>
+							<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.vla_ec"></span>
 						</div>
 						VLA-EC
 					</th>
 					<th>Notas</th>
 				</tr>
 			</thead>
-			<tr>
-				<td>
-					0.3 ppm<br />
-					0.37 mg/m3
-				</td>
-				<td>
-					<div class="dropdown" style="display:inline">
-						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-						<span class="dropdown-menu dropdown-content">Sensibilizante. <a href="#">Véase Apartado 7.</a></span>
-					</div>
-					Sen, 
-					<div class="dropdown" style="display:inline">
-						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-						<span class="dropdown-menu dropdown-content">Reclasificado, recientemente, por la International Agency for Research on Cancer (IARC) de grupo 2A (probablemente carcinogénico en humanos) a grupo 1 (carcinogénico en humanos).</span>
-					</div>
-					y
-				</td>
-			</tr>
+			<tbody data-bind="foreach: vla_ec">
+				<tr>
+					<td>
+						<ul class="base-ul" data-bind="foreach: values">
+							<li data-bind="text: $data"></li>
+						</ul>
+					</td>
+					<td>
+						<ul class="list-inline comma-list" data-bind="foreach: notas">
+							<li>
+								<div class="dropdown" style="display:inline" data-bind="visible: description">
+									<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+									<span class="dropdown-menu dropdown-content" data-bind="text: description"></span>
+								</div>
+								<span data-bind="text: value"></span>
+							</li>
+						</ul> 
+					</td>
+				</tr>
+			</tbody>
 		</table>
 
 		<p>
