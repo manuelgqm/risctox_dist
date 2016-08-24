@@ -96,18 +96,12 @@
 							<th>Etiquetado</th>
 						</tr>
 					</thead>
-					<tr>
-						<td>C >= 25 %</td>
-						<td>Corr. cut., 1B; H314</td>
-					</tr>
-					<tr>
-						<td>C >= 5 %</td>
-						<td>STOT única, 3; H335</td>
-					</tr>
-					<tr>
-						<td>C >= 0,2 %</td>
-						<td>Sens. cut., 1; H317</td>
-					</tr>
+					<tbody data-bind="foreach: concentracionEtiquetado">
+						<tr>
+							<td data-bind="text: concentracion"></td>
+							<td data-bind="text: etiquetado"></td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

@@ -32,6 +32,11 @@ define(function(){
 			{value: 'B', description: null},
 			{value: 'D', description: 'Ciertas sustancias que pueden experimentar una polimerización o descomposición espontáneas, se comercializan en una forma estabilizada, y así figuran en la parte 3. No obstante, en algunas ocasiones, dichas sustancias se comercializan en una forma no estabilizada. En este caso, el proveedor deberá especificar en la etiqueta el nombre de la sustancia seguido de la palabra «no estabilizada».'}
 		],
+		concentracionEtiquetado: [
+			{concentracion: 'C >= 25 %', etiquetado: 'Corr. cut., 1B; H314'},
+			{concentracion: 'C >= 5 %', etiquetado: 'STOT única, 3; H335'},
+			{concentracion: 'C >= 0,2 %', etiquetado: 'Sens. cut., 1; H317'},
+		],
 		descriptions: {
 			synonyms: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX',
 			cas: 'Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional',
