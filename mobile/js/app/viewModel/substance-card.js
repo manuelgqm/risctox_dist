@@ -44,6 +44,8 @@ define(function(){
 				{value: "y", description: "Reclasificado, recientemente, por la International Agency for Research on Cancer (IARC) de grupo 2A (probablemente carcinogénico en humanos) a grupo 1 (carcinogénico en humanos)."}
 			]
 		}],
+		groups: ['aldehidos'],
+		applications: ['adhesivo', 'biocida', 'conservante', 'desengrasante', 'desinfectante', '<a href="#">disolvente</a>', 'endurecedor', 'fungicida', 'impermeabilizante', 'limpiador', 'lubricante', 'microbiocida', 'pesticida', 'protector de madera, refrigerante'],
 		descriptions: {
 			synonyms: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX',
 			cas: 'Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional',

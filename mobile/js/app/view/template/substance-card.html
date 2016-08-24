@@ -147,16 +147,19 @@
 			</tbody>
 		</table>
 
-		<p>
-			<b>Grupos:</b> <span id="grupos">aldehidos</span>
-		</p>
+		<div>
+			<b>Grupos:</b> 
+			<ul class="list-inline comma-list" data-bind="foreach: groups" style="display:inline">
+				<li data-bind="text: $data"></li>
+			</ul>
+		</div>
 
-		<p>
+		<div>
 			<b>Usos:</b>
-			<span id="usos" class="small">
-				adhesivo, biocida, conservante, desengrasante, desinfectante, <a href="#">disolvente</a>, endurecedor, fungicida, impermeabilizante, limpiador, lubricante, microbiocida, pesticida, protector de madera, refrigerante
-			</span>
-		</p>
+			<ul class="list-inline comma-list" data-bind="foreach: applications" style="display:inline">
+				<li class="small" data-bind="text: $data"></li>
+			</ul>
+		</div>
 
 	</div><!-- div#well -->
 </div><!-- div#card -->
