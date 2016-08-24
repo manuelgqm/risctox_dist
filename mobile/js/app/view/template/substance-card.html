@@ -59,20 +59,15 @@
 		<h5 class="text-info">
 			<div class="dropdown" style="display:inline">
 					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-					<span class="dropdown-menu dropdown-content text-muted">Incluye las indicaciones de peligro (frases H) asignadas a las sustancias incluidas en el Anexo VI del Reglamento 1272/2008 (CLP). <br>
-					Los grupos de sustancias incluidos en el Reglamento 1272/2008, Ej. compuestos de berilio, se han desglosado en la relación de sustancias que forman este grupo y se les han asignado las frases H y los pictogramas y palabras de advertencia pertenecientes al grupo. <br>
-					Las sustancias que pertenecen a 2 grupos, Ej. cromato de mercurio, se han clasificado asignando las frases de mayor riesgo de cada grupo o sus combinaciones, según los criterios del Reglamento CLP.</span>
+					<span class="dropdown-menu dropdown-content text-muted" data-bind="text: descriptions.clp"></span>
 				</div>
 			Clasificación y etiquetado reglamento 1272/2008
 		</h5>
 
 		<div class="row">
 			<div class="col-xs-3 text-muted small">
-				<ul class="base-ul">
-					<li><img src="../imagenes/pictogramas/pictograma_sensibilizacion_respiratoria.png" class="pictogramaImg">Toxicidad crónica</li>
-					<li><img src="../imagenes/pictogramas/pictograma_toxicidad_aguda.png" class="pictogramaImg">Toxicidad aguda (oral, cutánea, por inhalación)</li>
-					<li><img src="../imagenes/pictogramas/pictograma_corrosivo_metales.png" class="pictogramaImg">Corrosivo</li>
-					<li class="button-danger">Peligro</li>
+				<ul class="base-ul" data-bind="foreach: pictograms">
+					<li><img data-bind="attr: { src: iconUrl, alt: name }" class="pictogramaImg"><span data-bind="text: name"></span></li>
 				</ul>
 			</div>
 			<div class="col-xs-9">
