@@ -19,6 +19,15 @@ define(function(){
 			name: 'Peligro',
 			iconUrl: ''
 		}],
+		frasesH: [
+			{value: 'H350', description: 'Puede provocar cáncer'}, 
+			{value: 'H341', description: 'Se sospecha que provoca defectos genéticos'}, 
+			{value: 'H301', description: 'Tóxico en caso de ingestión'}, 
+			{value: 'H311', description: 'Tóxico en contacto con la piel'}, 
+			{value: 'H331', description: 'Tóxico en caso de inhalación'}, 
+			{value: 'H314', description: 'Provoca quemaduras graves en la piel y lesiones oculares graves'}, 
+			{value: 'H317', description: 'Puede provocar una reacción alérgica en la piel'}
+		],
 		descriptions: {
 			synonyms: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX',
 			cas: 'Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional',
@@ -26,7 +35,7 @@ define(function(){
 			indice: 'El número índice es el número de identificación asignado a la sustancia en el anexo VI del Reglamento 1272/2008 (conocido como CLP) de clasificación, etiquetado y envasado de sustancias y mezclas peligrosas',
 			listaNegra: 'La lista negra incluye aquellas sustancias cuyos posibles daños a la salud y al medio ambiente son tan importantes que debemos evitar su uso o presencia en los lugares de trabajo y su vertido al medio ambiente. Estas sustancias, cuya eliminación será prioritaria, son: Cancerígenas, Mutágenas, Tóxicas para la Reproducción, Disruptores Endocrinos, Sensibilizantes, Neurotóxicos, Tóxicas, Persistentes y Bioacumulativas, muy persistent y muy bioacumulativas, Que pueden provocar a largo plazo efectos negativos en el medio ambiente acuático',
 			clp: 'Incluye las indicaciones de peligro (frases H) asignadas a las sustancias incluidas en el Anexo VI del Reglamento 1272/2008 (CLP). Los grupos de sustancias incluidos en el Reglamento 1272/2008, Ej. compuestos de berilio, se han desglosado en la relación de sustancias que forman este grupo y se les han asignado las frases H y los pictogramas y palabras de advertencia pertenecientes al grupo.	Las sustancias que pertenecen a 2 grupos, Ej. cromato de mercurio, se han clasificado asignando las frases de mayor riesgo de cada grupo o sus combinaciones, según los criterios del Reglamento CLP.',
-			frasesH: 'Indicación de peligro: es una frase que, asignada a una clase o categoría de peligro, describe la naturaleza de los peligros de una sustancia o mezcla peligrosas, incluyendo cuando proceda el grado de peligro.'
+
 		}
 	}
 })

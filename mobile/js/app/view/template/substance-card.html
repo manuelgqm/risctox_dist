@@ -71,14 +71,10 @@
 				</ul>
 			</div>
 			<div class="col-xs-9">
-				<ul class="base-ul small">
-					<li><b>H350: </b><span>Puede provocar cáncer</span></li>
-					<li><b>H341: </b><span>Se sospecha que provoca defectos genéticos</span></li>
-					<li><b>H301: </b><span>Tóxico en caso de ingestión</span></li>
-					<li><b>H311: </b><span>Tóxico en contacto con la piel</span></li>
-					<li><b>H331: </b><span>Tóxico en caso de inhalación</span></li>
-					<li><b>H314: </b><span>Provoca quemaduras graves en la piel y lesiones oculares graves</span></li>
-					<li><b>H317: </b><span>Puede provocar una reacción alérgica en la piel</span></li>
+				<ul class="base-ul small" data-bind="foreach: frasesH">
+					<li>
+						<b data-bind="text: value"></b>: <span data-bind="text: description"></span>
+					</li>
 				</ul>
 				<b class="small">Notas: </b><span id="notas">B y 
 					<div class="dropdown" style="display:inline">
