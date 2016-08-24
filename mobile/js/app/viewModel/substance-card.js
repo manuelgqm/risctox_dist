@@ -28,6 +28,10 @@ define(function(){
 			{value: 'H314', description: 'Provoca quemaduras graves en la piel y lesiones oculares graves'}, 
 			{value: 'H317', description: 'Puede provocar una reacción alérgica en la piel'}
 		],
+		notas: [
+			{value: 'B', description: null},
+			{value: 'D', description: 'Ciertas sustancias que pueden experimentar una polimerización o descomposición espontáneas, se comercializan en una forma estabilizada, y así figuran en la parte 3. No obstante, en algunas ocasiones, dichas sustancias se comercializan en una forma no estabilizada. En este caso, el proveedor deberá especificar en la etiqueta el nombre de la sustancia seguido de la palabra «no estabilizada».'}
+		],
 		descriptions: {
 			synonyms: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX',
 			cas: 'Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional',

@@ -58,9 +58,9 @@
 
 		<h5 class="text-info">
 			<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-					<span class="dropdown-menu dropdown-content text-muted" data-bind="text: descriptions.clp"></span>
-				</div>
+				<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+				<span class="dropdown-menu dropdown-content text-muted" data-bind="text: descriptions.clp"></span>
+			</div>
 			Clasificación y etiquetado reglamento 1272/2008
 		</h5>
 
@@ -70,18 +70,25 @@
 					<li><img data-bind="attr: { src: iconUrl, alt: name }" class="pictogramaImg"><span data-bind="text: name"></span></li>
 				</ul>
 			</div>
+
 			<div class="col-xs-9">
 				<ul class="base-ul small" data-bind="foreach: frasesH">
 					<li>
 						<b data-bind="text: value"></b>: <span data-bind="text: description"></span>
 					</li>
 				</ul>
-				<b class="small">Notas: </b><span id="notas">B y 
-					<div class="dropdown" style="display:inline">
-						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-						<span class="dropdown-menu dropdown-content">Ciertas sustancias que pueden experimentar una polimerización o descomposición espontáneas, se comercializan en una forma estabilizada, y así figuran en la parte 3. No obstante, en algunas ocasiones, dichas sustancias se comercializan en una forma no estabilizada. En este caso, el proveedor deberá especificar en la etiqueta el nombre de la sustancia seguido de la palabra «no estabilizada».</span>
-					</div>
-				D</span>
+
+				<b class="small">Notas: </b>
+				<ul class="list-inline comma-list" data-bind="foreach: notas" style="display:inline">
+					<li>
+						<div class="dropdown" data-bind="visible: description" style="display:inline">
+							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+							<span class="dropdown-menu dropdown-content" data-bind="text: description"></span>
+						</div>
+						<span  data-bind="text: value"></span>
+					</li>
+				</ul>
+
 				<table class="table-condensed small">
 					<thead>
 						<tr>
