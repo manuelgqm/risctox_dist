@@ -11,6 +11,9 @@ body{background-color: #E0EAF7}
 }
 .dropdown-content{
 	padding: 5px; 
-	font-size: 9pt; line
-	-height: 14px;
+	font-size: 9pt; 
+	line-height: 14px;
 	font-weight: normal;
+}
+.comma-list li:after{ content: ", "; }
+.comma-list li:last-child:after{ content: ""; }
