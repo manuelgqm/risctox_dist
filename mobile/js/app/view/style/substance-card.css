@@ -16,8 +16,13 @@ body{background-color: #E0EAF7}
 	line-height: 14px;
 	font-weight: normal;
 }
-.comma-list li:after{ content: ", "; }
-.comma-list li:last-child:after{ content: ""; }
+.list-comma li:after{ content: ","; }
+.list-comma li:last-child:after{ content: ""; }
+.list-comma li{ 
+	display: inline-block; 
+    list-style: none;
+    margin: 0px;
+}
 .row-xs-flex-center {
   display:flex;
   align-items:center;

@@ -50,7 +50,7 @@
 				Lista negra ISTAS:
 			</div>
 			<div class="col-xs-8">
-				<ul class="list-inline comma-list" data-bind="foreach: listaNegra">
+				<ul class="list-comma" data-bind="foreach: listaNegra">
 					<li data-bind="text: $data"></li>
 				</ul>
 			</div>
@@ -80,7 +80,7 @@
 				</ul>
 
 				<b class="small">Notas: </b>
-				<ul class="list-inline comma-list" data-bind="foreach: notas" style="display:inline">
+				<ul class="list-comma" data-bind="foreach: notas" style="display:inline">
 					<li>
 						<div class="dropdown" data-bind="visible: description" style="display:inline">
 							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
@@ -134,7 +134,7 @@
 						</ul>
 					</td>
 					<td>
-						<ul class="list-inline comma-list" data-bind="foreach: notas">
+						<ul class="list-comma" data-bind="foreach: notas">
 							<li>
 								<div class="dropdown" style="display:inline" data-bind="visible: description">
 									<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
@@ -150,14 +150,14 @@
 
 		<div>
 			<b>Grupos:</b> 
-			<ul class="list-inline comma-list" data-bind="foreach: groups" style="display:inline">
+			<ul class="list-comma" data-bind="foreach: groups" style="display:inline">
 				<li data-bind="text: $data"></li>
 			</ul>
 		</div>
 
 		<div>
 			<b>Usos:</b>
-			<ul class="list-inline comma-list" data-bind="foreach: applications" style="display:inline">
+			<ul class="list-comma" data-bind="foreach: applications" style="display:inline">
 				<li class="small" data-bind="text: $data"></li>
 			</ul>
 		</div>
