@@ -65,8 +65,11 @@
 		</h5>
 
 		<div class="row row-xs-flex-center">
-			<div class="base-ul col-xs-3 text-muted small image-container" data-bind="foreach: pictograms">
-				<img data-bind="attr: { src: iconUrl, alt: name }" class="pictogramaImg img-responsive"><span data-bind="text: name"></span>
+			<div class="base-ul col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictograms">
+				<div class="dropdown vertical-distributed-container">
+					<img data-bind="attr: { src: iconUrl, alt: name }" class="pictogramaImg img-responsive dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					<span class="dropdown-menu dropdown-content" data-bind="text: name"></span>
+				</div>
 			</div>
 
 			<div class="col-xs-9">
