@@ -1,4 +1,4 @@
-.pictogramaImg{ width: 50px }
+.pictogramaImg{ width: 50px; margin: 0 auto;}
 ul.base-ul{ padding-left: 0px }
 ul.base-ul>li{ list-style: none; margin-left: 0px; padding-top: 3px }
 .peligro{ background-color: red; color: white }
@@ -17,3 +17,14 @@ body{background-color: #E0EAF7}
 }
 .comma-list li:after{ content: ", "; }
 .comma-list li:last-child:after{ content: ""; }
+.row-xs-flex-center {
+  display:flex;
+  align-items:center;
+}
+.image-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	align-self: stretch;
+	justify-content: space-around;
+}
