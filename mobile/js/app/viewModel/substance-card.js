@@ -17,7 +17,7 @@ define(function(){
 			iconUrl: '../imagenes/pictogramas/pictograma_corrosivo_metales.png'
 		}, {
 			name: 'Peligro',
-			iconUrl: ''
+			iconUrl: '../imagenes/pictogramas/pictograma_peligro.png'
 		}],
 		frasesH: [
 			{value: 'H350', description: 'Puede provocar cáncer'}, 
