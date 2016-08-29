@@ -1,15 +1,9 @@
-define(['knockout',
-		'app/viewModel/substance-card',
-		'text!./template/substance-card.html',
-		'css!./style/substance-card', 
-		'bootstrap'
-		], 
-	function(ko, viewModel, template){
-		return {
-			render: function(domID){
-				document.body.innerHTML = template;
-				ko.applyBindings(viewModel, document.getElementById(domID));
-			}
-		}
-	}
-);
+define([
+	'app/view/View',
+	'app/viewModel/substance-card',
+	'text!./template/substance-card.html',
+	'css!./style/substance-card',
+], function(View, viewModel, template){
+	var substanceCardView = new View(viewModel, template);
+	return substanceCardView;
+});

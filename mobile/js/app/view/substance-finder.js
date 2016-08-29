@@ -1,12 +1,8 @@
-define(['app/viewModel/substance-finder', 
-		'text!./template/substance-finder.html', 
-		'knockout', 'bootstrap'], 
-	function(viewModel, template, ko){
-		return {
-			render: function( domID ){
-				document.body.innerHTML = template;
-				ko.applyBindings(viewModel, document.getElementById(domID));
-			}
-		}
-	}
-);
+define([
+	'app/view/View',
+	'app/viewModel/substance-finder', 
+	'text!./template/substance-finder.html', 
+], function(View, viewModel, template){
+	var substanceFinderView = new View(viewModel, template);
+	return substanceFinderView;
+});
