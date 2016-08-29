@@ -1,15 +1,18 @@
 define([
 	'lodash',
-	'app/viewModel/viewModel',
+	'app/viewModel/ViewModel',
 	'text!app/view/template/substanceFinder.html', 
+	'app/model/substanceFinder',
 	'app/viewModel/substanceCard',
-], function(_, View, substanceFinderTemplate, cardView){
+], function(_, ViewModel, substanceFinderTemplate, substanceFinderModel, substanceCardViewModel){
 	var substanceFinderViewModel = {
-		id: 957597,
 		findSubstance: function(){
-			cardView.render('card');
+			substanceCardViewModel.render('card');
 		}
 	};
-	_.assign(substanceFinderViewModel, new View(substanceFinderViewModel, substanceFinderTemplate));
+	_.assign(substanceFinderViewModel, 
+		substanceFinderModel,
+		new ViewModel(substanceFinderViewModel, substanceFinderTemplate)
+	);
 	return substanceFinderViewModel;
 });
