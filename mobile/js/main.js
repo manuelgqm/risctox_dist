@@ -10,6 +10,6 @@ requirejs.config({
 	}	,
 	map: {'*': {'css' : 'require-css/css.min'}}
 });
-define(['app/viewModel/substance-finder', 'css!app/view/style/layout'], function( substanceFinderViewModel ){
+define(['app/viewModel/substanceFinder', 'css!app/view/style/layout'], function( substanceFinderViewModel ){
 	substanceFinderViewModel.render('finder');
 });
