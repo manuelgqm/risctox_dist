@@ -1,6 +1,6 @@
 define([
 	'lodash',
-	'app/view/View',
+	'app/viewModel/viewModel',
 	'text!app/view/template/substance-finder.html', 
 	'app/viewModel/substance-card',
 ], function(_, View, substanceFinderTemplate, cardView){
