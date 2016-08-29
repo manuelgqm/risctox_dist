@@ -2,8 +2,8 @@ define([
 	'lodash',
 	'app/viewModel/viewModel',
 	'app/view/page',
-	'text!app/view/template/substance-card.html',
-	'css!app/view/style/substance-card'
+	'text!app/view/template/substanceCard.html',
+	'css!app/view/style/substanceCard'
 ], function(_, View, pageView, substanceCardTemplate){
 	var substanceCardViewModel = {
 		name: 'formaldehído',
