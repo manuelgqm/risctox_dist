@@ -2,10 +2,10 @@ define([
 	'lodash',
 	'app/viewModel/viewModel',
 	'app/view/page',
-	'text!app/view/template/substanceCard.html',
+	'text!app/view/substanceCard.html',
 	'app/model/substanceCard',
 	'css!app/view/style/substanceCard'
-], function(_, ViewModel, pageView, substanceCardTemplate, substanceCardModel){
+], function(_, ViewModel, pageView, substanceCardView, substanceCardModel){
 	var substanceCardViewModel = {
 		showPage: function(){
 			pageView.render('card');
@@ -13,7 +13,7 @@ define([
 	};
 	_.assign(substanceCardViewModel, 
 		substanceCardModel, 
-		new ViewModel(substanceCardViewModel, substanceCardTemplate)
+		new ViewModel(substanceCardViewModel, substanceCardView)
 	);
 
 	return substanceCardViewModel;
