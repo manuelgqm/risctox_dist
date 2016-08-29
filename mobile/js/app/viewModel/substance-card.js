@@ -1,5 +1,11 @@
-define(['app/view/page'], function(pageView){
-	return {
+define([
+	'lodash',
+	'app/view/View',
+	'app/view/page',
+	'text!app/view/template/substance-card.html',
+	'css!app/view//style/substance-card'
+], function(_, View, pageView, substanceCardTemplate){
+	var substanceCardViewModel = {
 		name: 'formaldehído',
 		synonyms: 'formaldehído (concentracion 90 por 100), formaldehído . . . %, formol',
 		cas: '50-00-0',
@@ -60,4 +66,7 @@ define(['app/view/page'], function(pageView){
 			pageView.render('card');
 		}
 	}
+	_.assign(substanceCardViewModel, new View(substanceCardViewModel, substanceCardTemplate));
+
+	return substanceCardViewModel;
 })

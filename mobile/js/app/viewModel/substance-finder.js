@@ -2,7 +2,7 @@ define([
 	'lodash',
 	'app/view/View',
 	'text!app/view/template/substance-finder.html', 
-	'app/view/substance-card',
+	'app/viewModel/substance-card',
 ], function(_, View, substanceFinderTemplate, cardView){
 	var substanceFinderViewModel = {
 		id: 957597,
