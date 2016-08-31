@@ -7,6 +7,7 @@ define([
 	'css!app/view/style/substanceCard'
 ], function(_, ViewModel, substanceCardView, substanceCardModel, pageViewModel){
 	var substanceCardViewModel = {
+		domId: 'card',
 		showPage: function(){
 			pageViewModel.render('page');
 		}

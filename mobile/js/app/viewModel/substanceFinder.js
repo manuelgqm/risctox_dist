@@ -6,8 +6,10 @@ define([
 	'app/viewModel/substanceCard',
 ], function(_, ViewModel, substanceFinderView, substanceFinderModel, substanceCardViewModel){
 	var substanceFinderViewModel = {
+		domId : 'finder',
 		findSubstance: function(){
-			substanceCardViewModel.render('card');
+			substanceCardViewModel.render();
+			substanceCardViewModel.bind();
 		}
 	};
 	_.assign(substanceFinderViewModel, 

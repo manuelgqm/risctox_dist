@@ -3,11 +3,12 @@ define([
 	'bootstrap'
 ], function(ko){
 	return function(viewModel, template){
-		this.viewModel = viewModel;
-		this.template = template;
 		this.render = function(domId){
-			document.body.innerHTML = this.template;
-			ko.applyBindings(this.viewModel, document.getElementById(domId));
+			document.body.innerHTML = template;
+		},
+		this.bind = function(){
+			domNode = document.getElementById(viewModel.domId);
+			ko.applyBindings(viewModel, domNode);
 		}
 	}
 });
