@@ -5,13 +5,7 @@ define([
 	'app/model/substanceFinder',
 	'app/viewModel/substanceCard',
 ], function(_, ViewModel, substanceFinderView, substanceFinderModel, substanceCardViewModel){
-	var substanceFinderViewModel = {
-		domId : 'finder',
-		findSubstance: function(){
-			substanceCardViewModel.render();
-			substanceCardViewModel.bind();
-		}
-	};
+	var substanceFinderViewModel = {domId: 'finder'};
 	_.assign(substanceFinderViewModel, 
 		substanceFinderModel,
 		new ViewModel(substanceFinderViewModel, substanceFinderView)
