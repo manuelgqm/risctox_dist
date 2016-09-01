@@ -2,9 +2,8 @@ define([
 	'lodash',
 	'app/viewModel/ViewModel',
 	'text!app/view/substanceFinder.html', 
-	'app/model/substanceFinder',
-	'app/viewModel/substanceCard',
-], function(_, ViewModel, substanceFinderView, substanceFinderModel, substanceCardViewModel){
+	'app/model/substanceFinder'
+], function(_, ViewModel, substanceFinderView, substanceFinderModel){
 	var substanceFinderViewModel = {domId: 'finder'};
 	_.assign(substanceFinderViewModel, 
 		substanceFinderModel,
