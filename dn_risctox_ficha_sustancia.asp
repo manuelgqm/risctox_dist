@@ -3217,13 +3217,4 @@ function aplana(byval cadena)
   cadena = replace(cadena, " ", "")
   aplana = cadena
 end function
-
-Function FieldExists(ByVal rs, ByVal fieldName)
-
-    On Error Resume Next
-    FieldExists = rs.Fields(fieldName).name <> ""
-    If Err <> 0 Then FieldExists = False
-    Err.Clear
-
-End Function
 %>
