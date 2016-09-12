@@ -44,21 +44,21 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 		case "cancer_rd": ' Cancerigeno según RD
 			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
 			sqlQuery = parentesis_where( _
-				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer) _
+				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRCancer) _
 			) &_
 			" OR (" & monta_condicion_grupo("asoc_cancer_rd") & ") )"
 
 		case "cancer_danesa": ' Cancerigeno según lista danesa
 			campos="sus.frases_r_danesa"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRCancer)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRCancer)
 
 		case "mutageno_rd": ' Mutágeno según RD
 			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRMutageno)
 
 		case "mutageno_danesa": ' Mutágeno según lista danesa
 			campos="sus.frases_r_danesa"
-			sqlQuery="select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRMutageno)
+			sqlQuery="select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRMutageno)
 
 		case "cancer_iarc": ' Cancerígena según IARC
 			sqlQuery = whereClause( _
@@ -100,13 +100,13 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 		case "tpr": ' Tóxicos para la reproducción
 			campos = "sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
 			sqlQuery = whereClause( _
-				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRTpr) _
+				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRTpr) _
 			) & _
 			" OR (" & groupByClause("asoc_reproduccion") & ") )"
 
 		case "tpr_danesa": ' Tóxicos para la reproducción según lista danesa
 			campos = "sus.frases_r_danesa"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRTpr)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRTpr)
 
 		case "de": ' Disruptor endocrino
 			sqlQuery = whereClause( _
@@ -119,22 +119,22 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 
 		case "neurotoxico_rd":
 			campos="sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRNeurotoxico)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRNeurotoxico)
 
 		case "neurotoxico_danesa":
 			campos="sus.frases_r_danesa"
-			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRNeurotoxico)
+			sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRNeurotoxico)
 
 		case "neurotoxico_nivel": ' Neurótoxico Danesa
       		sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN dn_risc_sustancias_neuro_disruptor ON (sus.id=dn_risc_sustancias_neuro_disruptor.id_sustancia) WHERE (dn_risc_sustancias_neuro_disruptor.nivel_neurotoxico<>'')"
 
 		case "sensibilizante": ' Sensibilizante
 			campos = "sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15"
-      		sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & monta_condicion(campos, frasesRSensibilizante)
+      		sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE " & obtainSqlFrasesCondition(campos, frasesRSensibilizante)
 
 		case "sensibilizante_danesa": ' Sensibilizante según lista danesa
 			campos="sus.frases_r_danesa"
-    		sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE "&monta_condicion(campos, frasesRSensibilizante)
+    		sqlQuery = "select distinct sus.id, sus.nombre from dn_risc_sustancias as sus WHERE "&obtainSqlFrasesCondition(campos, frasesRSensibilizante)
 
 		case "sensibilizante_reach": ' Sensibilizante según reach
 			sqlQuery = whereClause( _
@@ -244,7 +244,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN spl_risc_sustancias_prohibidas_embarazadas as pro_emb ON (sus.id=pro_emb.id_sustancia) WHERE " _
 			) & _
 			"(sus.id=pro_emb.id_sustancia) OR  " & _
-			"( " & buildCondition(campos, frasesREmbarazadas) & " OR "  & _
+			"( " & obtainSqlFrasesCondition(campos, frasesREmbarazadas) & " OR "  & _
 			" (sus.num_rd='082-001-00-6' ) " & _
 			" OR (" & groupByClause("asoc_prohibidas_embarazadas") & " )" & _
 			" OR (sus.num_rd='650-017-00-8' AND sus.num_rd='650-016-00-2')" & _
@@ -257,7 +257,7 @@ function isSubstanceInList(byval lista, byval id_sustancia, connection)
 				"select distinct sus.id, sus.nombre from dn_risc_sustancias as sus LEFT OUTER JOIN spl_risc_sustancias_prohibidas_lactantes as pro_lac ON (sus.id=pro_lac.id_sustancia) WHERE " _
 			) & _
 			"(sus.id=pro_lac.id_sustancia) OR  " & _
-			"( " & buildCondition(campos, frasesRLactantes) & " OR " & _
+			"( " & obtainSqlFrasesCondition(campos, frasesRLactantes) & " OR " & _
 			" (sus.num_rd='082-001-00-6' ) " & _
 			" OR (" & groupByClause("asoc_prohibidas_lactantes") & " )" & _
 			" OR (sus.num_rd='650-017-00-8' AND sus.num_rd='650-016-00-2')" & _
@@ -333,12 +333,12 @@ function groupByClause(check_lista)
 
 end function
 
-function buildCondition(byval campos, byval frases)
+function obtainSqlFrasesCondition(byval campos, byval frases)
   ' Helper para montar la parte de SQL donde se buscan frases R en los campos clasificacion_xx y/o frases_r_danesa,
   ' indicando en qué campos buscar (separados por comas) y qué frases (tambien separados por comas)
 
   ' Ejemplo:
-  ' buildCondition("sus.clasificacion_1, sus_clasificacion_2, sus_clasificacion_3", "R42, R43, R42/43") devuelve:
+  ' obtainSqlFrasesCondition("sus.clasificacion_1, sus_clasificacion_2, sus_clasificacion_3", "R42, R43, R42/43") devuelve:
   ' "((sus.clasificacion_1 LIKE '%R42') OR (sus.clasificacion_1 LIKE '%R42;%') OR (sus.clasificacion_1 LIKE '%R43') OR (sus.clasificacion_1 LIKE '%R43;%') OR (sus.clasificacion_1 LIKE '%R42/43') OR (sus.clasificacion_1 LIKE '%R42/43;%') OR (sus.clasificacion_2 LIKE '%R42') OR (sus.clasificacion_2 LIKE '%R42;%') OR (sus.clasificacion_2 LIKE '%R43') OR (sus.clasificacion_2 LIKE '%R43;%') OR (sus.clasificacion_2 LIKE '%R42/43') OR (sus.clasificacion_2 LIKE '%R42/43;%') OR (sus.clasificacion_3 LIKE '%R42') OR (sus.clasificacion_3 LIKE '%R42;%') OR (sus.clasificacion_3 LIKE '%R43') OR (sus.clasificacion_3 LIKE '%R43;%') OR (sus.clasificacion_3 LIKE '%R42/43') OR (sus.clasificacion_3 LIKE '%R42/43;%'))"
 
   ' Creamos array campos y de frases con split
@@ -363,7 +363,7 @@ function buildCondition(byval campos, byval frases)
 
   next
 
-  buildCondition = "("&condicion&")"
+  obtainSqlFrasesCondition = "("&condicion&")"
 
 end function
 %>

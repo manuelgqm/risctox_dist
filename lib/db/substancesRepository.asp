@@ -9,14 +9,14 @@
 function findSubstance( id_sustancia, connection )
 	sql = composeSubstanceQuery( id_sustancia )
 	set substanceRecordset = connection.execute(sql)
-	set substance = extractSubstance(substanceRecordset, connection)
+	set substance = extractSubstance(id_sustancia, substanceRecordset, connection)
 	substanceRecordset.close()
 	set substanceRecordset=nothing
 	set findSubstance = substance
 end function
 
 ' PRIVATE
-function extractSubstance(substanceRecordset, connection)
+function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
 
 	' dn_risc_sustancias
