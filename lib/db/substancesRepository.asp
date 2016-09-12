@@ -1,4 +1,5 @@
 <!--#include file="../arrayManipulations.asp"-->
+<!--#include file="../stringManipulations.asp"-->
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceListsRepository.asp"-->
 <!--#include file="substanceGroupsRepository.asp"-->
@@ -20,7 +21,7 @@ function extractSubstance(substanceRecordset, connection)
 
 	' dn_risc_sustancias
 	substance.Add "nombre", substanceRecordset("nombre").Value
-	substance.Add "nombre_ing", elimina_repes(substanceRecordset("nombre_ing").Value, "@")
+	substance.Add "nombre_ing", removeDuplicates(substanceRecordset("nombre_ing").Value, "@")
 
 	substance.Add "num_rd", substanceRecordset("num_rd").Value
 	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
