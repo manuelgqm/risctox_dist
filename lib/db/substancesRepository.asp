@@ -282,7 +282,6 @@ function composeSubstanceQuery(id_sustancia)
 	sql = sql & " FULL OUTER JOIN dn_risc_sustancias_mama_cop ON dn_risc_sustancias.id = dn_risc_sustancias_mama_cop.id_sustancia  "
 	sql = sql & " FULL OUTER JOIN spl_risc_sustancias_prohibidas_embarazadas ON dn_risc_sustancias.id = spl_risc_sustancias_prohibidas_embarazadas.id_sustancia  "
 	sql = sql & " WHERE dn_risc_sustancias.id="&id_sustancia
-
 	composeSubstanceQuery = sql
 end function
 
