@@ -74,9 +74,9 @@ Class SubstanceClass
 		inMpmbList = Me.Fields.Item("mpmb")
 	end function
 
-	public function inNeurotoxicoLists()
+	public function inNeurotoxicosLists()
 		dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-		inNeurotoxicoLists = presentInLists(NEUROTOXICO_LISTS)
+		inNeurotoxicosLists = presentInLists(NEUROTOXICO_LISTS)
 	end function
 
 	public function addShown(fieldName)
