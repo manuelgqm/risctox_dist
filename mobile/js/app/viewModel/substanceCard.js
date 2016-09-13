@@ -2,7 +2,7 @@ define([
 	'lodash',
 	'app/viewModel/viewModel',
 	'text!app/view/substanceCard.html',
-	'app/model/substanceCard',
+	'app/model/formolSubstance',
 	'app/model/Substance',
 	'app/viewModel/page',
 	'css!app/view/style/substanceCard'
