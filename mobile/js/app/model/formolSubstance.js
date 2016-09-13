@@ -1,7 +1,7 @@
-define(function(){
+define(function(ko){
 	return {
-		name: 'formaldehído',
-		synonyms: 'formaldehído (concentracion 90 por 100), formaldehído . . . %, formol',
+		nombre: 'formol',
+		sinonimos: 'formaldehído (concentracion 90 por 100), formaldehído . . . %, formol',
 		cas: '50-00-0',
 		einecs: '200-001-8',
 		indice: '605-001-00-5',

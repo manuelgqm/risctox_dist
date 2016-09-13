@@ -17,6 +17,8 @@ set mySubstance = new SubstanceClass
 mySubstance.find substanceId, objConnection2
 set substanceFields = mySubstance.fields
 
+
+
 response.write ((new JSON).toJSON("data", substanceFields, false))
 response.end
 %>

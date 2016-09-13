@@ -22,7 +22,6 @@ define([], function(){
 		});
 		router.on('routeload', function(module, a, b){
 			module.render();
-			module.bind();
 		});
 		router.init();
 	});

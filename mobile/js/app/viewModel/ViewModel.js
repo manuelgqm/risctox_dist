@@ -1,7 +1,7 @@
 define([
 	'knockout', 
 	'bootstrap'
-], function(ko){
+], function(){
 	return function(viewModel, template){
 		this.render = function(domId){
 			document.body.innerHTML = template;

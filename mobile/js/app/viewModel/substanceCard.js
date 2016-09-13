@@ -14,6 +14,10 @@ define([
 		formolSubstance, 
 		new ViewModel(substanceCardViewModel, substanceCardView)
 	);
+	substance.load().done(function(output){
+		substanceCardViewModel.nombre = output.data.nombre;
+		substanceCardViewModel.bind();
+	});
 
 	return substanceCardViewModel;
 })
