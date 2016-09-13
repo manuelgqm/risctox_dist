@@ -1353,7 +1353,7 @@ end sub
 sub ap2_clasificacion_lista_negra(substance)
 	' Muestra el etiquetado
 
-	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc_excepto_grupo_3") or esta_en_lista_cancer_otras_excepto_grupo_4 or MySubstance.inList("de") or (MySubstance.presentInLists(NEUROTOXICO_LISTS) and (instr(substance.Item("frasesR"),"R67")=0)) or  MySubstance.inList("tpb") or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("cancer_mama") or MySubstance.inList("cop")) or (instr(substance.Item("frasesR"),"R33")<>0) or (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) or (instr(substance.Item("frasesR"),"R58")<>0) then
+	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc_excepto_grupo_3") or esta_en_lista_cancer_otras_excepto_grupo_4 or MySubstance.inList("de") or (MySubstance.inNeurotoxicoLists() and (instr(substance.Item("frasesR"),"R67")=0)) or  MySubstance.inList("tpb") or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("cancer_mama") or MySubstance.inList("cop")) or (instr(substance.Item("frasesR"),"R33")<>0) or (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) or (instr(substance.Item("frasesR"),"R58")<>0) then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
@@ -1397,7 +1397,7 @@ sub ap2_clasificacion_lista_negra(substance)
 			end if
 		end if
 
-		if (MySubstance.presentInLists(NEUROTOXICO_LISTS)) then
+		if (MySubstance.inNeurotoxicoLists()) then
 			if (razones = "") then
 				razones = "neurotóxica"
 			else
@@ -1484,7 +1484,7 @@ sub ap3_riesgos()
 	end if
 
 
-	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc") or MySubstance.inList("cancer_otras") or MySubstance.inList("cancer_mama") or MySubstance.inList("de") or MySubstance.presentInLists(NEUROTOXICO_LISTS) or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("eepp") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("salud") or MySubstance.inList("prohibidas_embarazadas") or MySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
+	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc") or MySubstance.inList("cancer_otras") or MySubstance.inList("cancer_mama") or MySubstance.inList("de") or MySubstance.inNeurotoxicoLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("eepp") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("salud") or MySubstance.inList("prohibidas_embarazadas") or MySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -1506,7 +1506,7 @@ sub ap3_riesgos()
 		if (MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
 
 		if MySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
-		if MySubstance.presentInLists(NEUROTOXICO_LISTS) or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
+		if MySubstance.inNeurotoxicoLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
 		if MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
 		if MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
 		if MySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
