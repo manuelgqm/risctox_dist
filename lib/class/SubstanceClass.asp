@@ -79,6 +79,19 @@ Class SubstanceClass
 		inNeurotoxicosLists = presentInLists(NEUROTOXICO_LISTS)
 	end function
 
+	public function containsFraseR(frase)
+		dim result : result = false
+		if frase = "" then
+			containsFraseR = result
+			exit function
+		end if
+		if instr(Me.fields.Item("frasesR"), frase) > 0 then
+			result = true
+		end if
+
+		containsFraseR = result
+	end function
+
 	public function addShown(fieldName)
 		Me.fieldsShown = arrayPush(Me.fieldsShown, fieldName)
 	end function
