@@ -1353,7 +1353,7 @@ end sub
 sub ap2_clasificacion_lista_negra(substance)
 	' Muestra el etiquetado
 
-	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc_excepto_grupo_3") or MySubstance.inList("cancer_otras_excepto_grupo_4") or MySubstance.inList("de") or (MySubstance.inNeurotoxicosLists() and not MySubstance.containsFraseR("R67")) or  MySubstance.inList("tpb") or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("cancer_mama") or MySubstance.inList("cop")) or (instr(substance.Item("frasesR"),"R33")<>0) or (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) or (instr(substance.Item("frasesR"),"R58")<>0) then
+	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc_excepto_grupo_3") or MySubstance.inList("cancer_otras_excepto_grupo_4") or MySubstance.inList("de") or (MySubstance.inNeurotoxicosLists() and not MySubstance.containsFraseR("R67")) or  MySubstance.inList("tpb") or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("cancer_mama") or MySubstance.inList("cop")) or MySubstance.containsFraseR("R33") or MySubstance.containsFraseR("R53") or MySubstance.containsFraseR("R50-53") or MySubstance.containsFraseR("R51-53") or MySubstance.containsFraseR("R52-53") or MySubstance.containsFraseR("R58") then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
@@ -1422,7 +1422,7 @@ sub ap2_clasificacion_lista_negra(substance)
 			end if
 		end if
 
-		if (instr(substance.Item("frasesR"),"R33")<>0) then
+		if mySubstance.containsFraseR("R33")then
 			if (razones = "") then
 				razones = "bioacumulativa"
 			else
@@ -1430,7 +1430,7 @@ sub ap2_clasificacion_lista_negra(substance)
 			end if
 		end if
 
-		if (instr(substance.Item("frasesR"),"R58")<>0) then
+		if mySubstance.containsFraseR("R58") then
 			if (razones = "") then
 				razones = "Puede provocar a largo plazo efectos negativos en el medio ambiente"
 			else
@@ -1455,7 +1455,7 @@ sub ap2_clasificacion_lista_negra(substance)
 			end if
 		end if
 
-		if (instr(substance.Item("frasesR"),"R53")<>0) or (instr(substance.Item("frasesR"),"R50-53")<>0) or (instr(substance.Item("frasesR"),"R51-53")<>0) or (instr(substance.Item("frasesR"),"R52-53")<>0) then
+		if mySubstance.containsFraseR("R53") or mySubstance.containsFraseR("R50-53") or mySubstance.containsFraseR("R51-53") or mySubstance.containsFraseR("R52-53") then
 			if (razones = "") then
 				razones = "Puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
 			else
