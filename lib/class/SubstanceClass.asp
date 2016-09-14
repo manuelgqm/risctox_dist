@@ -117,7 +117,7 @@ Class SubstanceClass
 		if (Me.inList("de")) then
 			arrayPusher result, "disruptora endocrina"
 		end if
-		if (Me.inNeurotoxicosLists()) then
+		if (Me.inNeurotoxicosLists() and not MySubstance.containsFraseR("R67")) then
 			arrayPusher result, "neurotóxica"
 		end if
 		if (Me.inList("sensibilizante") or Me.inList("sensibilizante_danesa") or Me.inList("sensibilizante_reach")) then
