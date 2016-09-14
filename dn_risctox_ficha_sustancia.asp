@@ -13,9 +13,9 @@ errores = ""
 
 id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
-set MySubstance = new SubstanceClass
-MySubstance.find id_sustancia, objConnection2
-Set substance = MySubstance.fields
+set mySubstance = new SubstanceClass
+mySubstance.find id_sustancia, objConnection2
+Set substance = mySubstance.fields
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
 dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
@@ -425,7 +425,7 @@ sub ap1_identificacion()
 		<td valign="top" colspan="2">
 			<!-- Lista negra -->
 
-			<% ap2_clasificacion_lista_negra(MySubstance) %>
+			<% ap2_clasificacion_lista_negra(mySubstance) %>
 		</td>
 	</tr>
 <%
@@ -458,7 +458,7 @@ sub ap2_clasificacion()
 					<% ap2_clasificacion_frases_r(substance) %>
 					<%
 
-		        if MySubstance.hasFrasesRdanesa() then
+		        if mySubstance.hasFrasesRdanesa() then
 		          ap2_clasificacion_frases_r_danesa(substance)
 		        end if
 		      %>
@@ -1344,10 +1344,10 @@ end sub
 
 ' ##################################################################################
 
-sub ap2_clasificacion_lista_negra(MySubstance)
+sub ap2_clasificacion_lista_negra(mySubstance)
 	' Muestra el etiquetado
 
-	if MySubstance.hasListaNegraClassifications() then
+	if mySubstance.hasListaNegraClassifications() then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
@@ -1355,7 +1355,7 @@ sub ap2_clasificacion_lista_negra(MySubstance)
 
 %>
 		<p id="ap2_clasificacion_lista_negra_titulo" class="subtitulo3">&nbsp;<img src="imagenes/icono_atencion_20.png" align="absmiddle" /> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Lista negra")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Sustancia incluida en la Lista negra de ISTAS <% plegador "secc-listanegra", "img-listanegra" %></p>
-		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(MySubstance.fields.item("listaNegraClassifications"))%></p>
+		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(mySubstance.fields.item("listaNegraClassifications"))%></p>
 
 <%
 	end if
@@ -1374,7 +1374,7 @@ sub ap3_riesgos()
 	end if
 
 
-	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc") or MySubstance.inList("cancer_otras") or MySubstance.inList("cancer_mama") or MySubstance.inList("de") or MySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("eepp") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("salud") or MySubstance.inList("prohibidas_embarazadas") or MySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
+	if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama") or mySubstance.inList("de") or mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_reach") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") or mySubstance.inList("eepp") or mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") or mySubstance.inList("salud") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -1392,15 +1392,15 @@ sub ap3_riesgos()
 		</table>
 
 <%
-		if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc") or MySubstance.inList("cancer_otras") or MySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("Cancerígeno") end if
-		if (MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
+		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("Cancerígeno") end if
+		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
 
-		if MySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
-		if MySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
-		if MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
-		if MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
-		if MySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
-    	if MySubstance.inList("salud") then ap7_salud() end if
+		if mySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
+		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
+		if mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
+		if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
+		if mySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
+    	if mySubstance.inList("salud") then ap7_salud() end if
 %>
 
 		<%
@@ -1448,7 +1448,7 @@ sub ap3_riesgos()
 
 <% ' MEDIO AMBIENTE %>
 <%
-if (MySubstance.inList("tpb") or MySubstance.inList("directiva_aguas") or MySubstance.inList("alemana") or MySubstance.inList("sustancias_prioritarias")  or MySubstance.inList("ozono") or MySubstance.inList("clima") or MySubstance.inList("aire") or MySubstance.inList("cop") or substance.Item("comentarios_medio_ambiente") <>"" or MySubstance.inList("suelos")) then %>
+if (mySubstance.inList("tpb") or mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana") or mySubstance.inList("sustancias_prioritarias")  or mySubstance.inList("ozono") or mySubstance.inList("clima") or mySubstance.inList("aire") or mySubstance.inList("cop") or substance.Item("comentarios_medio_ambiente") <>"" or mySubstance.inList("suelos")) then %>
 
 		<!-- ################ Riesgos para el medio ambiente ###################### -->
 		<br />
@@ -1465,19 +1465,19 @@ if (MySubstance.inList("tpb") or MySubstance.inList("directiva_aguas") or MySubs
 			</tr>
 		</table>
 <%
-		if MySubstance.inList("tpb") then
+		if mySubstance.inList("tpb") then
 			ap3_riesgos_tabla("Tóxica, Persistente y Bioacumulativa")
 		end if
 		' SPL (16/06/20014)
 '		if num_cas="87-68-3" or num_cas="133-49-3" or num_cas="75-74-1" then
-		if MySubstance.inMpmbList() then
+		if mySubstance.inMpmbList() then
 			ap3_riesgos_tabla("mPmB")
 		end if
-		if (MySubstance.inList("directiva_aguas") or MySubstance.inList("alemana")) then ap3_riesgos_tabla("Tóxica para el agua") end if
-		if (MySubstance.inList("suelos")) then ap3_riesgos_tabla("Contaminante de suelos") end if
-		if (MySubstance.inList("ozono") or MySubstance.inList("clima") or MySubstance.inList("aire")) then ap3_riesgos_tabla("Contaminante del aire") end if
+		if (mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana")) then ap3_riesgos_tabla("Tóxica para el agua") end if
+		if (mySubstance.inList("suelos")) then ap3_riesgos_tabla("Contaminante de suelos") end if
+		if (mySubstance.inList("ozono") or mySubstance.inList("clima") or mySubstance.inList("aire")) then ap3_riesgos_tabla("Contaminante del aire") end if
 
-		if (MySubstance.inList("cop")) then ap3_riesgos_tabla("Contaminante Orgánico Persistente (COP)") end if
+		if (mySubstance.inList("cop")) then ap3_riesgos_tabla("Contaminante Orgánico Persistente (COP)") end if
 %>
 
 		<%
@@ -1751,7 +1751,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		case "Cancerígeno":
 
 				' Real Decreto ---------------------------------------------------------------
-				if (MySubstance.inList("cancer_rd")) then
+				if (mySubstance.inList("cancer_rd")) then
 %>
 					<fieldset>
 						<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
@@ -1786,7 +1786,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 				' Lista danesa ---------------------------------------------------------------
-				if (MySubstance.inList("cancer_danesa")) then
+				if (mySubstance.inList("cancer_danesa")) then
 		%>
 					<fieldset>
 						<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_cancer", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
@@ -1821,7 +1821,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 				' IARC -----------------------------------------------------------------------
-				if (MySubstance.inList("cancer_iarc")) then
+				if (mySubstance.inList("cancer_iarc")) then
 		%>
 					<fieldset>
 						<legend class="subtitulo3"><strong>Según IARC <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
@@ -1858,7 +1858,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				end if
 
 				' Otras fuentes
-				if (MySubstance.inList("cancer_otras")) then
+				if (mySubstance.inList("cancer_otras")) then
 
 		%>
 
@@ -1910,7 +1910,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		    ' Cancer mama
 
-		    if (MySubstance.inList("cancer_mama")) then
+		    if (mySubstance.inList("cancer_mama")) then
 
 		      if (isNull(substance.Item("cancer_mama_fuente"))) then
 
@@ -1935,7 +1935,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		case "Mutágeno":
       ' MUTAGENO RD -------------------------------------------------------------
-      if (MySubstance.inList("mutageno_rd")) then
+      if (mySubstance.inList("mutageno_rd")) then
 %>
 			<fieldset>
 				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
@@ -1961,7 +1961,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
       ' MUTAGENO DANESA -------------------------------------------------------------
-      if (MySubstance.inList("mutageno_danesa")) then
+      if (mySubstance.inList("mutageno_danesa")) then
 %>
 			<fieldset>
 				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_mutageno", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
@@ -2012,7 +2012,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		case "Neurotóxico":
 
 
-        if MySubstance.inList("neurotoxico_rd") or MySubstance.inList("neurotoxico_danesa") then
+        if mySubstance.inList("neurotoxico_rd") or mySubstance.inList("neurotoxico_danesa") then
           ' Añadimos SNC a efecto neurotoxico si no existía ya
           if (substance.Item("efecto_neurotoxico") = "") or (IsNull(substance.Item("efecto_neurotoxico"))) then
             substance.Item("efecto_neurotoxico")="SNC"
@@ -2023,7 +2023,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
           end if
         end if
 
-        if MySubstance.inList("neurotoxico_rd") then
+        if mySubstance.inList("neurotoxico_rd") then
           if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
             substance.Item("fuente_neurotoxico") = "363"
           else
@@ -2031,7 +2031,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
           end if
         end if
 
-        if MySubstance.inList("neurotoxico_danesa") then
+        if mySubstance.inList("neurotoxico_danesa") then
           if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
             substance.Item("fuente_neurotoxico") = "EPA-R67"
           else
@@ -2100,15 +2100,15 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		case "Sensibilizante":
 		      response.write "<ul>"
 					' Indicamos si es por lista RD o por lista danesa
-		      if MySubstance.inList("sensibilizante") then
+		      if mySubstance.inList("sensibilizante") then
 		        response.write "<li class='subtitulo3'>Sensibilizante según R. 1272/2008</li>"
 		      end if
 
-			  if MySubstance.inList("sensibilizante_reach") then
+			  if mySubstance.inList("sensibilizante_reach") then
 		        response.write "<li class='subtitulo3'>Alérgeno REACH &nbsp;<a href='http://www.istas.net/web/abreenlace.asp?idenlace=6340' target='_blank'>Ver documento</a></li>"
 		      end if
 
-		      if MySubstance.inList("sensibilizante_danesa") then
+		      if mySubstance.inList("sensibilizante_danesa") then
 		      %>
 		        <li class='subtitulo3'>Sensibilizante según <% plegador_texto "frases_r_danesa_sensibilizante", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></li>
 		      <%
@@ -2127,7 +2127,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		case "Tóxico para la reproducción":
 	      ' TPR SEGUN RD -------------------------------------------------------------
-	      if (MySubstance.inList("tpr")) then
+	      if (mySubstance.inList("tpr")) then
 	%>
 	    			<fieldset>
 	  				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
@@ -2152,7 +2152,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 	      ' TPR SEGUN LISTA DANESA ---------------------------------------------------
-	      if (MySubstance.inList("tpr_danesa")) then
+	      if (mySubstance.inList("tpr_danesa")) then
 	%>
 	    			<fieldset>
 	  				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_tpr", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
@@ -2178,7 +2178,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 	case "Prohibida para trabajadoras embarazadas":
 
-      if (MySubstance.inList("prohibidas_embarazadas")) then
+      if (mySubstance.inList("prohibidas_embarazadas")) then
 %>
   				<blockquote>
   					<strong>Fuente:</strong> Real Decreto 298/2009
@@ -2188,7 +2188,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 	case "Prohibida para trabajadoras lactantes":
 
-      if (MySubstance.inList("prohibidas_lactantes")) then
+      if (mySubstance.inList("prohibidas_lactantes")) then
 %>
   				<blockquote>
   					<strong>Fuente:</strong> Real Decreto 298/2009
@@ -2272,7 +2272,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 		case "Tóxica para el agua":
 			response.write "<table>"
-			if (substance.Item("directiva_aguas") or MySubstance.inList("directiva_aguas")) then
+			if (substance.Item("directiva_aguas") or mySubstance.inList("directiva_aguas")) then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">· Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
@@ -2280,7 +2280,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 			end if
 
-			if (MySubstance.inList("sustancias_prioritarias")) then
+			if (mySubstance.inList("sustancias_prioritarias")) then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">· Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a></td>
@@ -2317,7 +2317,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 				<table>
 <%
-				if (substance.Item("dano_calidad_aire") or MySubstance.inList("aire")) then
+				if (substance.Item("dano_calidad_aire") or mySubstance.inList("aire")) then
 %>
 					<tr>
 						<td class="subtitulo3">Calidad del aire:</td>
@@ -2537,7 +2537,7 @@ end sub
 ' ###################################################################################
 
 sub ap4_normativa_ambiental()
-	if MySubstance.inList("cov") or MySubstance.inList("residuos") or MySubstance.inList("vertidos") or MySubstance.inList("lpcic")  or MySubstance.inList("accidentes") or MySubstance.inList("emisiones") then
+	if mySubstance.inList("cov") or mySubstance.inList("residuos") or mySubstance.inList("vertidos") or mySubstance.inList("lpcic")  or mySubstance.inList("accidentes") or mySubstance.inList("emisiones") then
 %>
 
 		<!-- ################ Normativa ambiental ###################### -->
@@ -2558,14 +2558,14 @@ sub ap4_normativa_ambiental()
 ' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuántos hay en total.
 total = 0
 
-if MySubstance.inList("cov") then total = total +1 end if
-if MySubstance.inList("vertidos") then total = total +1 end if
-if MySubstance.inList("lpcic-agua") then total = total +1 end if
-if MySubstance.inList("lpcic-aire") then total = total +1 end if
-if MySubstance.inList("lpcic-suelo") then total = total +1 end if
-if MySubstance.inList("residuos") then total = total +1 end if
-if MySubstance.inList("accidentes") then total = total +1 end if
-if MySubstance.inList("emisiones") then total = total +1 end if
+if mySubstance.inList("cov") then total = total +1 end if
+if mySubstance.inList("vertidos") then total = total +1 end if
+if mySubstance.inList("lpcic-agua") then total = total +1 end if
+if mySubstance.inList("lpcic-aire") then total = total +1 end if
+if mySubstance.inList("lpcic-suelo") then total = total +1 end if
+if mySubstance.inList("residuos") then total = total +1 end if
+if mySubstance.inList("accidentes") then total = total +1 end if
+if mySubstance.inList("emisiones") then total = total +1 end if
 
 mitad = round(total / 2)
 ' Ajustamos la mitad para arriba si es impar
@@ -2583,7 +2583,7 @@ llevo = 0
 %>
 
 <%
-		if MySubstance.inList("cov") then
+		if mySubstance.inList("cov") then
 			ap3_riesgos_tabla("COV")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2592,7 +2592,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("vertidos") then
+		if mySubstance.inList("vertidos") then
 			ap3_riesgos_tabla("Vertidos")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2601,7 +2601,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("lpcic-agua") then
+		if mySubstance.inList("lpcic-agua") then
 			ap3_riesgos_tabla("IPPC (PRTR Agua)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2610,7 +2610,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("lpcic-aire") then
+		if mySubstance.inList("lpcic-aire") then
 			ap3_riesgos_tabla("IPPC (PRTR Aire)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2619,7 +2619,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("lpcic-suelo") then
+		if mySubstance.inList("lpcic-suelo") then
 			ap3_riesgos_tabla("IPPC (PRTR Suelo)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2628,7 +2628,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("residuos") then
+		if mySubstance.inList("residuos") then
 			ap3_riesgos_tabla("Residuos Peligrosos")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2637,7 +2637,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("accidentes") then
+		if mySubstance.inList("accidentes") then
 			ap3_riesgos_tabla("Accidentes Graves")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2646,7 +2646,7 @@ llevo = 0
 			end if
 		end if
 
-		if MySubstance.inList("emisiones") then
+		if mySubstance.inList("emisiones") then
 			ap3_riesgos_tabla("Emisiones Atmosféricas")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2671,7 +2671,7 @@ end sub ' ap4_normativa_salud_laboral
 
 
 sub ap4_normativa_restriccion_prohibicion()
-	if MySubstance.inList("prohibidas") or MySubstance.inList("restringidas") or MySubstance.inList("candidatas_reach") or MySubstance.inList("autorizacion_reach") or MySubstance.inList("biocidas_autorizadas") or MySubstance.inList("biocidas_prohibidas") or MySubstance.inList("pesticidas_autorizadas") or MySubstance.inList("pesticidas_prohibidas") or MySubstance.inList("prohibidas_embarazadas") or MySubstance.inList("prohibidas_lactantes") or MySubstance.inList("corap") then
+	if mySubstance.inList("prohibidas") or mySubstance.inList("restringidas") or mySubstance.inList("candidatas_reach") or mySubstance.inList("autorizacion_reach") or mySubstance.inList("biocidas_autorizadas") or mySubstance.inList("biocidas_prohibidas") or mySubstance.inList("pesticidas_autorizadas") or mySubstance.inList("pesticidas_prohibidas") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or mySubstance.inList("corap") then
 %>
 
 		<!-- ################ Normativa salud laboral ###################### -->
@@ -2692,37 +2692,37 @@ sub ap4_normativa_restriccion_prohibicion()
 			<tr>
 				<td valign="top">
 <%
-		if MySubstance.inList("prohibidas") then
+		if mySubstance.inList("prohibidas") then
 			ap3_riesgos_tabla("Sustancia prohibida")
 		end if
 
-		if MySubstance.inList("restringidas") then
+		if mySubstance.inList("restringidas") then
 			ap3_riesgos_tabla("Sustancia restringida")
 		end if
 
-		if MySubstance.inList("prohibidas_embarazadas") then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
+		if mySubstance.inList("prohibidas_embarazadas") then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
 
-		if MySubstance.inList("prohibidas_lactantes") then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
+		if mySubstance.inList("prohibidas_lactantes") then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
 
-		if MySubstance.inList("candidatas_reach") then
+		if mySubstance.inList("candidatas_reach") then
 			ap3_riesgos_tabla("Sustancia candidata REACH")
 		end if
-		if MySubstance.inList("autorizacion_reach") then
+		if mySubstance.inList("autorizacion_reach") then
 			ap3_riesgos_tabla("Sustancia REACH sujeta a autorización")
 		end if
-		if MySubstance.inList("biocidas_autorizadas") then
+		if mySubstance.inList("biocidas_autorizadas") then
 			ap3_riesgos_tabla("Sustancia biocida autorizada")
 		end if
-		if MySubstance.inList("biocidas_prohibidas") then
+		if mySubstance.inList("biocidas_prohibidas") then
 			ap3_riesgos_tabla("Sustancia biocida prohibida")
 		end if
-		if MySubstance.inList("pesticidas_autorizadas") then
+		if mySubstance.inList("pesticidas_autorizadas") then
 			ap3_riesgos_tabla("Sustancia pesticida autorizada")
 		end if
-		if MySubstance.inList("pesticidas_prohibidas") then
+		if mySubstance.inList("pesticidas_prohibidas") then
 			ap3_riesgos_tabla("Sustancia pesticida prohibida")
 		end if
-		if MySubstance.inList("corap") then
+		if mySubstance.inList("corap") then
 			ap3_riesgos_tabla("Sustancia bajo evaluación. CoRAP")
 		end if
 
@@ -3089,7 +3089,7 @@ sub plegador_texto(byval id_bloque, byval texto, byval clase)
   ' Solo se emplea para el plegador de frases R danesas, en caso de que no se hayan mostrado ya.
   id_bloque=aplana(id_bloque)
 
-  if (MySubstance.hasFrasesRdanesa()) then
+  if (mySubstance.hasFrasesRdanesa()) then
 %>
   <%=texto%>
 <%
