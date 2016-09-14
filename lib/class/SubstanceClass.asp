@@ -33,7 +33,6 @@ Class SubstanceClass
 		dim fields
 		set fields = findSubstance(id_sustancia, connection)
 		Me.Fields = fields
-		Me.fields.Add "listaNegraClassifications", getListaNegraClassifications()
 		find = id_sustancia
 	end function
 
@@ -103,7 +102,7 @@ Class SubstanceClass
 	end function
 
 'PRIVATE METHODS'
-	private function getListaNegraClassifications()
+	public function getListaNegraClassifications()
 		dim result : result = Array()
 
 		if (Me.inList("cancer_rd") or Me.inList("cancer_danesa") or Me.inList("cancer_iarc_excepto_grupo_3") or Me.inList("cancer_otras_excepto_grupo_4") or Me.inList("cancer_mama")) then
