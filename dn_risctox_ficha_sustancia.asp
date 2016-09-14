@@ -20,12 +20,6 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 
 dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
 
-'--/SPL
-' Condiciones para mostrar las frases R danesas en Clasificacion
-' Se mostrarán si existen las frases R danesas y NO existen las de RD
-if (MySubstance.fields.Item("frasesR") = "") and (MySubstance.fields.Item("frases_r_danesa") <> "") then
-	MySubstance.addShown("frases_r_danesa")
-end if
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -464,7 +458,7 @@ sub ap2_clasificacion()
 					<% ap2_clasificacion_frases_r(substance) %>
 					<%
 
-		        if MySubstance.showed("frases_r_danesa") then
+		        if MySubstance.hasFrasesRdanesa() then
 		          ap2_clasificacion_frases_r_danesa(substance)
 		        end if
 		      %>
@@ -3095,7 +3089,7 @@ sub plegador_texto(byval id_bloque, byval texto, byval clase)
   ' Solo se emplea para el plegador de frases R danesas, en caso de que no se hayan mostrado ya.
   id_bloque=aplana(id_bloque)
 
-  if (MySubstance.showed("frases_r_danesa")) then
+  if (MySubstance.hasFrasesRdanesa()) then
 %>
   <%=texto%>
 <%

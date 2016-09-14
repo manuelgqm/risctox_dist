@@ -93,12 +93,13 @@ Class SubstanceClass
 		containsFraseR = result
 	end function
 
-	public function addShown(fieldName)
-		arrayPush Me.fieldsShown, fieldName
-	end function
+	public function hasFrasesRdanesa()
+		dim result : result = false
+		if mFields.Item("frasesR") = "" and mFields.Item("frases_r_danesa") <> "" then
+			result = true
+		end if
 
-	public function showed(fieldName)
-		isShown = in_array(fieldName, Me.fieldsShown)
+		hasFrasesRdanesas = result
 	end function
 
 'PRIVATE METHODS'
