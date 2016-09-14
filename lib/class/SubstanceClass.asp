@@ -33,6 +33,7 @@ Class SubstanceClass
 		dim fields
 		set fields = findSubstance(id_sustancia, connection)
 		Me.Fields = fields
+		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
 		find = id_sustancia
 	end function
 
@@ -100,6 +101,16 @@ Class SubstanceClass
 		end if
 
 		hasFrasesRdanesas = result
+	end function
+
+	public function hasListaNegraClassifications()
+		dim result : result = false
+
+		if ubound(mFields.item("listaNegraClassifications")) > -1 then
+			result = true
+		end if
+
+		hasListaNegraClassifications = result
 	end function
 
 'PRIVATE METHODS'

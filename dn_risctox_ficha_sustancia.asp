@@ -425,7 +425,7 @@ sub ap1_identificacion()
 		<td valign="top" colspan="2">
 			<!-- Lista negra -->
 
-			<% ap2_clasificacion_lista_negra(substance) %>
+			<% ap2_clasificacion_lista_negra(MySubstance) %>
 		</td>
 	</tr>
 <%
@@ -1344,10 +1344,10 @@ end sub
 
 ' ##################################################################################
 
-sub ap2_clasificacion_lista_negra(substance)
+sub ap2_clasificacion_lista_negra(MySubstance)
 	' Muestra el etiquetado
 
-	if (MySubstance.inList("cancer_rd") or MySubstance.inList("cancer_danesa") or MySubstance.inList("cancer_iarc_excepto_grupo_3") or MySubstance.inList("cancer_otras_excepto_grupo_4") or MySubstance.inList("de") or (MySubstance.inNeurotoxicosLists() and not MySubstance.containsFraseR("R67")) or  MySubstance.inList("tpb") or MySubstance.inList("sensibilizante") or MySubstance.inList("sensibilizante_danesa") or MySubstance.inList("sensibilizante_reach") or MySubstance.inList("tpr") or MySubstance.inList("tpr_danesa") or MySubstance.inList("mutageno_rd") or MySubstance.inList("mutageno_danesa") or MySubstance.inList("cancer_mama") or MySubstance.inList("cop")) or MySubstance.containsFraseR("R33") or MySubstance.containsFraseR("R53") or MySubstance.containsFraseR("R50-53") or MySubstance.containsFraseR("R51-53") or MySubstance.containsFraseR("R52-53") or MySubstance.containsFraseR("R58") then
+	if MySubstance.hasListaNegraClassifications() then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
@@ -1355,7 +1355,7 @@ sub ap2_clasificacion_lista_negra(substance)
 
 %>
 		<p id="ap2_clasificacion_lista_negra_titulo" class="subtitulo3">&nbsp;<img src="imagenes/icono_atencion_20.png" align="absmiddle" /> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Lista negra")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Sustancia incluida en la Lista negra de ISTAS <% plegador "secc-listanegra", "img-listanegra" %></p>
-		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(MySubstance.getListaNegraClassifications())%></p>
+		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(MySubstance.fields.item("listaNegraClassifications"))%></p>
 
 <%
 	end if
