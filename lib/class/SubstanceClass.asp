@@ -28,10 +28,12 @@ Class SubstanceClass
 		mFieldsShown = pData
 	End property
 
+' PUBLIC METHODS'
 	Public function find(id_sustancia, connection)
 		dim fields
 		set fields = findSubstance(id_sustancia, connection)
 		Me.Fields = fields
+		Me.fields.Add "listaNegraClassifications", getListaNegraClassifications()
 		find = id_sustancia
 	end function
 
@@ -93,11 +95,55 @@ Class SubstanceClass
 	end function
 
 	public function addShown(fieldName)
-		Me.fieldsShown = arrayPush(Me.fieldsShown, fieldName)
+		arrayPusher Me.fieldsShown, fieldName
 	end function
 
 	public function showed(fieldName)
 		isShown = in_array(fieldName, Me.fieldsShown)
+	end function
+
+'PRIVATE METHODS'
+	private function getListaNegraClassifications()
+		dim result : result = Array()
+
+		if (Me.inList("cancer_rd") or Me.inList("cancer_danesa") or Me.inList("cancer_iarc_excepto_grupo_3") or Me.inList("cancer_otras_excepto_grupo_4") or Me.inList("cancer_mama")) then
+			arrayPusher result, "cancerígena"
+		end if
+		if (Me.inList("cop")) then
+			arrayPusher result, "cop"
+		end if
+		if (Me.inList("mutageno_rd") or Me.inList("mutageno_danesa")) then
+			arrayPusher result, "mutágena"
+		end if
+		if (Me.inList("de")) then
+			arrayPusher result, "disruptora endocrina"
+		end if
+		if (Me.inNeurotoxicosLists()) then
+			arrayPusher result, "neurotóxica"
+		end if
+		if (Me.inList("sensibilizante") or Me.inList("sensibilizante_danesa") or Me.inList("sensibilizante_reach")) then
+			arrayPusher result, "sensibilizante"
+		end if
+		if (Me.inList("tpr") or Me.inList("tpr_danesa")) then
+			arrayPusher result, "tóxica para la reproducción"
+		end if
+		if Me.containsFraseR("R33")then
+			arrayPusher result, "bioacumulativa"
+		end if
+		if Me.containsFraseR("R58") then
+			arrayPusher result, "puede provocar a largo plazo efectos negativos en el medio ambiente"
+		end if
+		if (Me.inList("tpb")) then
+			arrayPusher result, "tóxica, persistente y bioacumulativa"
+		end if
+		if Me.inMpmbList() then
+			arrayPusher result, "muy persistente y muy bioacumulativa"
+		end if
+		if Me.containsFraseR("R53") or Me.containsFraseR("R50-53") or Me.containsFraseR("R51-53") or Me.containsFraseR("R52-53") then
+			arrayPusher result, "puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
+		end if
+
+		getListaNegraClassifications = result
 	end function
 
 	Private function in_array(element, arrayParameter)
@@ -115,30 +161,10 @@ Class SubstanceClass
 		Next
 	End Function
 
-	private function arrayPush(arrayParameter, valueParameter) 
-		dim uba
-		dim result()
-
-		uba = getUBound(arrayParameter) 
-		redim preserve result(uba + 1) 
-		result(uba + 1) = valueParameter
-
-		arrayPush = result
-	end function
-
-	function getUbound(arrayParameter) 
-		dim result
-		result = -1 
-		
-		on error resume next
-		if not vartype(arrayParameter) = 8204 then 
-			getUbound = result
-			exit function
-		end if
-		result = ubound(arrayParameter) 
-
-		getUbound = result
-	end function 
+	Private Sub arrayPusher(byRef arrayParameter, valueParameter) 
+		redim preserve arrayParameter(uBound(arrayParameter) + 1)
+		arrayParameter(uBound(arrayParameter)) = valueParameter
+	End Sub
 
 End Class
 %>
