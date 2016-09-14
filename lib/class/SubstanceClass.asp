@@ -118,7 +118,7 @@ Class SubstanceClass
 		if (Me.inList("de")) then
 			arrayPush result, "disruptora endocrina"
 		end if
-		if (Me.inNeurotoxicosLists() and not MySubstance.containsFraseR("R67")) then
+		if Me.inNeurotoxicosLists() then 'Businnes Concern: original condition contains and not MySubstance.containsFraseR("R67"), removed due to bad logic
 			arrayPush result, "neurotóxica"
 		end if
 		if (Me.inList("sensibilizante") or Me.inList("sensibilizante_danesa") or Me.inList("sensibilizante_reach")) then
