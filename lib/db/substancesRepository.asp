@@ -235,7 +235,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	' mPmB
 	substance.Add "mpmb", substanceRecordset("mpmb").Value
 
-	' Tóxica para el agua
+	' TÃ³xica para el agua
 	substance.Add "directiva_aguas", substanceRecordset("directiva_aguas").Value
 	substance.Add "clasif_mma", substanceRecordset("clasif_mma").Value
 	substance.Add "sustancia_prioritaria", substanceRecordset("sustancia_prioritaria").Value
@@ -266,7 +266,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substanceGroupsRecordset = nothing
 
 	substance.Add "aplicaciones", findSubstanceApplications(id_sustancia, connection)
-	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
+	substance.Add "compaÃ±ias", findSubstanceCompanies(id_sustancia, connection)
 
 	set extractSubstance = substance
 end function
@@ -363,16 +363,16 @@ function formatFrases(byval c, tipo)
 end function
 
 function extractFrase(c,f, tipo)
-	' Saca las frases R, eliminando el símbolo
+	' Saca las frases R, eliminando el sÃ­mbolo
 
 	' Arreglamos la frase en caso de que tenga "-" y "/"
 	c=formatFrases(c, tipo)
 
-	' Limpiamos la clasificación para quedarnos con las frases
+	' Limpiamos la clasificaciÃ³n para quedarnos con las frases
 	array_frases = split(c, " ")
 	nuevo_c = ""
 	for i=0 to ubound(array_frases)
-		' Para que sea frase R ha de tener longitud 2 o mayor y comenzar por R más un digito ( o H)
+		' Para que sea frase R ha de tener longitud 2 o mayor y comenzar por R mÃ¡s un digito ( o H)
 		' Ej.: "R1", "R10", "R1/6"
 
 		if (es_frase(array_frases(i),tipo)) then
@@ -385,16 +385,16 @@ function extractFrase(c,f, tipo)
 	next
 
 	if (nuevo_c <> "") then
-		' La clasificación no es vacía, concatenamos a la frase
+		' La clasificaciÃ³n no es vacÃ­a, concatenamos a la frase
 		if (f <> "") then
 			' Ya hay algo en las frases, concateno
 			extractFrase = f & ", " & nuevo_c
 		else
-			' No hay nada, devuelvo clasificación
+			' No hay nada, devuelvo clasificaciÃ³n
 			extractFrase = nuevo_c
 		end if
 	else
-		' La clasificacion es vacía, devolvemos la frase tal cual
+		' La clasificacion es vacÃ­a, devolvemos la frase tal cual
 		extractFrase = f
 	end if
 end function

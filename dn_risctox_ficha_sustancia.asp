@@ -1,12 +1,17 @@
+<%@ LANGUAGE="VBSCRIPT" LCID="1034" CODEPAGE="65001"%>	
 <!--#include file="dn_restringida.asp"-->
 <!--#include file="config/dbConnection.asp"-->
-<!--#include file="dn_funciones_comunes.asp"-->
-<!--#include file="dn_funciones_texto.asp"-->
+<!--#include file="lib/dn_funciones_texto_utf-8.asp"-->
+<!--#include file="lib/dn_funciones_comunes_utf-8.asp"-->
 <!--#include file="lib/class/SubstanceClass.asp"-->
 <!--#include file="lib/visitsRecorder.asp"-->
 <!--#include file="lib/urlManipulations.asp"-->
 
 <%
+Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"
 idpagina = 627
 call recordVisit(idpagina)
 errores = ""
@@ -26,12 +31,12 @@ dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>ISTAS: risctox</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="Title" content="Risctox" />
-<meta name="Author" content="SPL Sistemas de Información, SL - www.spl-ssi.com" />
-<meta name="description" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Subject" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Keywords" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Author" content="SPL Sistemas de InformaciÃ³n, SL - www.spl-ssi.com" />
+<meta name="description" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Subject" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Keywords" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
 <meta name="Language" content="Spanish" />
 <meta name="Revisit" content="15 days" />
 <meta name="Distribution" content="Global" />
@@ -78,7 +83,7 @@ function toggle_texto(id_objeto, texto)
 <table width="100%" border="0">
 <tr>
 <td><p class=campo>Est&aacute;s en: <a href="dn_risctox_buscador.asp">bbdd risctox</a> &gt; ficha de sustancia</p></td>
-<td align="right"><input type="button" name="volver" class="boton2" value="Nueva búsqueda" onClick="window.location='dn_risctox_buscador.asp';"></td>
+<td align="right"><input type="button" name="volver" class="boton2" value="Nueva bÃºsqueda" onClick="window.location='dn_risctox_buscador.asp';"></td>
 </tr>
 </table>
 <br />
@@ -87,7 +92,7 @@ function toggle_texto(id_objeto, texto)
 	<table width="100%" cellpadding=5>
 		<tr>
 			<td>
-				<a name="identificacion"></a><img src="imagenes/risctox01.gif" alt="identificación de la sustancia" width="255" height="32" />
+				<a name="identificacion"></a><img src="imagenes/risctox01.gif" alt="identificaciÃ³n de la sustancia" width="255" height="32" />
 			</td>
 			<td align="right">
 				<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
@@ -96,26 +101,26 @@ function toggle_texto(id_objeto, texto)
 	</table>
 
 	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
-		<!-- ################ Identificación ###################### -->
+		<!-- ################ IdentificaciÃ³n ###################### -->
 
 		<!-- 1.- Datos de sustancia -->
 		<% ap1_identificacion() %>
 	</table>
 
 	<div style="height:3pt"></div>
-		<!-- 2.1- Clasificación -->
+		<!-- 2.1- ClasificaciÃ³n -->
 		<% ap2_clasificacion() %>
 
 	<br />
 	<div style="height:3pt"></div>
 
-		<!-- 2.2- Clasificación RD1272-->
+		<!-- 2.2- ClasificaciÃ³n RD1272-->
 		<% ap2_clasificacion_rd1272() %>
 
 	<br />
 	<div style="height:3pt"></div>
 
-		<!-- Valores límite -->
+		<!-- Valores lÃ­mite -->
 		<% ap2_clasificacion_vl("secc-vla") %>
 
 	<br />
@@ -141,12 +146,12 @@ function toggle_texto(id_objeto, texto)
 <center>
 <input type="button" name="imprimir" class="boton2" value="Imprimir ficha" onClick="window.print();">
 <input type="button" name="enviar" class="boton2" value="Enviar ficha de sustancia" onClick="onclick=window.open('dn_recomendar.asp?id=<%=id_sustancia%>','recomendar','width=500,height=230,scrollbars=yes,resizable=yes')">
-<input type="button" name="volver" class="boton2" value="Nueva búsqueda" onClick="window.location='dn_risctox_buscador.asp';">
+<input type="button" name="volver" class="boton2" value="Nueva bÃºsqueda" onClick="window.location='dn_risctox_buscador.asp';">
 </center>
 
 <br>
 <br>
-Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una Fundación de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
+Esta pÃ¡gina ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una FundaciÃ³n de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
 
 
 				</div>
@@ -259,7 +264,7 @@ sub ap1_identificacion()
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Sinónimos:
+				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> SinÃ³nimos:
 			</td>
 			<td class="texto" valign="middle">
 				<%=formatHtmlUnorderedList(substance.Item("sinonimos"))%>
@@ -286,7 +291,7 @@ sub ap1_identificacion()
 	<% if (substance.Item("num_cas") <> "") or (substance.Item("num_ce_einecs") <> "") or (substance.Item("num_ce_elincs") <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				Números de Identificación:
+				NÃºmeros de IdentificaciÃ³n:
 			</td>
 			<td class="texto" valign="middle">
 				<% if (substance.Item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS</b>: "&substance.Item("num_cas")&"<br/>" %>
@@ -342,7 +347,7 @@ sub ap1_identificacion()
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				 Ficha Internacional de Seguridad Química (<a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("INSHT")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" class="subtitulo3">INSHT</a>)
+				 Ficha Internacional de Seguridad QuÃ­mica (<a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("INSHT")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" class="subtitulo3">INSHT</a>)
 			</td>
 			<td class="texto" valign="middle">
           <%
@@ -375,13 +380,13 @@ sub ap1_identificacion()
 
 
 	<%
-		companias = formatHtmlCompaniesLinksString(substance.Item("compañias"))
+		companias = formatHtmlCompaniesLinksString(substance.Item("compaÃ±ias"))
 	%>
 
 	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top" width="35%">
-				Más información <% plegador "secc-masinformacion", "img-masinformacion" %>
+				MÃ¡s informaciÃ³n <% plegador "secc-masinformacion", "img-masinformacion" %>
 			</td>
 			<td class="texto" valign="middle" id="secc-masinformacion" style="display:none">
 
@@ -391,7 +396,7 @@ sub ap1_identificacion()
             array_nombres_ingleses = split(substance.Item("nombre_ing"), "@")
             if (ubound(array_nombres_ingleses) > 0) then
         %>
-              <b>Nombres en inglés</b>:<br/>
+              <b>Nombres en inglÃ©s</b>:<br/>
               <ul>
                 <% for i=0 to ubound(array_nombres_ingleses) %>
                   <li><%= espaciar(array_nombres_ingleses(i)) %></li>
@@ -400,13 +405,13 @@ sub ap1_identificacion()
         <%
             else
         %>
-              <b>Nombre inglés</b>: <%= espaciar(substance.Item("nombre_ing")) %><br/>
+              <b>Nombre inglÃ©s</b>: <%= espaciar(substance.Item("nombre_ing")) %><br/>
         <%
             end if
            end if %>
 
-				<% if (substance.Item("num_rd") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>Nº &iacute;ndice</b>: "&substance.Item("num_rd")&"<br/>" %>
-				<% if (substance.Item("formula_molecular") <> "") then response.write "<b>Fórmula molecular</b>: "&substance.Item("formula_molecular")&"<br/>" %>
+				<% if (substance.Item("num_rd") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>NÂº &iacute;ndice</b>: "&substance.Item("num_rd")&"<br/>" %>
+				<% if (substance.Item("formula_molecular") <> "") then response.write "<b>FÃ³rmula molecular</b>: "&substance.Item("formula_molecular")&"<br/>" %>
 				<% if (substance.Item("estructura_molecular") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/"&substance.Item("estructura_molecular")&"' /><br/>" %>
 
 				<% if (substance.Item("notas_xml") <> "") then %>
@@ -415,7 +420,7 @@ sub ap1_identificacion()
         <% end if %>
 
         <% if (companias <> "") then %>
-          <b>Compañías distribuidoras</b>: <%= companias %>
+          <b>CompaÃ±Ã­as distribuidoras</b>: <%= companias %>
         <% end if %>
 			</td>
 		</tr>
@@ -434,16 +439,16 @@ end sub ' ap1_identificacion
 ' ###################################################################################
 
 sub ap2_clasificacion()
-	' Solo mostramos este apartado si hay información para él
+	' Solo mostramos este apartado si hay informaciÃ³n para Ã©l
 	if ((substance.Item("simbolos") <> "") or (substance.Item("clasificacion_1") <> "") or (substance.Item("clasificacion_2") <> "") or (substance.Item("clasificacion_3") <> "") or (substance.Item("clasificacion_4") <> "") or (substance.Item("clasificacion_5") <> "") or (substance.Item("clasificacion_6") <> "") or (substance.Item("clasificacion_7") <> "") or (substance.Item("clasificacion_8") <> "") or (substance.Item("clasificacion_9") <> "") or (substance.Item("clasificacion_10") <> "") or (substance.Item("clasificacion_11") <> "") or (substance.Item("clasificacion_12") <> "") or (substance.Item("clasificacion_13") <> "") or (substance.Item("clasificacion_14") <> "") or (substance.Item("clasificacion_15") <> "") or (substance.Item("frases_r_danesa") <> "") or (substance.Item("notas_rd_363") <> "") or (substance.Item("conc_1") <> "") or (substance.Item("eti_conc_1") <> "") or (substance.Item("conc_2") <> "") or (substance.Item("eti_conc_2") <> "") or (substance.Item("conc_3") <> "") or (substance.Item("eti_conc_3") <> "") or (substance.Item("conc_4") <> "") or (substance.Item("eti_conc_4") <> "") or (substance.Item("conc_5") <> "") or (substance.Item("eti_conc_5") <> "") or (substance.Item("conc_6") <> "") or (substance.Item("eti_conc_6") <> "") or (substance.Item("conc_7") <> "") or (substance.Item("eti_conc_7") <> "") or (substance.Item("conc_8") <> "") or (substance.Item("eti_conc_8") <> "") or (substance.Item("conc_9") <> "") or (substance.Item("eti_conc_9") <> "") or (substance.Item("conc_10") <> "") or (substance.Item("eti_conc_10") <> "") or (substance.Item("conc_11") <> "") or (substance.Item("eti_conc_11") <> "") or (substance.Item("conc_12") <> "") or (substance.Item("eti_conc_12") <> "") or (substance.Item("conc_13") <> "") or (substance.Item("eti_conc_13") <> "") or (substance.Item("conc_14") <> "") or (substance.Item("eti_conc_14") <> "") or (substance.Item("conc_15") <> "") or (substance.Item("eti_conc_15") <> "") ) then
 
 %>
-	<!-- ################ Clasificación ###################### -->
+	<!-- ################ ClasificaciÃ³n ###################### -->
 	<table id="tabla_clasificacionm" class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
   <tr>
 		<td class="celdaabajo" colspan="2" align="center">
-			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=87','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÓN (RD 363/1995)
-			<a href="javascript:toggle('secc-clasificacion-363', 'img-mas_clasificacion-363');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-363" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=87','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÃ“N (RD 363/1995)
+			<a href="javascript:toggle('secc-clasificacion-363', 'img-mas_clasificacion-363');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-363" alt="Pulse para desplegar la informaciÃ³n" title="Pulse para desplegar la informaciÃ³n" /></a>
 			</td></tr></table>
 		</td>
 	</tr>
@@ -478,16 +483,16 @@ sub ap2_clasificacion()
 end sub ' ap2_clasificacion
 
 sub ap2_clasificacion_rd1272()
-	' Solo mostramos este apartado si hay información para él
+	' Solo mostramos este apartado si hay informaciÃ³n para Ã©l
 	if ((substance.Item("simbolos_rd1272") <> "") or (substance.Item("clasificacion_rd1272_1") <> "") or (substance.Item("clasificacion_rd1272_2") <> "") or (substance.Item("clasificacion_rd1272_3") <> "") or (substance.Item("clasificacion_rd1272_4") <> "") or (substance.Item("clasificacion_rd1272_5") <> "") or (substance.Item("clasificacion_rd1272_6") <> "") or (substance.Item("clasificacion_rd1272_7") <> "") or (substance.Item("clasificacion_rd1272_8") <> "") or (substance.Item("clasificacion_rd1272_9") <> "") or (substance.Item("clasificacion_rd1272_10") <> "") or (substance.Item("clasificacion_rd1272_11") <> "") or (substance.Item("clasificacion_rd1272_12") <> "") or (substance.Item("clasificacion_rd1272_13") <> "") or (substance.Item("clasificacion_rd1272_14") <> "") or (substance.Item("clasificacion_rd1272_15") <> "") or (substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "") ) then
 
 %>
-	<!-- ################ Clasificación ###################### -->
+	<!-- ################ ClasificaciÃ³n ###################### -->
 	<table id="tabla_clasificacionm_rd1272" class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
   <tr>
 		<td class="celdaabajo" colspan="2" align="center">
-			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=280','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)
-			<a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=280','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÃ“N Y ETIQUETADO (Reglamento 1272/2008)
+			<a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Pulse para desplegar la informaciÃ³n" title="Pulse para desplegar la informaciÃ³n" /></a>
 			</td></tr></table>
 		</td>
 	</tr>
@@ -519,10 +524,10 @@ end sub ' ap2_clasificacion
 sub ap2_clasificacion_simbolos()
 	if (substance.Item("simbolos") <> "") then
 %>
-		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Símbolos</p>
+		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">SÃ­mbolos</p>
 		<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
 <%
-		' Tiene símbolos, muestro cada uno
+		' Tiene sÃ­mbolos, muestro cada uno
 		substance.Item("simbolos") = replace(substance.Item("simbolos"), ",", ";")
 		array_simbolos = split(substance.Item("simbolos"), ";")
 		for i=0 to ubound(array_simbolos)
@@ -550,7 +555,7 @@ sub ap2_clasificacion_simbolos_rd1272()
 		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Pictogramas y palabras de advertencia</p>
 		<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
 <%
-		' Tiene símbolos, muestro cada uno
+		' Tiene sÃ­mbolos, muestro cada uno
 		substance.Item("simbolos") = replace(substance.Item("simbolos_rd1272"), ",", ";")
 		array_simbolos = split(substance.Item("simbolos"), ";")
 		for i=0 to ubound(array_simbolos)
@@ -624,10 +629,10 @@ sub ap2_clasificacion_frases_h()
 		muestra_clasificacion 14, substance.Item("clasificacion_rd1272_14")
 		muestra_clasificacion 15, substance.Item("clasificacion_rd1272_15")
 	end if
-	' 23/06/2014 - SPL - Por indicación de Tatiana se pone esta definición.
+	' 23/06/2014 - SPL - Por indicaciÃ³n de Tatiana se pone esta definiciÃ³n.
 	if (trim(substance.Item("clasificacion_rd1272_1"))="Expl., ****;") then
 		%>
-		<p><b>Explosiva</b>: Peligros físicos que deben confirmarse mediante ensayos</p>
+		<p><b>Explosiva</b>: Peligros fÃ­sicos que deben confirmarse mediante ensayos</p>
 		<%
 	end if
 
@@ -637,7 +642,7 @@ end sub
 
 sub muestra_clasificacion(numero, clasificacion)
 	if (len(trim(clasificacion))>0) then
-		' El formato de la clasificacion es Código - Categoria: Frase H
+		' El formato de la clasificacion es CÃ³digo - Categoria: Frase H
 		array_clasificacion = split(clasificacion, ";")
 		clas_cat_peligro = trim(array_clasificacion(0))
 		if ubound(array_clasificacion)>0 then
@@ -648,10 +653,10 @@ sub muestra_clasificacion(numero, clasificacion)
 	    <blockquote style="margin-left: 10px; margin-bottom: -20px;">
 <%
 			descripcion = describe_frase("h", replace (frase, "*", ""))
-			' Para ver definición de los *
+			' Para ver definiciÃ³n de los *
  			frase = buscaDefinicionAsteriscos(frase)
 
- 			' Las frases H??? son Gases a presión. Cambio solicitado por Tatiana en abril 2012
+ 			' Las frases H??? son Gases a presiÃ³n. Cambio solicitado por Tatiana en abril 2012
  			if (frase="H???") then
 %>
 	        <b>Gases a presi&oacute;n </b>
@@ -680,7 +685,7 @@ end sub
 
 
 function buscaDefinicionAsteriscos(cadena)
-	' Para ver definición de los *
+	' Para ver definiciÃ³n de los *
 	if (InStr(cadena,"****")>0) then ' Si hay 4*
 		cadena = replace(cadena, "****", "<a onclick=window.open('ver_definicion.asp?id=" + CStr(dame_id_definicion("****")) + "','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>****</a>")
 	else
@@ -703,7 +708,7 @@ end function
 ' ##################################################################################
 
 sub bucle_frases(tipo, byval frases)
-		' Pasandole las frases R o H separadas por comas, muestra cada una junto a su descripción
+		' Pasandole las frases R o H separadas por comas, muestra cada una junto a su descripciÃ³n
 		array_frases = split(frases, ",")
 %>
     <blockquote style="margin-left: 10px; margin-bottom: -20px;">
@@ -732,7 +737,7 @@ end sub
 ' ##################################################################################
 
 sub bucle_frases_s(byval frases_s)
-		' Pasandole las frases S separadas por guión, muestra cada una junto a su descripción
+		' Pasandole las frases S separadas por guiÃ³n, muestra cada una junto a su descripciÃ³n
 		frases_s = replace (frases_s, "S: ", "")
 		array_frases_s = split(frases_s, "-")
 %>
@@ -753,7 +758,7 @@ end sub
 ' ##################################################################################
 
 sub bucle_categorias_peligro_rd1272(byval frases)
-		' Pasandole las frases separadas por guión, muestra cada una junto a su descripción
+		' Pasandole las frases separadas por guiÃ³n, muestra cada una junto a su descripciÃ³n
 		array_frases = split(frases, ";")
 response.write frases
 %>
@@ -796,7 +801,7 @@ sub ap2_clasificacion_frases_r_danesa(substance)
 
 	if (substance.Item("frases_r_danesa") <> "") then
 %>
-	<p id="ap2_clasificacion_frases_r_danesa_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases R según la lista danesa de la EPA")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases R según clasificación de la EPA danesa</p>
+	<p id="ap2_clasificacion_frases_r_danesa_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases R segÃºn la lista danesa de la EPA")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases R segÃºn clasificaciÃ³n de la EPA danesa</p>
 <%
 		bucle_frases "r", joinFrasesRDanesa(substance.Item("frases_r_danesa"))
 	end if
@@ -809,7 +814,7 @@ sub ap2_clasificacion_frases_s
 	' Muestra las frases S
 
 	if (substance.Item("frases_s") <> "") then
-		' Eliminamos los paréntesis de las frases S
+		' Eliminamos los parÃ©ntesis de las frases S
 		frases_s = replace (substance.Item("frases_s"), "(", "")
 		frases_s = replace (frases_s, ")", "")
 
@@ -830,12 +835,12 @@ sub ap2_clasificacion_categorias_peligro
 	' Muestra las frases
 
 	if (substance.Item("clases_categorias_peligro_rd1272") <> "") then
-		' Eliminamos los paréntesis
+		' Eliminamos los parÃ©ntesis
 		clases_categorias_peligro_rd1272 = replace (substance.Item("clases_categorias_peligro_rd1272"), "(", "")
 		clases_categorias_peligro_rd1272 = replace (clases_categorias_peligro_rd1272, ")", "")
 
 %>
-	<p id="ap2_clasificacion_frases_s_titulo" class="ficha_titulo_2" style="margin-top: 14px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases S")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Clase y categoría de peligro <% plegador "secc-categpeligro", "img-frasess" %></p>
+	<p id="ap2_clasificacion_frases_s_titulo" class="ficha_titulo_2" style="margin-top: 14px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases S")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Clase y categorÃ­a de peligro <% plegador "secc-categpeligro", "img-frasess" %></p>
 
 		<% bucle_categorias_peligro_rd1272 clases_categorias_peligro_rd1272%>
 
@@ -916,7 +921,7 @@ sub ap2_clasificacion_etiquetado()
   <fieldset id="secc-etiquetado" style="display:none; margin: 15px 45px;">
 	<table cellspacing="0" cellpadding="3" width="100%" align="center">
 		<tr>
-			<th class="subtitulo3 celdaabajo">Concentración</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
+			<th class="subtitulo3 celdaabajo">ConcentraciÃ³n</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
 		</tr>
 <%
 	ap2_clasificacion_etiquetado_fila	"r", substance.Item("conc_1"), substance.Item("eti_conc_1")
@@ -968,7 +973,7 @@ sub ap2_clasificacion_etiquetado_rd1272()
 %>
 	<table cellspacing="0" cellpadding="3" width="100%" align="center">
 		<tr>
-			<th class="subtitulo3 celdaabajo">Concentración</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
+			<th class="subtitulo3 celdaabajo">ConcentraciÃ³n</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
 		</tr>
 <%
 	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_1"), substance.Item("eti_conc_rd1272_1")
@@ -1023,7 +1028,7 @@ sub ap2_clasificacion_etiquetado_fila(tipo_frase, byval c, byval e)
 %>
 			<tr>
 				<td class="celdaabajo" colspan="2">
-				Esta entrada tiene límites de concentración específicos para la toxicidad aguda conforme al RD 363/1995 que no pueden «hacerse corresponder» con los límites de concentración con arreglo al Reglamento CLP (como referencia, ver etiquetado del apartado de clasificación (RD 363/1995) de la sustancia).
+				Esta entrada tiene lÃ­mites de concentraciÃ³n especÃ­ficos para la toxicidad aguda conforme al RD 363/1995 que no pueden Â«hacerse corresponderÂ» con los lÃ­mites de concentraciÃ³n con arreglo al Reglamento CLP (como referencia, ver etiquetado del apartado de clasificaciÃ³n (RD 363/1995) de la sustancia).
 				</td>
 			</tr>
 <%
@@ -1040,7 +1045,7 @@ end sub
 
 
 ' ##################################################################################
-' VALORES LÍMITE
+' VALORES LÃMITE
 sub ap2_clasificacion_vl(id_cajetilla)
 	if ((substance.Item("estado_1") <> "") or (substance.Item("vla_ed_ppm_1") <> "") or (substance.Item("vla_ed_mg_m3_1") <> "") or (substance.Item("vla_ec_ppm_1") <> "") or (substance.Item("vla_ec_mg_m3_1") <> "") or (substance.Item("notas_vla_1") <> "") or (substance.Item("estado_2") <> "") or (substance.Item("vla_ed_ppm_2") <> "") or (substance.Item("vla_ed_mg_m3_2") <> "") or (substance.Item("vla_ec_ppm_2") <> "") or (substance.Item("vla_ec_mg_m3_2") <> "") or (substance.Item("notas_vla_2") <> "") or (substance.Item("estado_3") <> "") or (substance.Item("vla_ed_ppm_3") <> "") or (substance.Item("vla_ed_mg_m3_3") <> "") or (substance.Item("vla_ec_ppm_3") <> "") or (substance.Item("vla_ec_mg_m3_3") <> "") or (substance.Item("notas_vla_3") <> "") or (substance.Item("estado_4") <> "") or (substance.Item("vla_ed_ppm_4") <> "") or (substance.Item("vla_ed_mg_m3_4") <> "") or (substance.Item("vla_ec_ppm_4") <> "") or (substance.Item("vla_ec_mg_m3_4") <> "") or (substance.Item("notas_vla_4") <> "") or (substance.Item("estado_5") <> "") or (substance.Item("vla_ed_ppm_5") <> "") or (substance.Item("vla_ed_mg_m3_5") <> "") or (substance.Item("vla_ec_ppm_5") <> "") or (substance.Item("vla_ec_mg_m3_5") <> "") or (substance.Item("notas_vla_5") <> "") or (substance.Item("estado_6") <> "") or (substance.Item("vla_ed_ppm_6") <> "") or (substance.Item("vla_ed_mg_m3_6") <> "") or (substance.Item("vla_ec_ppm_6")  <> "") or (substance.Item("vla_ec_mg_m3_6") <> "") or (substance.Item("notas_vla_6") <> "") or (substance.Item("ib_1") <> "") or  (substance.Item("vlb_1") <> "") or (substance.Item("momento_1") <> "") or (substance.Item("notas_vlb_1") <> "") or (substance.Item("ib_2") <> "") or  (substance.Item("vlb_2") <> "") or (substance.Item("momento_2") <> "") or (substance.Item("notas_vlb_2") <> "") or (substance.Item("ib_3") <> "") or  (substance.Item("vlb_3") <> "") or (substance.Item("momento_3") <> "") or (substance.Item("notas_vlb_3") <> "") or (substance.Item("ib_4") <> "") or  (substance.Item("vlb_4") <> "") or (substance.Item("momento_4") <> "") or (substance.Item("notas_vlb_4") <> "") or (substance.Item("ib_5") <> "") or  (substance.Item("vlb_5") <> "") or (substance.Item("momento_5") <> "") or (substance.Item("notas_vlb_5") <> "") or (substance.Item("ib_6") <> "") or  (substance.Item("vlb_6") <> "") or (substance.Item("momento_6") <> "") or (substance.Item("notas_vlb_6") <> "")) then
 
@@ -1062,7 +1067,7 @@ sub ap2_clasificacion_vl(id_cajetilla)
 		' VLA
 		if ((substance.Item("estado_1") <> "") or (substance.Item("vla_ed_ppm_1") <> "") or (substance.Item("vla_ed_mg_m3_1") <> "") or (substance.Item("vla_ec_ppm_1") <> "") or (substance.Item("vla_ec_mg_m3_1") <> "") or (substance.Item("notas_vla_1") <> "") or (substance.Item("estado_2") <> "") or (substance.Item("vla_ed_ppm_2") <> "") or (substance.Item("vla_ed_mg_m3_2") <> "") or (substance.Item("vla_ec_ppm_2") <> "") or (substance.Item("vla_ec_mg_m3_2") <> "") or (substance.Item("notas_vla_2") <> "") or (substance.Item("estado_3") <> "") or (substance.Item("vla_ed_ppm_3") <> "") or (substance.Item("vla_ed_mg_m3_3") <> "") or (substance.Item("vla_ec_ppm_3") <> "") or (substance.Item("vla_ec_mg_m3_3") <> "") or (substance.Item("notas_vla_3") <> "") or (substance.Item("estado_4") <> "") or (substance.Item("vla_ed_ppm_4") <> "") or (substance.Item("vla_ed_mg_m3_4") <> "") or (substance.Item("vla_ec_ppm_4") <> "") or (substance.Item("vla_ec_mg_m3_4") <> "") or (substance.Item("notas_vla_4") <> "") or (substance.Item("estado_5") <> "") or (substance.Item("vla_ed_ppm_5") <> "") or (substance.Item("vla_ed_mg_m3_5") <> "") or (substance.Item("vla_ec_ppm_5") <> "") or (substance.Item("vla_ec_mg_m3_5") <> "") or (substance.Item("notas_vla_5") <> "") or (substance.Item("estado_6") <> "") or (substance.Item("vla_ed_ppm_6") <> "") or (substance.Item("vla_ed_mg_m3_6") <> "") or (substance.Item("vla_ec_ppm_6")  <> "") or (substance.Item("vla_ec_mg_m3_6") <> "") or (substance.Item("notas_vla_6") <> "")) then
 %>
-	<span id="ap2_clasificacion_vla_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores Límite Ambientales <% plegador "secc-vla"+id_cajetilla, "img-vla"+id_cajetilla %></span>
+	<span id="ap2_clasificacion_vla_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores LÃ­mite Ambientales <% plegador "secc-vla"+id_cajetilla, "img-vla"+id_cajetilla %></span>
 	<fieldset id="secc-vla<%=id_cajetilla%>" style="display:none">
 	<table border="0" width="100%" cellspacing="0" cellpadding="3">
 		<tr>
@@ -1106,7 +1111,7 @@ sub ap2_clasificacion_vl(id_cajetilla)
 		if ((substance.Item("ib_1") <> "") or (substance.Item("vlb_1") <> "") or (substance.Item("momento_1") <> "") or (substance.Item("notas_vlb_1") <> "") or (substance.Item("ib_2") <> "") or (substance.Item("vlb_2") <> "") or (substance.Item("momento_2") <> "") or (substance.Item("notas_vlb_2") <> "") or (substance.Item("ib_3") <> "") or (substance.Item("vlb_3") <> "") or (substance.Item("momento_3") <> "") or (substance.Item("notas_vlb_3") <> "") or (substance.Item("ib_4") <> "") or (substance.Item("vlb_4") <> "") or (substance.Item("momento_4") <> "") or (substance.Item("notas_vlb_4") <> "") or (substance.Item("ib_5") <> "") or (substance.Item("vlb_5") <> "") or (substance.Item("momento_5") <> "") or (notas_vlb_51 <> "") or (substance.Item("ib_6") <> "") or (substance.Item("vlb_6") <> "") or (substance.Item("momento_6") <> "") or (substance.Item("notas_vlb_6") <> "")) then
 %>
 
-		<p id="ap2_clasificacion_vlb_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores Límite Biológicos <% plegador "secc-vlb"+id_cajetilla, "img-vlb"+id_cajetilla %></p>
+		<p id="ap2_clasificacion_vlb_titulo" class="ficha_titulo_1"><a href="index.asp?idpagina=616"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>Valores LÃ­mite BiolÃ³gicos <% plegador "secc-vlb"+id_cajetilla, "img-vlb"+id_cajetilla %></p>
 		<fieldset id="secc-vlb<%=id_cajetilla%>" style="display:none">
 		<table width="100%" cellspacing="0" cellpadding="3">
 			<tr>
@@ -1115,7 +1120,7 @@ sub ap2_clasificacion_vl(id_cajetilla)
 			<% end if %>
 
 			<% if ap2_clasificacion_vl_b_hay_columna_vlb then %>
-				<td class="subtitulo3 celdaabajo">Valor límite</th>
+				<td class="subtitulo3 celdaabajo">Valor lÃ­mite</th>
 			<% end if %>
 
 			<% if ap2_clasificacion_vl_b_hay_columna_momento then %>
@@ -1151,7 +1156,7 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_vl_a(estado, vla_ed_ppm, vla_ed_mg_m3, vla_ec_ppm, vla_ec_mg_m3, notas_vla)
-	' Mostramos una fila si hay algún dato
+	' Mostramos una fila si hay algÃºn dato
 	if (trim(estado&vla_ed_ppm&vla_ed_mg_m3&vla_ec_ppm&vla_ec_mg_m3&notas_vla) <> "") then
 %>
 		<tr>
@@ -1184,7 +1189,7 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_vl_b(ib, vlb, momento, notas_vlb)
-	' Pinta una fila si hay algún dato
+	' Pinta una fila si hay algÃºn dato
 		if (trim(replace( ib&vlb&momento&notas_vlb, ",", "") ) <> "") then
 
 %>
@@ -1324,7 +1329,7 @@ end function
 
 sub notas_con_ayuda(byval notas, byval tipo)
 
-	' Para buscar la definición hay ocasiones en las que hay que aplicar un parche.
+	' Para buscar la definiciÃ³n hay ocasiones en las que hay que aplicar un parche.
 
 	array_notas = split(notas, ",")
 	cadena_notas = ""
@@ -1355,7 +1360,7 @@ sub ap2_clasificacion_lista_negra(mySubstance)
 
 %>
 		<p id="ap2_clasificacion_lista_negra_titulo" class="subtitulo3">&nbsp;<img src="imagenes/icono_atencion_20.png" align="absmiddle" /> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Lista negra")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Sustancia incluida en la Lista negra de ISTAS <% plegador "secc-listanegra", "img-listanegra" %></p>
-		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(mySubstance.fields.item("listaNegraClassifications"))%></p>
+		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia estÃ¡ incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(mySubstance.fields.item("listaNegraClassifications"))%></p>
 
 <%
 	end if
@@ -1374,7 +1379,7 @@ sub ap3_riesgos()
 	end if
 
 
-	if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama") or mySubstance.inList("de") or mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_reach") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") or mySubstance.inList("eepp") or mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") or mySubstance.inList("salud") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
+	if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama") or mySubstance.inList("de") or mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÃ“XICO" or mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_reach") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") or mySubstance.inList("eepp") or mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") or mySubstance.inList("salud") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -1383,7 +1388,7 @@ sub ap3_riesgos()
 		<table width="100%" cellpadding=5>
 			<tr>
 				<td>
-					<a name="identificacion"></a><img src="imagenes/risctox02.gif" alt="Riesgos específicos para la salud" />
+					<a name="identificacion"></a><img src="imagenes/risctox02.gif" alt="Riesgos especÃ­ficos para la salud" />
 				</td>
 				<td align="right">
 					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
@@ -1392,13 +1397,13 @@ sub ap3_riesgos()
 		</table>
 
 <%
-		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("Cancerígeno") end if
-		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
+		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("CancerÃ­geno") end if
+		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("MutÃ¡geno") end if
 
 		if mySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
-		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
+		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÃ“XICO" then ap3_riesgos_tabla("NeurotÃ³xico") end if
 		if mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
-		if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
+		if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("TÃ³xico para la reproducciÃ³n") end if
 		if mySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
     	if mySubstance.inList("salud") then ap7_salud() end if
 %>
@@ -1414,8 +1419,8 @@ sub ap3_riesgos()
 							<tr>
 								<td width="100%" class="titulo3" align="left">
 
-							Más información en salud laboral
-							<a href="javascript:toggle('secc-mas_informacion_salud_laboral', 'img-mas_informacion_salud_laboral');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_salud_laboral" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+							MÃ¡s informaciÃ³n en salud laboral
+							<a href="javascript:toggle('secc-mas_informacion_salud_laboral', 'img-mas_informacion_salud_laboral');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_salud_laboral" alt="Pulse para desplegar la informaciÃ³n" title="Pulse para desplegar la informaciÃ³n" /></a>
 			        			</td>
 							</tr>
 						</table>
@@ -1456,7 +1461,7 @@ if (mySubstance.inList("tpb") or mySubstance.inList("directiva_aguas") or mySubs
 		<table width="100%" cellpadding=5>
 			<tr>
 				<td>
-                        <a name="identificacion"></a><img src="imagenes/risctox03.gif" alt="Riesgos específicos para el medio ambiente" />
+                        <a name="identificacion"></a><img src="imagenes/risctox03.gif" alt="Riesgos especÃ­ficos para el medio ambiente" />
 
 				</td>
 				<td align="right">
@@ -1466,18 +1471,18 @@ if (mySubstance.inList("tpb") or mySubstance.inList("directiva_aguas") or mySubs
 		</table>
 <%
 		if mySubstance.inList("tpb") then
-			ap3_riesgos_tabla("Tóxica, Persistente y Bioacumulativa")
+			ap3_riesgos_tabla("TÃ³xica, Persistente y Bioacumulativa")
 		end if
 		' SPL (16/06/20014)
 '		if num_cas="87-68-3" or num_cas="133-49-3" or num_cas="75-74-1" then
 		if mySubstance.inMpmbList() then
 			ap3_riesgos_tabla("mPmB")
 		end if
-		if (mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana")) then ap3_riesgos_tabla("Tóxica para el agua") end if
+		if (mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana")) then ap3_riesgos_tabla("TÃ³xica para el agua") end if
 		if (mySubstance.inList("suelos")) then ap3_riesgos_tabla("Contaminante de suelos") end if
 		if (mySubstance.inList("ozono") or mySubstance.inList("clima") or mySubstance.inList("aire")) then ap3_riesgos_tabla("Contaminante del aire") end if
 
-		if (mySubstance.inList("cop")) then ap3_riesgos_tabla("Contaminante Orgánico Persistente (COP)") end if
+		if (mySubstance.inList("cop")) then ap3_riesgos_tabla("Contaminante OrgÃ¡nico Persistente (COP)") end if
 %>
 
 		<%
@@ -1490,8 +1495,8 @@ if (mySubstance.inList("tpb") or mySubstance.inList("directiva_aguas") or mySubs
 							<tr>
 								<td width="100%" class="titulo3" align="left">
 
-							Más información en medio ambiente
-							<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+							MÃ¡s informaciÃ³n en medio ambiente
+							<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Pulse para desplegar la informaciÃ³n" title="Pulse para desplegar la informaciÃ³n" /></a>
 			        			</td>
 							</tr>
 						</table>
@@ -1535,7 +1540,7 @@ sub ap3_riesgos_tabla(byval tipo)
 			<td class="celdaabajo" colspan="2" align="center">
 				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><% ap3_riesgos_tabla_ayuda(tipo) %><%=tipo%>
 
-        <% if ((tipo <> "COV") and (tipo <> "Vertidos") and (tipo <> "IPPC (PRTR Agua)") and (tipo <> "IPPC (PRTR Aire)") and (tipo <> "IPPC (PRTR Suelo)") and (tipo <> "Residuos Peligrosos") and (tipo <> "Accidentes Graves") and (tipo <> "Emisiones Atmosféricas") ) then %>
+        <% if ((tipo <> "COV") and (tipo <> "Vertidos") and (tipo <> "IPPC (PRTR Agua)") and (tipo <> "IPPC (PRTR Aire)") and (tipo <> "IPPC (PRTR Suelo)") and (tipo <> "Residuos Peligrosos") and (tipo <> "Accidentes Graves") and (tipo <> "Emisiones AtmosfÃ©ricas") ) then %>
 
         <% plegador "secc-"&tipo, "img-"&tipo %>
 
@@ -1559,11 +1564,11 @@ end sub
 sub ap3_riesgos_tabla_ayuda(tipo)
 
 	select case tipo
-		case "Cancerígeno":
+		case "CancerÃ­geno":
 %>
 			<a href="index.asp?idpagina=607"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Mutágeno":
+		case "MutÃ¡geno":
 %>
 			<a href="index.asp?idpagina=607"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1571,7 +1576,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=610"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Neurotóxico":
+		case "NeurotÃ³xico":
 %>
 			<a href="index.asp?idpagina=611"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1579,11 +1584,11 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=612"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Tóxico para la reproducción":
+		case "TÃ³xico para la reproducciÃ³n":
 %>
 			<a href="index.asp?idpagina=609"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Tóxica, Persistente y Bioacumulativa":
+		case "TÃ³xica, Persistente y Bioacumulativa":
 %>
 			<a href="index.asp?idpagina=613"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
         <%
@@ -1591,7 +1596,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=613"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Tóxica para el agua":
+		case "TÃ³xica para el agua":
 %>
 			<a href="index.asp?idpagina=614"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 
@@ -1601,7 +1606,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 			<a href="index.asp?idpagina=622"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 
 <%
-		case "Contaminante Orgánico Persistente (COP)":
+		case "Contaminante OrgÃ¡nico Persistente (COP)":
 %>
 			<a href="index.asp?idpagina=1185"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1637,7 +1642,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=622"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Emisiones Atmosféricas":
+		case "Emisiones AtmosfÃ©ricas":
 %>
 			<a href="index.asp?idpagina=620"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1653,7 +1658,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=1194"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Sustancia REACH sujeta a autorización":
+		case "Sustancia REACH sujeta a autorizaciÃ³n":
 %>
 			<a href="index.asp?idpagina=1194"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1673,7 +1678,7 @@ sub ap3_riesgos_tabla_ayuda(tipo)
 %>
 			<a href="index.asp?idpagina=1191"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
-		case "Sustancia bajo evaluación. CoRAP":
+		case "Sustancia bajo evaluaciÃ³n. CoRAP":
 %>
 			<a href="index.asp?idpagina=1194"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a>
 <%
@@ -1697,19 +1702,19 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	case "Contaminante de suelos"
 	%>
 
-    Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2940" target="_blank">Real Decreto 9/2005</a>
+    SegÃºn <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2940" target="_blank">Real Decreto 9/2005</a>
 
 
 <%
 
 
-    case "Contaminante Orgánico Persistente (COP)":
+    case "Contaminante OrgÃ¡nico Persistente (COP)":
 
 %>
 
     <fieldset>
 
-      <legend class="subtitulo3"><strong>Según Convenio de Estocolmo</strong></legend>
+      <legend class="subtitulo3"><strong>SegÃºn Convenio de Estocolmo</strong></legend>
 
       <ul>
 
@@ -1738,7 +1743,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 		<%
 	  	if (trim(substance.Item("enlace_cop")) <> "") then
-			response.write "<li><a href='"&substance.Item("enlace_cop")&"' target='_blank'>Más información</a></li>"
+			response.write "<li><a href='"&substance.Item("enlace_cop")&"' target='_blank'>MÃ¡s informaciÃ³n</a></li>"
 		end if
 	  %>
 
@@ -1748,23 +1753,23 @@ sub ap3_riesgos_tabla_contenidos(tipo)
     </fieldset>
 
 <%
-		case "Cancerígeno":
+		case "CancerÃ­geno":
 
 				' Real Decreto ---------------------------------------------------------------
 				if (mySubstance.inList("cancer_rd")) then
 %>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
+						<legend class="subtitulo3"><strong>SegÃºn R. 1272/2008</strong></legend>
 						<blockquote>
 <%
 				nivel_cancerigeno_rd = dame_nivel_cancerigeno_rd()
-				' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
+				' Tatiana - 01/8/2012 - Las categorÃ­as sustituir 1 por 1A, 2 por 1B y 3 por 2.
 				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd, "1", "1A")
 				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "2", "1B")
 				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "3", "2")
 
 				if (nivel_cancerigeno_rd <> "") then
-							response.write "<strong>Nivel cancerígeno:</strong> "&nivel_cancerigeno_rd_txt
+							response.write "<strong>Nivel cancerÃ­geno:</strong> "&nivel_cancerigeno_rd_txt
 %>
 					 		<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("C"&nivel_cancerigeno_rd_txt)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 <%
@@ -1789,12 +1794,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				if (mySubstance.inList("cancer_danesa")) then
 		%>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_cancer", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
+						<legend class="subtitulo3"><strong>SegÃºn <% plegador_texto "frases_r_danesa_cancer", "frases R", "subtitulo3" %> en la clasificaciÃ³n de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
 						<blockquote>
 		<%
 				nivel_cancerigeno_danesa = dame_nivel_cancerigeno_danesa()
 				if (nivel_cancerigeno_danesa <> "") then
-					response.write "<strong>Nivel cancerígeno:</strong> "&nivel_cancerigeno_danesa
+					response.write "<strong>Nivel cancerÃ­geno:</strong> "&nivel_cancerigeno_danesa
 		%>
 
 					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("RDC"&nivel_cancerigeno_danesa)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
@@ -1824,7 +1829,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				if (mySubstance.inList("cancer_iarc")) then
 		%>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según IARC <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+						<legend class="subtitulo3"><strong>SegÃºn IARC <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 		<%
 						if (trim(substance.Item("grupo_iarc")) <> "") or (trim(substance.Item("volumen_iarc")) <> "") or (trim(substance.Item("notas_iarc")) <> "") then
 		%>
@@ -1863,7 +1868,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		%>
 
 		    <fieldset>
-				  <legend class="subtitulo3"><strong>Según otras fuentes</strong></legend>
+				  <legend class="subtitulo3"><strong>SegÃºn otras fuentes</strong></legend>
 
 		<%
 
@@ -1889,7 +1894,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					for i=0 to ubound(array_fuentes)
 		%>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según <%=trim(array_fuentes(i))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(array_fuentes(i)))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+						<legend class="subtitulo3"><strong>SegÃºn <%=trim(array_fuentes(i))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(array_fuentes(i)))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 						<blockquote>
 						<table>
 							<tr><td class="subtitulo3"><%=trim(array_categorias(i))%>:</td><td><%= dame_definicion(trim(array_categorias(i))) %></td></tr>
@@ -1921,7 +1926,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		%>
 
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según SSI (cáncer de mama) <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("SSI")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+						<legend class="subtitulo3"><strong>SegÃºn SSI (cÃ¡ncer de mama) <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("SSI")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 						<blockquote>
 						<table>
 							<tr><td class="subtitulo3"><strong>Fuente:</strong><br /><a href="<%= substance.Item("cancer_mama_fuente") %>" target="_blank"><%= replace(substance.Item("cancer_mama_fuente"), "http://", "") %></a></td></tr>
@@ -1933,22 +1938,22 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		    end if
 
-		case "Mutágeno":
+		case "MutÃ¡geno":
       ' MUTAGENO RD -------------------------------------------------------------
       if (mySubstance.inList("mutageno_rd")) then
 %>
 			<fieldset>
-				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
+				<legend class="subtitulo3"><strong>SegÃºn R. 1272/2008</strong></legend>
 				<blockquote>
 				<%
 					nivel_mutageno_rd = dame_nivel_mutageno_rd()
-					' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
+					' Tatiana - 01/8/2012 - Las categorÃ­as sustituir 1 por 1A, 2 por 1B y 3 por 2.
 					nivel_mutageno_rd_txt = replace(nivel_mutageno_rd, "1", "1A")
 					nivel_mutageno_rd_txt = replace(nivel_mutageno_rd_txt, "2", "1B")
 					nivel_mutageno_rd_txt = replace(nivel_mutageno_rd_txt, "3", "2")
 
 					if (nivel_mutageno_rd <> "") then
-					response.write "<br /><strong>Nivel mutágeno:</strong> "&nivel_mutageno_rd_txt
+					response.write "<br /><strong>Nivel mutÃ¡geno:</strong> "&nivel_mutageno_rd_txt
 				%>
 					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("M"&nivel_mutageno_rd_txt)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 				<%
@@ -1964,12 +1969,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
       if (mySubstance.inList("mutageno_danesa")) then
 %>
 			<fieldset>
-				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_mutageno", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
+				<legend class="subtitulo3"><strong>SegÃºn <% plegador_texto "frases_r_danesa_mutageno", "frases R", "subtitulo3" %> en la clasificaciÃ³n de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
 				<blockquote>
 				<%
 					nivel_mutageno_danesa = dame_nivel_mutageno_danesa()
 					if (nivel_mutageno_danesa <> "") then
-					response.write "<br /><strong>Nivel mutágeno:</strong> "&nivel_mutageno_danesa
+					response.write "<br /><strong>Nivel mutÃ¡geno:</strong> "&nivel_mutageno_danesa
 				%>
 					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("RDM"&nivel_mutageno_danesa)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 				<%
@@ -2009,11 +2014,11 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			</table>
 			</blockquote>
 <%
-		case "Neurotóxico":
+		case "NeurotÃ³xico":
 
 
         if mySubstance.inList("neurotoxico_rd") or mySubstance.inList("neurotoxico_danesa") then
-          ' Añadimos SNC a efecto neurotoxico si no existía ya
+          ' AÃ±adimos SNC a efecto neurotoxico si no existÃ­a ya
           if (substance.Item("efecto_neurotoxico") = "") or (IsNull(substance.Item("efecto_neurotoxico"))) then
             substance.Item("efecto_neurotoxico")="SNC"
           else
@@ -2101,16 +2106,16 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		      response.write "<ul>"
 					' Indicamos si es por lista RD o por lista danesa
 		      if mySubstance.inList("sensibilizante") then
-		        response.write "<li class='subtitulo3'>Sensibilizante según R. 1272/2008</li>"
+		        response.write "<li class='subtitulo3'>Sensibilizante segÃºn R. 1272/2008</li>"
 		      end if
 
 			  if mySubstance.inList("sensibilizante_reach") then
-		        response.write "<li class='subtitulo3'>Alérgeno REACH &nbsp;<a href='http://www.istas.net/web/abreenlace.asp?idenlace=6340' target='_blank'>Ver documento</a></li>"
+		        response.write "<li class='subtitulo3'>AlÃ©rgeno REACH &nbsp;<a href='http://www.istas.net/web/abreenlace.asp?idenlace=6340' target='_blank'>Ver documento</a></li>"
 		      end if
 
 		      if mySubstance.inList("sensibilizante_danesa") then
 		      %>
-		        <li class='subtitulo3'>Sensibilizante según <% plegador_texto "frases_r_danesa_sensibilizante", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></li>
+		        <li class='subtitulo3'>Sensibilizante segÃºn <% plegador_texto "frases_r_danesa_sensibilizante", "frases R", "subtitulo3" %> en la clasificaciÃ³n de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></li>
 		      <%
 
 
@@ -2125,22 +2130,22 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			  response.write "</ul>"
 
 
-		case "Tóxico para la reproducción":
+		case "TÃ³xico para la reproducciÃ³n":
 	      ' TPR SEGUN RD -------------------------------------------------------------
 	      if (mySubstance.inList("tpr")) then
 	%>
 	    			<fieldset>
-	  				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
+	  				<legend class="subtitulo3"><strong>SegÃºn R. 1272/2008</strong></legend>
 	<%
 	  			nivel_reproduccion_rd = dame_nivel_reproduccion_rd()
-				' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
+				' Tatiana - 01/8/2012 - Las categorÃ­as sustituir 1 por 1A, 2 por 1B y 3 por 2.
 				nivel_reproduccion_rd_txt = replace(nivel_reproduccion_rd, "1", "1A")
 				nivel_reproduccion_rd_txt = replace(nivel_reproduccion_rd_txt, "2", "1B")
 				nivel_reproduccion_rd_txt = replace(nivel_reproduccion_rd_txt, "3", "2")
 	  			if (nivel_reproduccion_rd <> "") then
 				  %>
 	  				<blockquote>
-	  					<strong>Categoría:</strong> <%=nivel_reproduccion_rd_txt%>
+	  					<strong>CategorÃ­a:</strong> <%=nivel_reproduccion_rd_txt%>
 	  				  <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("TR"&nivel_reproduccion_rd_txt)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 	  					</blockquote>
 	  			<%
@@ -2155,13 +2160,13 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	      if (mySubstance.inList("tpr_danesa")) then
 	%>
 	    			<fieldset>
-	  				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_tpr", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+	  				<legend class="subtitulo3"><strong>SegÃºn <% plegador_texto "frases_r_danesa_tpr", "frases R", "subtitulo3" %> en la clasificaciÃ³n de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 	<%
 	  			nivel_reproduccion_danesa = dame_nivel_reproduccion_danesa()
 	  			if (nivel_reproduccion_danesa <> "") then
 				  %>
 	  				<blockquote>
-	  					<strong>Categoría:</strong> <%=nivel_reproduccion_danesa%>
+	  					<strong>CategorÃ­a:</strong> <%=nivel_reproduccion_danesa%>
 	  				  <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("RDR"&nivel_reproduccion_danesa)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 	  					</blockquote>
 	  			<%
@@ -2197,12 +2202,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
       end if
 
 
-		case "Tóxica, Persistente y Bioacumulativa":
+		case "TÃ³xica, Persistente y Bioacumulativa":
 %>
 			<blockquote>
 			<table>
 				<tr>
-					<td class="subtitulo3">Más información (en inglés):</td>
+					<td class="subtitulo3">MÃ¡s informaciÃ³n (en inglÃ©s):</td>
 					<td><a href="<%= substance.Item("enlace_tpb") %>"><%= corta(substance.Item("anchor_tpb"), 70, "puntossuspensivos") %></a></td>
 				</tr>
 				<tr>
@@ -2246,7 +2251,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<table>
 				<tr>
 					<td class="subtitulo3">
-	                    <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=restringidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+	                    <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=restringidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 
 				</tr>
@@ -2262,7 +2267,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 				</tr>
 			</table>
@@ -2270,12 +2275,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 <%
-		case "Tóxica para el agua":
+		case "TÃ³xica para el agua":
 			response.write "<table>"
 			if (substance.Item("directiva_aguas") or mySubstance.inList("directiva_aguas")) then
 %>
 				<tr>
-					<td class="subtitulo3" colspan="2">· Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
+					<td class="subtitulo3" colspan="2">Â· SegÃºn <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
 				</tr>
 <%
 			end if
@@ -2283,7 +2288,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			if (mySubstance.inList("sustancias_prioritarias")) then
 %>
 				<tr>
-					<td class="subtitulo3" colspan="2">· Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a></td>
+					<td class="subtitulo3" colspan="2">Â· Posible sustancia prioritaria segÃºn la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a></td>
 				</tr>
 <%
 			end if
@@ -2292,12 +2297,12 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">
-						· Según <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministerio de Medio Ambiente de Alemania</a>
+						Â· SegÃºn <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministerio de Medio Ambiente de Alemania</a>
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><strong>Clasificación</strong>: <%=substance.Item("clasif_mma")%>
+					<td><strong>ClasificaciÃ³n</strong>: <%=substance.Item("clasif_mma")%>
 					 	<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(parche_definicion(substance.Item("clasif_mma"), "MMA"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 					</td>
 				</tr>
@@ -2321,7 +2326,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 					<tr>
 						<td class="subtitulo3">Calidad del aire:</td>
-						<td>Sustancia incluida en la <a href="abreenlace.asp?idenlace=2234" target="_blank">Directiva 96/62/CE</a> de 27 de septiembre sobre evaluación y gestión de la calidad del aire ambiente</td>
+						<td>Sustancia incluida en la <a href="abreenlace.asp?idenlace=2234" target="_blank">Directiva 96/62/CE</a> de 27 de septiembre sobre evaluaciÃ³n y gestiÃ³n de la calidad del aire ambiente</td>
 					</tr>
 <%
 				end if
@@ -2331,7 +2336,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 					<tr>
 						<td class="subtitulo3">Capa de ozono:</td>
-						<td>Sustancia que agota la capa de ozono, según <a href="abreenlace.asp?idenlace=2229" target="_blank">Reglamento (CE) 2037/2000</a> del Parlamento Europeo y del Consejo, de 29 de junio de 2000</td>
+						<td>Sustancia que agota la capa de ozono, segÃºn <a href="abreenlace.asp?idenlace=2229" target="_blank">Reglamento (CE) 2037/2000</a> del Parlamento Europeo y del Consejo, de 29 de junio de 2000</td>
 					</tr>
 <%
 				end if
@@ -2340,7 +2345,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				if (substance.Item("dano_cambio_clima")) then
 %>
 					<tr>
-						<td class="subtitulo3">Cambio climático:</td>
+						<td class="subtitulo3">Cambio climÃ¡tico:</td>
 						<td>Sustancia incluida en el listado del <a href="abreenlace.asp?idenlace=2230" target="_blank">Protocolo de Kyoto</a></td>
 					</tr>
 <%
@@ -2357,7 +2362,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	Fuente: <a href="http://echa.europa.eu/chem_data/authorisation_process/candidate_list_table_en.asp" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
+                    	Fuente: <a href="http://echa.europa.eu/chem_data/authorisation_process/candidate_list_table_en.asp" target="_blank">Agencia Europea de sustancias y mezclas quÃ­micas (ECHA)</a>
                     </td>
 				</tr>
 			</table>
@@ -2365,13 +2370,13 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 <%
-		case "Sustancia REACH sujeta a autorización":
+		case "Sustancia REACH sujeta a autorizaciÃ³n":
 %>
 			<blockquote>
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	Fuente: <a href="http://echa.europa.eu/reach/authorisation_under_reach/authorisation_list_en.asp" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
+                    	Fuente: <a href="http://echa.europa.eu/reach/authorisation_under_reach/authorisation_list_en.asp" target="_blank">Agencia Europea de sustancias y mezclas quÃ­micas (ECHA)</a>
                     </td>
 				</tr>
 			</table>
@@ -2385,7 +2390,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 				</tr>
 			</table>
@@ -2399,7 +2404,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 				</tr>
 			</table>
@@ -2413,7 +2418,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 				</tr>
 			</table>
@@ -2427,19 +2432,19 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">MÃ¡s informaciÃ³n</a>
                     </td>
 				</tr>
 			</table>
 			</blockquote>
 <%
-		case "Sustancia bajo evaluación. CoRAP":
+		case "Sustancia bajo evaluaciÃ³n. CoRAP":
 %>
 			<blockquote>
 				<table>
 				<tr>
 					<td class="subtitulo3">
-							<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=corap&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Mas información</a>
+							<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=corap&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Mas informaciÃ³n</a>
 						</td>
 				</tr>
 				<tr>
@@ -2466,7 +2471,7 @@ sub ap3_riesgos_enfermedades()
 			' Para mostrar agrupados por listado, solo escribimos la cabecera si el listado es nuevo
 			if (listado_antiguo <> objRstEnf("listado")) then
 
-				' Si el listado antiguo no es vacío, es que ya habiamos abierto antes uno así que primero cerramos el anterior
+				' Si el listado antiguo no es vacÃ­o, es que ya habiamos abierto antes uno asÃ­ que primero cerramos el anterior
 				if (listado_antiguo <> "") then
 %>
 			</td>
@@ -2499,7 +2504,7 @@ sub ap3_riesgos_enfermedades()
 					if (objRstEnf("sintomas") <> "") then
 				%>
 					<tr>
-						<td class="subtitulo3" align="right" valign="top" width='10%' nowrap style='padding-top:10px'>Síntomas:</td><td align="left" style'padding-top:10px'><%=replace(objRstEnf("sintomas"), vbcrlf, "<br>")%></td>
+						<td class="subtitulo3" align="right" valign="top" width='10%' nowrap style='padding-top:10px'>SÃ­ntomas:</td><td align="left" style'padding-top:10px'><%=replace(objRstEnf("sintomas"), vbcrlf, "<br>")%></td>
 					</tr>
 				<%
 					end if
@@ -2555,7 +2560,7 @@ sub ap4_normativa_ambiental()
 		</table>
 
 <%
-' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuántos hay en total.
+' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuÃ¡ntos hay en total.
 total = 0
 
 if mySubstance.inList("cov") then total = total +1 end if
@@ -2578,7 +2583,7 @@ end if
 			<tr>
 				<td valign="top" width="50%">
 <%
-' Contaremos cuantos llevamos para ver en qué momento hay que poner la división de columnas
+' Contaremos cuantos llevamos para ver en quÃ© momento hay que poner la divisiÃ³n de columnas
 llevo = 0
 %>
 
@@ -2647,7 +2652,7 @@ llevo = 0
 		end if
 
 		if mySubstance.inList("emisiones") then
-			ap3_riesgos_tabla("Emisiones Atmosféricas")
+			ap3_riesgos_tabla("Emisiones AtmosfÃ©ricas")
 			llevo = llevo +1
 			if llevo >= mitad then
 				response.write "</td><td valign='top' width='50%'>"
@@ -2680,7 +2685,7 @@ sub ap4_normativa_restriccion_prohibicion()
 		<table width="100%" cellpadding=5>
 			<tr>
 				<td>
-					<a name="identificacion"></a><img src="imagenes/risctox04-restricciones.gif" alt="Normativa sobre restricción/prohibición de sustancias" />
+					<a name="identificacion"></a><img src="imagenes/risctox04-restricciones.gif" alt="Normativa sobre restricciÃ³n/prohibiciÃ³n de sustancias" />
 				</td>
 				<td align="right">
 					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
@@ -2708,7 +2713,7 @@ sub ap4_normativa_restriccion_prohibicion()
 			ap3_riesgos_tabla("Sustancia candidata REACH")
 		end if
 		if mySubstance.inList("autorizacion_reach") then
-			ap3_riesgos_tabla("Sustancia REACH sujeta a autorización")
+			ap3_riesgos_tabla("Sustancia REACH sujeta a autorizaciÃ³n")
 		end if
 		if mySubstance.inList("biocidas_autorizadas") then
 			ap3_riesgos_tabla("Sustancia biocida autorizada")
@@ -2723,7 +2728,7 @@ sub ap4_normativa_restriccion_prohibicion()
 			ap3_riesgos_tabla("Sustancia pesticida prohibida")
 		end if
 		if mySubstance.inList("corap") then
-			ap3_riesgos_tabla("Sustancia bajo evaluación. CoRAP")
+			ap3_riesgos_tabla("Sustancia bajo evaluaciÃ³n. CoRAP")
 		end if
 
 %>
@@ -2769,7 +2774,7 @@ sub ap5_alternativas()
 			<td>
 				<ul>
 <%
-	' Mostramos los ficheros, comprobando que no haya titulos repetidos. Como vienen ordenados por título, basta comparar con el título anterior
+	' Mostramos los ficheros, comprobando que no haya titulos repetidos. Como vienen ordenados por tÃ­tulo, basta comparar con el tÃ­tulo anterior
 	titulo_antiguo = ""
 	do while (not objRst.eof)
 		id_fichero=objRst("id_fichero")
@@ -2827,7 +2832,7 @@ sub ap6_sectores()
 			<td>
 				<ul>
 <%
-	' Mostramos los sectores, comprobando que no haya codigos repetidos. Como vienen ordenados por código, basta comparar con el código anterior
+	' Mostramos los sectores, comprobando que no haya codigos repetidos. Como vienen ordenados por cÃ³digo, basta comparar con el cÃ³digo anterior
 	codigo_antiguo = ""
 	do while (not objRst.eof)
 		id_sector=objRst("id_sector")
@@ -2878,7 +2883,7 @@ sub ap7_salud()
 	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
    	<tr>
 			<td class="celdaabajo" colspan="2" align="center">
-				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">Otras alteraciones para la salud y sistemas y órganos afectados <% plegador "secc-salud", "img-salud" %></td></tr></table>
+				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">Otras alteraciones para la salud y sistemas y Ã³rganos afectados <% plegador "secc-salud", "img-salud" %></td></tr></table>
 			</td>
 		</tr>
 		<tr id="secc-salud" style="display:none">
@@ -2913,9 +2918,9 @@ sub ap7_salud()
           if (cardiocirculatorio) then response.write "<li>Cardiocirculatorio</li>" end if
           if (respiratorio) then response.write "<li>Respiratorio</li>" end if
           if (reproductivo) then response.write "<li>Reproductivo</li>" end if
-          if (musculo_esqueletico) then response.write "<li>Musculoesquelético</li>" end if
+          if (musculo_esqueletico) then response.write "<li>MusculoesquelÃ©tico</li>" end if
           if (sistema_inmunitario) then response.write "<li>Inmunitario</li>" end if
-          if (higado_gastrointestinal) then response.write "<li>Gastrointestinal - Hígado</li>" end if
+          if (higado_gastrointestinal) then response.write "<li>Gastrointestinal - HÃ­gado</li>" end if
           if (sistema_endocrino) then response.write "<li>Endocrino</li>" end if
 %>
         </ul>
@@ -2929,11 +2934,11 @@ sub ap7_salud()
         <strong>- Otros efectos:</strong><br />
         <ul>
 <%
-          if (embrion) then response.write "<li>Daños en el embrión</li>" end if
-          if (cancer) then response.write "<li>Cáncer</li>" end if
-          if (rinyon) then response.write "<li>Daños en el riñón</li>" end if
+          if (embrion) then response.write "<li>DaÃ±os en el embriÃ³n</li>" end if
+          if (cancer) then response.write "<li>CÃ¡ncer</li>" end if
+          if (rinyon) then response.write "<li>DaÃ±os en el riÃ±Ã³n</li>" end if
           if (piel_sentidos) then response.write "<li>Piel y mucosas</li>" end if
-          if (neuro_toxicos) then response.write "<li>Efectos neurotóxicos</li>" end if
+          if (neuro_toxicos) then response.write "<li>Efectos neurotÃ³xicos</li>" end if
 %>
         </ul>
         </td>
@@ -2955,7 +2960,7 @@ sub ap7_salud()
 end sub
 
 ' #############################################################################################
-' Obtiene el nivel cancerígeno de los campos de clasificación
+' Obtiene el nivel cancerÃ­geno de los campos de clasificaciÃ³n
 function dame_nivel_cancerigeno_rd()
 	' Juntamos todas las clasificaciones
 	clasificacion_rd = substance.Item("clasificacion_1") & substance.Item("clasificacion_2") & substance.Item("clasificacion_3") & substance.Item("clasificacion_4") & substance.Item("clasificacion_5") & substance.Item("clasificacion_6") & substance.Item("clasificacion_7") & substance.Item("clasificacion_8") & substance.Item("clasificacion_9") & substance.Item("clasificacion_10") & substance.Item("clasificacion_11") & substance.Item("clasificacion_12") & substance.Item("clasificacion_13") & substance.Item("clasificacion_14") & substance.Item("clasificacion_15")
@@ -2969,7 +2974,7 @@ function dame_nivel_cancerigeno_rd()
 	' Buscamos la primera aparicion de "Carc.Cat."
 	posicion = instr(1,clasificacion_rd, "Carc.Cat.")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 
 	if (posicion > 0) then
 		dame_nivel_cancerigeno_rd = mid(clasificacion_rd, posicion+9, 1)
@@ -2984,7 +2989,7 @@ function dame_nivel_cancerigeno_danesa()
 	' Buscamos la primera aparicion de "Carc"
 	posicion = instr(1,substance.Item("frases_r_danesa"), "Carc")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 	if (posicion > 0) then
 		dame_nivel_cancerigeno_danesa = mid(substance.Item("frases_r_danesa"), posicion+4, 1)
 	else
@@ -3009,7 +3014,7 @@ function dame_nivel_mutageno_rd()
 	' Buscamos la primera aparicion de "Muta.Cat."
 	posicion = instr(1,clasificacion_rd, "Muta.Cat.")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 	if (posicion > 0) then
 		dame_nivel_mutageno_rd = mid(clasificacion_rd, posicion+9, 1)
 	else
@@ -3023,7 +3028,7 @@ function dame_nivel_mutageno_danesa()
 	' Buscamos la primera aparicion de "Mut"
 	posicion = instr(1,substance.Item("frases_r_danesa"), "Mut")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 	if (posicion > 0) then
 		dame_nivel_mutageno_danesa = mid(substance.Item("frases_r_danesa"), posicion+3, 1)
 	else
@@ -3048,7 +3053,7 @@ function dame_nivel_reproduccion_rd()
 	' Buscamos la primera aparicion de "Repr.Cat."
 	posicion = instr(1,clasificacion_rd, "Repr.Cat.")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 	if (posicion > 0) then
 		dame_nivel_reproduccion_rd = mid(clasificacion_rd, posicion+9, 1)
 	else
@@ -3062,7 +3067,7 @@ function dame_nivel_reproduccion_danesa()
 	' Buscamos la primera aparicion de "Repr.Cat."
 	posicion = instr(1,sus_frases_r_danesa, "Repr.Cat.")
 
-	' Sacamos el nivel como el caracter que hay justo detrás de la primera aparición de la subcadena
+	' Sacamos el nivel como el caracter que hay justo detrÃ¡s de la primera apariciÃ³n de la subcadena
 	if (posicion > 0) then
 		dame_nivel_reproduccion_danesa = mid(clasificacion_rd, posicion+9, 1)
 	else
@@ -3078,7 +3083,7 @@ sub plegador(byval id_bloque, byval id_imagen)
   id_bloque=aplana(id_bloque)
   id_imagen=aplana(id_imagen)
 %>
-  <a href="javascript:toggle('<%= id_bloque %>', '<%= id_imagen %>');"><img src="imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+  <a href="javascript:toggle('<%= id_bloque %>', '<%= id_imagen %>');"><img src="imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Pulse para desplegar la informaciÃ³n" title="Pulse para desplegar la informaciÃ³n" /></a>
 <%
 end sub
 

@@ -7,9 +7,14 @@
 <!--#include file="../../dn_funciones_comunes.asp"-->
 
 <%
-dim substanceId, substanceFields, mySubstance
+Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"
 Server.ScriptTimeout = 600
 response.expires = -1
+
+dim substanceId, substanceFields, mySubstance
 
 substanceId = obtainSanitizedQueryParameter("substanceId")
 id_sustancia = substanceId
@@ -17,8 +22,5 @@ set mySubstance = new SubstanceClass
 mySubstance.find substanceId, objConnection2
 set substanceFields = mySubstance.fields
 
-
-
 response.write ((new JSON).toJSON("data", substanceFields, false))
-response.end
 %>

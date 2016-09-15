@@ -118,25 +118,25 @@ Class SubstanceClass
 		dim result : result = Array()
 
 		if (Me.inList("cancer_rd") or Me.inList("cancer_danesa") or Me.inList("cancer_iarc_excepto_grupo_3") or Me.inList("cancer_otras_excepto_grupo_4") or Me.inList("cancer_mama")) then
-			arrayPush result, "cancer韌ena"
+			arrayPush result, "cancer铆gena"
 		end if
 		if (Me.inList("cop")) then
 			arrayPush result, "cop"
 		end if
 		if (Me.inList("mutageno_rd") or Me.inList("mutageno_danesa")) then
-			arrayPush result, "mut醙ena"
+			arrayPush result, "mut谩gena"
 		end if
 		if (Me.inList("de")) then
 			arrayPush result, "disruptora endocrina"
 		end if
 		if Me.inNeurotoxicosLists() then 'Businnes Concern: original condition contains and not MySubstance.containsFraseR("R67"), removed due to bad logic
-			arrayPush result, "neurot髕ica"
+			arrayPush result, "neurot贸xica"
 		end if
 		if (Me.inList("sensibilizante") or Me.inList("sensibilizante_danesa") or Me.inList("sensibilizante_reach")) then
 			arrayPush result, "sensibilizante"
 		end if
 		if (Me.inList("tpr") or Me.inList("tpr_danesa")) then
-			arrayPush result, "t髕ica para la reproducci髇"
+			arrayPush result, "t贸xica para la reproducci贸n"
 		end if
 		if Me.containsFraseR("R33")then
 			arrayPush result, "bioacumulativa"
@@ -145,13 +145,13 @@ Class SubstanceClass
 			arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente"
 		end if
 		if (Me.inList("tpb")) then
-			arrayPush result, "t髕ica, persistente y bioacumulativa"
+			arrayPush result, "t贸xica, persistente y bioacumulativa"
 		end if
 		if Me.inMpmbList() then
 			arrayPush result, "muy persistente y muy bioacumulativa"
 		end if
 		if Me.containsFraseR("R53") or Me.containsFraseR("R50-53") or Me.containsFraseR("R51-53") or Me.containsFraseR("R52-53") then
-			arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acu醫ico"
+			arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acu谩tico"
 		end if
 
 		getListaNegraClassifications = result
