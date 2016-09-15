@@ -15,6 +15,7 @@ define([
 			output.data, 
 			new ViewModel(substanceCardViewModel, substanceCardView)
 		);
+		substanceCardViewModel.formatFields();
 		substanceCardViewModel.bind();
 	});	
 

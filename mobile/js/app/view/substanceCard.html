@@ -9,7 +9,9 @@
 				</div>
 				Sinónimos:
 			</div>
-			<div class="col-xs-8 small" data-bind="text: sinonimos"></div>
+			<ul class="col-xs-8 small list-comma" data-bind="foreach: sinonimos">
+				<li data-bind="text: $data"></li>
+			</ul>
 		</div>
 		<div class="row">
 			<div class="col-xs-4 text-muted">

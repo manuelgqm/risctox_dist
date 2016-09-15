@@ -1,4 +1,4 @@
-define(['lodash', 'Server'], function(_, Server){
+define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 	return function(id){
 		var self = this;
 		var defaults = {
@@ -54,12 +54,17 @@ define(['lodash', 'Server'], function(_, Server){
 			groups: ['aldehidos'],
 			applications: ['adhesivo', 'biocida', 'conservante', 'desengrasante', 'desinfectante', '<a href="#">disolvente</a>', 'endurecedor', 'fungicida', 'impermeabilizante', 'limpiador', 'lubricante', 'microbiocida', 'pesticida', 'protector de madera, refrigerante'],
 			load: function(){
-				return new Server("substance").request({
+				ajaxRequest = new Server("substance").request({
 					substanceId: self.id
 				});
+				return ajaxRequest;
 			}
 		}
 
 		_.assign(this, defaults);
+
+		this.formatFields = function(){
+			this.sinonimos[1] = this.sinonimos[1].decodeHtmlEntity();
+		};
 	}
 });
