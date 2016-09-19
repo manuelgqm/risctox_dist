@@ -17,12 +17,13 @@ Class SubstanceClass
 		dim fields
 		set fields = findSubstance(id_sustancia, connection)
 		Me.Fields = fields
-		call obtainLevelOneFields
+		call obtainLevelOneFields(connection)
 		find = id_sustancia
 	end function
 
-	Private sub obtainLevelOneFields
+	Private sub obtainLevelOneFields(connection)
 		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
+		Me.Fields.Add "pictogramasRd", getPictogramasRd(Me.Fields.item("simbolos_rd1272"), connection)
 	End sub
 
 	Public function inList(listName)
@@ -101,8 +102,8 @@ Class SubstanceClass
 		hasListaNegraClassifications = result
 	end function
 
-'PRIVATE METHODS'
-	public function getListaNegraClassifications()
+'PRIVATE'
+	Private function getListaNegraClassifications()
 		dim result : result = Array()
 
 		if (Me.inList("cancer_rd") or Me.inList("cancer_danesa") or Me.inList("cancer_iarc_excepto_grupo_3") or Me.inList("cancer_otras_excepto_grupo_4") or Me.inList("cancer_mama")) then
