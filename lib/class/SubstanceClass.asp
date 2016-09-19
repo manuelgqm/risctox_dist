@@ -1,6 +1,4 @@
 <!--#include file="../db/substancesRepository.asp"-->
-<!--#include file="../db/synonymsRepository.asp"-->
-<!--#include file="../db/substanceListsRepository.asp"-->
 <%
 Class SubstanceClass
 	Private mFields
@@ -23,7 +21,6 @@ Class SubstanceClass
 
 	Private sub obtainLevelOneFields(connection)
 		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
-		Me.Fields.Add "pictogramasRd", getPictogramasRd(Me.Fields.item("simbolos_rd1272"), connection)
 	End sub
 
 	Public function inList(listName)
