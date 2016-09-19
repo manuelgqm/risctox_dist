@@ -67,10 +67,10 @@
 		</h5>
 
 		<div class="row row-xs-flex-center">
-			<div class="base-ul col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictograms">
-				<div class="dropdown vertical-distributed-container">
-					<img data-bind="attr: { src: iconUrl, alt: name }" class="pictogramaImg img-responsive dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					<span class="dropdown-menu dropdown-content" data-bind="text: name"></span>
+			<div class="base-ul col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictogramasRd">
+				<div class="vertical-distributed-container dropdown">
+					<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: $root.getPictogramRdImageUrl(image, name), alt: description }" class="pictogramaImg img-responsive" />
+					<span class="dropdown-menu dropdown-content" style="vertical-align: middle" data-bind="text: description"></span>
 				</div>
 			</div>
 
