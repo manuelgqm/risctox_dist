@@ -3,29 +3,13 @@
 <!--#include file="../db/substanceListsRepository.asp"-->
 <%
 Class SubstanceClass
-	Private mNombre
 	Private mFields
-	Private mFieldsShown
-
-	Public property Get nombre()
-		nombre = mNombre
-	End property
-	Public property Let nombre(pData)
-		mNombre = pData
-	End property
 
 	Public property Get Fields()
 		set Fields = mFields
 	End property
 	Public property Let Fields(pData)
 		set mFields = pData
-	End property
-
-	Public property Get fieldsShown()
-		fieldsShown = mFieldsShown
-	End property
-	Public property Let fieldsShown(pData)
-		mFieldsShown = pData
 	End property
 
 ' PUBLIC METHODS'
