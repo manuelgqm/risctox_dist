@@ -6,6 +6,7 @@
 <!--#include file="substanceApplicationsRepository.asp"-->
 <!--#include file="substanceCompaniesRepository.asp"-->
 <!--#include file="pictogramsRepository.asp"-->
+<!--#include file="classificationsRepository.asp"-->
 <%
 function findSubstance(id_sustancia, connection)
 	sql = composeSubstanceQuery( id_sustancia )
@@ -270,6 +271,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
 	substance.Add "pictogramasRd", findPictogramasRd1272(substance.item("simbolos_rd1272"), connection)
+	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance)
 
 	set extractSubstance = substance
 end function

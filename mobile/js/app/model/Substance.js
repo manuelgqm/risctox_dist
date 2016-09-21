@@ -12,7 +12,7 @@ define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 				clp: 'Incluye las indicaciones de peligro (frases H) asignadas a las sustancias incluidas en el Anexo VI del Reglamento 1272/2008 (CLP). Los grupos de sustancias incluidos en el Reglamento 1272/2008, Ej. compuestos de berilio, se han desglosado en la relación de sustancias que forman este grupo y se les han asignado las frases H y los pictogramas y palabras de advertencia pertenecientes al grupo.	Las sustancias que pertenecen a 2 grupos, Ej. cromato de mercurio, se han clasificado asignando las frases de mayor riesgo de cada grupo o sus combinaciones, según los criterios del Reglamento CLP.',
 				vla_ec: 'Es el valor de referencia para la Exposición de Corta Duración (EC), que es la concentración media del agente químico en la zona de respiración del trabajador, medida o calculada para cualquier período de 15 minutos a lo largo de la jornada laboral, excepto para aquellos agentes químicos para los que se especifique un período de referencia inferior, en la lista de Valores Límite.Lo habitual es determinar las EC de interés, es decir, las del período o períodos de máxima exposición, tomando muestras de 15 minutos de duración en cada uno de ellos. El VLA-EC no debe ser superado por ninguna EC a lo largo de la jornada laboral.Para aquellos agentes químicos que tienen efectos agudos reconocidos pero cuyos principales efectos tóxicos son de naturaleza crónica, el VLA-EC constituye un complemento del VLA-ED y, por tanto, la exposición a estos agentes habrá de valorarse en relación con ambos límites.En cambio, a los agentes químicos de efectos principalmente agudos como, por ejemplo, los gases irritantes, sólo se les asigna para su valoración un VLA-EC.'
 			},
-			frasesH: [
+			/*frasesH: [
 				{value: 'H350', description: 'Puede provocar cáncer'}, 
 				{value: 'H341', description: 'Se sospecha que provoca defectos genéticos'}, 
 				{value: 'H301', description: 'Tóxico en caso de ingestión'}, 
@@ -20,7 +20,7 @@ define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 				{value: 'H331', description: 'Tóxico en caso de inhalación'}, 
 				{value: 'H314', description: 'Provoca quemaduras graves en la piel y lesiones oculares graves'}, 
 				{value: 'H317', description: 'Puede provocar una reacción alérgica en la piel'}
-			],
+			],*/
 			notas: [
 				{value: 'B', description: null},
 				{value: 'D', description: 'Ciertas sustancias que pueden experimentar una polimerización o descomposición espontáneas, se comercializan en una forma estabilizada, y así figuran en la parte 3. No obstante, en algunas ocasiones, dichas sustancias se comercializan en una forma no estabilizada. En este caso, el proveedor deberá especificar en la etiqueta el nombre de la sustancia seguido de la palabra «no estabilizada».'}
