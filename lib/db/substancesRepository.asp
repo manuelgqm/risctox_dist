@@ -325,26 +325,6 @@ function joinFrases(tipo, substance)
 	joinFrases=frases
 end function
 
-function arrayWrapItems(arr, prepend, append)
-	dim result : result = Array()
-	if not isArray(arr) Then
-		arrayWrapItems = result
-		exit function
-	end if
-	dim i, itemConverted
-	for i = 0 to uBound(arr)
-		itemConverted = prepend & arr(i) & append
-		arrayPush result, itemConverted
-	next
-	
-	arrayWrapItems = result
-end function
-
-Sub arrayPush(byRef arrayParameter, valueParameter) 
-	redim preserve arrayParameter(uBound(arrayParameter) + 1)
-	arrayParameter(uBound(arrayParameter)) = valueParameter
-End Sub
-
 function joinFrasesRDanesa(byval frases_r)
 	' Las frases R danesas vienen separadas por espacios, y para cada una si tiene simbolo, separado por punto y coma
 

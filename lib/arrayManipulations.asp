@@ -28,4 +28,40 @@ function arraySerialize(arr)
 	
 	arraySerialize = result
 end function
+
+function arrayWrapItems(arr, prepend, append)
+	dim result : result = Array()
+	if not isArray(arr) Then
+		arrayWrapItems = result
+		exit function
+	end if
+	dim i, itemConverted
+	for i = 0 to uBound(arr)
+		itemConverted = prepend & arr(i) & append
+		arrayPush result, itemConverted
+	next
+	
+	arrayWrapItems = result
+end function
+
+Sub arrayPush(byRef arrayParameter, valueParameter) 
+	redim preserve arrayParameter(uBound(arrayParameter) + 1)
+	arrayParameter(uBound(arrayParameter)) = valueParameter
+End Sub
+
+function in_array(element, arrayParameter)
+	in_array = false
+
+	if not isArray(arrayParameter) then
+		in_array = false
+		exit function
+	end if
+	For i = 0 To Ubound(arrayParameter)
+		If Trim(arrayParameter(i)) = Trim(element) Then 
+			in_array = true
+			Exit Function
+		end if
+	Next
+End Function
+
 %>
