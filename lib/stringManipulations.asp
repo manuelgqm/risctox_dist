@@ -38,4 +38,15 @@ function addListSeparator(currentIndex, lastIndex, separatorChar)
 
   addListSeparator = calculatedSeparatorChar
 end function
+
+function removeTailSeparator(str, separator)
+  dim result
+
+  result = str
+  if Right(str, 1) = separator then
+    result = Left(str, Len(str) - 1)
+  end if
+
+  removeTailSeparator = result
+end function
 %>

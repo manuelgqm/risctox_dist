@@ -36,15 +36,4 @@ function extractPictograms(simbolo, connection)
 	set simbolosRecodset = nothing
 	Set extractPictograms = pictogram
 end function
-
-function removeTailSeparator(str, separator)
-	dim result
-
-	result = str
-	if Right(str, 1) = separator then
-		result = Left(str, Len(str) - 1)
-	end if
-
-	removeTailSeparator = result
-end function
 %>
