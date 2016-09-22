@@ -131,12 +131,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "eti_conc_rd1272_14", substanceRecordset("eti_conc_rd1272_14").Value
 	substance.Add "conc_rd1272_15", substanceRecordset("conc_rd1272_15").Value
 	substance.Add "eti_conc_rd1272_15", substanceRecordset("eti_conc_rd1272_15").Value
-	if varType(substanceRecordset("notas_rd1272").Value) = vbNull then
-		notas_rd1272 = ""
-	else
-		notas_rd1272 = substanceRecordset("notas_rd1272").Value
-	end if
-	substance.Add "notas_rd1272", replaceValidated(substanceRecordset("notas_rd1272"), "@", "@ ")
+	substance.Add "notas_rd1272", obtainNotasRd1272(substanceRecordset("notas_rd1272"), connection)
 	substance.Add "simbolos_rd1272", substanceRecordset("simbolos_rd1272").Value
 	substance.Add "clases_categorias_peligro_rd1272", substanceRecordset("clases_categorias_peligro_rd1272").Value
 
@@ -328,6 +323,83 @@ function joinFrases(tipo, substance)
 
 	joinFrases=frases
 end function
+
+function obtainNotasRd1272(notas, connection)
+	Dim result : result = Array()
+	if varType(notas) = vbNull then
+		obtainNotasRd1272 = result
+		Exit function
+	end if
+	if notas = "" then
+		obtainNotasRd1272 = result
+		Exit function
+	end if 
+	notas = replaceValidated(notas, "@", "@ ")
+	notas = replaceValidated(notas, ",", "")
+	notas = removeTailSeparator(notas, ".")
+	Dim notasList : notasList = split(notas, ".")
+	Dim i, notaValue, notaId
+	Dim nota
+	Dim notasDefinitions : set notasDefinitions = findNotasDefinition(notasList, connection)
+	for i = 0 to ubound(notasList)
+		set nota = Server.CreateObject("Scripting.Dictionary")
+		notaValue = notasList(i)
+		nota.add "value", notaValue
+		nota.add "id", notasDefinitions.item(notaValue).item("id")
+		nota.add "description", notasDefinitions.item(notaValue).item("description")
+		result = arrayPushDictionary(result, nota)
+		set nota = nothing
+	next
+	
+	obtainNotasRd1272 = result
+end function
+
+function findNotasDefinition(notasList, connection)
+	Dim notasDefinitionsQuery : notasDefinitionsQuery = composeNotasDefinitionsQuery(notasList)
+	Dim notasDefinitionsRecordSet : set notasDefinitionsRecordSet = connection.execute(notasDefinitionsQuery)
+	Dim result : set result = Server.CreateObject("Scripting.Dictionary")
+	Dim i : i = 0
+	Do while not notasDefinitionsRecordSet.EOF
+		set nota = Server.CreateObject("Scripting.Dictionary")
+		nota.add "id", notasDefinitionsRecordSet("id").value
+		nota.add "description", notasDefinitionsRecordSet("definicion").value
+		result.add notasList(i), nota
+		notasDefinitionsRecordSet.moveNext
+		i = i + 1
+	loop
+
+	notasDefinitionsRecordSet.close
+	set notasDefinitionsRecordSet = nothing
+	set findNotasDefinition = result
+end function
+
+function composeNotasDefinitionsQuery(notasList)
+	Dim notasListQueryFormated : notasListQueryFormated = arrayWrapItems(notasList, "'R.1272-", "'")
+	Dim notasListQueryFormatedSerialized : notasListQueryFormatedSerialized = join(notasListQueryFormated, ",")
+	Dim sql
+	sql = "SELECT id, palabra, dbo.udf_StripHTML(definicion) as definicion FROM rq_definiciones where palabra in (" & notasListQueryFormatedSerialized & ")"
+	composeNotasDefinitionsQuery = sql
+end function
+
+function arrayWrapItems(arr, prepend, append)
+	dim result : result = Array()
+	if not isArray(arr) Then
+		arrayWrapItems = result
+		exit function
+	end if
+	dim i, itemConverted
+	for i = 0 to uBound(arr)
+		itemConverted = prepend & arr(i) & append
+		arrayPush result, itemConverted
+	next
+	
+	arrayWrapItems = result
+end function
+
+Sub arrayPush(byRef arrayParameter, valueParameter) 
+	redim preserve arrayParameter(uBound(arrayParameter) + 1)
+	arrayParameter(uBound(arrayParameter)) = valueParameter
+End Sub
 
 function joinFrasesRDanesa(byval frases_r)
 	' Las frases R danesas vienen separadas por espacios, y para cada una si tiene simbolo, separado por punto y coma
