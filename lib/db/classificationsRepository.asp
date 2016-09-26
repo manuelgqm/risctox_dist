@@ -46,16 +46,13 @@ function obtainClasificacionRd(clasificacionRaw)
 	Dim result : Set result = Server.CreateObject("Scripting.Dictionary")
 	
 	Dim clasificacionDecomposed : clasificacionDecomposed = getClasificacionDecomposed(clasificacionRaw)
-	Dim categoriaPeligro : categoriaPeligro = clasificacionDecomposed(0)
-	Dim categoriaPeligroDecomposed : categoriaPeligroDecomposed = split(categoriaPeligro, ",")
-	categoriaPeligro = obtainCategoriaPeligro(categoriaPeligroDecomposed)
-	Dim categoriaPeligroDescription : categoriaPeligroDescription = obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
+	Dim categoriaPeligroRaw	: categoriaPeligroRaw = clasificacionDecomposed(0)
+	Dim categoriaPeligroDecomposed : categoriaPeligroDecomposed = split(categoriaPeligroRaw, ",")
 	Dim frase : frase = obtainFrase(clasificacionDecomposed)
-	Dim fraseDescription : fraseDescription = obtainFraseHDescription(frase)
 	result.add "frase", frase
-	result.add "fraseDescription", fraseDescription
-	result.add "categoriaPeligro", categoriaPeligro
-	result.add "categoriaPeligroDescription", categoriaPeligroDescription
+	result.add "fraseDescription", obtainFraseHDescription(frase)
+	result.add "categoriaPeligro", obtainCategoriaPeligro(categoriaPeligroDecomposed)
+	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
 
 	Set obtainClasificacionRd = result
 end function
