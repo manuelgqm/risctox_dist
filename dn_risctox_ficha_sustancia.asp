@@ -827,28 +827,6 @@ sub ap2_clasificacion_frases_s
 	end if
 end sub
 
-
-
-' ##################################################################################
-
-sub ap2_clasificacion_categorias_peligro
-	' Muestra las frases
-
-	if (substance.Item("clases_categorias_peligro_rd1272") <> "") then
-		' Eliminamos los paréntesis
-		clases_categorias_peligro_rd1272 = replace (substance.Item("clases_categorias_peligro_rd1272"), "(", "")
-		clases_categorias_peligro_rd1272 = replace (clases_categorias_peligro_rd1272, ")", "")
-
-%>
-	<p id="ap2_clasificacion_frases_s_titulo" class="ficha_titulo_2" style="margin-top: 14px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases S")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Clase y categoría de peligro <% plegador "secc-categpeligro", "img-frasess" %></p>
-
-		<% bucle_categorias_peligro_rd1272 clases_categorias_peligro_rd1272%>
-
-<%
-	end if
-end sub 'ap2_clasificacion_categorias_peligro
-
-
 ' ##################################################################################
 
 sub ap2_clasificacion_notas()
