@@ -267,7 +267,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
 	substance.Add "pictogramasRd", findPictogramasRd1272(substance.item("simbolos_rd1272"), connection)
-	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance)
+	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance, connection)
 
 	set extractSubstance = substance
 end function

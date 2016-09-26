@@ -1,8 +1,8 @@
 <%
-function findClasificacionesRd1272(substance)
+function findClasificacionesRd1272(substance, connection)
 	Dim clasificacionesRd1272Raw : clasificacionesRd1272Raw = getClasificacionesRd1272Raw(substance)
 	dim clasificacionesRd1272 : Array()
-	clasificacionesRd1272 = extractClasificacionesRd1272(clasificacionesRd1272Raw)
+	clasificacionesRd1272 = extractClasificacionesRd1272(clasificacionesRd1272Raw, connection)
 
 	findClasificacionesRd1272 = clasificacionesRd1272
 end function
@@ -29,12 +29,12 @@ function getClasificacionesRd1272Raw(substance)
 	getClasificacionesRd1272Raw = result
 End function
 
-function extractClasificacionesRd1272(clasificacionesRd1272Raw)
+function extractClasificacionesRd1272(clasificacionesRd1272Raw, connection)
 	Dim i
 	Dim result : result = Array()
 	For i = 0 to UBound(clasificacionesRd1272Raw)
 		if clasificacionesRd1272Raw(i) <> "" then
-			Set clasificacion = obtainClasificacionRd(clasificacionesRd1272Raw(i))
+			Set clasificacion = obtainClasificacionRd(clasificacionesRd1272Raw(i), connection)
 			result = arrayPushDictionary(result, clasificacion)
 		end if
 	Next
@@ -42,7 +42,7 @@ function extractClasificacionesRd1272(clasificacionesRd1272Raw)
 	extractClasificacionesRd1272 = result
 end function
 
-function obtainClasificacionRd(clasificacionRaw)
+function obtainClasificacionRd(clasificacionRaw, connection)
 	Dim result : Set result = Server.CreateObject("Scripting.Dictionary")
 	
 	Dim clasificacionDecomposed : clasificacionDecomposed = getClasificacionDecomposed(clasificacionRaw)
@@ -50,7 +50,7 @@ function obtainClasificacionRd(clasificacionRaw)
 	Dim categoriaPeligroDecomposed : categoriaPeligroDecomposed = split(categoriaPeligroRaw, ",")
 	Dim frase : frase = obtainFrase(clasificacionDecomposed)
 	result.add "frase", frase
-	result.add "fraseDescription", obtainFraseHDescription(frase)
+	result.add "fraseDescription", findFraseHDescription(frase, connection)
 	result.add "categoriaPeligro", obtainCategoriaPeligro(categoriaPeligroDecomposed)
 	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
 
@@ -97,24 +97,26 @@ function obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
 	obtaincategoriaPeligroDescription = result
 end function
 
-function obtainFraseHDescription(frase)
+function findFraseHDescription(frase, connection)
+	Dim result : result = ""
 	' Sustituye "-" por "/" para unificar formato
 	frase = replace(frase, "-", "/")
 	frase = replace(frase, "*", "")
-
+	Dim sql, objRst
 	sql = "SELECT dbo.udf_StripHTML(texto) as texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
-	set objRst = objConnection2.execute(sql)
+	set objRst = connection.execute(sql)
 
 	if (objRst.eof) then
-		descripcion = ""
-	else
-		descripcion = objRst("texto")
+		result = ""
+		findFraseHDescription = result	
 	end if
+
+	result = objRst("texto")
 
 	objRst.close()
 	set objRst = nothing
 
-	obtainFraseHDescription = descripcion
+	findFraseHDescription = result
 end function
 
 function findCategoriaPeligroDescription(categoria)
