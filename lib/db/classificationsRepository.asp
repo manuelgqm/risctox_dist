@@ -1,13 +1,14 @@
 <%
 function findClasificacionesRd1272(substance)
+	Dim clasificacionesRd1272Raw : clasificacionesRd1272Raw = getClasificacionesRd1272Raw(substance)
 	dim clasificacionesRd1272 : Array()
-	clasificacionesRd1272 = extractClasificacionesRd1272(substance)
+	clasificacionesRd1272 = extractClasificacionesRd1272(clasificacionesRd1272Raw)
 
 	findClasificacionesRd1272 = clasificacionesRd1272
 end function
 
-function extractClasificacionesRd1272(substance)
-	Dim clasificacionesRaw : clasificacionesRaw = Array( _
+function getClasificacionesRd1272Raw(substance)
+	Dim result : result = Array( _
 			substance.item("clasificacion_rd1272_1"), _
 			substance.item("clasificacion_rd1272_2"), _
 			substance.item("clasificacion_rd1272_3"), _
@@ -25,11 +26,15 @@ function extractClasificacionesRd1272(substance)
 			substance.item("clasificacion_rd1272_15") _
 		)
 
+	getClasificacionesRd1272Raw = result
+End function
+
+function extractClasificacionesRd1272(clasificacionesRd1272Raw)
 	Dim i
 	Dim result : result = Array()
-	For i = 0 to UBound(clasificacionesRaw)
-		if clasificacionesRaw(i) <> "" then
-			Set clasificacion = obtainClasificacionRd(clasificacionesRaw(i))
+	For i = 0 to UBound(clasificacionesRd1272Raw)
+		if clasificacionesRd1272Raw(i) <> "" then
+			Set clasificacion = obtainClasificacionRd(clasificacionesRd1272Raw(i))
 			result = arrayPushDictionary(result, clasificacion)
 		end if
 	Next
