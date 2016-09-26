@@ -47,13 +47,7 @@ function obtainClasificacionRd(clasificacionRaw)
 	Dim categoriaPeligroDecomposed : categoriaPeligroDecomposed = split(categoriaPeligro, ",")
 	categoriaPeligro = obtainCategoriaPeligro(categoriaPeligroDecomposed)
 	Dim categoriaPeligroDescription : categoriaPeligroDescription = obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
-	Dim frase : frase = clasificacionDecomposed(0)
-	if ubound(clasificacionDecomposed)>0 then
-		frase = clasificacionDecomposed(1)
-	end if
-	if frase = "H???" then
-		frase = "Gases a presión"
-	end if
+	Dim frase : frase = obtainFrase(clasificacionDecomposed)
 	Dim fraseDescription : fraseDescription = obtainFraseHDescription(frase)
 	result.add "frase", frase
 	result.add "fraseDescription", fraseDescription
@@ -61,6 +55,18 @@ function obtainClasificacionRd(clasificacionRaw)
 	result.add "categoriaPeligroDescription", categoriaPeligroDescription
 
 	Set obtainClasificacionRd = result
+end function
+
+function obtainFrase(clasificacionDecomposed)
+	Dim frase : frase = clasificacionDecomposed(0)
+	if ubound(clasificacionDecomposed)>0 then
+		frase = clasificacionDecomposed(1)
+	end if
+	if frase = "H???" then
+		frase = "Gases a presión"
+	end if
+
+	obtainFrase = frase
 end function
 
 function obtainCategoriaPeligro(categoriaPeligroDecomposed)
