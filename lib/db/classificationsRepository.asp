@@ -1,8 +1,7 @@
 <%
 function findClasificacionesRd1272(substance, connection)
 	Dim clasificacionesRd1272Raw : clasificacionesRd1272Raw = getClasificacionesRd1272Raw(substance)
-	dim clasificacionesRd1272 : Array()
-	clasificacionesRd1272 = extractClasificacionesRd1272(clasificacionesRd1272Raw, connection)
+	dim clasificacionesRd1272 : clasificacionesRd1272 = extractClasificacionesRd1272(clasificacionesRd1272Raw, connection)
 
 	findClasificacionesRd1272 = clasificacionesRd1272
 end function
