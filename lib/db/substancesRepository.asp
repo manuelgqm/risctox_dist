@@ -6,7 +6,7 @@
 <!--#include file="substanceApplicationsRepository.asp"-->
 <!--#include file="substanceCompaniesRepository.asp"-->
 <!--#include file="pictogramsRepository.asp"-->
-<!--#include file="classificationsRepository.asp"-->
+<!--#include file="classificationsRd1272Repository.asp"-->
 <!--#include file="notasRd1272Repository.asp"-->
 <%
 function findSubstance(id_sustancia, connection)
