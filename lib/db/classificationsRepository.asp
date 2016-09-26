@@ -52,7 +52,7 @@ function obtainClasificacionRd(clasificacionRaw, connection)
 	result.add "frase", frase
 	result.add "fraseDescription", findFraseHDescription(frase, connection)
 	result.add "categoriaPeligro", obtainCategoriaPeligro(categoriaPeligroDecomposed)
-	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
+	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed, connection)
 
 	Set obtainClasificacionRd = result
 end function
@@ -86,13 +86,13 @@ function obtainCategoriaPeligro(categoriaPeligroDecomposed)
 	obtainCategoriaPeligro = result
 end function
 
-function obtaincategoriaPeligroDescription(categoriaPeligroDecomposed)
+function obtaincategoriaPeligroDescription(categoriaPeligroDecomposed, connection)
 	Dim result : result = ""
 	if ubound(categoriaPeligroDecomposed) < 0 then
 		obtaincategoriaPeligroDescription = result
 		Exit function
 	end if
-	result = findCategoriaPeligroDescription(categoriaPeligroDecomposed(0))
+	result = findCategoriaPeligroDescription(categoriaPeligroDecomposed(0), connection)
 
 	obtaincategoriaPeligroDescription = result
 end function
@@ -105,36 +105,32 @@ function findFraseHDescription(frase, connection)
 	Dim sql, objRst
 	sql = "SELECT dbo.udf_StripHTML(texto) as texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
 	set objRst = connection.execute(sql)
-
 	if (objRst.eof) then
-		result = ""
-		findFraseHDescription = result	
+		findFraseHDescription = result
+		Exit function
 	end if
-
 	result = objRst("texto")
 
 	objRst.close()
 	set objRst = nothing
-
 	findFraseHDescription = result
 end function
 
-function findCategoriaPeligroDescription(categoria)
+function findCategoriaPeligroDescription(categoria, connection)
+	Dim result : result = ""
 	' Sustituye "-" por "/" para unificar formato
 	frase = replace(categoria, "-", "/")
-
-	sql = "SELECT texto FROM dn_risc_categorias_peligro WHERE frase='" & categoria & "'"
-	set objRst=objConnection2.execute(sql)
-
+	Dim sql, objRst
+	sql = "SELECT texto FROM dn_risc_categorias_peligro WHERE frase = '" & categoria & "'"
+	set objRst = connection.execute(sql)
 	if (objRst.eof) then
-		descripcion = ""
-	else
-		descripcion = objRst("texto").value
+		findFraseHDescription = result
+		Exit function
 	end if
+	result = objRst("texto")
 
 	objRst.close()
 	set objRst=nothing
-
-	findCategoriaPeligroDescription = descripcion
+	findCategoriaPeligroDescription = result
 end function
 %>
