@@ -935,7 +935,7 @@ sub ap2_clasificacion_etiquetado_rd1272()
 
   <fieldset id="secc-etiquetado_rd1272" style="display:none; margin: 15px 45px;">
 <%
-	if (substance.Item("conc_rd1272_1")+conc_rd1272_2)<>"" then
+	if (substance.Item("conc_rd1272_1") & substance.Item("conc_rd1272_2"))<>"" then
 		if (substance.Item("conc_rd1272_1"))="" then
 			if substance.Item("eti_conc_rd1272_1")<>"" then
 %>
