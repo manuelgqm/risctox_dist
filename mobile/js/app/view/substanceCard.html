@@ -94,17 +94,17 @@
 					</ul>
 				</div>
 
-				<table class="table-condensed small" data-bind="if: concentracionEtiquetado.length">
+				<table class="table-condensed small" data-bind="if: concentracionEtiquetadoRd1272.length">
 					<thead>
 						<tr>
 							<th>Concentración</th>
 							<th>Etiquetado</th>
 						</tr>
 					</thead>
-					<tbody data-bind="foreach: concentracionEtiquetado">
+					<tbody data-bind="foreach: concentracionEtiquetadoRd1272">
 						<tr>
-							<td data-bind="text: concentracion"></td>
-							<td data-bind="text: etiquetado"></td>
+							<td data-bind="html: concentracion"></td>
+							<td data-bind="html: etiquetado"></td>
 						</tr>
 					</tbody>
 				</table>
