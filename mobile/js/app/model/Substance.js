@@ -31,11 +31,6 @@ define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 
 		_.assign(this, defaults);
 
-		this.formatFields = function(){
-			this.nombre = this.nombre.decodeHtmlEntity();
-			this.sinonimos = this.sinonimos.map( element => element.decodeHtmlEntity());
-		};
-
 		this.getPictogramRdImageUrl = function(image, simbolo){
 			const PICTOGRAMS_IMAGES_BASE_PATH = '../imagenes/pictogramas/';
 			const PELIGRO_IMAGE = "pictograma_peligro.gif"

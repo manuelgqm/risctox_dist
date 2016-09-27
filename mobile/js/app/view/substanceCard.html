@@ -1,5 +1,5 @@
 <div id="card" class="text-left">
-	<div class="card-title">Risctox <span id="nombre" data-bind="text: nombre"></span></div>
+	<div class="card-title">Risctox <span id="nombre" data-bind="html: nombre"></span></div>
 	<div class="well well-sm">
 		<div class="row" data-bind="if: sinonimos.length">
 			<div class="col-xs-4 text-muted">
@@ -10,7 +10,7 @@
 				Sinónimos:
 			</div>
 			<ul class="col-xs-8 small list-comma" data-bind="foreach: sinonimos">
-				<li data-bind="text: $data"></li>
+				<li data-bind="html: $data"></li>
 			</ul>
 		</div>
 		<div class="row" data-bind="if: num_cas">
