@@ -9,6 +9,7 @@
 <!--#include file="classificationsRd1272Repository.asp"-->
 <!--#include file="notasRd1272Repository.asp"-->
 <!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
+<!--#include file="valoresLimiteAmbientalRepository.asp"-->
 <%
 function findSubstance(id_sustancia, connection)
 	sql = composeSubstanceQuery( id_sustancia )
@@ -179,6 +180,8 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "vla_ec_ppm_6", substanceRecordset("vla_ec_ppm_6").Value
 	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
 	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
+	
+	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substance, connection)
 
 	substance.Add "ib_1", substanceRecordset("ib_1").Value
 	substance.Add "vlb_1", substanceRecordset("vlb_1").Value
