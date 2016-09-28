@@ -111,7 +111,7 @@
 			</div>
 		</div>
 
-		<div data-bind="if: vla_ec.length">
+		<div data-bind="if: valoresLimiteAmbiental.length">
 			<h5 class="text-info">
 				<a href="#/page">
 					<span class="glyphicon glyphicon-question-sign dropdown-toggle" ></span>
@@ -121,31 +121,51 @@
 			<table class="table small">
 				<thead>
 					<tr>
-						<th>
+						<th data-bind="visible: $root.hasVlaEstado()">
 							<div class="dropdown" style="display:inline">
 								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vla_ec"></span>
+								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEstado"></span>
+							</div>
+							Estado
+						</th>
+						<th data-bind="visible: $root.hasVlaEd()">
+							<div class="dropdown" style="display:inline">
+								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEd"></span>
+							</div>
+							VLA-ED
+						</th>
+						<th data-bind="visible: $root.hasVlaEc()">
+							<div class="dropdown" style="display:inline">
+								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEc"></span>
 							</div>
 							VLA-EC
 						</th>
-						<th>Notas</th>
+						<th data-bind="visible: $root.hasVlaNotas()">Notas</th>
 					</tr>
 				</thead>
-				<tbody data-bind="foreach: vla_ec">
+				<tbody data-bind="foreach: valoresLimiteAmbiental">
 					<tr>
-						<td>
-							<ul class="base-ul" data-bind="foreach: values">
-								<li data-bind="text: $data"></li>
-							</ul>
+						<td data-bind="visible: $root.hasVlaEstado()">
+							<span class="base-ul" data-bind="html: estado"></span>
 						</td>
-						<td>
+						<td data-bind="visible: $root.hasVlaEd()">
+							<span class="base-ul" data-bind="html: ed_ppm"></span>&nbsp;ppm<br>
+							<span class="base-ul" data-bind="html: ed_mg_m3"></span>&nbsp;mg/m3
+						</td>
+						<td data-bind="visible: $root.hasVlaEc()">
+							<span class="base-ul" data-bind="html: ec_ppm"></span>&nbsp;ppm<br>
+							<span class="base-ul" data-bind="html: ec_mg_m3"></span>&nbsp;mg/m3
+						</td>
+						<td data-bind="visible: notas.length">
 							<ul class="list-comma" data-bind="foreach: notas">
 								<li>
-									<div class="dropdown" style="display:inline" data-bind="visible: description">
+									<div class="dropdown" style="display:inline" data-bind="visible: $data.description">
 										<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: $data.description"></span>
 									</div>
-									<span data-bind="text: value"></span>
+									<span data-bind="text: key"></span>
 								</li>
 							</ul> 
 						</td>

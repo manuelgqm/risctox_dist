@@ -15,7 +15,7 @@ define([
 			output.data, 
 			new ViewModel(substanceCardViewModel, substanceCardView)
 		);
-		console.log(substanceCardViewModel)
+		console.log(substanceCardViewModel);
 		substanceCardViewModel.bind();
 	});	
 
