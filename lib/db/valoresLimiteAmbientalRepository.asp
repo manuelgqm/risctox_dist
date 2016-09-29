@@ -80,10 +80,10 @@ function formatDefinitionKeysQueryList(byVal definitionKeys)
 	dim i, definitionKeyFormated
 	for i = 0 to ubound(definitionKeys)
 		definitionKeyFormated = trim(definitionKeys(i))
-		if in_array(definitionKey, format1) then
+		if inArray(definitionKey, format1) then
 			definitionKeyFormated = "(" & definitionKey & ")"
 		end if
-		if in_array(definitionKey, format2) then
+		if inArray(definitionKey, format2) then
 			definitionKeyFormated = lcase(definitionKey) & "."
 		end if
 		definitionKeys(i) = definitionKeyFormated

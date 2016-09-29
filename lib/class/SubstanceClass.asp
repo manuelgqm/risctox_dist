@@ -31,7 +31,7 @@ Class SubstanceClass
 			inList = result
 			exit function
 		end if
-		result = in_array(listName, Me.fields.Item("featuredLists"))
+		result = inArray(listName, Me.fields.Item("featuredLists"))
 
 		inList = result
 	end function

@@ -49,16 +49,16 @@ Sub arrayPush(byRef arrayParameter, valueParameter)
 	arrayParameter(uBound(arrayParameter)) = valueParameter
 End Sub
 
-function in_array(element, arrayParameter)
-	in_array = false
+function inArray(element, arrayParameter)
+	inArray = false
 
 	if not isArray(arrayParameter) then
-		in_array = false
+		inArray = false
 		exit function
 	end if
 	For i = 0 To Ubound(arrayParameter)
 		If Trim(arrayParameter(i)) = Trim(element) Then 
-			in_array = true
+			inArray = true
 			Exit Function
 		end if
 	Next
