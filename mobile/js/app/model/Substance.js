@@ -14,8 +14,6 @@ define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 				vlaEd: '',
 				vlaEstado: '',
 			},
-			groups: ['aldehidos'],
-			applications: ['adhesivo', 'biocida', 'conservante', 'desengrasante', 'desinfectante', '<a href="#">disolvente</a>', 'endurecedor', 'fungicida', 'impermeabilizante', 'limpiador', 'lubricante', 'microbiocida', 'pesticida', 'protector de madera, refrigerante'],
 			load: function(){
 				ajaxRequest = new Server("substance").request({
 					substanceId: self.id

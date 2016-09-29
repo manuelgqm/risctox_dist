@@ -13,6 +13,7 @@
 				<li data-bind="html: $data"></li>
 			</ul>
 		</div>
+
 		<div class="row" data-bind="if: num_cas">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
@@ -23,6 +24,7 @@
 			</div>
 			<div class="col-xs-8" data-bind="text: num_cas"></div>
 		</div>
+
 		<div class="row" data-bind="if: num_ce_einecs">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
@@ -33,6 +35,7 @@
 			</div>
 			<div class="col-xs-8" data-bind="text: num_ce_einecs"></div>
 		</div>
+
 		<div class="row" data-bind="if: num_rd">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
@@ -43,6 +46,7 @@
 			</div>
 			<div class="col-xs-8" data-bind="text: num_rd"></div>
 		</div>
+		
 		<div class="row" data-bind="if: listaNegraClassifications.length">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
@@ -161,9 +165,9 @@
 						<td data-bind="visible: notas.length">
 							<ul class="list-comma" data-bind="foreach: notas">
 								<li>
-									<div class="dropdown" style="display:inline" data-bind="visible: $data.description">
+									<div class="dropdown" style="display:inline" data-bind="if: description">
 										<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
-										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: $data.description"></span>
+										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
 									</div>
 									<span data-bind="text: key"></span>
 								</li>
@@ -174,17 +178,23 @@
 			</table>
 		</div>
 
-		<div data-bind="if: groups.length">
+		<div data-bind="if: grupos.length">
 			<b>Grupos:</b> 
-			<ul class="list-comma" data-bind="foreach: groups" style="display:inline">
-				<li data-bind="text: $data"></li>
+			<ul class="list-comma" data-bind="foreach: grupos" style="display:inline">
+				<li data-bind="html: name"></li>
 			</ul>
 		</div>
 
-		<div data-bind="if: applications.length">
+		<div data-bind="if: aplicaciones.length">
 			<b>Usos:</b>
-			<ul class="list-comma" data-bind="foreach: applications" style="display:inline">
-				<li class="small" data-bind="text: $data"></li>
+			<ul class="list-comma" data-bind="foreach: aplicaciones" style="display:inline">
+				<li class="small">
+					<div class="dropdown" style="display:inline" data-bind="if: description">
+						<a class="dropdown-toggle" data-toggle="dropdown" data-bind="html: name" aria-haspopup="true" aria-expanded="true"></a>
+						<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
+					</div>
+					<span data-bind="ifnot: description.length"><span data-bind="html: name"></span></span>
+				</li>
 			</ul>
 		</div>
 
