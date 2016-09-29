@@ -1,4 +1,4 @@
-define(['lodash', 'Server', 'stringExtended'], function(_, Server){
+define(['Server', 'stringExtended'], function(Server){
 	return function(id){
 		var self = this;
 		var defaults = {
@@ -22,7 +22,7 @@ define(['lodash', 'Server', 'stringExtended'], function(_, Server){
 			}
 		}
 
-		_.assign(this, defaults);
+		Object.assign(this, defaults);
 
 		this.hasVlaEstado = function(){
 			return this.valoresLimiteAmbiental.map(element => element.estado).filter(element => element.length != 0).length != 0;

@@ -5,7 +5,7 @@ define([
 	], 
 	function(ViewModel, pageModel, pageView){
 		var pageViewModel = {};
-		_.assign(pageViewModel, 
+		Object.assign(pageViewModel, 
 			pageModel,
 			new ViewModel(pageViewModel, pageView)
 		);

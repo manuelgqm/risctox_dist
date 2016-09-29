@@ -7,8 +7,7 @@ define([], function(){
 			router: 'router.min',
 			knockout: 'knockout-3.4.0', 
 			bootstrap: 'bootstrap-3.3.7/js/bootstrap', 
-			jquery: 'jquery-3.1.0.min',
-			lodash: 'lodash.min'
+			jquery: 'jquery-3.1.0.min'
 		},
 		map: {'*': {'css' : 'require-css/css.min'}}
 	});
