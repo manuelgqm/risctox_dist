@@ -15,14 +15,16 @@ define([], function(){
 	require(['router'], function(router){
 		router.registerRoutes({
 			substanceFinder: {path: '/finder', moduleId: 'app/viewModel/substanceFinder'},
+			substanceSearch: {path: '/search/:name/:code', moduleId: 'app/viewModel/substanceSearch'},
 			substanceCard: {path: '/card',	 moduleId: 'app/viewModel/substanceCard'},
 			page: {path: '/page', moduleId: 'app/viewModel/page'},
 			notFound: {path: '*', moduleId: 'app/viewModel/substanceFinder'}
 		});
-		router.on('routeload', function(module, a, b){
-			module.render();
+		router.on('routeload', function(module, args){
+			Object.assign(module, args);
+			module.run();
 		});
 		router.init();
 	});
 
-})
+});

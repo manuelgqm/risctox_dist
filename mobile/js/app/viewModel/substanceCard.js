@@ -5,17 +5,24 @@ define([
 	'app/viewModel/page',
 	'css!app/view/style/substanceCard'
 ], function(ViewModel, substanceCardView, SubstanceModel, pageViewModel){
-	var substanceCardViewModel = {domId: 'card'};
-	var substanceId = 957597;
-	var substance = new SubstanceModel(substanceId);
-	Object.assign(substanceCardViewModel, substance, new ViewModel(substanceCardViewModel, substanceCardView));
-	substance.load().done(function(output){
-		Object.assign(substanceCardViewModel, 
-			output.data, 
-			new ViewModel(substanceCardViewModel, substanceCardView)
-		);
-		substanceCardViewModel.bind();
-	});	
+	module = {
+		run: function(){
+			var substanceCardViewModel = {domId: 'card'};
+			var substanceId = 957597;
+			var substance = new SubstanceModel(substanceId);
+			Object.assign(substanceCardViewModel, substance, new ViewModel(substanceCardViewModel, substanceCardView));
+			substance.load().done(function(output){
+				Object.assign(substanceCardViewModel, 
+					output.data, 
+					new ViewModel(substanceCardViewModel, substanceCardView)
+				);
+				substanceCardViewModel.render();
+				substanceCardViewModel.bind();
+			});	
 
-	return substanceCardViewModel;
+			return substanceCardViewModel;
+		}
+	}
+
+	return module;
 });
