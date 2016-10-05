@@ -119,7 +119,6 @@
 
 		end select 'cual busc
 
-
 		'RESULTADOS DE BUSQUEDA (para busc 1 y busc 2)
 		'seleccionamos datos a mostrar de los x registros que toquen
 		if numRecordsFound>0 then
