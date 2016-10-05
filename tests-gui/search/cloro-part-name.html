@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/istas/risctox/" />
+<title>bisfenol-part</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">bisfenol-part</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>dn_risctox_buscador.asp</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=nombre</td>
+	<td>cloro</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=tipobus</td>
+	<td>label=parte del nombre</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p.neg</td>
+	<td>Se han encontrado 11147 registros. Se muestran registros del 1 al 50:</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Productos de reaccion oligomericos de, productos de reaccion de butano-1,4-diol con 1-cloro-2,3...</td>
+	<td>Productos de reaccion oligomericos de, productos de reaccion de butano-1,4-diol con 1-cloro-2,3...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>Butane - 1, 4 - diol, oligomeric reaction products with 1 - chloro - 2, 3 - epoxypropane, reaction products with bicyclo[2. 2. 1]heptanebis (methylamine)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=(etilo 4-cloro-3-etoxi-3-hidroxibutirato)iodomagnesio</td>
+	<td>(etilo 4-cloro-3-etoxi-3-hidroxibutirato)iodomagnesio</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul/li</td>
+	<td>(ethyl 4 - chloro - 3 - ethoxy - 3 - hydroxybutyrato) iodomagnesium</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=[octabromooctacloro-29H,31H-ftalocianinato(2-)-N29,N30,N31,N32]cobre</td>
+	<td>[octabromooctacloro-29H,31H-ftalocianinato(2-)-N29,N30,N31,N32]cobre</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td/ul/li</td>
+	<td>[octabromooctachloro - 29H, 31H - phthalocyaninato (2 - ) - N29, N30, N31, N32]copper</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Siguiente &gt;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[38]/td/ul</td>
+	<td>*γ - BHC*1alfa, 2alfa, 3ß, 4alfa, 5alfa, 6ß - hexaclorociclohexano*Bencenohexacloruro*gamma - 1, 2, 3, 4, 5, 6 - hexaclorociclohexano*gamma - hexaclorociclohexano*HCH*hexaclorociclohexano*lindano*lindano (gamma)*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[38]/td/ul[2]</td>
+	<td>*Benzenehexachloride*Lindane*BHC*gamma isomer of 1, 2, 3, 4, 5, 6 - hexachlorocyclohexane*Benhexachlor*gamma - BHC*Gamma - Col*gamma - HCH*Tri - 6*gamma - Hexachlorocyclohexane*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[38]/td/ul[3]</td>
+	<td>*Aparasin*Aphitiria*Benesan*Benexane*BoreKil*Borer - Tox*Exagama*Gallogama*Gamaphex*Gamasan*Gammex*Gammexane*Gexane*Isotox*Jacutin*Kwell*Lindafor*Lindagronox*Lindaterra*Lindatox*Lintox*Lorexane*NewKotol*Noviagam*Quellada*Steward*Streunex*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=α-(4-clorofenil)-α-[2-(dimetilamino)etil]piridina-2-acetonitrilo</td>
+	<td>α-(4-clorofenil)-α-[2-(dimetilamino)etil]piridina-2-acetonitrilo</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[48]/td/ul/li</td>
+	<td>2 - Pyridineacetonitrile, alpha - (4 - chlorophenyl) - alpha - [2 - (dimethylamino) ethyl] -</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[48]/td/ul/li[2]</td>
+	<td>α - (4 - chlorophenyl) - α - [2 - (dimethylamino) ethyl]pyridine - 2 - acetonitrile</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=form[name=&quot;myform&quot;] &gt; div</td>
+	<td>*Páginas:*&lt; Anterior 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214 215 216 217 218 219 220 221 222 223 Siguiente &gt;</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Siguiente &gt;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=155</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=clorbenside</td>
+	<td>clorbenside</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[9]/td</td>
+	<td>*CLORBENSIDA*SULFURO DE (4 - CLORO - BENCIL) - (4 - CLORO - FENIL)*chlorbenside*</td>
+</tr>
+</tbody></table>
+</body>
+</html>
