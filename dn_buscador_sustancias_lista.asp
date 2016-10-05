@@ -5,7 +5,7 @@
 		if not rstpag.eof then
 			arrayDatos = rstpag.GetRows
 
-			for contadorFilas=0 to registrofin-registroini
+			for contadorFilas=0 to currentPageFinalRecordNumber-currentPageInitialRecordNumber
 
 						  tablares=tablares & "<tr>"
 						  select case  filtro

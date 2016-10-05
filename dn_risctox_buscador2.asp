@@ -41,7 +41,7 @@ function cambiapag(paginadest)
 {
 	var frm = document.forms["myform"]; 
 	frm.busc.value=2;
-	frm.pag.value=paginadest;
+	frm.currentPageNumber.value=paginadest;
 	frm.submit();
 }
 
@@ -64,7 +64,7 @@ function primerapag()
 	{
 
 		frm.busc.value=1;
-		frm.pag.value=1;
+		frm.currentPageNumber.value=1;
 		frm.submit();
 
 	}
@@ -105,11 +105,11 @@ function primerapag()
 
 <form action="dn_risctox_buscador2.asp?busc=1" method="post" name="myform" onSubmit="primerapag();">
  <input type="hidden" name='busc' value='<%=busc%>' />	
- <input type="hidden" name='pag' value='<%=pag%>' />	
- <input type="hidden" name='hr' value='<%=hr%>' />		
+ <input type="hidden" name='currentPageNumber' value='<%=currentPageNumber%>' />	
+ <input type="hidden" name='numRecordsFound' value='<%=numRecordsFound%>' />		
  <input type="hidden" name='arr' value='<%=arr%>' />
  <input type="hidden" name='ordenacion' value='<%=ordenacion%>' />
- <input type="hidden" name='nregs' value='<%=nregs%>' />				
+ <input type="hidden" name='numRecordsByPage' value='<%=numRecordsByPage%>' />				
 <table class="tabla3" width="90%" align="center">
 <tr><td colspan="3" class="subtitulo3">Buscador de sustancias</td></td></tr>
 	<tr>
@@ -133,21 +133,21 @@ function primerapag()
 
 <%
 if busc<>"" then
-	if hr=0  then
+	if numRecordsFound=0  then
 %>
 		<fieldset id="flashmsg"><legend class="advertencia"><strong>Advertencia</strong></legend>No se encontraron registros que coincidan con su consulta.</fieldset>
 <%
 	else
-		response.Write("<p class='neg' style='margin:15px 0; padding:10px;'>Se han encontrado " &hr& " registros. Se muestran registros del " &registroini+1& " al " &registrofin+1& ":</p>")
+		response.Write("<p class='neg' style='margin:15px 0; padding:10px;'>Se han encontrado " &numRecordsFound& " registros. Se muestran registros del " &currentPageInitialRecordNumber+1& " al " &currentPageFinalRecordNumber+1& ":</p>")
 		
 		
 		
 %>		
 		<%=tablares%>
 <%
-if hr>nregs then
+if numRecordsFound>numRecordsByPage then
 %>		
-		<div align='center' style="margin:20px 10px; background-color: #3399CC; padding:3px;"><%paginacion%></div>
+		<div align='center' style="margin:20px 10px; background-color: #3399CC; padding:3px;"><%= obtainPagerHtml(numRecordsFound, numRecordsByPage, currentPageNumber)%></div>
 <%
 end if
 %>		
@@ -185,5 +185,26 @@ Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target=
 <%
 cerrarconexion
 %>
+<%
+function obtainPagerHtml(numRecordsFound, numRecordsByPage, currentPageNumber)
+	dim html : html = "<strong>Páginas: </strong><br />"
+	dim pagesCount : pagesCount = roundsup(numRecordsFound/numRecordsByPage)
+	if currentPageNumber>1 then
+		html = html & "<a href=""#"" onclick=""cambiapag(" & currentPageNumber-1 & ")"">&lt; Anterior</a>"
+	end if
+	dim i
+	for i = 1 to pagesCount
+		if cint(i) = cint(currentPageNumber) then
+			currentPageHtml = " <b>" & i & "</b>"
+		else
+			currentPageHtml = " <a href=""#"" onclick=""cambiapag(" & i & ")"">" & i & "</a>"
+		end if
+		html = html & currentPageHtml
+	next
+	if cint(currentPageNumber) < cint(pagesCount) then
+		html = html & "&nbsp;<a href=""#"" onclick=""cambiapag(" & currentPageNumber + 1 & ")"">Siguiente &gt;</a>"
+	end if
 
-
+	obtainPagerHtml = html
+end function
+%>
