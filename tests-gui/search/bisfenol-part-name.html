@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/istas/risctox/" />
+<title>bisfenol-part</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">bisfenol-part</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>dn_risctox_buscador.asp</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=nombre</td>
+	<td>bisfenol</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=tipobus</td>
+	<td>label=parte del nombre</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p.neg</td>
+	<td>Se han encontrado 111 registros. Se muestran registros del 1 al 50:</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=4,4´-(1-metildecilideno)bisfenol</td>
+	<td>4,4´-(1-metildecilideno)bisfenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>4, 4' - (1 - methyldecylidene) bisphenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=1,1-bis(4-hidroxifenil)-1-feniletano</td>
+	<td>1,1-bis(4-hidroxifenil)-1-feniletano</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul/li</td>
+	<td>Bisfenol AP</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul[2]/li</td>
+	<td>1, 1 - bis (4 - hydroxyphenyl) - 1 - phenylethane</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul[2]/li[2]</td>
+	<td>*4, 4' - (1 - Phenylethylidene) biphenol*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul[2]/li[3]</td>
+	<td>Bisphenol AP</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=1,2-etanodiamida, N-(2-aminoetil)-, productos de reacción con homopolímero de bisfenol A diglicid...</td>
+	<td>1,2-etanodiamida, N-(2-aminoetil)-, productos de reacción con homopolímero de bisfenol A diglicid...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td/ul/li</td>
+	<td>1, 2 - Ethanediamine, N - (2 - aminoethyl) - , reaction products with bisphenol A diglycidyl ether homopolymer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Siguiente &gt;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p.neg</td>
+	<td>Se han encontrado 111 registros. Se muestran registros del 51 al 100:</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...</td>
+	<td>aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>Tall oil, reaction products with 1 - [[2 - [ (2 - aminoethyl) amino]ethyl]amino] - 3 - phenoxy - 2 - propanol, bisphenol A diglycidyl ether, carbon dioxide, formaldehyde and pentaethylenehexamine</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//a[contains(text(),'aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...')])[2]</td>
+	<td>aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul/li</td>
+	<td>Tall oil, reaction products with 1 - [[2 - [ (2 - aminoethyl) amino]ethyl]amino] - 3 - phenoxy - 2 - propanol, bisphenol A diglycidyl ether, carbon dioxide, pentaethylenehexamine and 3 - (2 - propenyloxy) - 1, 2 - propanediol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>xpath=(//a[contains(text(),'aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...')])[3]</td>
+	<td>aceite de resina, productos de reacción con 1-[[2-[(2-aminoetil)amino]etil]amino]-3-fenoxi-2-prop...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td/ul/li</td>
+	<td>*Tall oil, reaction products with 1 - [[2 - [ (2 - aminoethyl) amino]ethyl]amino] - 3 - phenoxy - 2 - propanol, bisphenol A diglycidyl ether, formaldehyde and pentaethylenehexamine*</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Siguiente &gt;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p.neg</td>
+	<td>Se han encontrado 111 registros. Se muestran registros del 101 al 111:</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Polimero de dicloruro carbonico con 4,4'-(1-metiletiliden)bis(2,6-dibromofenol) y fenol</td>
+	<td>Polimero de dicloruro carbonico con 4,4'-(1-metiletiliden)bis(2,6-dibromofenol) y fenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>oligomero de carbonato de tetrabromobisfenol A</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr/td/ul/li[2]</td>
+	<td>Polimero de tetrabromobisfenol A, fosgeno, fenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr/td/ul[2]/li</td>
+	<td>Carbonic dichloride, polymer with 4, 4' - (1 - methylethylidene) bis (2, 6 - dibromophenol) and phenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr/td/ul[2]/li[2]</td>
+	<td>Polymer of tetrabromobisphenol A, phosgene, phenol</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Polimero de dicloruro carbonico con 4,4'-(1-metiletiliden)bis(2,6-dibromofenol), bis(2,4,6-tr...</td>
+	<td>Polimero de dicloruro carbonico con 4,4'-(1-metiletiliden)bis(2,6-dibromofenol), bis(2,4,6-tr...</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul/li</td>
+	<td>oligomero de carbonato de tetrabromo bisfenol A</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[2]/td/ul[2]/li</td>
+	<td>Carbonic dichloride, polymer with 4, 4' - (1 - methylethylidene) bis (2, 6 - dibromophenol) , bis (2, 4, 6 - tribromophenyl) ester</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=polimero diglicidil éter de bisfenol A (mw&lt;700)</td>
+	<td>polimero diglicidil éter de bisfenol A (mw&lt;700)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td/ul/li</td>
+	<td>PRODUCTO DE REACCION DE EPICLOROHIDRINO Y DE BISFENOL A</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='texto']/div/form/table[2]/tbody/tr[3]/td/ul[2]/li</td>
+	<td>polymer diglicidyl ether of bisphenol A (mw&lt;700)</td>
+</tr>
+</tbody></table>
+</body>
+</html>
