@@ -2,21 +2,21 @@
 <%
 	ordenacion = EliminaInyeccionSQL( request( "ordenacion" ) )
 	sentido = EliminaInyeccionSQL( request( "sentido" ) )
-	nregs = EliminaInyeccionSQL( request( "nregs" ) )
+	numRecordsByPage = EliminaInyeccionSQL( request( "numRecordsByPage" ) )
 
 	'valores de busqueda por defecto
 	if ordenacion = "" then ordenacion = "sus.nombre"
 	if sentido = "" then sentido = ""
-	if nregs = "" then nregs = 50
+	if numRecordsByPage = "" then numRecordsByPage = 50
 
 	if busc="" then
 
 	else
 	
-		if isnumeric(nregs) then
-			nregs=round(nregs,0)
+		if isnumeric(numRecordsByPage) then
+			numRecordsByPage=round(numRecordsByPage,0)
 		else
-			nregs=50
+			numRecordsByPage=50
 		end if
 
 		nombre = lcase(EliminaInyeccionSQL(request.form("nombre")))
@@ -96,7 +96,7 @@
 
 				Set objRst = Server.CreateObject("ADODB.Recordset")
 				objRst.Open sqls, objConnection2, adOpenStatic, adCmdText
-				hr = objRst.recordcount
+				numRecordsFound = objRst.recordcount
 
 				if not objRst.eof then
 					arrayDatos = objRst.getrows
@@ -105,7 +105,7 @@
 						arr=arr& arrayDatos(0,I) & ","
 					next
 					'esta sera la pagina 1
-					pag = 1
+					currentPageNumber = 1
 				end if
 
 				objRst.Close
@@ -113,8 +113,8 @@
 
 			case 2: 'paginando
 
-				hr = EliminaInyeccionSQL(request("hr"))
-				pag = EliminaInyeccionSQL(request("pag"))
+				numRecordsFound = EliminaInyeccionSQL(request("numRecordsFound"))
+				currentPageNumber = EliminaInyeccionSQL(request("currentPageNumber"))
 				arr = request("arr")
 
 		end select 'cual busc
@@ -122,26 +122,26 @@
 
 		'RESULTADOS DE BUSQUEDA (para busc 1 y busc 2)
 		'seleccionamos datos a mostrar de los x registros que toquen
-		if hr>0 then
+		if numRecordsFound>0 then
 
 			'vemos que registros hay que mostrar
-			registroini=(pag*nregs)-nregs
-			'response.write "<p>registroini=" &registroini& "</p>"
+			currentPageInitialRecordNumber=(currentPageNumber*numRecordsByPage)-numRecordsByPage
+			'response.write "<p>currentPageInitialRecordNumber=" &currentPageInitialRecordNumber& "</p>"
 
-			registrofin=registroini+nregs
-			'response.write "<p>registrofin=" &registrofin& "</p>"
+			currentPageFinalRecordNumber=currentPageInitialRecordNumber+numRecordsByPage
+			'response.write "<p>currentPageFinalRecordNumber=" &currentPageFinalRecordNumber& "</p>"
 
-			if registrofin>=hr-1 then
-				registrofin=hr
-				'response.write "<p>registrofin era mayor, ahora=" &registrofin& "</p>"
+			if currentPageFinalRecordNumber>=numRecordsFound-1 then
+				currentPageFinalRecordNumber=numRecordsFound
+				'response.write "<p>currentPageFinalRecordNumber era mayor, ahora=" &currentPageFinalRecordNumber& "</p>"
 			end if
 
-			registrofin=registrofin-1
-			'response.write "<p>registrofin corregido=" &registrofin& "</p>"
+			currentPageFinalRecordNumber=currentPageFinalRecordNumber-1
+			'response.write "<p>currentPageFinalRecordNumber corregido=" &currentPageFinalRecordNumber& "</p>"
 
 			arrayx = split(arr, ",")
 
-			for i = registroini to registrofin
+			for i = currentPageInitialRecordNumber to currentPageFinalRecordNumber
 				cadenaids = cadenaids & arrayx(i) & ","
 			next
 			
@@ -150,11 +150,11 @@
 
 		%><!--#include file="dn_buscador_sustancias_lista.asp"--><%
 		
-		end if 'hr>0
+		end if 'numRecordsFound>0
 		
 	end if 'busc
 
-	if hr = 1 then
+	if numRecordsFound = 1 then
 		response.redirect( unico_enlace )
 	end if
 %>
