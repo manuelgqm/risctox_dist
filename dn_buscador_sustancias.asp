@@ -126,18 +126,13 @@
 
 			'vemos que registros hay que mostrar
 			currentPageInitialRecordNumber=(currentPageNumber*numRecordsByPage)-numRecordsByPage
-			'response.write "<p>currentPageInitialRecordNumber=" &currentPageInitialRecordNumber& "</p>"
-
 			currentPageFinalRecordNumber=currentPageInitialRecordNumber+numRecordsByPage
-			'response.write "<p>currentPageFinalRecordNumber=" &currentPageFinalRecordNumber& "</p>"
 
 			if currentPageFinalRecordNumber>=numRecordsFound-1 then
 				currentPageFinalRecordNumber=numRecordsFound
-				'response.write "<p>currentPageFinalRecordNumber era mayor, ahora=" &currentPageFinalRecordNumber& "</p>"
 			end if
 
 			currentPageFinalRecordNumber=currentPageFinalRecordNumber-1
-			'response.write "<p>currentPageFinalRecordNumber corregido=" &currentPageFinalRecordNumber& "</p>"
 
 			arrayx = split(arr, ",")
 
@@ -145,7 +140,6 @@
 				cadenaids = cadenaids & arrayx(i) & ","
 			next
 			
-			'quitamos la ultima coma
 			cadenaids = left( cadenaids, len( cadenaids ) - 1 )
 
 		%><!--#include file="dn_buscador_sustancias_lista.asp"--><%
