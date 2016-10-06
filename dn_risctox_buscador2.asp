@@ -1,18 +1,13 @@
 <!--#include file="adovbs.inc"-->
-<!--#include file="dn_conexion.asp"-->
+<!--#include file="config/dbConnection.asp"-->
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="dn_restringida.asp"-->
 <%
-'si busc está vacio, mostramos formulario; si es 1, han dado a "buscar"; si es dos, han dado a paginación 
 const filtro = 0 'este filtro diferencia a este buscador del de sustancias: si esta a true, muestra solo las que son toxicas y tienen alternativas
-dim busc : busc = EliminaInyeccionSQL(request.form("busc"))
-dim displayMode : displayMode = ""
-if busc = 1 then
+dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
+if displayMode = "" then
 	displayMode = "search"
-end if
-if busc = 2 then
-	displayMode = "pagination"
 end if
 %>
 <!--#include file="lib/db/substancesSearch.asp"-->
@@ -36,7 +31,7 @@ end if
 <script type="text/javascript">
 	function cambiapag(paginadest){
 		var frm = document.forms["myform"]; 
-		frm.displayMode.value = 2;
+		frm.displayMode.value = "pagination";
 		frm.currentPageNumber.value = paginadest;
 		frm.submit();
 	};
@@ -72,7 +67,7 @@ end if
 	
 					<p class=titulo3>Base de datos de sustancias t&oacute;xicas y peligrosas RISCTOX </p>
 
-					<form action="dn_risctox_buscador2.asp?busc=1" method="post" name="myform" onSubmit="primerapag();">
+					<form action="dn_risctox_buscador2.asp" method="post" name="myform" onSubmit="primerapag();">
 						<input type="hidden" name='displayMode' value='<%=displayMode%>' />	
 						<input type="hidden" name='currentPageNumber' value='<%=currentPageNumber%>' />	
 						<input type="hidden" name='numRecordsFound' value='<%=numRecordsFound%>' />		
