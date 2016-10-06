@@ -1,10 +1,8 @@
 <!--#include file="../listas.asp"-->
 <%
-ordenacion = EliminaInyeccionSQL( request( "ordenacion" ) )
 numRecordsByPage = EliminaInyeccionSQL( request( "numRecordsByPage" ) )
 
 'valores de busqueda por defecto
-if ordenacion = "" then ordenacion = "sus.nombre"
 if numRecordsByPage = "" then numRecordsByPage = 50
 
 if displayMode="" then
@@ -82,7 +80,7 @@ else
 
 			end if
 
-			sqls = sqls & " ORDER BY " & ordenacion &  " "
+			sqls = sqls & " ORDER BY sus.nombre"
 
 			Set objRst = Server.CreateObject("ADODB.Recordset")
 			objRst.Open sqls, objConnection2, adOpenStatic, adCmdText
@@ -130,7 +128,7 @@ else
 		
 		cadenaids = left( cadenaids, len( cadenaids ) - 1 )
 
-		sqlpag = "select id, nombre from dn_risc_sustancias as sus WHERE id IN(" & cadenaids & ") ORDER BY " & ordenacion
+		sqlpag = "select id, nombre from dn_risc_sustancias as sus WHERE id IN(" & cadenaids & ") ORDER BY nombre"
 		set rstpag = objConnection2.execute(sqlpag)
 		if not rstpag.eof then
 			arrayDatos = rstpag.GetRows
