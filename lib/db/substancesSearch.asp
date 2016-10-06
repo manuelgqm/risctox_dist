@@ -17,7 +17,7 @@ select case displayMode
 
 	case "search":
 
-		dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus, filtro)
+		dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus)
 
 		Set objRst = Server.CreateObject("ADODB.Recordset")
 		objRst.Open searchQuery, objConnection2, adOpenStatic, adCmdText
@@ -71,10 +71,7 @@ if numRecordsFound>0 then
 		arrayDatos = rstpag.GetRows
 		for contadorFilas = 0 to currentPageFinalRecordNumber-currentPageInitialRecordNumber
 			tablares = tablares & "<tr>"
-			select case  filtro
-			case "1": enlazacon = "dn_alternativas_ficha_sustancia.asp"
-			case else:enlazacon = "dn_risctox_ficha_sustancia.asp"
-			end select
+			enlazacon = "dn_risctox_ficha_sustancia.asp"
 			'Sergio -> por si hay uno solo, lo cojo
 			unico_enlace = enlazacon & "?id_sustancia=" & arrayDatos(0, contadorFilas)
 			tablares = tablares & "<td class='celda_risctox'><a href='" & enlazacon & "?id_sustancia=" & arrayDatos(0,contadorFilas) & "'>" & corta(arrayDatos(1,contadorFilas),100, "puntossuspensivos") & "</a><br />" & dameSinonimos(arrayDatos(0,contadorFilas)) & dameNombreingles(arrayDatos(0,contadorFilas))& dameNombrecomercial(arrayDatos(0,contadorFilas)) & "</td>"
@@ -92,7 +89,7 @@ if numRecordsFound = 1 then
 	response.redirect( unico_enlace )
 end if
 
-function obtainSearchQuery(byVal nombre, byVal numero, tipobus, filtro)
+function obtainSearchQuery(byVal nombre, byVal numero, tipobus)
 	dim condicion : condicion = ""
 
 	if nombre <> "" or numero <> "" then
@@ -132,24 +129,10 @@ function obtainSearchQuery(byVal nombre, byVal numero, tipobus, filtro)
 	sqls = sqls & " from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
 	sqls = sqls & " FULL OUTER JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
 
-	'según filtro, unimos a distintas tablas, nos indica de que buscador venimos
-	if filtro <> "0" then sqls = sqls & get_string_tablas( filtro )
+	sqls = sqls & get_string_tablas(0) 'magic number 0 means basic type of buscador'
 
 	if condicion <> "" then sqls = sqls & " WHERE (" & condicion & ")"
 	
-	'según filtro, agregamos distintas condiciones
-	if filtro<>"0" then
-
-		if condicion="" then
-			sqls = sqls & " WHERE ("
-		else
-			sqls = sqls & " AND ("
-		end if
-
-		sqls = sqls & get_string_codicion( filtro ) & ")"
-
-	end if
-
 	sqls = sqls & " ORDER BY sus.nombre"
 
 	obtainSearchQuery = sqls

@@ -4,7 +4,6 @@
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="dn_restringida.asp"-->
 <%
-const filtro = 0 'este filtro diferencia a este buscador del de sustancias: si esta a true, muestra solo las que son toxicas y tienen alternativas
 dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
 if displayMode = "" then
 	displayMode = "search"
