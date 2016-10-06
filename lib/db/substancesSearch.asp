@@ -26,7 +26,7 @@ select case displayMode
 		if not objRst.eof then
 			arrayDatos = objRst.getrows
 
-			arr = serializeIds(arrayDatos)
+			substancesFoundedIdsSrz = serializeIds(arrayDatos)
 			currentPageNumber = 1
 		end if
 
@@ -37,7 +37,7 @@ select case displayMode
 
 		numRecordsFound = EliminaInyeccionSQL(request("numRecordsFound"))
 		currentPageNumber = EliminaInyeccionSQL(request("currentPageNumber"))
-		arr = request("arr")
+		substancesFoundedIdsSrz = request("substancesFoundedIdsSrz")
 
 end select 'cual busc
 
@@ -55,7 +55,7 @@ if numRecordsFound>0 then
 
 	currentPageFinalRecordNumber=currentPageFinalRecordNumber-1
 
-	arrayx = split(arr, ",")
+	arrayx = split(substancesFoundedIdsSrz, ",")
 
 	for i = currentPageInitialRecordNumber to currentPageFinalRecordNumber
 		cadenaids = cadenaids & arrayx(i) & ","

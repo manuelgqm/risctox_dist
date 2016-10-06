@@ -70,7 +70,7 @@ end if
 						<input type="hidden" name='displayMode' value='<%=displayMode%>' />	
 						<input type="hidden" name='currentPageNumber' value='<%=currentPageNumber%>' />	
 						<input type="hidden" name='numRecordsFound' value='<%=numRecordsFound%>' />		
-						<input type="hidden" name='arr' value='<%=arr%>' />
+						<input type="hidden" name='substancesFoundedIdsSrz' value='<%=substancesFoundedIdsSrz%>' />
 						<input type="hidden" name='ordenacion' value='<%=ordenacion%>' />
 						<input type="hidden" name='numRecordsByPage' value='<%=numRecordsByPage%>' />				
 						<table class="tabla3" width="90%" align="center">
