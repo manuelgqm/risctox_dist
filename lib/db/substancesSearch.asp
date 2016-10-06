@@ -26,9 +26,7 @@ select case displayMode
 		if not objRst.eof then
 			arrayDatos = objRst.getrows
 
-			for I = 0 to UBound(arrayDatos,2)
-				arr=arr& arrayDatos(0,I) & ","
-			next
+			arr = serializeIds(arrayDatos)
 			currentPageNumber = 1
 		end if
 
@@ -136,5 +134,14 @@ function obtainSearchQuery(byVal nombre, byVal numero, tipobus)
 	sqls = sqls & " ORDER BY sus.nombre"
 
 	obtainSearchQuery = sqls
+end function
+
+function serializeIds(list)
+	dim i, result 
+	for i = 0 to UBound(list,2)
+		result = result & list(0, i) & ","
+	next
+
+	serializeIds = result
 end function
 %>
