@@ -9,7 +9,7 @@
 	if sentido = "" then sentido = ""
 	if numRecordsByPage = "" then numRecordsByPage = 50
 
-	if busc="" then
+	if displayMode="" then
 
 	else
 	
@@ -24,9 +24,9 @@
 		numero = EliminaInyeccionSQL(request.form("numero"))
 		cas_alternativo=EliminaInyeccionSQL(request.form("cas_alternativo"))
 
-		select case busc
+		select case displayMode
 
-			case 1: 'han dado a buscar
+			case "search":
 
 				condicion=""
 
@@ -111,7 +111,7 @@
 				objRst.Close
 				Set objRst = Nothing
 
-			case 2: 'paginando
+			case "pagination":
 
 				numRecordsFound = EliminaInyeccionSQL(request("numRecordsFound"))
 				currentPageNumber = EliminaInyeccionSQL(request("currentPageNumber"))

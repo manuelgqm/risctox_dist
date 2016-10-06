@@ -1,22 +1,19 @@
 <!--#include file="adovbs.inc"-->
 <!--#include file="dn_conexion.asp"-->
 <!--#include file="dn_funciones_comunes.asp"-->
-
 <!--#include file="dn_funciones_texto.asp"-->
-
-
 <!--#include file="dn_restringida.asp"-->
-
-
-
 <%
-
 'si busc está vacio, mostramos formulario; si es 1, han dado a "buscar"; si es dos, han dado a paginación 
-
-busc=request.form("busc")
-busc = EliminaInyeccionSQL(busc)
-
-	filtro=0 'este filtro diferencia a este buscador del de sustancias: si esta a true, muestra solo las que son toxicas y tienen alternativas
+const filtro = 0 'este filtro diferencia a este buscador del de sustancias: si esta a true, muestra solo las que son toxicas y tienen alternativas
+dim busc : busc = EliminaInyeccionSQL(request.form("busc"))
+dim displayMode : displayMode = ""
+if busc = 1 then
+	displayMode = "search"
+end if
+if busc = 2 then
+	displayMode = "pagination"
+end if
 %>
 	<!--#include file="dn_buscador_sustancias.asp"-->
 
@@ -39,7 +36,7 @@ busc = EliminaInyeccionSQL(busc)
 <script type="text/javascript">
 	function cambiapag(paginadest){
 		var frm = document.forms["myform"]; 
-		frm.busc.value = 2;
+		frm.displayMode.value = 2;
 		frm.currentPageNumber.value = paginadest;
 		frm.submit();
 	};
@@ -49,7 +46,7 @@ busc = EliminaInyeccionSQL(busc)
 		if ( (frm.nombre.value.length < 3) && (frm.tipobus.options[frm.tipobus.selectedIndex].value == "parte") ){
 			alert("Por favor, teclee al menos 3 caracteres para buscar por nombre");
 		} else {
-			frm.busc.value=1;
+			frm.displayMode.value=1;
 			frm.currentPageNumber.value=1;
 			frm.submit();
 		};
@@ -76,7 +73,7 @@ busc = EliminaInyeccionSQL(busc)
 					<p class=titulo3>Base de datos de sustancias t&oacute;xicas y peligrosas RISCTOX </p>
 
 					<form action="dn_risctox_buscador2.asp?busc=1" method="post" name="myform" onSubmit="primerapag();">
-						<input type="hidden" name='busc' value='<%=busc%>' />	
+						<input type="hidden" name='displayMode' value='<%=displayMode%>' />	
 						<input type="hidden" name='currentPageNumber' value='<%=currentPageNumber%>' />	
 						<input type="hidden" name='numRecordsFound' value='<%=numRecordsFound%>' />		
 						<input type="hidden" name='arr' value='<%=arr%>' />
@@ -103,7 +100,7 @@ busc = EliminaInyeccionSQL(busc)
 							</tr>
 						</table>
 						<%
-						if busc<>"" then
+						if displayMode<>"" then
 							if numRecordsFound = 0  then
 							%>
 							<fieldset id="flashmsg">
