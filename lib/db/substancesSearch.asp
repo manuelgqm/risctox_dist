@@ -1,12 +1,10 @@
 <!--#include file="../listas.asp"-->
 <%
 ordenacion = EliminaInyeccionSQL( request( "ordenacion" ) )
-sentido = EliminaInyeccionSQL( request( "sentido" ) )
 numRecordsByPage = EliminaInyeccionSQL( request( "numRecordsByPage" ) )
 
 'valores de busqueda por defecto
 if ordenacion = "" then ordenacion = "sus.nombre"
-if sentido = "" then sentido = ""
 if numRecordsByPage = "" then numRecordsByPage = 50
 
 if displayMode="" then
@@ -132,7 +130,7 @@ else
 		
 		cadenaids = left( cadenaids, len( cadenaids ) - 1 )
 
-		sqlpag = "select id, nombre from dn_risc_sustancias as sus WHERE id IN(" & cadenaids & ") ORDER BY " & ordenacion &  " " & sentido
+		sqlpag = "select id, nombre from dn_risc_sustancias as sus WHERE id IN(" & cadenaids & ") ORDER BY " & ordenacion
 		set rstpag = objConnection2.execute(sqlpag)
 		if not rstpag.eof then
 			arrayDatos = rstpag.GetRows
