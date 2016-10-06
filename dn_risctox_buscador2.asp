@@ -15,7 +15,7 @@ if busc = 2 then
 	displayMode = "pagination"
 end if
 %>
-	<!--#include file="dn_buscador_sustancias.asp"-->
+<!--#include file="lib/db/substancesSearch.asp"-->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml">
