@@ -1,8 +1,6 @@
 <!--#include file="../listas.asp"-->
 <%
 numRecordsByPage = EliminaInyeccionSQL( request( "numRecordsByPage" ) )
-
-'valores de busqueda por defecto
 if numRecordsByPage = "" then numRecordsByPage = 50
 
 if displayMode="" then
@@ -16,74 +14,17 @@ else
 	end if
 
 	nombre = lcase(EliminaInyeccionSQL(request.form("nombre")))
-	tipobus = EliminaInyeccionSQL(request.form("tipobus"))
 	numero = EliminaInyeccionSQL(request.form("numero"))
+	tipobus = EliminaInyeccionSQL(request.form("tipobus"))
 
 	select case displayMode
 
 		case "search":
 
-			condicion=""
-
-			if nombre <> "" or numero <> "" then
-				condicion = ""
-			
-				if nombre <> "" then	'busca en nombre, sinonimos, nombre ingles y nombre comercial
-					nombre2 = h(nombre)
-					nombre2 = quitartildes(nombre2)
-					nombre2 = montartildes(nombre2)
-					
-					if tipobus = "exacto" then
-						' La busqueda exacta tambien usa like, sin %, para no distinguir mayusculas
-						' CONDICION NUEVA
-						' Para que encuentre por nombre ingles en busqueda exacta hay que incluir los casos:
-						' "nom" (exacta)
-						' "nom@%" (al principio y seguido por otros)
-						' "%@nom" (al final y antecedido por otros)
-						' "%@nom@%" (en medio, seguido y precedido por otros)
-						' No debe haber espacio junto a las @ (avisar al cliente)
-
-						condicion = condicion &  " (sus.nombre like '" & nombre2 & "' or sin.nombre like '" & nombre2 & "' or sus.nombre_ing like '" & nombre2 & "' or sus.nombre_ing like '" & nombre2 & "@%' or sus.nombre_ing like '%@" & nombre2 & "' or sus.nombre_ing like '%@ " & nombre2 & "@%' or sus.nombre_ing like '%@" & nombre2 & "@%' or com.nombre like '" &nombre2& "')  "
-
-					else
-						condicion = condicion & " (sus.nombre like '%" & nombre2 & "%' or sin.nombre like '%" & nombre2 & "%' or sus.nombre_ing like '%" & nombre2 & "%' or com.nombre like '%" & nombre2 & "%')  "
-					end if
-					
-				end if
-			
-				if numero <> "" then
-					if nombre <> "" then condicion = condicion & " OR "
-					condicion = condicion & " (num_ce_einecs = '" & numero & "' OR num_ce_elincs  = '" & numero & "' OR  num_rd = '" & numero & "' OR  num_cas = '" & numero & "' OR cas_alternativos like '%" & numero & "%')"
-				end if
-				
-			end if
-
-			sqls = "select distinct sus.id, sus.nombre "
-			sqls = sqls & " from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
-			sqls = sqls & " FULL OUTER JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
-
-			'según filtro, unimos a distintas tablas, nos indica de que buscador venimos
-			if filtro <> "0" then sqls = sqls & get_string_tablas( filtro )
-
-			if condicion <> "" then sqls = sqls & " WHERE (" & condicion & ")"
-			
-			'según filtro, agregamos distintas condiciones
-			if filtro<>"0" then
-
-				if condicion="" then
-					sqls = sqls & " WHERE ("
-				else
-					sqls = sqls & " AND ("
-				end if
-
-				sqls = sqls & get_string_codicion( filtro ) & ")"
-
-			end if
-
-			sqls = sqls & " ORDER BY sus.nombre"
+			dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus, filtro)
 
 			Set objRst = Server.CreateObject("ADODB.Recordset")
-			objRst.Open sqls, objConnection2, adOpenStatic, adCmdText
+			objRst.Open searchQuery, objConnection2, adOpenStatic, adCmdText
 			numRecordsFound = objRst.recordcount
 
 			if not objRst.eof then
@@ -156,4 +97,67 @@ end if 'busc
 if numRecordsFound = 1 then
 	response.redirect( unico_enlace )
 end if
+
+function obtainSearchQuery(byVal nombre, byVal numero, tipobus, filtro)
+	dim condicion : condicion = ""
+
+	if nombre <> "" or numero <> "" then
+		condicion = ""
+	
+		if nombre <> "" then	'busca en nombre, sinonimos, nombre ingles y nombre comercial
+			nombre2 = h(nombre)
+			nombre2 = quitartildes(nombre2)
+			nombre2 = montartildes(nombre2)
+			
+			if tipobus = "exacto" then
+				' La busqueda exacta tambien usa like, sin %, para no distinguir mayusculas
+				' CONDICION NUEVA
+				' Para que encuentre por nombre ingles en busqueda exacta hay que incluir los casos:
+				' "nom" (exacta)
+				' "nom@%" (al principio y seguido por otros)
+				' "%@nom" (al final y antecedido por otros)
+				' "%@nom@%" (en medio, seguido y precedido por otros)
+				' No debe haber espacio junto a las @ (avisar al cliente)
+
+				condicion = condicion &  " (sus.nombre like '" & nombre2 & "' or sin.nombre like '" & nombre2 & "' or sus.nombre_ing like '" & nombre2 & "' or sus.nombre_ing like '" & nombre2 & "@%' or sus.nombre_ing like '%@" & nombre2 & "' or sus.nombre_ing like '%@ " & nombre2 & "@%' or sus.nombre_ing like '%@" & nombre2 & "@%' or com.nombre like '" &nombre2& "')  "
+
+			else
+				condicion = condicion & " (sus.nombre like '%" & nombre2 & "%' or sin.nombre like '%" & nombre2 & "%' or sus.nombre_ing like '%" & nombre2 & "%' or com.nombre like '%" & nombre2 & "%')  "
+			end if
+			
+		end if
+	
+		if numero <> "" then
+			if nombre <> "" then condicion = condicion & " OR "
+			condicion = condicion & " (num_ce_einecs = '" & numero & "' OR num_ce_elincs  = '" & numero & "' OR  num_rd = '" & numero & "' OR  num_cas = '" & numero & "' OR cas_alternativos like '%" & numero & "%')"
+		end if
+		
+	end if
+
+	sqls = "select distinct sus.id, sus.nombre "
+	sqls = sqls & " from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
+	sqls = sqls & " FULL OUTER JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
+
+	'según filtro, unimos a distintas tablas, nos indica de que buscador venimos
+	if filtro <> "0" then sqls = sqls & get_string_tablas( filtro )
+
+	if condicion <> "" then sqls = sqls & " WHERE (" & condicion & ")"
+	
+	'según filtro, agregamos distintas condiciones
+	if filtro<>"0" then
+
+		if condicion="" then
+			sqls = sqls & " WHERE ("
+		else
+			sqls = sqls & " AND ("
+		end if
+
+		sqls = sqls & get_string_codicion( filtro ) & ")"
+
+	end if
+
+	sqls = sqls & " ORDER BY sus.nombre"
+
+	obtainSearchQuery = sqls
+end function
 %>
