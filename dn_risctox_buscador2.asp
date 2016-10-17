@@ -3,13 +3,15 @@
 <!--#include file="dn_funciones_comunes.asp"-->
 <!--#include file="dn_funciones_texto.asp"-->
 <!--#include file="dn_restringida.asp"-->
+<!--#include file="lib/db/substancesSearch.asp"-->
 <%
 dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
 if displayMode = "" then
 	displayMode = "search"
 end if
+
+dim search : set search = doSearch(displayMode)
 %>
-<!--#include file="lib/db/substancesSearch.asp"-->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml">
@@ -68,16 +70,16 @@ end if
 
 					<form action="dn_risctox_buscador2.asp" method="post" name="myform" onSubmit="primerapag();">
 						<input type="hidden" name='displayMode' value='<%=displayMode%>' />	
-						<input type="hidden" name='currentPageNumber' value='<%=currentPageNumber%>' />	
-						<input type="hidden" name='numRecordsFound' value='<%=numRecordsFound%>' />		
-						<input type="hidden" name='substancesFoundedIdsSrz' value='<%=substancesFoundedIdsSrz%>' />
+						<input type="hidden" name='currentPageNumber' value='<%=search.item("currentPageNumber")%>' />	
+						<input type="hidden" name='numRecordsFound' value='<%=search.item("numRecordsFound")%>' />		
+						<input type="hidden" name='substancesFoundedIdsSrz' value='<%=search.item("substancesFoundedIdsSrz")%>' />
 						<input type="hidden" name='ordenacion' value='<%=ordenacion%>' />
-						<input type="hidden" name='numRecordsByPage' value='<%=numRecordsByPage%>' />				
+						<input type="hidden" name='numRecordsByPage' value='<%=search.item("numRecordsByPage")%>' />				
 						<table class="tabla3" width="90%" align="center">
 							<tr><td colspan="3" class="subtitulo3">Buscador de sustancias</td></td></tr>
 							<tr>
 								<td align="right"><strong>Nombre</strong></td>
-								<td><input type="text" name="nombre" value="<%=nombre%>" />
+								<td><input type="text" name="nombre" value="<%=search.item("nombre")%>" />
 								<select name="tipobus">
 								<option value="exacto" <%if tipobus="exacto" then response.write "selected"%>>nombre exacto</option>
 
@@ -87,7 +89,7 @@ end if
 							</tr>
 							<tr>
 								<td align="right"><strong>Número CAS/CE/RD</strong></td>
-								<td><input type="text" name="numero" value="<%=numero%>" /></td>
+								<td><input type="text" name="numero" value="<%=search.item("numero")%>" /></td>
 							</tr>	
 							<tr>
 								<td colspan="2" align="center"><input type="submit" value="Buscar" /> <input type="reset" value="Borrar" /></td>
@@ -95,7 +97,7 @@ end if
 						</table>
 						<%
 						if displayMode<>"" then
-							if numRecordsFound = 0  then
+							if search.item("numRecordsFound") = 0  then
 							%>
 							<fieldset id="flashmsg">
 								<legend class="advertencia"><strong>Advertencia</strong></legend>
@@ -103,11 +105,11 @@ end if
 							</fieldset>
 							<%
 							else
-								response.Write("<p class='neg' style='margin:15px 0; padding:10px;'>Se han encontrado " & numRecordsFound & " registros. Se muestran registros del " &currentPageInitialRecordNumber+1& " al " &currentPageFinalRecordNumber+1& ":</p>")
+								response.Write("<p class='neg' style='margin:15px 0; padding:10px;'>Se han encontrado " & search.item("numRecordsFound") & " registros. Se muestran registros del " & search.item("currentPageInitialRecordNumber") + 1 & " al " & search.item("currentPageFinalRecordNumber") + 1 & ":</p>")
 							%>		
-							<%= tablares %>
-							<% if numRecordsFound>numRecordsByPage then %>		
-							<div align='center' style="margin:20px 10px; background-color: #3399CC; padding:3px;"><%= obtainPagerHtml(numRecordsFound, numRecordsByPage, currentPageNumber)%></div>
+							<%= search.item("tablares") %>
+							<% if search.item("numRecordsFound")>search.item("numRecordsByPage") then %>		
+							<div align='center' style="margin:20px 10px; background-color: #3399CC; padding:3px;"><%= obtainPagerHtml(search.item("numRecordsFound"), search.item("numRecordsByPage"), search.item("currentPageNumber"))%></div>
 							<% end if %>		
 						<%
 							end if
