@@ -68,25 +68,18 @@ function doSearch(displayMode)
 
 		sqlpag = "select id, nombre from dn_risc_sustancias as sus WHERE id IN(" & cadenaids & ") ORDER BY nombre"
 		set rstpag = objConnection2.execute(sqlpag)
-		if not rstpag.eof then
-			arrayDatos = rstpag.GetRows
-			for contadorFilas = 0 to currentPageFinalRecordNumber-currentPageInitialRecordNumber
-				tablares = tablares & "<tr>"
-				enlazacon = "dn_risctox_ficha_sustancia.asp"
-				'Sergio -> por si hay uno solo, lo cojo
-				unico_enlace = enlazacon & "?id_sustancia=" & arrayDatos(0, contadorFilas)
-				tablares = tablares & "<td class='celda_risctox'><a href='" & enlazacon & "?id_sustancia=" & arrayDatos(0,contadorFilas) & "'>" & corta(arrayDatos(1,contadorFilas),100, "puntossuspensivos") & "</a><br />" & dameSinonimos(arrayDatos(0,contadorFilas)) & dameNombreingles(arrayDatos(0,contadorFilas))& dameNombrecomercial(arrayDatos(0,contadorFilas)) & "</td>"
-				tablares = tablares & "</tr>"
-			next
-		end if
+		arrayDatos = rstpag.GetRows
 		rstpag.close
 		set rstpag = nothing
-
-		tablares = "<table class='tabla3' width='90%' align='center' border='0' cellpadding='4' cellspacing='0'>" & tablares & "</table>"
+		tablares = formatHtmlTable(arrayDatos _
+						, currentPageFinalRecordNumber _
+						, currentPageInitialRecordNumber _
+					)
 
 	end if 'numRecordsFound>0
 		
 	if numRecordsFound = 1 then
+		dim unico_enlace : unico_enlace = "dn_risctox_ficha_sustancia.asp?id_sustancia=" & arrayDatos(0, 0)
 		response.redirect( unico_enlace )
 	end if
 
@@ -101,6 +94,28 @@ function doSearch(displayMode)
 	result.add "currentPageFinalRecordNumber", currentPageFinalRecordNumber
 
 	set doSearch = result
+end function
+
+function formatHtmlTable(arrayDatos _
+			, currentPageFinalRecordNumber _
+			, currentPageInitialRecordNumber _
+		)
+	dim i
+	for i = 0 to currentPageFinalRecordNumber-currentPageInitialRecordNumber
+		tableContent = tableContent &_
+		"<tr>" &_
+			"<td class='celda_risctox'>" &_
+				"<a href='dn_risctox_ficha_sustancia.asp?id_sustancia=" & arrayDatos(0,i) & "'>" &_
+					corta(arrayDatos(1,i), 100, "puntossuspensivos") &_
+				"</a><br />" &_ 
+				dameSinonimos(arrayDatos(0,i)) &_
+				dameNombreIngles(arrayDatos(0,i)) &_
+				dameNombreComercial(arrayDatos(0,i)) &_
+			"</td>" &_
+		"</tr>"
+	next
+	
+	formatHtmlTable = "<table class='tabla3' width='90%' align='center' border='0' cellpadding='4' cellspacing='0'>" & tableContent & "</table>"
 end function
 
 function obtainSearchQuery(byVal nombre, byVal numero, tipobus)
