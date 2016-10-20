@@ -13,7 +13,7 @@ define(['app/viewModel/ViewModel'
 			Object.assign(search, new ViewModel(search, view));
 
 			var find = function(name, code){
-				ajaxRequest = new Server("substance").request({
+				var ajaxRequest = new Server("substance").request({
 					name: name
 					, code: code
 					, action: "search"
@@ -21,9 +21,15 @@ define(['app/viewModel/ViewModel'
 				return ajaxRequest;
 			};
 
-			find(this.name, this.code);
-			search.render();
-			search.bind();
+			var show = function(search){
+				search.render();
+				search.bind();
+			};
+
+			find(this.name, this.code).done( 
+				output => show(search)
+			);
+
 			return search;
 		},
 

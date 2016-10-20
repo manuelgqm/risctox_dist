@@ -3,6 +3,7 @@
 <!--#include file="../inputSanitizers.asp"-->
 <!--#include file="../JSON151.asp"-->
 <!--#include file="../class/SubstanceClass.asp"-->
+<!--#include file="../db/substancesSearch.asp"-->
 <!--#include file="../../config/dbConnection.asp"-->
 <!--#include file="../../dn_funciones_texto.asp"-->
 <!--#include file="../../dn_funciones_comunes.asp"-->
@@ -28,15 +29,37 @@ function find()
 	id_sustancia = substanceId
 	set mySubstance = new SubstanceClass
 	mySubstance.find substanceId, objConnection2
-	
+
 	set find = mySubstance.fields
 end function
 
 function search()
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim name : name = obtainSanitizedQueryParameter("name")
+	dim code : code = obtainSanitizedQueryParameter("code")
+	dim searchType : searchType = getSearchType(name)
+	name = replace(name, """", "")
+	dim searchQuery : searchQuery = obtainSearchQuery(name, code, searchType)
+	dim substancesRecordset : Set substancesRecordset = Server.CreateObject("ADODB.Recordset")
+	const adOpenStatic = 3
+	const adCmdText = 1
+	substancesRecordset.Open searchQuery, objConnection2, adOpenStatic, adCmdText
+
 	result.add "name", name
-	
+	result.add "records", substancesRecordset
 	set search = result
+end function
+
+' PRIVATE '
+function getSearchType(name)
+	dim  result : result = ""
+	if isQuoted(name) then result = "exacto"
+	getSearchType = result
+end function
+
+function isQuoted(str)
+	dim result : result = false
+	if len(str) - len(replace(str, """", "")) = 2 then result = true
+	isQuoted = result
 end function
 %>
