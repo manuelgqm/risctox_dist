@@ -13,16 +13,17 @@ define(['Server', 'stringExtended'], function(Server){
 				vlaEc: 'Es el valor de referencia para la Exposición de Corta Duración (EC), que es la concentración media del agente químico en la zona de respiración del trabajador, medida o calculada para cualquier período de 15 minutos a lo largo de la jornada laboral, excepto para aquellos agentes químicos para los que se especifique un período de referencia inferior, en la lista de Valores Límite.Lo habitual es determinar las EC de interés, es decir, las del período o períodos de máxima exposición, tomando muestras de 15 minutos de duración en cada uno de ellos. El VLA-EC no debe ser superado por ninguna EC a lo largo de la jornada laboral.Para aquellos agentes químicos que tienen efectos agudos reconocidos pero cuyos principales efectos tóxicos son de naturaleza crónica, el VLA-EC constituye un complemento del VLA-ED y, por tanto, la exposición a estos agentes habrá de valorarse en relación con ambos límites.En cambio, a los agentes químicos de efectos principalmente agudos como, por ejemplo, los gases irritantes, sólo se les asigna para su valoración un VLA-EC.',
 				vlaEd: '',
 				vlaEstado: '',
-			},
-			load: function(){
-				ajaxRequest = new Server("substance").request({
-					substanceId: self.id
-				});
-				return ajaxRequest;
 			}
 		}
 
 		Object.assign(this, defaults);
+
+		this.load = function(){
+			ajaxRequest = new Server("substance").request({
+				substanceId: self.id
+			});
+			return ajaxRequest;
+		};
 
 		this.hasVlaEstado = function(){
 			return this.valoresLimiteAmbiental.map(element => element.estado).filter(element => element.length != 0).length != 0;
