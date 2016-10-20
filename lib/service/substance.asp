@@ -16,21 +16,27 @@ Server.ScriptTimeout = 600
 response.expires = -1
 
 dim action : action = obtainSanitizedQueryParameter("action")
-dim JSONResponse : JSONResponse = execute( sanitizeScript(action) & "()" )
+dim actionResult
+execute( _
+	"set actionResult = " & sanitizeScript(action) & "()" _
+)
+response.write ((new JSON).toJSON("data", actionResult, false))
 
 function find()
-	dim substanceId, substanceFields, mySubstance
+	dim substanceId, mySubstance
 	substanceId = obtainSanitizedQueryParameter("substanceId")
 	id_sustancia = substanceId
 	set mySubstance = new SubstanceClass
 	mySubstance.find substanceId, objConnection2
-	set substanceFields = mySubstance.fields
-	response.write ((new JSON).toJSON("data", substanceFields, false))
+	
+	set find = mySubstance.fields
 end function
 
 function search()
+	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim name : name = obtainSanitizedQueryParameter("name")
-	response.write name
-	search = name
+	result.add "name", name
+	
+	set search = result
 end function
 %>
