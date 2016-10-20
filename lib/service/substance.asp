@@ -1,5 +1,6 @@
-<%@ LANGUAGE="VBSCRIPT" CODEPAGE="65001" LCID="1034"%>	
+<%@ LANGUAGE="VBSCRIPT" CODEPAGE="65001" LCID="1034"%>
 <!--#include file="../urlManipulations.asp"-->
+<!--#include file="../inputSanitizers.asp"-->
 <!--#include file="../JSON151.asp"-->
 <!--#include file="../class/SubstanceClass.asp"-->
 <!--#include file="../../config/dbConnection.asp"-->
@@ -14,13 +15,22 @@ Response.CharSet = "UTF-8"
 Server.ScriptTimeout = 600
 response.expires = -1
 
-dim substanceId, substanceFields, mySubstance
+dim action : action = obtainSanitizedQueryParameter("action")
+dim JSONResponse : JSONResponse = execute( sanitizeScript(action) & "()" )
 
-substanceId = obtainSanitizedQueryParameter("substanceId")
-id_sustancia = substanceId
-set mySubstance = new SubstanceClass
-mySubstance.find substanceId, objConnection2
-set substanceFields = mySubstance.fields
+function find()
+	dim substanceId, substanceFields, mySubstance
+	substanceId = obtainSanitizedQueryParameter("substanceId")
+	id_sustancia = substanceId
+	set mySubstance = new SubstanceClass
+	mySubstance.find substanceId, objConnection2
+	set substanceFields = mySubstance.fields
+	response.write ((new JSON).toJSON("data", substanceFields, false))
+end function
 
-response.write ((new JSON).toJSON("data", substanceFields, false))
+function search()
+	dim name : name = obtainSanitizedQueryParameter("name")
+	response.write name
+	search = name
+end function
 %>

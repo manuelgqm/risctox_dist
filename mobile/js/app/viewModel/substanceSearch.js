@@ -16,7 +16,7 @@ define(['app/viewModel/ViewModel'
 				ajaxRequest = new Server("substance").request({
 					name: name
 					, code: code
-					, action: "find"
+					, action: "search"
 				});
 				return ajaxRequest;
 			};

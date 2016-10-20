@@ -21,6 +21,7 @@ define(['Server', 'stringExtended'], function(Server){
 		this.load = function(){
 			ajaxRequest = new Server("substance").request({
 				substanceId: self.id
+				, action: "find"
 			});
 			return ajaxRequest;
 		};
