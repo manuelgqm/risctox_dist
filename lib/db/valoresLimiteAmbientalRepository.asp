@@ -77,9 +77,10 @@ function formatDefinitionKeysQueryList(byVal definitionKeys)
 	dim result : result = ""
 	dim format1 : format1 = Array("1", "2", "3", "4", "5", "6", "7", "8", "o")
 	dim format2 : format2 = Array("F", "I", "S")
-	dim i, definitionKeyFormated
+	dim i, definitionKeyFormated, definitionKey
 	for i = 0 to ubound(definitionKeys)
-		definitionKeyFormated = trim(definitionKeys(i))
+		definitionKey = trim(definitionKeys(i))
+		definitionKeyFormated = definitionKey
 		if inArray(definitionKey, format1) then
 			definitionKeyFormated = "(" & definitionKey & ")"
 		end if
