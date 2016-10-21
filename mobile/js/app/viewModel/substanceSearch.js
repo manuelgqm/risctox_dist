@@ -1,6 +1,7 @@
 define(['app/viewModel/ViewModel'
 		, 'text!app/view/substanceSearch.html'
 		, 'Server'
+		, 'css!app/view/style/layout'
 ], function(ViewModel, view, Server){
 	'use strict';
 	var module = {

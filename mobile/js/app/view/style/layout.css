@@ -1,2 +1,6 @@
-body{padding: 5px; background-color: }
-.row{margin-bottom: 5px;}
+.top-header{
+	color: white; 
+	background: #097db0 url("../image/header-background.jpg") right/60px no-repeat;
+	padding-left: 10px;
+	font-size: 16pt;
+}
