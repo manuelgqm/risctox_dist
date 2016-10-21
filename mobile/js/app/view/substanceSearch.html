@@ -1,6 +1,13 @@
-<div id="search">
-	<p>Selecciona una sustancia de la lista para ver su ficha</p>
-	<ul data-bind="foreach: results">
-		<li data-bind="html: nombre, click: $root.select"></li>
-	</ul>
+<div id="search" class="text-center">
+	<div class="top-header">
+		Risctox busqueda -> 
+		<span data-bind="if: name.length"> nombre: <span id="nombre" data-bind="html: name"></span>
+		<span data-bind="if: code.length"> número: <span id="nombre" data-bind="html: code"></span>
+	</div>
+	<div data-bind="foreach: results" class="list-group">
+		<button data-bind="html: nombre, click: $root.select" type="button" class="list-group-item"></button>
+	</div>
+	<div style="margin-top: 10px;">
+		<a class="btn btn-primary" href="#/finder">nueva búsqueda</a>
+	</div>
 </div>
