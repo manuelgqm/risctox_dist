@@ -8,7 +8,7 @@ define([
 	module = {
 		run: function(){
 			var substanceCardViewModel = {domId: 'card'};
-			var substanceId = 957597;
+			var substanceId = this.id;
 			var substance = new SubstanceModel(substanceId);
 			Object.assign(substanceCardViewModel, substance, new ViewModel(substanceCardViewModel, substanceCardView));
 			substance.load().done(function(output){
