@@ -16,7 +16,7 @@ function obtainFeaturedLists(id_sustancia, connection)
 		"pesticidas_prohibidas", "corap" _
 	)
 
-	dim listsContainingSubstance()
+	dim listsContainingSubstance : listsContainingSubstance = Array()
 	dim size
 	size = 0
 	for i = 0 to uBound(substanceLists)

@@ -4,6 +4,10 @@ function findPictogramasRd1272(simbolosRdString, connection)
 	Dim pictograms : pictograms = Array()
 	
 	simbolosRdString = removeTailSeparator(simbolosRdString, ",")
+	if isNull(simbolosRdString) then
+		findPictogramasRd1272 = pictograms
+		exit function
+	end if
 	simbolosRd = split(simbolosRdString, ",")
 	for i = 0 to ubound(simbolosRd)
 		simbolo = trim(simbolosRd(i))

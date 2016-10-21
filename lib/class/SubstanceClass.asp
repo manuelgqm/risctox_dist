@@ -27,6 +27,10 @@ Class SubstanceClass
 		dim result
 		result = false
 
+		if not isArray(Me.fields.Item("featuredLists")) then
+			inList = result
+			exit function
+		end if
 		if listName = "" Then
 			inList = result
 			exit function
