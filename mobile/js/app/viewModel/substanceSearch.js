@@ -34,7 +34,6 @@ define(['app/viewModel/ViewModel'
 			return search;
 		},
 
-
-	}
+	};
 	return module;
 });
