@@ -1,5 +1,5 @@
 define(['app/viewModel/ViewModel'
-		,'text!app/view/substanceSearch.html'
+		, 'text!app/view/substanceSearch.html'
 		, 'Server'
 ], function(ViewModel, view, Server){
 	'use strict';
@@ -13,29 +13,21 @@ define(['app/viewModel/ViewModel'
 			};
 			Object.assign(search, new ViewModel(search, view));
 
-			var requestServer = function(search){
-				var ajaxRequest = new Server("substance").request({
-					name: search.name
-					, code: search.code
-					, action: "search"
-				});
-				return ajaxRequest;
-			};
-
-			var show = function(search){
+			var returnResults = function(records, search){
+				search.results = records;
 				search.render();
 				search.bind();
 			};
 
-			var setResults = function(search, results){
-				search.results = results;
-				return search;
-			}
+			var requestServer = (function(search){
+				var ajaxRequest = new Server("substance").request({
+					name: search.name
+					, code: search.code
+					, action: "search"
+				}).done( output => returnResults(output.data.records, search) );
 
-			requestServer(search).done( function(output){
-				setResults(search, output.data.records);
-				show(search);
-			});
+				return ajaxRequest;
+			})(search);
 
 			return search;
 		},
