@@ -28,9 +28,12 @@ define(['app/viewModel/ViewModel'
 
 				return ajaxRequest;
 			})(search);
+			
+			search.select = current =>	window.location = "#/card/" + current.id;
 
 			return search;
 		},
+
 
 	}
 	return module;
