@@ -6,16 +6,17 @@ define(['app/viewModel/ViewModel'
 	var module = {
 		run: function(){
 			var search = {
-				domId : "search",
-				name: this.name,
-				code: this.code
+				domId : "search"
+				, name: this.name
+				, code: this.code
+				, results: []
 			};
 			Object.assign(search, new ViewModel(search, view));
 
-			var find = function(name, code){
+			var requestServer = function(search){
 				var ajaxRequest = new Server("substance").request({
-					name: name
-					, code: code
+					name: search.name
+					, code: search.code
 					, action: "search"
 				});
 				return ajaxRequest;
@@ -26,9 +27,15 @@ define(['app/viewModel/ViewModel'
 				search.bind();
 			};
 
-			find(this.name, this.code).done( 
-				output => show(search)
-			);
+			var setResults = function(search, results){
+				search.results = results;
+				return search;
+			}
+
+			requestServer(search).done( function(output){
+				setResults(search, output.data.records);
+				show(search);
+			});
 
 			return search;
 		},

@@ -1,9 +1,6 @@
 <div id="search">
-	<p>Searching for:</p>
-	<p>
-		Name: <span data-bind="text: name"></span>
-	</p>
-	<p>
-		Code: <span data-bind="text: code"></span>
-	</p>
+	<p>Selecciona una sustancia de la lista para ver su ficha</p>
+	<ul data-bind="foreach: results">
+		<li data-bind="html: nombre"></li>
+	</ul>
 </div>
