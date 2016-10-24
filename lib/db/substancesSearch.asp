@@ -2,6 +2,14 @@
 <%
 function doSearch(displayMode)
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
+	Dim nombre, numero, tipobus
+	nombre = lcase(EliminaInyeccionSQL(request.form("nombre")))
+	numero = EliminaInyeccionSQL(request.form("numero"))
+	tipobus = EliminaInyeccionSQL(request.form("tipobus"))
+	if nombre = "" and numero = "" then
+		set doSearch = result
+		exit function
+	end if
 	dim numRecordsByPage
 	numRecordsByPage = EliminaInyeccionSQL( request( "numRecordsByPage" ) )
 	if numRecordsByPage = "" then numRecordsByPage = 50
@@ -11,15 +19,10 @@ function doSearch(displayMode)
 		numRecordsByPage=50
 	end if
 
-	Dim nombre, numero, tipobus
-	nombre = lcase(EliminaInyeccionSQL(request.form("nombre")))
-	numero = EliminaInyeccionSQL(request.form("numero"))
-	tipobus = EliminaInyeccionSQL(request.form("tipobus"))
 
 	select case displayMode
 
 		case "search":
-
 			dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus)
 
 			Set objRst = Server.CreateObject("ADODB.Recordset")

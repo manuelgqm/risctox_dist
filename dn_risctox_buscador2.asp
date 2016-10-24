@@ -6,10 +6,9 @@
 <!--#include file="lib/db/substancesSearch.asp"-->
 <%
 dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
-if displayMode = "" then
+if displayMode = "1" or displayMode = "" then
 	displayMode = "search"
 end if
-
 dim search : set search = doSearch(displayMode)
 %>
 
