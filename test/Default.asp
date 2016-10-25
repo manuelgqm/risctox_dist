@@ -5,7 +5,7 @@
 
 <%
 	' Register pages to test
-	Call ASPUnit.AddPage("TestAccount.asp")
+	Call ASPUnit.AddPage("TestSubstance.asp")
 
 	' Execute tests
 	Call ASPUnit.Run()
