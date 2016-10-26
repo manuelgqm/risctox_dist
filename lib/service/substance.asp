@@ -28,7 +28,7 @@ function find()
 	substanceId = obtainSanitizedQueryParameter("substanceId")
 	id_sustancia = substanceId
 	set mySubstance = new SubstanceClass
-	mySubstance.find substanceId, objConnection2
+	mySubstance.obtainLevelOneFields substanceId, objConnection2
 
 	set find = mySubstance.fields
 end function

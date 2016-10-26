@@ -15,13 +15,16 @@ Class SubstanceClass
 		dim fields
 		set fields = findSubstance(id_sustancia, connection)
 		Me.Fields = fields
-		call obtainLevelOneFields(connection)
+		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
 		find = id_sustancia
 	end function
 
-	Private sub obtainLevelOneFields(connection)
+	Public function obtainLevelOneFields(id_sustancia, connection)
+		dim fields
+		set fields = findSubstanceLevelOne(id_sustancia, connection)
+		Me.fields = fields
 		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
-	End sub
+	End function
 
 	Public function inList(listName)
 		dim result

@@ -20,6 +20,15 @@ function findSubstance(id_sustancia, connection)
 	set findSubstance = substance
 end function
 
+function findSubstanceLevelOne(id_sustancia, connection)
+	sql = composeSubstanceQuery( id_sustancia )
+	set substanceRecordset = connection.execute(sql)
+	set substance = extractSubstanceLevelOneFields(id_sustancia, substanceRecordset, connection)
+	substanceRecordset.close()
+	set substanceRecordset = nothing
+	set findSubstanceLevelOne = substance
+end function
+
 ' PRIVATE
 function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
@@ -275,6 +284,120 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substance)
 
 	set extractSubstance = substance
+end function
+
+function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connection)
+	set substance = Server.CreateObject("Scripting.Dictionary")
+
+	substance.Add "nombre", substanceRecordset("nombre").Value
+	substance.Add "sinonimos", obtainSynonyms(substanceId, connection)
+	substance.Add "num_cas", substanceRecordset("num_cas").Value
+	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
+	substance.Add "num_rd", substanceRecordset("num_rd").Value
+	'listaNegraClassifications in SubstanceClass'
+	substance.Add "pictogramasRd", findPictogramasRd1272(substanceRecordset("simbolos_rd1272"), connection)
+	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceRecordset.fields, connection)
+	substance.Add "notas_rd1272", obtainNotasRd1272(substanceRecordset("notas_rd1272"), connection)
+	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceRecordset.fields)
+	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substanceRecordset.fields, connection)
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
+	substance.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
+	set substance = addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
+	substance.Add "aplicaciones", findSubstanceApplications(substanceId, connection)
+
+	' RD1272/2008
+	'substance.Add "clasificacion_rd1272_1", trim(substanceRecordset("clasificacion_rd1272_1").Value)
+'	substance.Add "clasificacion_rd1272_2", trim(substanceRecordset("clasificacion_rd1272_2").Value)
+'	substance.Add "clasificacion_rd1272_3", trim(substanceRecordset("clasificacion_rd1272_3").Value)
+'	substance.Add "clasificacion_rd1272_4", trim(substanceRecordset("clasificacion_rd1272_4").Value)
+'	substance.Add "clasificacion_rd1272_5", trim(substanceRecordset("clasificacion_rd1272_5").Value)
+'	substance.Add "clasificacion_rd1272_6", trim(substanceRecordset("clasificacion_rd1272_6").Value)
+'	substance.Add "clasificacion_rd1272_7", trim(substanceRecordset("clasificacion_rd1272_7").Value)
+'	substance.Add "clasificacion_rd1272_8", trim(substanceRecordset("clasificacion_rd1272_8").Value)
+'	substance.Add "clasificacion_rd1272_9", trim(substanceRecordset("clasificacion_rd1272_9").Value)
+'	substance.Add "clasificacion_rd1272_10", trim(substanceRecordset("clasificacion_rd1272_10").Value)
+'	substance.Add "clasificacion_rd1272_11", trim(substanceRecordset("clasificacion_rd1272_11").Value)
+'	substance.Add "clasificacion_rd1272_12", trim(substanceRecordset("clasificacion_rd1272_12").Value)
+'	substance.Add "clasificacion_rd1272_13", trim(substanceRecordset("clasificacion_rd1272_13").Value)
+'	substance.Add "clasificacion_rd1272_14", trim(substanceRecordset("clasificacion_rd1272_14").Value)
+'	substance.Add "clasificacion_rd1272_15", trim(substanceRecordset("clasificacion_rd1272_15").Value)
+'	substance.Add "conc_rd1272_1", substanceRecordset("conc_rd1272_1").Value
+'	substance.Add "eti_conc_rd1272_1", substanceRecordset("eti_conc_rd1272_1").Value
+'	substance.Add "conc_rd1272_2", substanceRecordset("conc_rd1272_2").Value
+'	substance.Add "eti_conc_rd1272_2", substanceRecordset("eti_conc_rd1272_2").Value
+'	substance.Add "conc_rd1272_3", substanceRecordset("conc_rd1272_3").Value
+'	substance.Add "eti_conc_rd1272_3", substanceRecordset("eti_conc_rd1272_3").Value
+'	substance.Add "conc_rd1272_4", substanceRecordset("conc_rd1272_4").Value
+'	substance.Add "eti_conc_rd1272_4", substanceRecordset("eti_conc_rd1272_4").Value
+'	substance.Add "conc_rd1272_5", substanceRecordset("conc_rd1272_5").Value
+'	substance.Add "eti_conc_rd1272_5", substanceRecordset("eti_conc_rd1272_5").Value
+'	substance.Add "conc_rd1272_6", substanceRecordset("conc_rd1272_6").Value
+'	substance.Add "eti_conc_rd1272_6", substanceRecordset("eti_conc_rd1272_6").Value
+'	substance.Add "conc_rd1272_7", substanceRecordset("conc_rd1272_7").Value
+'	substance.Add "eti_conc_rd1272_7", substanceRecordset("eti_conc_rd1272_7").Value
+'	substance.Add "conc_rd1272_8", substanceRecordset("conc_rd1272_8").Value
+'	substance.Add "eti_conc_rd1272_8", substanceRecordset("eti_conc_rd1272_8").Value
+'	substance.Add "conc_rd1272_9", substanceRecordset("conc_rd1272_9").Value
+'	substance.Add "eti_conc_rd1272_9", substanceRecordset("eti_conc_rd1272_9").Value
+'	substance.Add "conc_rd1272_10", substanceRecordset("conc_rd1272_10").Value
+'	substance.Add "eti_conc_rd1272_10", substanceRecordset("eti_conc_rd1272_10").Value
+'	substance.Add "conc_rd1272_11", substanceRecordset("conc_rd1272_11").Value
+'	substance.Add "eti_conc_rd1272_11", substanceRecordset("eti_conc_rd1272_11").Value
+'	substance.Add "conc_rd1272_12", substanceRecordset("conc_rd1272_12").Value
+'	substance.Add "eti_conc_rd1272_12", substanceRecordset("eti_conc_rd1272_12").Value
+'	substance.Add "conc_rd1272_13", substanceRecordset("conc_rd1272_13").Value
+'	substance.Add "eti_conc_rd1272_13", substanceRecordset("eti_conc_rd1272_13").Value
+'	substance.Add "conc_rd1272_14", substanceRecordset("conc_rd1272_14").Value
+'	substance.Add "eti_conc_rd1272_14", substanceRecordset("eti_conc_rd1272_14").Value
+'	substance.Add "conc_rd1272_15", substanceRecordset("conc_rd1272_15").Value
+'	substance.Add "eti_conc_rd1272_15", substanceRecordset("eti_conc_rd1272_15").Value
+
+	' dn_risc_sustancias_vl
+'	substance.Add "estado_1", substanceRecordset("estado_1").Value
+'	substance.Add "vla_ed_ppm_1", substanceRecordset("vla_ed_ppm_1").Value
+'	substance.Add "vla_ed_mg_m3_1", substanceRecordset("vla_ed_mg_m3_1").Value
+'	substance.Add "vla_ec_ppm_1", substanceRecordset("vla_ec_ppm_1").Value
+'	substance.Add "vla_ec_mg_m3_1", substanceRecordset("vla_ec_mg_m3_1").Value
+'	substance.Add "notas_vla_1", removeVlbFromNotes(substanceRecordset("notas_vla_1").Value)
+
+'	substance.Add "estado_2", substanceRecordset("estado_2").Value
+'	substance.Add "vla_ed_ppm_2", substanceRecordset("vla_ed_ppm_2").Value
+'	substance.Add "vla_ed_mg_m3_2", substanceRecordset("vla_ed_mg_m3_2").Value
+'	substance.Add "vla_ec_ppm_2", substanceRecordset("vla_ec_ppm_2").Value
+'	substance.Add "vla_ec_mg_m3_2", substanceRecordset("vla_ec_mg_m3_2").Value
+'	substance.Add "notas_vla_2", removeVlbFromNotes(substanceRecordset("notas_vla_2").Value)
+
+'	substance.Add "estado_3", substanceRecordset("estado_3").Value
+'	substance.Add "vla_ed_ppm_3", substanceRecordset("vla_ed_ppm_3").Value
+'	substance.Add "vla_ed_mg_m3_3", substanceRecordset("vla_ed_mg_m3_3").Value
+'	substance.Add "vla_ec_ppm_3", substanceRecordset("vla_ec_ppm_3").Value
+'	substance.Add "vla_ec_mg_m3_3", substanceRecordset("vla_ec_mg_m3_3").Value
+'	substance.Add "notas_vla_3", removeVlbFromNotes(substanceRecordset("notas_vla_3").Value)
+
+'	substance.Add "estado_4", substanceRecordset("estado_4").Value
+'	substance.Add "vla_ed_ppm_4", substanceRecordset("vla_ed_ppm_4").Value
+'	substance.Add "vla_ed_mg_m3_4", substanceRecordset("vla_ed_mg_m3_4").Value
+'	substance.Add "vla_ec_ppm_4", substanceRecordset("vla_ec_ppm_4").Value
+'	substance.Add "vla_ec_mg_m3_4", substanceRecordset("vla_ec_mg_m3_4").Value
+'	substance.Add "notas_vla_4", removeVlbFromNotes(substanceRecordset("notas_vla_4").Value)
+
+'	substance.Add "estado_5", substanceRecordset("estado_5").Value
+'	substance.Add "vla_ed_ppm_5", substanceRecordset("vla_ed_ppm_5").Value
+'	substance.Add "vla_ed_mg_m3_5", substanceRecordset("vla_ed_mg_m3_5").Value
+'	substance.Add "vla_ec_ppm_5", substanceRecordset("vla_ec_ppm_5").Value
+'	substance.Add "vla_ec_mg_m3_5", substanceRecordset("vla_ec_mg_m3_5").Value
+'	substance.Add "notas_vla_5", removeVlbFromNotes(substanceRecordset("notas_vla_5").Value)
+
+'	substance.Add "estado_6", substanceRecordset("estado_6").Value
+'	substance.Add "vla_ed_ppm_6", substanceRecordset("vla_ed_ppm_6").Value
+'	substance.Add "vla_ed_mg_m3_6", substanceRecordset("vla_ed_mg_m3_6").Value
+'	substance.Add "vla_ec_ppm_6", substanceRecordset("vla_ec_ppm_6").Value
+'	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
+'	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
+	
+	set extractSubstanceLevelOneFields = substance
 end function
 
 function composeSubstanceQuery(id_sustancia)
