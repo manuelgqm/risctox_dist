@@ -282,6 +282,11 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "pictogramasRd", findPictogramasRd1272(substance.item("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance, connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substance)
+	substance.Add _
+		"listaNegraClassifications" _
+		, getListaNegraClassifications( _
+			substance("featuredLists"), substance("frasesR"), substanceRecordset("mpmb") _
+		)
 
 	set extractSubstance = substance
 end function
