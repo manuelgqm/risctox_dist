@@ -21,12 +21,12 @@ function removeDuplicates(byval inputStringList, byval separatorChar)
 end function
 
 function stringContains(container, content)
-	if container = "" or content = "" then
 	stringContains = false
-	exit function
+	if container = "" or content = "" then
+		exit function
 	end if
 	if instr(lcase(container), lcase(content)) > 0 then
-	stringContains = true
+		stringContains = true
 	end if
 end function
 
