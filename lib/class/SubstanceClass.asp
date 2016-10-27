@@ -1,4 +1,5 @@
 <!--#include file="../arrayManipulations.asp"-->
+<!--#include file="../stringManipulations.asp"-->
 <!--#include file="../db/substancesRepository.asp"-->
 <%
 Class SubstanceClass
@@ -47,16 +48,7 @@ Class SubstanceClass
 	end function
 
 	public function containsFraseR(frase)
-		dim result : result = false
-		if frase = "" then
-			containsFraseR = result
-			exit function
-		end if
-		if instr(Me.fields.Item("frasesR"), frase) > 0 then
-			result = true
-		end if
-
-		containsFraseR = result
+		containsFraseR = stringContains(Me.fields.Item("frasesR"), frase)
 	end function
 
 	public function hasFrasesRdanesa()

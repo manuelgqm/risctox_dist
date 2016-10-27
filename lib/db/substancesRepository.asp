@@ -1,4 +1,3 @@
-<!--#include file="../stringManipulations.asp"-->
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceListsRepository.asp"-->
 <!--#include file="substanceGroupsRepository.asp"-->
@@ -538,7 +537,7 @@ function getListaNegraClassifications(featuredLists, frasesR, mpmb)
 		, "neurotoxico_rd" _
 		, "neurotoxico_danesa" _
 		, "neurotoxico_nivel" _
-		), featuredLists) then arrayPush result, "neurotóxica" 'Businnes Concern: original condition contains and not MySubstance.contains("R67"), removed due to bad logic
+		), featuredLists) then arrayPush result, "neurotóxica"
 	if anyElementInArray(Array _
 		( "sensibilizante" _
 		, "sensibilizante_danesa" _
@@ -547,10 +546,10 @@ function getListaNegraClassifications(featuredLists, frasesR, mpmb)
 	if anyElementInArray(Array _
 		("tpr", "tpr_danesa" _ 
 		), featuredLists) then arrayPush result, "tóxica para la reproducción"
-	if contains("R33", frasesR) then
+	if stringContains(frasesR, "R33") then
 		arrayPush result, "bioacumulativa"
 	end if
-	if contains("R58", frasesR) then
+	if stringContains(frasesR, "R58") then
 		arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente"
 	end if
 	if inArray("tpb", featuredLists) then
@@ -559,20 +558,12 @@ function getListaNegraClassifications(featuredLists, frasesR, mpmb)
 	if mpmb then
 		arrayPush result, "muy persistente y muy bioacumulativa"
 	end if
-	if contains("R53", frasesR) or contains("R50-53", frasesR) or contains("R51-53", frasesR) or contains("R52-53", frasesR) then
-		arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
-	end if
+	if stringContains(frasesR, "R53") _
+		or stringContains(frasesR, "R50-53") _
+		or stringContains(frasesR, "R51-53") _
+		or stringContains(frasesR, "R52-53") _
+		then arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
 
 	getListaNegraClassifications = result
-end function
-
-function contains(source, target)
-	contains = false
-	if source = "" then
-		exit function
-	end if
-	if instr(target, source) > 0 then
-		contains = true
-	end if
 end function
 %>
