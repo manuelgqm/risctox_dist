@@ -30,26 +30,18 @@ Class SubstanceClass
 		inList = inArray(listName, Me.fields.Item("featuredLists"))
 	end function
 
-	public function presentInLists(lists)
-		dim result
-		result = false
-
+	public function inLists(lists)
+		inLists = false
 		if not isArray(lists) then
-			presentInLists = result
 			exit function
 		end if
-
-		dim i, list
+		dim i
 		for i = 0 to Ubound(lists)
-			list = lists(i)
-			result = Me.inList(list)
-			if result then 
-				presentInLists = true
+			if Me.inList(lists(i)) then 
+				inLists = true
 				exit function
 			end if
 		next
-
-		presentInLists = result
 	end function
 
 	public function inMpmbList()
@@ -58,7 +50,7 @@ Class SubstanceClass
 
 	public function inNeurotoxicosLists()
 		dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-		inNeurotoxicosLists = presentInLists(NEUROTOXICO_LISTS)
+		inNeurotoxicosLists = inLists(NEUROTOXICO_LISTS)
 	end function
 
 	public function containsFraseR(frase)
