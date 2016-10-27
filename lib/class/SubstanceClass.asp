@@ -29,17 +29,7 @@ Class SubstanceClass
 	end function
 
 	public function inLists(lists)
-		inLists = false
-		if not isArray(lists) then
-			exit function
-		end if
-		dim i
-		for i = 0 to Ubound(lists)
-			if Me.inList(lists(i)) then 
-				inLists = true
-				exit function
-			end if
-		next
+		inLists = anyElementInArray(lists, Me.fields.Item("featuredLists"))
 	end function
 
 	public function inMpmbList()
