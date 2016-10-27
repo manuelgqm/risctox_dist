@@ -37,8 +37,13 @@ Class SubstanceClass
 	end function
 
 	public function inNeurotoxicosLists()
-		dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-		inNeurotoxicosLists = inLists(NEUROTOXICO_LISTS)
+		inNeurotoxicosLists = inLists( array _
+			( "neurotoxico" _
+			, "neurotoxico_rd" _
+			, "neurotoxico_danesa" _
+			, "neurotoxico_nivel" _
+			) _
+		)
 	end function
 
 	public function containsFraseR(frase)
