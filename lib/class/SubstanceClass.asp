@@ -59,13 +59,10 @@ Class SubstanceClass
 	end function
 
 	public function hasListaNegraClassifications()
-		dim result : result = false
-
+		hasListaNegraClassifications = false
 		if ubound(mFields.item("listaNegraClassifications")) > -1 then
-			result = true
+			hasListaNegraClassifications = true
 		end if
-
-		hasListaNegraClassifications = result
 	end function
 
 'PRIVATE'
