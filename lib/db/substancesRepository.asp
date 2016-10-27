@@ -306,7 +306,9 @@ function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connect
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
 	substance.Add "aplicaciones", findSubstanceApplications(substanceId, connection)
-	
+	substance.Add "featuredLists", obtainFeaturedLists(substanceId, connection)
+	substance.Add "frasesR", joinFrases("R", substanceRecordset)
+
 	set extractSubstanceLevelOneFields = substance
 end function
 
@@ -344,6 +346,11 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus.eti_conc_rd1272_7, sus.eti_conc_rd1272_8, sus.eti_conc_rd1272_9, " &_
 			"sus.eti_conc_rd1272_10, sus.eti_conc_rd1272_11, sus.eti_conc_rd1272_12, " &_
 			"sus.eti_conc_rd1272_13, sus.eti_conc_rd1272_14, sus.eti_conc_rd1272_15, " &_
+			"sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, " &_
+			"sus.clasificacion_4, sus.clasificacion_5, sus.clasificacion_6, " &_
+			"sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, " &_
+			"sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, " &_
+			"sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15, " &_
 			"sus_vl.estado_1, sus_vl.estado_2, sus_vl.estado_3, sus_vl.estado_4, sus_vl.estado_5, sus_vl.estado_6, " &_
 			"sus_vl.vla_ed_ppm_1, sus_vl.vla_ed_ppm_2, sus_vl.vla_ed_ppm_3, " &_
 			"sus_vl.vla_ed_ppm_4, sus_vl.vla_ed_ppm_5, sus_vl.vla_ed_ppm_6, " &_
@@ -354,11 +361,14 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus_vl.vla_ec_mg_m3_1, sus_vl.vla_ec_mg_m3_2, sus_vl.vla_ec_mg_m3_3, " &_
 			"sus_vl.vla_ec_mg_m3_4, sus_vl.vla_ec_mg_m3_5, sus_vl.vla_ec_mg_m3_6, " &_
 			"sus_vl.notas_vla_1, sus_vl.notas_vla_2, sus_vl.notas_vla_3, " &_
-			"sus_vl.notas_vla_4, sus_vl.notas_vla_5, sus_vl.notas_vla_6 " &_
+			"sus_vl.notas_vla_4, sus_vl.notas_vla_5, sus_vl.notas_vla_6, " &_
+			"sus_amb.mpmb " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
-		"FULL OUTER JOIN dn_risc_sustancias_vl as sus_vl " &_
+		"LEFT JOIN dn_risc_sustancias_vl as sus_vl " &_
 			"ON sus.id = sus_vl.id_sustancia " &_
+		"LEFT JOIN dn_risc_sustancias_ambiente as sus_amb " &_
+			"ON sus.id = sus_amb.id_sustancia " &_
 		"WHERE sus.id = " & id_sustancia
 
 	composeSubstanceLevelOneFieldsQuery = sql
