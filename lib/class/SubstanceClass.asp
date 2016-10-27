@@ -27,20 +27,7 @@ Class SubstanceClass
 	End function
 
 	Public function inList(listName)
-		dim result
-		result = false
-
-		if not isArray(Me.fields.Item("featuredLists")) then
-			inList = result
-			exit function
-		end if
-		if listName = "" Then
-			inList = result
-			exit function
-		end if
-		result = inArray(listName, Me.fields.Item("featuredLists"))
-
-		inList = result
+		inList = inArray(listName, Me.fields.Item("featuredLists"))
 	end function
 
 	public function presentInLists(lists)
