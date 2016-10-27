@@ -52,7 +52,7 @@ End Sub
 function inArray(element, arrayParameter)
 	inArray = false
 
-	if not isArray(arrayParameter) then
+	if not isArray(arrayParameter) or element = "" then
 		inArray = false
 		exit function
 	end if
