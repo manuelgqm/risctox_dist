@@ -52,12 +52,10 @@ Class SubstanceClass
 	end function
 
 	public function hasFrasesRdanesa()
-		dim result : result = false
+		hasFrasesRdanesa = false
 		if mFields.Item("frasesR") = "" and mFields.Item("frases_r_danesa") <> "" then
-			result = true
+			hasFrasesRdanesa = true
 		end if
-
-		hasFrasesRdanesas = result
 	end function
 
 	public function hasListaNegraClassifications()
