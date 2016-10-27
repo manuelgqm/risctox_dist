@@ -1,3 +1,4 @@
+<!--#include file="../arrayManipulations.asp"-->
 <!--#include file="../db/substancesRepository.asp"-->
 <%
 Class SubstanceClass

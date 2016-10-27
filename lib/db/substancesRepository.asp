@@ -1,4 +1,3 @@
-<!--#include file="../arrayManipulations.asp"-->
 <!--#include file="../stringManipulations.asp"-->
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceListsRepository.asp"-->
