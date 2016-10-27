@@ -62,4 +62,18 @@ function inArray(element, arrayParameter)
 		end if
 	Next
 End Function
+
+function anyElementInArray(sources, targets)
+	anyElementInArray = false
+	if not isArray(sources) then
+		exit function
+	end if
+	dim i
+	for i = 0 to Ubound(sources)
+		if inArray(sources(i), targets) then 
+			anyElementInArray = true
+			exit function
+		end if
+	next
+end function
 %>

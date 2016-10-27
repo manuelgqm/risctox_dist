@@ -23,7 +23,7 @@ Class SubstanceClass
 		dim fields
 		set fields = findSubstanceLevelOne(id_sustancia, connection)
 		Me.fields = fields
-		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
+'		Me.Fields.item("listaNegraClassifications") = getListaNegraClassifications()
 	End function
 
 	Public function inList(listName)

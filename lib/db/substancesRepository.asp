@@ -294,7 +294,6 @@ function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connect
 	substance.Add "num_cas", substanceRecordset("num_cas").Value
 	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
 	substance.Add "num_rd", substanceRecordset("num_rd").Value
-	'listaNegraClassifications in SubstanceClass'
 	substance.Add "pictogramasRd", findPictogramasRd1272(substanceRecordset("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceRecordset.fields, connection)
 	substance.Add "notas_rd1272", obtainNotasRd1272(substanceRecordset("notas_rd1272"), connection)
@@ -308,6 +307,11 @@ function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connect
 	substance.Add "aplicaciones", findSubstanceApplications(substanceId, connection)
 	substance.Add "featuredLists", obtainFeaturedLists(substanceId, connection)
 	substance.Add "frasesR", joinFrases("R", substanceRecordset)
+	substance.Add _
+		"listaNegraClassifications" _
+		, getListaNegraClassifications( _
+			substance("featuredLists"), substance("frasesR"), substanceRecordset("mpmb") _
+		)
 
 	set extractSubstanceLevelOneFields = substance
 end function
@@ -507,4 +511,64 @@ sub printSusbtance(substance)
 		response.write "<br>"
 	next
 end sub
+
+function getListaNegraClassifications(featuredLists, frasesR, mpmb)
+	dim result : result = Array()
+
+	if anyElementInArray(Array _
+		( "cancer_danesa" _
+		, "cancer_iarc_excepto_grupo_3" _
+		, "cancer_otras_excepto_grupo_4" _
+		, "cancer_mama" _
+		), featuredLists) then arrayPush result, "cancerígena"
+	if inArray("cop", featuredLists) then
+		arrayPush result, "cop"
+	end if
+	if anyElementInArray(Array _
+		("mutageno_rd", "mutageno_danesa"), featuredLists) then	arrayPush result, "mutágena"
+	if inArray("de", featuredLists) then
+		arrayPush result, "disruptora endocrina"
+	end if
+	if anyElementInArray(Array _
+		( "neurotoxico" _
+		, "neurotoxico_rd" _
+		, "neurotoxico_danesa" _
+		, "neurotoxico_nivel" _
+		), featuredLists) then arrayPush result, "neurotóxica" 'Businnes Concern: original condition contains and not MySubstance.contains("R67"), removed due to bad logic
+	if anyElementInArray(Array _
+		( "sensibilizante" _
+		, "sensibilizante_danesa" _
+		, "sensibilizante_reach" _
+		), featuredLists) then arrayPush result, "sensibilizante"
+	if anyElementInArray(Array _
+		("tpr", "tpr_danesa" _ 
+		), featuredLists) then arrayPush result, "tóxica para la reproducción"
+	if contains("R33", frasesR) then
+		arrayPush result, "bioacumulativa"
+	end if
+	if contains("R58", frasesR) then
+		arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente"
+	end if
+	if inArray("tpb", featuredLists) then
+		arrayPush result, "tóxica, persistente y bioacumulativa"
+	end if
+	if mpmb then
+		arrayPush result, "muy persistente y muy bioacumulativa"
+	end if
+	if contains("R53", frasesR) or contains("R50-53", frasesR) or contains("R51-53", frasesR) or contains("R52-53", frasesR) then
+		arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
+	end if
+
+	getListaNegraClassifications = result
+end function
+
+function contains(source, target)
+	contains = false
+	if source = "" then
+		exit function
+	end if
+	if instr(target, source) > 0 then
+		contains = true
+	end if
+end function
 %>
