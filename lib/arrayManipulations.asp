@@ -51,11 +51,10 @@ End Sub
 
 function inArray(element, arrayParameter)
 	inArray = false
-
 	if not isArray(arrayParameter) or element = "" then
-		inArray = false
 		exit function
 	end if
+	dim i
 	For i = 0 To Ubound(arrayParameter)
 		If Trim(arrayParameter(i)) = Trim(element) Then 
 			inArray = true
@@ -63,5 +62,4 @@ function inArray(element, arrayParameter)
 		end if
 	Next
 End Function
-
 %>
