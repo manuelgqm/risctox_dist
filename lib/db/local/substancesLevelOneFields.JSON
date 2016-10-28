@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "id": 953905,
       "nombre": "di(acetato) de berilio",
       "num_cas": "543-81-7",
       "num_ce_einecs": "208-850-6",
@@ -106,6 +107,7 @@
       "mpmb": null
     },
     {
+      "id": 954578,
       "nombre": "hipoclorito de sodio",
       "num_cas": "7681-52-9",
       "num_ce_einecs": "231-668-3",
@@ -211,6 +213,7 @@
       "mpmb": null
     },
     {
+      "id": 955906,
       "nombre": "mercurio",
       "num_cas": "7439-97-6",
       "num_ce_einecs": "231-106-7",
@@ -316,6 +319,7 @@
       "mpmb": null
     },
     {
+      "id": 956228,
       "nombre": "plomo",
       "num_cas": "7439-92-1",
       "num_ce_einecs": "231-100-4",
@@ -421,6 +425,7 @@
       "mpmb": null
     },
     {
+      "id": 956772,
       "nombre": "benceno",
       "num_cas": "71-43-2",
       "num_ce_einecs": "200-753-7",
@@ -526,6 +531,7 @@
       "mpmb": null
     },
     {
+      "id": 956773,
       "nombre": "tolueno",
       "num_cas": "108-88-3",
       "num_ce_einecs": "203-625-9",
@@ -631,6 +637,7 @@
       "mpmb": null
     },
     {
+      "id": 957555,
       "nombre": "4,4&#39;-isopropilidendifenol",
       "num_cas": "80-05-7",
       "num_ce_einecs": "201-245-8",
@@ -736,6 +743,7 @@
       "mpmb": null
     },
     {
+      "id": 957597,
       "nombre": "formaldehído",
       "num_cas": "50-00-0",
       "num_ce_einecs": "200-001-8",

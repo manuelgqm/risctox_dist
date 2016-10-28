@@ -4,6 +4,7 @@
 <!--#include file="../lib/dn_funciones_texto_utf-8.asp"-->
 <!--#include file="../lib/dn_funciones_comunes_utf-8.asp"-->
 <!--#include file="../config/dbConnection.asp"-->
+<!--#include file="../lib/db/substanceLocalRepository.asp"-->
 
 <%
 	Response.ContentType = "text/html"
@@ -15,10 +16,10 @@
 	Call ASPUnit.AddModule( _
 		ASPUnit.CreateModule( _
 			"Single Substance Tests", _
-			Array( _
-				ASPUnit.CreateTest("Name") _
-			), _
-			ASPUnit.CreateLifeCycle("Setup", "Teardown") _
+			Array _ 
+				( ASPUnit.CreateTest("Name") _
+				, ASPUnit.CreateTest("local") _
+			), ASPUnit.CreateLifeCycle("Setup", "Teardown") _
 		) _
 	)
 
@@ -42,5 +43,11 @@
 		dim substance : set substance = mySubstance.fields
 		Call ASPUnit.Equal(substance.item("nombre"), "formaldehído", "Name loaded '" & substance.item("nombre") & "' should match mocked formaldehído")
 	End Function
+
+	function local()
+		dim localDataFile : localDataFile = Server.MapPath("/istas/risctox/lib/db/local/substancesLevelOneFields.JSON")
+		dim formol : set formol = findLocalJSONSubstance(localDataFile, 957597)
+		call ASPUnit.Equal(formol("nombre"), "formaldehído", "Name loaded '" & formol("nombre") & "' should match mocked formaldehído")
+	end function
 
 %>
