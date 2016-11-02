@@ -36,9 +36,9 @@ end function
 function search()
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim name : name = obtainSanitizedQueryParameter("name")
-	name = replace(name, "*", "")
 	dim code : code = obtainSanitizedQueryParameter("code")
 	dim searchType : searchType = getSearchType(name)
+	name = replace(name, "*", "")
 	dim searchQuery : searchQuery = obtainSearchQuery(name, code, searchType)
 	dim substancesRecordset : Set substancesRecordset = Server.CreateObject("ADODB.Recordset")
 	const adOpenStatic = 3
@@ -58,8 +58,7 @@ function getSearchType(name)
 end function
 
 function hasArterisk(str)
-	dim result : result = false
-	if len(str) <> len(replace(str, "*", "")) then result = true
-	hasArterisk = result
+	hasArterisk = false
+	hasArterisk = inStr(str, "*") > 0
 end function
 %>
