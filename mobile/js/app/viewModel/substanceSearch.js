@@ -15,6 +15,11 @@ define(['app/viewModel/ViewModel'
 			Object.assign(search, new ViewModel(search, view));
 
 			var returnResults = function(records, search){
+				console.log(records)
+				if (records.length == 1) {
+					showCard(records[0].id);
+					return true;
+				}
 				search.results = records;
 				search.render();
 				search.bind();
@@ -29,8 +34,10 @@ define(['app/viewModel/ViewModel'
 
 				return ajaxRequest;
 			})(search);
+
+			var showCard = substanceId => window.location = "#/card/" + substanceId;
 			
-			search.select = current =>	window.location = "#/card/" + current.id;
+			search.select = current =>	showCard(current.id);
 
 			return search;
 		},
