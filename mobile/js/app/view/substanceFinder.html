@@ -6,12 +6,12 @@
 	<div class="well well-lg">
 		<form action="substance_card.html" role="form">
 			<div class="form-group">
-				<label for="substance-name">Sustancia</label>
-				<input name="subtance-name" type="text" data-bind="value: name" class="form-control" placeholder="Introduce el nombre completo o una parte" />
+				<label for="substance-name">Nombre sustancia</label>
+				<input name="subtance-name" type="text" data-bind="value: name" class="form-control" placeholder="Utiliza * al final para buscar por una parte" />
 			</div>
 			<div class="form-group">
 				<label for="substance-number">Número CAS, CE o RD</label>
-				<input name="substance-number" type="text" data-bind="value: code" class="form-control" placeholder="Introduce uno de ellos completo o una parte"/>
+				<input name="substance-number" type="text" data-bind="value: code" class="form-control" placeholder="Introduce uno de ellos"/>
 			</div>
 		</form>
 		<a class="btn btn-primary" data-bind="click: runFinder">Mostrar</a>
