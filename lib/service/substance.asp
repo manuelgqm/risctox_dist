@@ -5,8 +5,8 @@
 <!--#include file="../class/SubstanceClass.asp"-->
 <!--#include file="../db/substancesSearch.asp"-->
 <!--#include file="../../config/dbConnection.asp"-->
-<!--#include file="../../dn_funciones_texto.asp"-->
-<!--#include file="../../dn_funciones_comunes.asp"-->
+<!--#include file="../dn_funciones_texto_utf-8.asp"-->
+<!--#include file="../dn_funciones_comunes_utf-8.asp"-->
 
 <%
 Response.ContentType = "text/html"
@@ -36,9 +36,9 @@ end function
 function search()
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim name : name = obtainSanitizedQueryParameter("name")
+	name = replace(name, "*", "")
 	dim code : code = obtainSanitizedQueryParameter("code")
 	dim searchType : searchType = getSearchType(name)
-	name = replace(name, """", "")
 	dim searchQuery : searchQuery = obtainSearchQuery(name, code, searchType)
 	dim substancesRecordset : Set substancesRecordset = Server.CreateObject("ADODB.Recordset")
 	const adOpenStatic = 3
@@ -52,14 +52,14 @@ end function
 
 ' PRIVATE '
 function getSearchType(name)
-	dim  result : result = ""
-	if isQuoted(name) then result = "exacto"
+	dim  result : result = "exacto"
+	if hasArterisk(name) then result = ""
 	getSearchType = result
 end function
 
-function isQuoted(str)
+function hasArterisk(str)
 	dim result : result = false
-	if len(str) - len(replace(str, """", "")) = 2 then result = true
-	isQuoted = result
+	if len(str) <> len(replace(str, "*", "")) then result = true
+	hasArterisk = result
 end function
 %>
