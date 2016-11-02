@@ -1,8 +1,10 @@
-define(['app/viewModel/ViewModel'
-		, 'text!app/view/substanceSearch.html'
-		, 'Server'
-		, 'css!app/view/style/layout'
-], function(ViewModel, view, Server){
+define(
+	[ 'app/viewModel/ViewModel'
+	, 'text!app/view/substanceSearch.html'
+	, 'Server'
+	, 'css!app/view/style/layout'
+	]
+, function(ViewModel, view, Server){
 	'use strict';
 	var module = {
 		run: function(){
@@ -12,32 +14,31 @@ define(['app/viewModel/ViewModel'
 				, code: this.code
 				, results: []
 			};
-			Object.assign(search, new ViewModel(search, view));
 
-			var returnResults = function(records, search){
-				console.log(records)
-				if (records.length == 1) {
-					showCard(records[0].id);
-					return true;
+			Object.assign
+				( search
+				, new ViewModel(search, view)
+				, { select : current => showCard(current.id) }
+				);
+
+			new Server("substance").request(
+				{ name: search.name
+				, code: search.code
+				, action: "search"
 				}
+			).done( 
+				output => (output.data.records.length == 1) 
+					? showCard(output.data.records[0].id)
+					: showResults(output.data.records, search)
+			);
+
+			var showResults = function(records, search){
 				search.results = records;
 				search.render();
 				search.bind();
 			};
 
-			var requestServer = (function(search){
-				var ajaxRequest = new Server("substance").request({
-					name: search.name
-					, code: search.code
-					, action: "search"
-				}).done( output => returnResults(output.data.records, search) );
-
-				return ajaxRequest;
-			})(search);
-
 			var showCard = substanceId => window.location = "#/card/" + substanceId;
-			
-			search.select = current =>	showCard(current.id);
 
 			return search;
 		},
