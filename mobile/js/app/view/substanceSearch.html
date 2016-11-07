@@ -9,8 +9,15 @@
 			<h4>No se obtuvieron resultados para la búsqueda.</h4>
 		</div>
 	</div>
-	<div data-bind="foreach: results" class="list-group">
-		<button data-bind="html: nombre, click: $root.select" type="button" class="list-group-item"></button>
+	<div data-bind="if: overflow">
+		<div class="well">
+			<h4>Se obtuvieron demasiados resultados. Cambia los criterios de búsqueda</h4>
+		</div>
+	</div>
+	<div data-bind="ifnot: overflow">
+		<div data-bind="foreach: results" class="list-group">
+			<button data-bind="html: nombre, click: $root.select" type="button" class="list-group-item"></button>
+		</div>
 	</div>
 	<div style="margin-top: 10px;">
 		<a class="btn btn-primary" href="#/finder">nueva búsqueda</a>

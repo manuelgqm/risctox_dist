@@ -13,6 +13,7 @@ define(
 				, name: this.name
 				, code: this.code
 				, results: []
+				, overflow: false
 			};
 
 			Object.assign
@@ -33,6 +34,10 @@ define(
 			);
 
 			var showResults = function(records, search){
+				const resultsLimit = 100;
+				search.overflow = (records.length > resultsLimit)
+					? true
+					: false
 				search.results = records;
 				search.render();
 				search.bind();
