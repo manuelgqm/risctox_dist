@@ -14,7 +14,7 @@ function findSubstanceInArray(arr, substanceId)
 	if not isArray(arr) then exit function
 	dim i
 	for i = 0 to uBound(arr)
-		if arr(i).item("substanceId") = substanceId then
+		if cLng(arr(i).item("substanceId")) = cLng(substanceId) then
 			set findSubstanceInArray = arr(i)
 			exit function
 		end if 
