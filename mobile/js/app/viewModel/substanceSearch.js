@@ -8,6 +8,7 @@ define(
 	'use strict';
 	var module = {
 		run: function(){
+			const pipe = (...fns) => (x) => fns.reduce((prev, func) => func(prev), x);
 			var search = {
 				domId : "search"
 				, name: this.name
@@ -15,7 +16,7 @@ define(
 				, results: []
 				, overflow: false
 			};
-
+			
 			Object.assign
 				( search
 				, new ViewModel(search, view)
@@ -30,20 +31,25 @@ define(
 			).done( 
 				output => (output.data.records.length == 1) 
 					? showCard(output.data.records[0].id)
-					: showResults(output.data.records, search)
+					: pipe
+						( setResults(output.data.records)
+						, showResults()
+						) 
 			);
-
-			var showResults = function(records, search){
+			
+			var showCard = substanceId => window.location = "#/card/" + substanceId;
+			var setResults = function(records){
 				const resultsLimit = 100;
+				search.results = records;
 				search.overflow = (records.length > resultsLimit)
 					? true
 					: false
-				search.results = records;
+			};
+			var showResults = function(){
+				console.log("de")
 				search.render();
 				search.bind();
 			};
-
-			var showCard = substanceId => window.location = "#/card/" + substanceId;
 
 			return search;
 		},
