@@ -26,26 +26,6 @@ define(['Server', 'stringExtended'], function(Server){
 			return ajaxRequest;
 		};
 
-		this.hasVlaEstado = function(){
-			return this.valoresLimiteAmbiental.map(element => element.estado).filter(element => element.length != 0).length != 0;
-		}
-
-		this.hasVlaEd = function(){
-			var ed_mg_m3Valued = this.valoresLimiteAmbiental.map(element => element.ed_mg_m3).filter(element => element.length != 0).length;
-			var ed_ppmValued = this.valoresLimiteAmbiental.map(element => element.ed_ppm).filter(element => element.length != 0).length;
-			return ed_mg_m3Valued + ed_ppmValued > 0;
-		}		
-
-		this.hasVlaEc = function(){
-			var ec_mg_m3Valued = this.valoresLimiteAmbiental.map(element => element.ec_mg_m3).filter(element => element.length != 0).length;
-			var ec_ppmValued = this.valoresLimiteAmbiental.map(element => element.ec_ppm).filter(element => element.length != 0).length;
-			return ec_mg_m3Valued + ec_ppmValued > 0;
-		}
-
-		this.hasVlaNotas = function(){
-			return this.valoresLimiteAmbiental.map(element => element.notas).length != 0;
-		}
-
 		this.getPictogramRdImageUrl = function(image, simbolo){
 			const PICTOGRAMS_IMAGES_BASE_PATH = '../imagenes/pictogramas/';
 			const PELIGRO_IMAGE = "pictograma_peligro.gif"
