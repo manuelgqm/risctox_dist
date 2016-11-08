@@ -13,9 +13,10 @@ define([
 			};
 
 			finder.find = function(){
-				if (0 < this.name().length && this.name().length < 3)
+				this.messages([]);
+				if (0 < this.name().length && this.name().length < 3 && this.code().length == 0)
 					this.messages.push("El nombre de la sustancia debe tener al menos 3 caracteres");
-				if (this.code().length == 0 && this.name().length < 3)
+				if (this.code().length == 0 && this.name().length == 0)
 					this.messages.push("Al menos uno de los campos ha de estar completado");
 				var doSearch = () => window.location = "#/search/" + this.name() + "/" + this.code();
 
