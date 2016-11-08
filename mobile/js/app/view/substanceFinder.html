@@ -14,6 +14,9 @@
 				<input name="substance-number" type="text" data-bind="value: code" class="form-control" placeholder="Introduce uno de ellos"/>
 			</div>
 		</form>
-		<a class="btn btn-primary" data-bind="click: runFinder">Mostrar</a>
+		<div data-bind="foreach: messages">
+			<p data-bind="html: $data" class="alert alert-danger" role="alert"></p>
+		</div>
+		<a class="btn btn-primary" data-bind="click: find">Mostrar</a>
 	</div>
 </div>
