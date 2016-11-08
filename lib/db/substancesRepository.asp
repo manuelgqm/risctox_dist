@@ -21,8 +21,9 @@ end function
 function findSubstanceLevelOne(id_sustancia, connection)
 	sql = composeSubstanceLevelOneFieldsQuery( id_sustancia )
 	set substanceRecordset = connection.execute(sql)
-	set substance = extractSubstanceLevelOneFields(id_sustancia, substanceRecordset, connection)
+	set substanceDic = recodsetToDictionary(substanceRecordset)
 	substanceRecordset.close()
+	set substance = extractSubstanceLevelOneFields(id_sustancia, substanceDic, connection)
 	set substanceRecordset = nothing
 	set findSubstanceLevelOne = substance
 end function
@@ -289,19 +290,19 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set extractSubstance = substance
 end function
 
-function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connection)
+function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
 
-	substance.Add "nombre", substanceRecordset("nombre").Value
+	substance.Add "nombre", substanceDic("nombre")
 	substance.Add "sinonimos", obtainSynonyms(substanceId, connection)
-	substance.Add "num_cas", substanceRecordset("num_cas").Value
-	substance.Add "num_ce_einecs", substanceRecordset("num_ce_einecs").Value
-	substance.Add "num_rd", substanceRecordset("num_rd").Value
-	substance.Add "pictogramasRd", findPictogramasRd1272(substanceRecordset("simbolos_rd1272"), connection)
-	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceRecordset.fields, connection)
-	substance.Add "notas_rd1272", obtainNotasRd1272(substanceRecordset("notas_rd1272"), connection)
-	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceRecordset.fields)
-	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substanceRecordset.fields, connection)
+	substance.Add "num_cas", substanceDic("num_cas")
+	substance.Add "num_ce_einecs", substanceDic("num_ce_einecs")
+	substance.Add "num_rd", substanceDic("num_rd")
+	substance.Add "pictogramasRd", findPictogramasRd1272(substanceDic("simbolos_rd1272"), connection)
+	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceDic, connection)
+	substance.Add "notas_rd1272", obtainNotasRd1272(substanceDic("notas_rd1272"), connection)
+	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceDic)
+	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substanceDic, connection)
 	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
 	substance.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
 	set substance = addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
@@ -309,11 +310,11 @@ function extractSubstanceLevelOneFields(substanceId, substanceRecordset, connect
 	set substanceGroupsRecordset = nothing
 	substance.Add "aplicaciones", findSubstanceApplications(substanceId, connection)
 	substance.Add "featuredLists", obtainFeaturedLists(substanceId, connection)
-	substance.Add "frasesR", joinFrases("R", substanceRecordset)
+	substance.Add "frasesR", joinFrases("R", substanceDic)
 	substance.Add _
 		"listaNegraClassifications" _
 		, getListaNegraClassifications( _
-			substance("featuredLists"), substance("frasesR"), substanceRecordset("mpmb") _
+			substance("featuredLists"), substance("frasesR"), substanceDic("mpmb") _
 		)
 
 	set extractSubstanceLevelOneFields = substance
@@ -565,5 +566,14 @@ function getListaNegraClassifications(featuredLists, frasesR, mpmb)
 		then arrayPush result, "puede provocar a largo plazo efectos negativos en el medio ambiente acuático"
 
 	getListaNegraClassifications = result
+end function
+
+function recodsetToDictionary(recordset)
+	set result = Server.CreateObject("Scripting.Dictionary")
+	dim key
+	for each key in recordset.fields
+		result.add key.name, key.Value
+	next
+	set recodsetToDictionary = result
 end function
 %>
