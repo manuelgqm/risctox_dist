@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/istas/risctox/mobile" />
+<title>formol-card</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">formol-card</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>mobile</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=subtance-name</td>
+	<td>tebuconazol</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Mostrar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>80000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=nombre</td>
+	<td>tebuconazol (ISO)</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=li</td>
+	<td>TEBUCONAZOL</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[2]/div[2]</td>
+	<td>107534-96-3</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[4]/div[2]</td>
+	<td>403-640-2</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[5]/div[2]</td>
+	<td>603-197-00-7</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.col-xs-8 &gt; ul.list-comma</td>
+	<td>*disruptora endocrina*tóxica para la reproducción*puede provocar a largo plazo efectos negativos en el medio ambiente acuático*</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=img.pictogramaImg.img-responsive</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//img[@alt='Toxicidad aguda (oral, cutánea, por inhalación)']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//img[@alt='Peligroso para el medio ambiente acuático']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>//img[@alt='Atención']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=ul.base-ul.small &gt; li</td>
+	<td>H361d ***: Se sospecha que daña al feto.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[7]/div[2]/ul/li[2]</td>
+	<td>H302: Nocivo en caso de ingestión.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[7]/div[2]/ul/li[3]</td>
+	<td>H400: Muy tóxico para los organismos acuáticos.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[7]/div[2]/ul/li[4]</td>
+	<td>H410: Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[9]/ul</td>
+	<td>*alcoholes compuestos*organoclorados*triazoles*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card']/div[2]/div[10]</td>
+	<td>*aditivo*disolvente*estabilizante*fungicida*pesticida*</td>
+</tr>
+</tbody></table>
+</body>
+</html>
