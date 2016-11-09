@@ -7,11 +7,6 @@ function obtainConcentracionEtiquetadoRd1272(substance)
 		etiConcList = arrayPushDictionary(etiConcList, etiConc)
 		Exit function
 	end if
-	if substance.item("conc_rd1272_1") = "" and substance.item("conc_rd1272_2") <> "" and substance.Item("eti_conc_rd1272_1") <> "" Then
-		etiConc.Add "concentracion", "Factor " & substance.Item("eti_conc_rd1272_1")
-		etiConcList = arrayPushDictionary(etiConcList, etiConc)
-		Exit function
-	end if
 	etiConcList = extractEtiConcList(substance)
 
 	obtainConcentracionEtiquetadoRd1272 = etiConcList
@@ -56,9 +51,15 @@ function extractEtiConcList(substance)
 	Dim etiConc
 	Dim i
 	for i = 0 to Ubound(etiquetas)
-		set etiConc = obtainConcentracionEtiquetado(substance.item(etiquetas(i)), substance.item(concentraciones(i)))
+		dim currentEtiquetado : currentEtiquetado = substance.item(etiquetas(i))
+		dim currentConcentracion : currentConcentracion = substance.item(concentraciones(i))
+		set etiConc = obtainConcentracionEtiquetado(currentEtiquetado, currentConcentracion)
 		if etiConc.count > 0 then
 			result = arrayPushDictionary(result, etiConc)
+		end if
+		if currentEtiquetado = "*" then
+			extractEtiConcList = result
+			exit function
 		end if
 	next
 
