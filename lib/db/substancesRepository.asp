@@ -297,6 +297,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	substance.Add "sinonimos", obtainSynonyms(substanceId, connection)
 	substance.Add "num_cas", substanceDic("num_cas")
 	substance.Add "num_ce_einecs", substanceDic("num_ce_einecs")
+	substance.Add "num_ce_elincs", substanceDic("num_ce_elincs")
 	substance.Add "num_rd", substanceDic("num_rd")
 	substance.Add "pictogramasRd", findPictogramasRd1272(substanceDic("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceDic, connection)
@@ -337,7 +338,7 @@ end function
 function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 	sql = _
 		"SELECT " &_
-			"sus.id as substanceId, sus.nombre, sus.num_cas, sus.num_ce_einecs, sus.num_rd, " &_
+			"sus.id as substanceId, sus.nombre, sus.num_cas, sus.num_ce_einecs, sus.num_ce_elincs, sus.num_rd, " &_
 			"sus.simbolos_rd1272, sus.notas_rd1272, " &_
 			"sus.clasificacion_rd1272_1, sus.clasificacion_rd1272_2, sus.clasificacion_rd1272_3, " &_
 			"sus.clasificacion_rd1272_4, sus.clasificacion_rd1272_5, sus.clasificacion_rd1272_6, " &_
