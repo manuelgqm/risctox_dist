@@ -260,7 +260,7 @@ sub ap1_identificacion()
 	</tr>
 
 	<%
-	if ( isArray(substance.Item("sinonimos")) ) then
+	if ( ubound(substance.Item("sinonimos")) > -1 ) then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
