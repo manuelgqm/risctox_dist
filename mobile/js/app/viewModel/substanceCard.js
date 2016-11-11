@@ -45,6 +45,7 @@ define([
 					);
 				substanceCard.render();
 				substanceCard.bind();
+				console.log(output)
 			});
 
 			return substanceCard;

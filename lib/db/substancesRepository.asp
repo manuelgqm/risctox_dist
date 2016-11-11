@@ -8,6 +8,7 @@
 <!--#include file="notasRd1272Repository.asp"-->
 <!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
 <!--#include file="valoresLimiteAmbientalRepository.asp"-->
+<!--#include file="valoresLimiteBiologicoRepository.asp"-->
 <%
 function findSubstance(id_sustancia, connection)
 	sql = composeSubstanceQuery( id_sustancia )
@@ -189,8 +190,6 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
 	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
 	
-	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substance, connection)
-
 	substance.Add "ib_1", substanceRecordset("ib_1").Value
 	substance.Add "vlb_1", substanceRecordset("vlb_1").Value
 	substance.Add "momento_1", substanceRecordset("momento_1").Value
@@ -304,6 +303,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	substance.Add "notas_rd1272", obtainNotasRd1272(substanceDic("notas_rd1272"), connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceDic)
 	substance.Add "valoresLimiteAmbiental", obtainValoresLimiteAmbiental(substanceDic, connection)
+	substance.Add "valoresLimiteBiologico", obtainValoresLimiteBiologico(substanceDic, connection)
 	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
 	substance.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
 	set substance = addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
@@ -371,6 +371,12 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus_vl.vla_ec_mg_m3_4, sus_vl.vla_ec_mg_m3_5, sus_vl.vla_ec_mg_m3_6, " &_
 			"sus_vl.notas_vla_1, sus_vl.notas_vla_2, sus_vl.notas_vla_3, " &_
 			"sus_vl.notas_vla_4, sus_vl.notas_vla_5, sus_vl.notas_vla_6, " &_
+			"sus_vl.ib_1, sus_vl.vlb_1, sus_vl.momento_1, sus_vl.notas_vlb_1, " &_
+			"sus_vl.ib_2, sus_vl.vlb_2, sus_vl.momento_2, sus_vl.notas_vlb_2, " &_
+			"sus_vl.ib_3, sus_vl.vlb_3, sus_vl.momento_3, sus_vl.notas_vlb_3, " &_
+			"sus_vl.ib_4, sus_vl.vlb_4, sus_vl.momento_4, sus_vl.notas_vlb_4, " &_
+			"sus_vl.ib_5, sus_vl.vlb_5, sus_vl.momento_5, sus_vl.notas_vlb_5, " &_
+			"sus_vl.ib_6, sus_vl.vlb_6, sus_vl.momento_6, sus_vl.notas_vlb_6, " &_
 			"sus_amb.mpmb " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
