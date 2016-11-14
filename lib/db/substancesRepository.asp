@@ -317,6 +317,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 		, getListaNegraClassifications( _
 			substance("featuredLists"), substance("frasesR"), substanceDic("mpmb") _
 		)
+	substance.add "explosiva", isSubstanceExplosive(substanceDic("clasificacion_rd1272_1"))
 
 	set extractSubstanceLevelOneFields = substance
 end function
@@ -582,5 +583,10 @@ function recodsetToDictionary(recordset)
 		result.add key.name, key.Value
 	next
 	set recodsetToDictionary = result
+end function
+
+function isSubstanceExplosive(clasificacion_rd1272_1)
+	isSubstanceExplosive = false
+	if clasificacion_rd1272_1 = "Expl., ****;" then isSubstanceExplosive = true
 end function
 %>

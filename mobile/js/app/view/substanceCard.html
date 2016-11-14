@@ -96,6 +96,10 @@
 					</li>
 				</ul>
 
+				<div data-bind="if: explosiva">
+					<b>Explosiva</b>: Peligros físicos que deben confirmarse mediante ensayos.
+				</div>
+
 				<div data-bind="if: notas_rd1272.length">
 					<b class="small">Notas: </b>
 					<ul class="list-comma" data-bind="foreach: notas_rd1272" style="display:inline">
