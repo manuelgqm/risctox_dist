@@ -38,28 +38,26 @@ function extractValorLimiteAmbiental(substance, connection, estado, ed_ppm, ed_m
 end function
 
 function isDictionaryEmpty(dictionary)
-	dim result : result = true
-	if dictionary.count = 0 then
-		isDictionaryEmpty = result
-		exit function
-	end if
+	isDictionaryEmpty = true
+	if dictionary.count = 0 then exit function
 	dim dictItems : dictItems = dictionary.items
 	dim i, dictItem
 	for i = 0 to ubound(dictItems)
-		dictItem = dictItems(i)
-		if isArray(dictItem) then
-			if Ubound(dictItem) > -1 then
-				isDictionaryEmpty = false
-			end if
-		else
-			if dictItems(i) <> "" then
-				isDictionaryEmpty = false
-				exit function
-			end if
+		if hasValue(dictItems(i)) then 
+			isDictionaryEmpty = false
+			exit function
 		end if
 	next
+end function
 
-	isDictionaryEmpty = result
+function hasValue(var)
+	hasValue = false
+	select case varType(var)
+		case vbString
+			if len(var) > 0 then hasValue = true
+		case vbArray:
+			if ubound(var) > -1 then hasValue = true
+	end select
 end function
 
 function obtainNotasValoresLimiteAmbiental(byVal notasSrz, connection)
