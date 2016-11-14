@@ -1,5 +1,6 @@
 <!--#include file="../arrayManipulations.asp"-->
 <!--#include file="../stringManipulations.asp"-->
+<!--#include file="../dictionaryManipulations.asp"-->
 <!--#include file="../db/substancesRepository.asp"-->
 <%
 Class SubstanceClass

@@ -33,31 +33,6 @@ function extractValorLimiteBiologico(substance, connection, indicador, valor, mo
 	set extractValorLimiteBiologico = result
 end function
 
-function isDictionaryEmpty(dictionary)
-	dim result : result = true
-	if dictionary.count = 0 then
-		isDictionaryEmpty = result
-		exit function
-	end if
-	dim dictItems : dictItems = dictionary.items
-	dim i, dictItem
-	for i = 0 to ubound(dictItems)
-		dictItem = dictItems(i)
-		if isArray(dictItem) then
-			if Ubound(dictItem) > -1 then
-				isDictionaryEmpty = false
-			end if
-		else
-			if dictItems(i) <> "" then
-				isDictionaryEmpty = false
-				exit function
-			end if
-		end if
-	next
-
-	isDictionaryEmpty = result
-end function
-
 function obtainNotasValoresLimiteBiologico(byVal notasSrz, connection)
 	dim result : result = Array()
 	Dim notas
