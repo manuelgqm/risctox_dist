@@ -126,14 +126,15 @@
 			</div>
 		</div>
 
-		<div data-bind="if: valoresLimiteAmbiental.length">
+		<div data-bind="if: valoresLimiteAmbiental.length || valoresLimiteBiologico.length">
 			<h5 class="text-info">
 				<a href="#/page">
 					<span class="glyphicon glyphicon-question-sign dropdown-toggle" ></span>
 				</a>
 				Valores límite de exposición profesional
 			</h5>
-			<table class="table small">
+			<table class="table small" data-bind="if: valoresLimiteAmbiental.length">
+				<h6>Ambientales</h6>
 				<thead>
 					<tr>
 						<th data-bind="visible: $root.hasVlaEstado()">
@@ -187,6 +188,46 @@
 					</tr>
 				</tbody>
 			</table>
+			<div data-bind="if: valoresLimiteBiologico.length">
+				<h6 class="text-info">
+					<a href="#/page">
+						<span class="glyphicon glyphicon-question-sign dropdown-toggle" ></span>
+					</a>
+					Biológicos
+				</h6>
+				<table class="table small">
+					<thead>
+						<tr>
+							<th data-bind="visible: $root.hasVlbIb()">Indicador</th>
+							<th data-bind="visible: $root.hasVlbValor()">Valor límite</th>
+							<th data-bind="visible: $root.hasVlbMomento()">Momento de muestreo</th>
+							<th data-bind="visible: $root.hasVlbNotas()">Notas</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: valoresLimiteBiologico">
+						<tr>
+							<td data-bind="visible: $root.hasVlbIb()">
+								<span class="base-ul" data-bind="html: indicador"></span>
+							</td>
+							<td data-bind="visible: $root.hasVlbValor()">
+								<span class="base-ul" data-bind="html: valor"></span>	
+							</td>
+							<td data-bind="visible: $root.hasVlbMomento(), html: momento"></td>
+							<td data-bind="visible: notas.length">
+								<ul class="list-comma" data-bind="foreach: notas">
+									<li>
+										<div class="dropdown" style="display:inline" data-bind="if: description">
+											<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+											<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
+										</div>
+										<span data-bind="text: key"></span>
+									</li>
+								</ul> 
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 		<div data-bind="if: grupos.length">

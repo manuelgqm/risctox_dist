@@ -29,6 +29,14 @@ define([
 					{ return this.num_ce_einecs && this.num_ce_einecs.substring(0, 1) != 4 && !this.num_ce_elincs }
 				, hasElincs: function()
 					{ return this.num_ce_elincs && (this.num_ce_einecs.substring(0, 1)  == 4 || !this.num_ce_einecs) }
+				, hasVlbIb: function()
+					{ return this.valoresLimiteBiologico.map(element => element.indicador).filter(element => element.length != 0).length != 0; }
+				, hasVlbValor: function()
+					{ return this.valoresLimiteBiologico.map(element => element.valor).filter(element => element.length != 0).length != 0; }
+				, hasVlbMomento: function()
+					{ return this.valoresLimiteBiologico.map(element => element.momento).filter(element => element.length != 0).length != 0; }
+				, hasVlbNotas: function()
+					{ return this.valoresLimiteBiologico.map(element => element.notas).length != 0;	}
 				};
 			var substance = new SubstanceModel(this.id);
 			Object.assign
@@ -45,7 +53,6 @@ define([
 					);
 				substanceCard.render();
 				substanceCard.bind();
-				console.log(output)
 			});
 
 			return substanceCard;
