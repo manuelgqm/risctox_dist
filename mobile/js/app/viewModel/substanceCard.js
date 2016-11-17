@@ -37,6 +37,12 @@ define([
 					{ return this.valoresLimiteBiologico.map(element => element.momento).filter(element => element.length != 0).length != 0; }
 				, hasVlbNotas: function()
 					{ return this.valoresLimiteBiologico.map(element => element.notas).length != 0;	}
+				, hasClassificationOrLabelingRd1272: function()
+					{ return this.pictogramasRd.lengt 
+					|| this.clasificacionesRd1272.length
+					|| this.notas_rd1272.length
+					|| this.concentracionEtiquetadoRd1272.length
+					}
 				};
 			var substance = new SubstanceModel(this.id);
 			Object.assign
