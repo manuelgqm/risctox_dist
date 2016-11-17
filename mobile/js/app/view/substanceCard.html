@@ -84,12 +84,14 @@
 		</h5>
 
 		<div class="row row-xs-flex-center">
-			<div class="base-ul col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictogramasRd">
-				<div class="vertical-distributed-container dropdown">
-					<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: $root.getPictogramRdImageUrl(image, name), alt: description }" class="pictogramaImg img-responsive" />
+			<!-- ko if: pictogramasRd.length -->
+			<div class="col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictogramasRd">
+				<div class="dropdown vertical-distributed-container">
+					<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: $root.getPictogramRdImageUrl(image, name), alt: description }" class="pictogramaImg" />
 					<span class="dropdown-menu dropdown-content" style="vertical-align: middle" data-bind="text: description"></span>
 				</div>
 			</div>
+			<!-- /ko -->
 
 			<div class="col-xs-9">
 				<ul class="base-ul small" data-bind="foreach: clasificacionesRd1272">
