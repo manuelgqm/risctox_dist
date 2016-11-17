@@ -46,7 +46,6 @@ define(
 					: false
 			};
 			var showResults = function(){
-				console.log("de")
 				search.render();
 				search.bind();
 			};
