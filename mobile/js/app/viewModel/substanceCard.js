@@ -4,6 +4,7 @@ define([
 	'app/model/Substance',
 	'app/viewModel/page',
 	'css!app/view/style/substanceCard'
+	'css!app/view/style/layout.css'
 ], function(ViewModel, view, SubstanceModel, pageViewModel){
 	module = {
 		run: function(){
