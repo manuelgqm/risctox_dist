@@ -2,7 +2,35 @@
 	<div class="top-header">
 		Risctox <span id="nombre" data-bind="html: nombre"></span>
 	</div>
-	<div class="well well-sm">
+
+	<ul class="nav nav-tabs card-tabs" style="margin-top:3px; text-align:center;">
+		<li role="presentation" class="active">
+			<a href="#">
+				<img src="../imagenes/ico_indentificacion.gif"><br>
+				identif.
+			</a>
+		</li>	
+		<li role="presentation">
+			<a href="#">
+				<img src="../imagenes/ico_danos_sl.gif" alt=""><br>
+				r. salud
+			</a>
+		</li>	
+		<li role="presentation">
+			<a href="#">
+				<img src="../imagenes/ico_normativa.gif" alt=""><br>
+				normat.
+			</a>
+		</li>	
+		<li role="presentation">
+			<a href="#">
+				<img src="../imagenes/ico_danos_ma.gif" alt=""><br>
+				medio am.
+			</a>
+		</li>	
+	</ul>
+
+	<div class="container-fluid">
 		<div class="row" data-bind="if: sinonimos.length">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
