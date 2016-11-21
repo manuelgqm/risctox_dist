@@ -17,6 +17,7 @@ define([], function(){
 			substanceFinder: {path: '/finder', moduleId: 'app/viewModel/substanceFinder'},
 			substanceSearch: {path: '/search/:name/:code', moduleId: 'app/viewModel/substanceSearch'},
 			substanceCard: {path: '/card/:id', moduleId: 'app/viewModel/substanceCard'},
+			substanceCardSection: {path: '/card/:id/:section', moduleId: 'app/viewModel/substanceCard'},
 			page: {path: '/page', moduleId: 'app/viewModel/page'},
 			notFound: {path: '*', moduleId: 'app/viewModel/substanceFinder'}
 		});

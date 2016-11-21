@@ -10,6 +10,7 @@ define([
 		run: function(){
 			var substanceCard = 
 				{ domId: 'card'
+				, section: module.section
 				, hasVlaEstado: function() { return hasItems(this.valoresLimiteAmbiental, "estado") }
 
 				, hasVlaEd: function()
@@ -76,6 +77,8 @@ define([
 					|| this.notas_rd1272.length
 					|| this.concentracionEtiquetadoRd1272.length
 					}
+				, sectionUrl: function(sectionName)
+					{ return '#/card/' + this.id.toString() + '/' + sectionName }
 				};
 
 			var substance = new SubstanceModel(this.id);

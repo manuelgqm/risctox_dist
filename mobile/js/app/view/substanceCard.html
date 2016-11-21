@@ -4,33 +4,33 @@
 	</div>
 
 	<ul class="nav nav-tabs card-tabs" style="margin-top:3px; text-align:center;">
-		<li role="presentation" class="active">
-			<a href="#">
+		<li role="presentation" data-bind="css: { active: section == 'identificacion' }">
+			<a data-bind="attr : { href: $root.sectionUrl('identificacion') }">
 				<img src="../imagenes/ico_indentificacion.gif"><br>
 				identif.
 			</a>
 		</li>	
-		<li role="presentation">
-			<a href="#">
+		<li role="presentation" data-bind="css: { active: section == 'salud' }">
+			<a data-bind="attr : { href: $root.sectionUrl('salud') }">
 				<img src="../imagenes/ico_danos_sl.gif" alt=""><br>
 				r. salud
 			</a>
 		</li>	
-		<li role="presentation">
-			<a href="#">
+		<li role="presentation" data-bind="css: { active: section == 'normativa' }">
+			<a data-bind="attr : { href: $root.sectionUrl('normativa') }">
 				<img src="../imagenes/ico_normativa.gif" alt=""><br>
 				normat.
 			</a>
 		</li>	
-		<li role="presentation">
-			<a href="#">
+		<li role="presentation" data-bind="css: { active: section == 'medio-ambiente' }">
+			<a data-bind="attr : { href: $root.sectionUrl('medio-ambiente') }">
 				<img src="../imagenes/ico_danos_ma.gif" alt=""><br>
 				medio am.
 			</a>
 		</li>	
 	</ul>
 
-	<div class="container-fluid">
+	<div class="container-fluid" id="card-main">
 		<div class="row" data-bind="if: sinonimos.length">
 			<div class="col-xs-4 text-muted">
 				<div class="dropdown" style="display:inline">
