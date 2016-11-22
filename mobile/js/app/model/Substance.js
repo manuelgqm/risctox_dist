@@ -4,6 +4,7 @@ define(['Server', 'stringExtended'], function(Server){
 		var defaults = {
 			id: id,
 			descriptions: {
+				nombre: 'Se ha asignado el nombre en español que aparece en la base de datos EINECS del Bureau Europeo de Sustancias Químicas',
 				sinonimos: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX',
 				num_cas: 'Número asignado por el Chemical Abstract Service. Es el sistema de identificación más utilizado a nivel internacional',
 				num_ce_einecs: 'Catálogo europeo de sustancias químicas comercializadas. Dicho inventario establece la lista definitiva de todas las sustancias que en principio se encontraban en el mercado comunitario al 18 de septiembre de 1981.',
