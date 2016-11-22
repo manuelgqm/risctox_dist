@@ -1,4 +1,4 @@
-define(['Server', 'stringExtended'], function(Server){
+define(['Server'], function(Server){
 	return function(id){
 		var self = this;
 		var defaults = {
