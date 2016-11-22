@@ -1,0 +1,255 @@
+<div class="row" data-bind="if: sinonimos.length">
+	<div class="col-xs-4 text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.sinonimos"></span>
+		</div>
+		Sinónimos:
+	</div>
+	<ul class="col-xs-8 small list-comma" data-bind="foreach: sinonimos">
+		<li data-bind="html: $data"></li>
+	</ul>
+</div>
+
+<div class="row" data-bind="if: num_cas">
+	<div class="col-xs-4 text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_cas"></span>
+		</div>
+		CAS:
+	</div>
+	<div class="col-xs-8" data-bind="text: num_cas"></div>
+</div>
+
+<div class="row" data-bind="if: $root.hasEinecs()">
+	<div class="col-xs-4 text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_ce_einecs"></span>
+		</div>
+		EINECS:
+	</div>
+	<div class="col-xs-8" data-bind="text: num_ce_einecs"></div>
+</div>
+
+<div class="row" data-bind="if: $root.hasElincs()">
+	<div class="col-xs-4 text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_ce_einecs"></span>
+		</div>
+		ELINCS:
+	</div>
+	<div class="col-xs-8" data-bind="text: num_ce_elincs"></div>
+</div>
+
+<div class="row" data-bind="if: num_rd">
+	<div class="col-xs-4 text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.num_rd"></span>
+		</div>
+		Nº índice:
+	</div>
+	<div class="col-xs-8" data-bind="text: num_rd"></div>
+</div>
+
+<div data-bind="if: listaNegraClassifications.length">
+	<div class="text-muted">
+		<div class="dropdown" style="display:inline">
+			<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+			<span class="dropdown-menu dropdown-content dropdown-menu-large" data-bind="text: descriptions.listaNegra"></span>
+		</div>
+		Lista negra ISTAS:
+	</div>
+	<ul class="list-comma" data-bind="foreach: listaNegraClassifications">
+		<li data-bind="text: $data"></li>
+	</ul>
+</div>
+
+<h5 class="text-info" data-bind="if: $root.hasClassificationOrLabelingRd1272()">
+	<div class="dropdown" style="display:inline">
+		<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+		<span class="dropdown-menu dropdown-menu-large dropdown-content text-muted" data-bind="text: descriptions.clp"></span>
+	</div>
+	Clasificación y etiquetado reglamento 1272/2008
+</h5>
+
+<div class="row row-xs-flex-center">
+	<!-- ko if: pictogramasRd.length -->
+	<div class="col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictogramasRd">
+		<div class="dropdown vertical-distributed-container">
+			<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: $root.getPictogramRdImageUrl(image, name), alt: description }" class="pictogramaImg" />
+			<span class="dropdown-menu dropdown-content" style="vertical-align: middle" data-bind="text: description"></span>
+		</div>
+	</div>
+	<!-- /ko -->
+
+	<div class="col-xs-9">
+		<ul class="base-ul small" data-bind="foreach: clasificacionesRd1272">
+			<li data-bind="if: frase.length">
+				<b data-bind="text: frase"></b>: <span data-bind="text: fraseDescription"></span>
+			</li>
+		</ul>
+
+		<div data-bind="if: explosiva">
+			<b>Explosiva</b>: Peligros físicos que deben confirmarse mediante ensayos.
+		</div>
+
+		<div data-bind="if: notas_rd1272.length">
+			<b class="small">Notas: </b>
+			<ul class="list-comma" data-bind="foreach: notas_rd1272" style="display:inline">
+				<li>
+					<div class="dropdown" data-bind="visible: description" style="display:inline">
+						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+					</div>
+					<span  data-bind="text: value"></span>
+				</li>
+			</ul>
+		</div>
+
+		<table class="table-condensed small" data-bind="if: concentracionEtiquetadoRd1272.length">
+			<thead>
+				<tr>
+					<th>Concentración</th>
+					<th>Etiquetado</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: concentracionEtiquetadoRd1272">
+				<tr data-bind="ifnot: concentracion">
+					<td data-bind="html: etiquetado" colspan="2"></td>
+				</tr>
+				<tr data-bind="if: concentracion">
+					<td data-bind="html: concentracion"></td>
+					<td data-bind="html: etiquetado"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div data-bind="if: valoresLimiteAmbiental.length || valoresLimiteBiologico.length">
+	<h5 class="text-info">
+		<a href="#/page">
+			<span class="glyphicon glyphicon-question-sign dropdown-toggle" ></span>
+		</a>
+		Valores límite de exposición profesional
+	</h5>
+	<table class="table small" data-bind="if: valoresLimiteAmbiental.length">
+		<h6>Ambientales</h6>
+		<thead>
+			<tr>
+				<th data-bind="visible: $root.hasVlaEstado()">
+					<div class="dropdown" style="display:inline">
+						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEstado"></span>
+					</div>
+					Estado
+				</th>
+				<th data-bind="visible: $root.hasVlaEd()">
+					<div class="dropdown" style="display:inline">
+						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEd"></span>
+					</div>
+					VLA-ED
+				</th>
+				<th data-bind="visible: $root.hasVlaEc()">
+					<div class="dropdown" style="display:inline">
+						<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEc"></span>
+					</div>
+					VLA-EC
+				</th>
+				<th data-bind="visible: $root.hasVlaNotas()">Notas</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: valoresLimiteAmbiental">
+			<tr>
+				<td data-bind="visible: $root.hasVlaEstado()">
+					<span class="base-ul" data-bind="html: estado"></span>
+				</td>
+				<td data-bind="visible: $root.hasVlaEd()">
+					<span class="base-ul" data-bind="html: ed_ppm"></span>&nbsp;ppm<br>
+					<span class="base-ul" data-bind="html: ed_mg_m3"></span>&nbsp;mg/m3
+				</td>
+				<td data-bind="visible: $root.hasVlaEc()">
+					<span class="base-ul" data-bind="html: ec_ppm"></span>&nbsp;ppm<br>
+					<span class="base-ul" data-bind="html: ec_mg_m3"></span>&nbsp;mg/m3
+				</td>
+				<td data-bind="visible: notas.length">
+					<ul class="list-comma" data-bind="foreach: notas">
+						<li>
+							<div class="dropdown" style="display:inline" data-bind="if: description">
+								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
+							</div>
+							<span data-bind="text: key"></span>
+						</li>
+					</ul> 
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div data-bind="if: valoresLimiteBiologico.length">
+		<h6 class="text-info">
+			<a href="#/page">
+				<span class="glyphicon glyphicon-question-sign dropdown-toggle" ></span>
+			</a>
+			Biológicos
+		</h6>
+		<table class="table small">
+			<thead>
+				<tr>
+					<th data-bind="visible: $root.hasVlbIb()">Indicador</th>
+					<th data-bind="visible: $root.hasVlbValor()">Valor límite</th>
+					<th data-bind="visible: $root.hasVlbMomento()">Momento de muestreo</th>
+					<th data-bind="visible: $root.hasVlbNotas()">Notas</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: valoresLimiteBiologico">
+				<tr>
+					<td data-bind="visible: $root.hasVlbIb()">
+						<span class="base-ul" data-bind="html: indicador"></span>
+					</td>
+					<td data-bind="visible: $root.hasVlbValor()">
+						<span class="base-ul" data-bind="html: valor"></span>	
+					</td>
+					<td data-bind="visible: $root.hasVlbMomento(), html: momento"></td>
+					<td data-bind="visible: notas.length">
+						<ul class="list-comma" data-bind="foreach: notas">
+							<li>
+								<div class="dropdown" style="display:inline" data-bind="if: description">
+									<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+									<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
+								</div>
+								<span data-bind="text: key"></span>
+							</li>
+						</ul> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<p data-bind="if: grupos.length">
+	<div class="text-muted">Grupos:</div>
+	<ul class="list-comma" data-bind="foreach: grupos" style="display:inline">
+		<li data-bind="html: name"></li>
+	</ul>
+</p>
+
+<p data-bind="if: aplicaciones.length">
+	<div class="text-muted">Usos:</div>
+	<ul class="list-comma" data-bind="foreach: aplicaciones" style="display:inline">
+		<li class="small">
+			<div class="dropdown" style="display:inline" data-bind="if: description">
+				<a class="dropdown-toggle" data-toggle="dropdown" data-bind="html: name" aria-haspopup="true" aria-expanded="true"></a>
+				<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
+			</div>
+			<span data-bind="ifnot: description.length"><span data-bind="html: name"></span></span>
+		</li>
+	</ul>
+</p>

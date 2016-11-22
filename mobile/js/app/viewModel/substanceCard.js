@@ -1,11 +1,12 @@
 define([
+	'knockout',
 	'app/viewModel/viewModel',
 	'text!app/view/substanceCard.html',
 	'app/model/Substance',
 	'app/viewModel/page',
 	'css!app/view/style/substanceCard',
 	'css!app/view/style/layout.css'
-], function(ViewModel, view, SubstanceModel, pageViewModel){
+], function(ko, ViewModel, view, SubstanceModel, pageViewModel){
 	module = {
 		run: function(){
 			var substanceCard = 
@@ -94,6 +95,13 @@ define([
 					, output.data
 					, new ViewModel(substanceCard, view)
 					);
+
+				ko.components.register('identification', 
+					{ template: { require: 'text!app/view/substanceCardIdentification.html' }
+					, viewModel: function() {
+						Object.assign(this, substanceCard);
+					}
+				});
 				substanceCard.render();
 				substanceCard.bind();
 			});
