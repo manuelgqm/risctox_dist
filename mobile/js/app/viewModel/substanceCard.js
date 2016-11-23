@@ -9,14 +9,14 @@ define([
 		run: function(){
 			var substanceCard = 
 				{ domId: 'card'
-				, section: module.section
+				, section: module.section || 'identificacion'
 				, substanceId: module.id
 				, sectionUrl: function(sectionName)
 					{ return '#/card/' + this.substanceId.toString() + '/' + sectionName }
 				};
 			Object.assign(substanceCard, new ViewModel(substanceCard, view));
-			if (!ko.components.isRegistered('identification')) {
-				ko.components.register('identification', { require: 'app/viewModel/substanceCardIdentification' });
+			if (!ko.components.isRegistered('identificacion')) {
+				ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentification' });
 			}
 			substanceCard.render();
 			substanceCard.bind();

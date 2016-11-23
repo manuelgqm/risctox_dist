@@ -31,7 +31,13 @@
 	</ul>
 
 	<div class="container-fluid" id="card-main">
-		<identification params="substanceId: substanceId"></identification>
+		<div data-bind="if: section == 'identificacion'">
+			<div data-bind="component: 
+				{ name: 'identificacion'
+				, params: { substanceId: substanceId } 
+				}">
+			</div>
+		</div>
 	</div>
 
 	<div style="margin-bottom: 10px;" class="text-center">
