@@ -15,9 +15,11 @@ end function
 function hasValue(var)
 	hasValue = false
 	select case varType(var)
-		case vbString
+		case vbString:
 			if len(var) > 0 then hasValue = true
 		case vbArray:
+			if ubound(var) > -1 then hasValue = true
+		case 8204:
 			if ubound(var) > -1 then hasValue = true
 	end select
 end function

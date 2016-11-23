@@ -44,8 +44,14 @@ function obtainNotasValoresLimiteAmbiental(byVal notasSrz, connection)
 		notasSrz = ""
 	end if
 	notas = split(notasSrz, ",")
-	dim definitionKeysQueryFormatedSrz : definitionKeysQueryFormatedSrz = formatDefinitionKeysQueryList(notas)
-	obtainNotasValoresLimiteAmbiental = findDefinitions(notas, definitionKeysQueryFormatedSrz, connection)
+	dim i, nota
+	dim notasCleared : notasCleared = array()
+	for i = 0 to Ubound(notas)
+		nota = replace(notas(i), " ", "")
+		if len(nota) then arrayPush notasCleared, nota
+	next
+	dim definitionKeysQueryFormatedSrz : definitionKeysQueryFormatedSrz = formatDefinitionKeysQueryList(notasCleared)
+	obtainNotasValoresLimiteAmbiental = findDefinitions(notasCleared, definitionKeysQueryFormatedSrz, connection)
 end function
 
 function formatDefinitionKeysQueryList(byVal definitionKeys)

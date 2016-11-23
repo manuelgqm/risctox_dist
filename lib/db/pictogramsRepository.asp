@@ -29,15 +29,26 @@ function extractPictograms(simbolo, connection)
 		pictogram.add "name", simbolo
 		pictogram.add "image", ""
 		pictogram.add "description", simbolo
+		pictogram.add "imageUrl", getImageUrl("", simbolo)
 		Set extractPictograms = pictogram
 		exit function
 	end if
 	pictogram.add "name", simbolo
 	pictogram.add "image", simbolosRecodset("imagen").value
 	pictogram.add "description", simbolosRecodset("descripcion").value
+	pictogram.add "imageUrl", getImageUrl(simbolosRecodset("imagen").value, simbolo)
 
 	simbolosRecodset.close()
 	set simbolosRecodset = nothing
 	Set extractPictograms = pictogram
+end function
+
+function getImageUrl(image, simbolo)
+	const PICTOGRAMS_IMAGES_BASE_PATH = "../imagenes/pictogramas/"
+	const PELIGRO_IMAGE = "pictograma_peligro.gif"
+	const ATENCION_IMAGE = "pictograma_atencion.gif"
+	getImageUrl = PICTOGRAMS_IMAGES_BASE_PATH + image
+	if simbolo = "Peligro" then getImageUrl = PICTOGRAMS_IMAGES_BASE_PATH + PELIGRO_IMAGE
+	if simbolo = "Atención" then getImageUrl = PICTOGRAMS_IMAGES_BASE_PATH + ATENCION_IMAGE
 end function
 %>

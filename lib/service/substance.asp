@@ -7,6 +7,7 @@
 <!--#include file="../../config/dbConnection.asp"-->
 <!--#include file="../dn_funciones_texto_utf-8.asp"-->
 <!--#include file="../dn_funciones_comunes_utf-8.asp"-->
+<!--#include file="../dictionaryManipulations.asp"-->
 
 <%
 Response.ContentType = "text/html"
@@ -29,6 +30,14 @@ function find()
 	id_sustancia = substanceId
 	set mySubstance = new SubstanceClass
 	mySubstance.obtainLevelOneFields substanceId, objConnection2
+	dim i, key
+	dim dictKeys : dictKeys = mySubstance.fields.Keys
+	for i = 0 to Ubound(dictKeys)
+		key = dictKeys(i)
+		if not(hasValue(mySubstance.fields.item(key))) then 
+			mySubstance.fields.remove(key)
+		end if
+	next
 
 	set find = mySubstance.fields
 end function
