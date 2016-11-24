@@ -1,7 +1,8 @@
-define([
-	'knockout',
-	'app/viewModel/ViewModel',
-	'text!app/view/substanceFinder.html', 
+define(
+	[ 'knockout'
+	, 'app/viewModel/ViewModel'
+	, 'text!app/view/substanceFinder.html'
+	, 'css!app/view/style/layout'
 ], function(ko, ViewModel, view){
 	var module = {
 		run: function(){

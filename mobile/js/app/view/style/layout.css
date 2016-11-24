@@ -1,6 +1,18 @@
 .top-header{
 	color: white; 
-	background: #097db0 url("../image/header-background.jpg") right/60px no-repeat;
+	background: #008783 url("../image/header-background.jpg") right/60px no-repeat;
 	padding-left: 10px;
 	font-size: 16pt;
 }
+.jumbotron{
+	color: white !important;
+	background-color: #008783 !important;
+}
+.btn-primary {
+    color: #fff !important;
+    background-color: #129895 !important;
+    border-color: #008783 !important;
+}
+a{ color: #129895 !important; }
+.text-info{ color: #008783 !important; }
+label{ font-size: 18px !important; }
