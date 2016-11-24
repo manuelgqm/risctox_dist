@@ -16,7 +16,7 @@ define([
 				};
 			Object.assign(substanceCard, new ViewModel(substanceCard, view));
 			if (!ko.components.isRegistered('identificacion')) {
-				ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentification' });
+				ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
 			}
 			substanceCard.render();
 			substanceCard.bind();
