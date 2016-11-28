@@ -4,9 +4,10 @@ define(
 	, 'app/viewModel/viewModel'
 	, 'text!app/view/substanceCard.html'
 	, 'app/model/substance'
+	, 'Server'
 	, 'css!app/view/style/substanceCard'
 	, 'css!app/view/style/layout.css'
-], function(ko, mapping, ViewModel, cardView, SubstanceModel){
+], function(ko, mapping, ViewModel, cardView, SubstanceModel, Server){
 	return function(args){
 		Object.assign(ko, mapping);
 		var card = 
@@ -39,11 +40,22 @@ define(
 
 		loadSection = ko.computed(
 			function(){
-				section = card.section().toString();
-				if (!Object.keys(card[card.section()]).length) {
-					console.log(section);
-
+				section = card[card.section()];
+				if (Object.keys(section).length) {
+					return true;
 				}
+				Object.assign(section, 
+					{ grupo_iarc: null
+					, volumen_iarc: null
+					, notas_iarc: null
+					});
+				Object.assign(section, ko.fromJS(section));
+				new Server("substance").request(
+					{ substanceId: card.substanceId
+					, action: "findSalud"
+					}).done(function(output){
+						ko.fromJS(output.data, section);
+					});
 			}
 		, this);
 

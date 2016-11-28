@@ -42,6 +42,14 @@ function find()
 	set find = mySubstance.fields
 end function
 
+function findSalud()
+	dim result : set result = Server.CreateObject("Scripting.Dictionary")
+	result.add "grupo_iarc", "2A"
+	result.add "volumen_iarc", "(VOL. 23, SUPL.7; 1987)"
+	result.add "notas_iarc", Array()
+	set findSalud = result
+end function
+
 function search()
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim name : name = obtainSanitizedQueryParameter("name")
