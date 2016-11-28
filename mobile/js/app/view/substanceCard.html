@@ -55,6 +55,14 @@
 			</div>
 		</div>
 
+		<div data-bind="if: isSection('medio-ambiente')">
+			<div data-bind="component: 
+				{ name: 'medio-ambiente'
+				, params: { substanceId: substanceId, identification: identification } 
+				}">
+			</div>
+		</div>
+
 	</div>
 
 	<div style="margin-bottom: 10px;" class="text-center">
