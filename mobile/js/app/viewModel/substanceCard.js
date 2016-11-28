@@ -36,6 +36,7 @@ define(
 
 		ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
 		ko.components.register('salud', { require: 'app/viewModel/substanceCardSalud' });
+		ko.components.register('normativa', { require: 'app/viewModel/substanceCardNormativa' });
 
 		card.render();
 		card.bind();

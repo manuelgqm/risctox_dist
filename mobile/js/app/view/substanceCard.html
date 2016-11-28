@@ -46,7 +46,15 @@
 				}">
 			</div>
 		</div>
-		
+
+		<div data-bind="if: isSection('normativa')">
+			<div data-bind="component: 
+				{ name: 'normativa'
+				, params: { substanceId: substanceId, identification: identification } 
+				}">
+			</div>
+		</div>
+
 	</div>
 
 	<div style="margin-bottom: 10px;" class="text-center">
