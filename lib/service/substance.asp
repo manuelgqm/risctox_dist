@@ -24,9 +24,21 @@ execute( _
 )
 response.write ((new JSON).toJSON("data", actionResult, false))
 
-function find()
-	dim substanceId, mySubstance
-	substanceId = obtainSanitizedQueryParameter("substanceId")
+function findSection()
+	dim section : section = obtainSanitizedQueryParameter("section")
+	dim substanceId : substanceId = obtainSanitizedQueryParameter("substanceId")
+	select case(section)
+		case("identificacion"):
+			set findSection = findIdentificacionFields(substanceId)
+		case("salud"):
+			set findSection = findSaludFields(substanceId)
+		case else:
+			set findSection = Server.CreateObject("Scripting.Dictionary")
+	end select
+end function
+
+function findIdentificacionFields(substanceId)
+	dim mySubstance
 	id_sustancia = substanceId
 	set mySubstance = new SubstanceClass
 	mySubstance.obtainLevelOneFields substanceId, objConnection2
@@ -39,15 +51,15 @@ function find()
 		end if
 	next
 
-	set find = mySubstance.fields
+	set findIdentificacionFields = mySubstance.fields
 end function
 
-function findSalud()
+function findSaludFields(substanceId)
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	result.add "grupo_iarc", "2A"
 	result.add "volumen_iarc", "(VOL. 23, SUPL.7; 1987)"
 	result.add "notas_iarc", Array()
-	set findSalud = result
+	set findSaludFields = result
 end function
 
 function search()

@@ -57,14 +57,6 @@ define(['Server'], function(Server){
 
 		Object.assign(this, defaults);
 
-		this.load = function(){
-			ajaxRequest = new Server("substance").request({
-				substanceId: self.id
-				, action: "find"
-			});
-			return ajaxRequest;
-		};
-
 	}
 
 });
