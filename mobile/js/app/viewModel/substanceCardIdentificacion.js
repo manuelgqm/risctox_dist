@@ -1,18 +1,10 @@
 define(
 	[ 'knockout'
 	, 'text!app/view/substanceCardIdentification.html'
-	, 'app/model/substance'
-	, 'knockout-mapping'
-	], function(ko, template, SubstanceModel, mapping){
-		Object.assign(ko, mapping);
+	], function(ko, template){
 
 		function viewModel(card){
-			var self = this;
-			Object.assign(this, new SubstanceModel(card.substanceId));
-			Object.assign(this, ko.fromJS(this));
-			this.load().done(function(output){
-				ko.fromJS(output.data, self);
-			});
+			Object.assign(this, card.identification);
 
 			this.hasEinecs = ko.computed(function()
 				{ return (
@@ -126,6 +118,6 @@ define(
 				.length != 0;
 			} 
 
-		return { viewModel: viewModel, template: template, syncronous: true };
+		return { viewModel: viewModel, template: template };
 	}
 ); 

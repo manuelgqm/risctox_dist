@@ -5,25 +5,25 @@
 
 	<ul class="nav nav-tabs card-tabs" style="margin-top:3px; text-align:center;">
 		<li role="presentation" data-bind="css: { active: section == 'identificacion' }">
-			<a data-bind="attr : { href: $root.sectionUrl('identificacion') }">
+			<a data-bind="click: function() { setSection('identificacion') }">
 				<img src="js/app/view/image/ico_indentificacion.jpg"><br>
 				identif.
 			</a>
 		</li>	
 		<li role="presentation" data-bind="css: { active: section == 'salud' }">
-			<a data-bind="attr : { href: $root.sectionUrl('salud') }">
+			<a data-bind="click: function() { setSection('salud') }">
 				<img src="js/app/view/image/ico_danos_sl.jpg" alt=""><br>
 				r. salud
 			</a>
 		</li>	
 		<li role="presentation" data-bind="css: { active: section == 'normativa' }">
-			<a data-bind="attr : { href: $root.sectionUrl('normativa') }">
+			<a data-bind="click: function() { setSection('normativa') }">
 				<img src="js/app/view/image/ico_normativa.jpg" alt=""><br>
 				normat.
 			</a>
 		</li>	
 		<li role="presentation" data-bind="css: { active: section == 'medio-ambiente' }">
-			<a data-bind="attr : { href: $root.sectionUrl('medio-ambiente') }">
+			<a data-bind="click: function() { setSection('medio-ambiente') }">
 				<img src="js/app/view/image/ico_danos_ma.jpg" alt=""><br>
 				medio am.
 			</a>
@@ -31,13 +31,22 @@
 	</ul>
 
 	<div class="container-fluid" id="card-main">
-		<div data-bind="if: section == 'identificacion'">
+		<div data-bind="if: isSection('identificacion')">
 			<div data-bind="component: 
 				{ name: 'identificacion'
-				, params: { substanceId: substanceId } 
+				, params: { substanceId: substanceId, identification: identification } 
 				}">
 			</div>
 		</div>
+		
+		<div data-bind="if: isSection('salud')">
+			<div data-bind="component: 
+				{ name: 'salud'
+				, params: { substanceId: substanceId, identification: identification } 
+				}">
+			</div>
+		</div>
+		
 	</div>
 
 	<div style="margin-bottom: 10px;" class="text-center">

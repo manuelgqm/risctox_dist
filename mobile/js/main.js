@@ -21,9 +21,8 @@ define([], function(){
 			page: {path: '/page', moduleId: 'app/viewModel/page'},
 			notFound: {path: '*', moduleId: 'app/viewModel/substanceFinder'}
 		});
-		router.on('routeload', function(module, args){
-			Object.assign(module, args);
-			module.run();
+		router.on('routeload', function(Module, args){
+			var app = new Module(args);
 		});
 		router.init();
 	});

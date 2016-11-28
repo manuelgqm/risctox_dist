@@ -1,29 +1,43 @@
-define([
-	'knockout',
-	'app/viewModel/viewModel',
-	'text!app/view/substanceCard.html',
-	'css!app/view/style/substanceCard',
-	'css!app/view/style/layout.css'
-], function(ko, ViewModel, view){
-	module = {
-		run: function(){
-			var substanceCard = 
-				{ domId: 'card'
-				, section: module.section || 'identificacion'
-				, substanceId: module.id
-				, sectionUrl: function(sectionName)
-					{ return '#/card/' + this.substanceId.toString() + '/' + sectionName }
-				};
-			Object.assign(substanceCard, new ViewModel(substanceCard, view));
-			if (!ko.components.isRegistered('identificacion')) {
-				ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
+define(
+	[ 'knockout'
+	, 'knockout-mapping'
+	, 'app/viewModel/viewModel'
+	, 'text!app/view/substanceCard.html'
+	, 'app/model/substance'
+	, 'css!app/view/style/substanceCard'
+	, 'css!app/view/style/layout.css'
+], function(ko, mapping, ViewModel, cardView, SubstanceModel){
+	return function(args){
+		Object.assign(ko, mapping);
+		var card = 
+			{ domId : 'card'
+			, section : ko.observable(args.section || 'identificacion')
+			, isSection : function(currentSection){ return this.section() == currentSection }
+			, substanceId : args.id
+			, identification : {}
+			, setSection: function(section) 
+				{ this.section(section) }
 			}
-			substanceCard.render();
-			substanceCard.bind();
 
-			return substanceCard;
+		Object.assign(card, new ViewModel(card, cardView));
+		Object.assign(card.identification, initializeIdentification(card.substanceId));
+
+		function initializeIdentification(substanceId){
+			var result = {};
+			Object.assign(result, new SubstanceModel(substanceId));
+			Object.assign(result, ko.fromJS(result));
+
+			result.load().done(function(output){
+				ko.fromJS(output.data, result);
+			});
+
+			return result;
 		}
-	}
 
-	return module;
+		ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
+		ko.components.register('salud', { require: 'app/viewModel/substanceCardSalud' });
+
+		card.render();
+		card.bind();
+	};
 });
