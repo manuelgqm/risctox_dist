@@ -22,8 +22,8 @@
 				normat.
 			</a>
 		</li>	
-		<li role="presentation" data-bind="css: { active: section == 'medio-ambiente' }">
-			<a data-bind="click: function() { setSection('medio-ambiente') }">
+		<li role="presentation" data-bind="css: { active: section == 'medioAmbiente' }">
+			<a data-bind="click: function() { setSection('medioAmbiente') }">
 				<img src="js/app/view/image/ico_danos_ma.jpg" alt=""><br>
 				medio am.
 			</a>
@@ -34,7 +34,7 @@
 		<div data-bind="if: isSection('identificacion')">
 			<div data-bind="component: 
 				{ name: 'identificacion'
-				, params: { substanceId: substanceId, identification: identification } 
+				, params: { substanceId: substanceId, identificacion: identificacion } 
 				}">
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 		<div data-bind="if: isSection('salud')">
 			<div data-bind="component: 
 				{ name: 'salud'
-				, params: { substanceId: substanceId, identification: identification } 
+				, params: { substanceId: substanceId, identificacion: identificacion } 
 				}">
 			</div>
 		</div>
@@ -50,15 +50,15 @@
 		<div data-bind="if: isSection('normativa')">
 			<div data-bind="component: 
 				{ name: 'normativa'
-				, params: { substanceId: substanceId, identification: identification } 
+				, params: { substanceId: substanceId, identificacion: identificacion } 
 				}">
 			</div>
 		</div>
 
-		<div data-bind="if: isSection('medio-ambiente')">
+		<div data-bind="if: isSection('medioAmbiente')">
 			<div data-bind="component: 
-				{ name: 'medio-ambiente'
-				, params: { substanceId: substanceId, identification: identification } 
+				{ name: 'medioAmbiente'
+				, params: { substanceId: substanceId, identificacion: identificacion } 
 				}">
 			</div>
 		</div>

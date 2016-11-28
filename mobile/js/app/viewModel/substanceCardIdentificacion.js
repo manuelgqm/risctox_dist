@@ -1,10 +1,10 @@
 define(
 	[ 'knockout'
-	, 'text!app/view/substanceCardIdentification.html'
+	, 'text!app/view/substanceCardIdentificacion.html'
 	], function(ko, template){
 
 		function viewModel(card){
-			Object.assign(this, card.identification);
+			Object.assign(this, card.identificacion);
 
 			this.hasEinecs = ko.computed(function()
 				{ return (

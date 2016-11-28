@@ -14,15 +14,18 @@ define(
 			, section : ko.observable(args.section || 'identificacion')
 			, isSection : function(currentSection){ return this.section() == currentSection }
 			, substanceId : args.id
-			, identification : {}
+			, identificacion : {}
+			, salud: {}
+			, normativa: {}
+			, medioAmbiente: {}
 			, setSection: function(section) 
 				{ this.section(section) }
 			}
 
 		Object.assign(card, new ViewModel(card, cardView));
-		Object.assign(card.identification, initializeIdentification(card.substanceId));
+		Object.assign(card.identificacion, loadIdentificacion(card.substanceId));
 
-		function initializeIdentification(substanceId){
+		function loadIdentificacion(substanceId){
 			var result = {};
 			Object.assign(result, new SubstanceModel(substanceId));
 			Object.assign(result, ko.fromJS(result));
@@ -34,10 +37,20 @@ define(
 			return result;
 		}
 
+		loadSection = ko.computed(
+			function(){
+				section = card.section().toString();
+				if (!Object.keys(card[card.section()]).length) {
+					console.log(section);
+
+				}
+			}
+		, this);
+
 		ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
 		ko.components.register('salud', { require: 'app/viewModel/substanceCardSalud' });
 		ko.components.register('normativa', { require: 'app/viewModel/substanceCardNormativa' });
-		ko.components.register('medio-ambiente', { require: 'app/viewModel/substanceCardMedioAmbiente' });
+		ko.components.register('medioAmbiente', { require: 'app/viewModel/substanceCardMedioAmbiente' });
 
 		card.render();
 		card.bind();
