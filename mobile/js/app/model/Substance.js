@@ -1,6 +1,5 @@
 define(['Server'], function(Server){
 	return function(id){
-		var self = this;
 		var defaults = 
 			{ id: id
 			, nombre: null
@@ -54,9 +53,6 @@ define(['Server'], function(Server){
 				, vlaEstado: ''
 			}
 		}
-
 		Object.assign(this, defaults);
-
 	}
-
 });
