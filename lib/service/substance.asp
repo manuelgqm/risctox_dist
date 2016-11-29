@@ -29,7 +29,7 @@ function findSection()
 	dim substanceId : substanceId = obtainSanitizedQueryParameter("substanceId")
 	select case(section)
 		case("identificacion"):
-			set findSection = findIdentificacionFields(substanceId)
+			set findSection = obtainIdentificacionFields(substanceId)
 		case("salud"):
 			set findSection = obtainSaludFields(substanceId)
 		case else:
@@ -37,19 +37,13 @@ function findSection()
 	end select
 end function
 
-function findIdentificacionFields(substanceId)
+function obtainIdentificacionFields(substanceId)
 	dim substance : set substance = new SubstanceClass
 	substance.obtainLevelOneFields substanceId, objConnection2
 	dim i, key
 	dim dictKeys : dictKeys = substance.fields.Keys
-	for i = 0 to Ubound(dictKeys)
-		key = dictKeys(i)
-		if not(hasValue(substance.fields.item(key))) then 
-			substance.fields.remove(key)
-		end if
-	next
-
-	set findIdentificacionFields = substance.fields
+	
+	set obtainIdentificacionFields = removeDictionaryEmptyFields(substance.fields)
 end function
 
 function obtainSaludFields(substanceId)
@@ -57,14 +51,7 @@ function obtainSaludFields(substanceId)
 	substance.obtainSaludFields substanceId, objConnection2
 	dim i, key
 	dim dictKeys : dictKeys = substance.fields.Keys
-	for i = 0 to Ubound(dictKeys)
-		key = dictKeys(i)
-		if not(hasValue(substance.fields.item(key))) then 
-			substance.fields.remove(key)
-		end if
-	next
-
-	set obtainSaludFields = substance.fields
+	set obtainSaludFields = removeDictionaryEmptyFields(substance.fields)
 end function
 
 function search()
@@ -94,5 +81,19 @@ end function
 function hasArterisk(str)
 	hasArterisk = false
 	hasArterisk = inStr(str, "*") > 0
+end function
+
+function removeDictionaryEmptyFields(byRef dictionary)
+	dim result : set result = Server.CreateObject("Scripting.Dictionary")
+	dim i, key
+	dim dictKeys : dictKeys = dictionary.Keys
+	for i = 0 to Ubound(dictKeys)
+		key = dictKeys(i)
+		if not(hasValue(dictionary.item(key))) then 
+			dictionary.remove(key)
+		end if
+	next
+
+	set removeDictionaryEmptyFields = dictionary
 end function
 %>
