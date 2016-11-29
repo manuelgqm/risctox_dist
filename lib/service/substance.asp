@@ -31,35 +31,40 @@ function findSection()
 		case("identificacion"):
 			set findSection = findIdentificacionFields(substanceId)
 		case("salud"):
-			set findSection = findSaludFields(substanceId)
+			set findSection = obtainSaludFields(substanceId)
 		case else:
 			set findSection = Server.CreateObject("Scripting.Dictionary")
 	end select
 end function
 
 function findIdentificacionFields(substanceId)
-	dim mySubstance
-	id_sustancia = substanceId
-	set mySubstance = new SubstanceClass
-	mySubstance.obtainLevelOneFields substanceId, objConnection2
+	dim substance : set substance = new SubstanceClass
+	substance.obtainLevelOneFields substanceId, objConnection2
 	dim i, key
-	dim dictKeys : dictKeys = mySubstance.fields.Keys
+	dim dictKeys : dictKeys = substance.fields.Keys
 	for i = 0 to Ubound(dictKeys)
 		key = dictKeys(i)
-		if not(hasValue(mySubstance.fields.item(key))) then 
-			mySubstance.fields.remove(key)
+		if not(hasValue(substance.fields.item(key))) then 
+			substance.fields.remove(key)
 		end if
 	next
 
-	set findIdentificacionFields = mySubstance.fields
+	set findIdentificacionFields = substance.fields
 end function
 
-function findSaludFields(substanceId)
-	dim result : set result = Server.CreateObject("Scripting.Dictionary")
-	result.add "grupo_iarc", "2A"
-	result.add "volumen_iarc", "(VOL. 23, SUPL.7; 1987)"
-	result.add "notas_iarc", Array()
-	set findSaludFields = result
+function obtainSaludFields(substanceId)
+	dim substance : set substance = new SubstanceClass
+	substance.obtainSaludFields substanceId, objConnection2
+	dim i, key
+	dim dictKeys : dictKeys = substance.fields.Keys
+	for i = 0 to Ubound(dictKeys)
+		key = dictKeys(i)
+		if not(hasValue(substance.fields.item(key))) then 
+			substance.fields.remove(key)
+		end if
+	next
+
+	set obtainSaludFields = substance.fields
 end function
 
 function search()

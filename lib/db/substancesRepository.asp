@@ -29,6 +29,17 @@ function findSubstanceLevelOne(id_sustancia, connection)
 	set findSubstanceLevelOne = substance
 end function
 
+function findSaludFields(id_sustancia, connection)
+	dim sql : sql = composeSaludQuery(id_sustancia)
+	dim substanceRecordset : set substanceRecordset = connection.execute(sql)
+	dim substanceDic : set substanceDic = recodsetToDictionary(substanceRecordset)
+	substanceRecordset.close()
+	set substanceRecordset = nothing
+	dim substance : set substance = extractSubstanceSaludFields(id_sustancia, substanceDic)
+
+	set findSaludFields = substance
+end function
+
 ' PRIVATE
 function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
@@ -329,6 +340,24 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	set extractSubstanceLevelOneFields = substance
 end function
 
+function extractSubstanceSaludFields(substanceId, substanceDic)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
+	substance.add "volumen_iarc", substanceDic("volumen_iarc")
+	substance.add "notas_iarc", substanceDic("notas_iarc")
+
+	set extractSubstanceSaludFields = substance
+end function
+
+function extractGrupoIarc(grupo)
+	extractGrupoIarc = ""
+	extractGrupoIarc = _
+		trim( _
+			replace( _
+				ucase(grupo), "GRUPO", "") _
+			)
+end function
+
 function composeSubstanceQuery(id_sustancia)
 	sql = "SELECT *,dn_risc_sustancias_ambiente.comentarios as comentarios_ma, dn_risc_sustancias.comentarios as comentarios_sustancia "
 	sql = sql & " FROM dn_risc_sustancias  "
@@ -395,6 +424,18 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 		"WHERE sus.id = " & id_sustancia
 
 	composeSubstanceLevelOneFieldsQuery = sql
+end function
+
+function composeSaludQuery(id_sustancia)
+	dim sql
+	sql = _
+		"SELECT " &_
+			"iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc " &_
+		"FROM " &_
+			"dn_risc_sustancias_iarc as iarc " &_
+		"WHERE " &_
+			"iarc.id_sustancia = " & id_sustancia
+	composeSaludQuery = sql
 end function
 
 function removeVlbFromNotes(notes)
