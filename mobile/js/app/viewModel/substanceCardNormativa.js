@@ -4,9 +4,14 @@ define(
 	], function(ko, template){
 		function viewModel(card){
 			Object.assign(this, card.identificacion);
-			this.isRestringida = card.featuredLists().indexOf('restringidas') != -1;
-			this.isProhibidaEmbarazadas = card.featuredLists().indexOf('prohibidas_embarazadas') != -1;
-			this.isProhibidaLactantes = card.featuredLists().indexOf('prohibidas_lactantes') != -1;
+			this.featuredLists = card.featuredLists;
+			this.isRestringida = this.inList('restringidas');
+			this.isProhibidaEmbarazadas = this.inList('prohibidas_embarazadas');
+			this.isProhibidaLactantes = this.inList('prohibidas_lactantes');
+		};
+
+		viewModel.prototype.inList = function (listName) {
+			return this.featuredLists().indexOf(listName) != -1;
 		};
 
 		return { viewModel: viewModel, template: template };
