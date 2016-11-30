@@ -53,7 +53,9 @@
 		<div data-bind="if: isSection('normativa')">
 			<div data-bind="component: 
 				{ name: 'normativa'
-				, params: { substanceId: substanceId, identificacion: identificacion } 
+				, params: 
+					{ substanceId: substanceId
+					, featuredLists: identificacion.featuredLists } 
 				}">
 			</div>
 		</div>
