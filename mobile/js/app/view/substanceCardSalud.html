@@ -1,2 +1,13 @@
-<h5 class="text-info" data-bind="if: isCancerigeno()">Cancerígeno<h5>
-Grupo Iarc:<div data-bind="text: grupo_iarc"></div>
+<div data-bind="if: isCancerigeno()">
+	<h5 class="text-info">Cancerígeno<h5>
+	<div class="row" data-bind="if: isCancerigenoIarc">
+		<div class="col-xs-3">Según IARC</div>
+		<div class="col-xs-9">
+			<ul class="base-ul">
+				<li data-bind="if: grupo_iarc">Grupo:&nbsp;<span data-bind="text: grupo_iarc"></span></li>
+				<li data-bind="if: volumen_iarc">Volumen:&nbsp;<span data-bind="html: volumen_iarc"></span></li>
+				<li data-bind="if: notas_iarc">Notas:&nbsp;<span data-bind="html: notas_iarc"></span></li>
+			</ul>
+		</div>
+	</div>
+</div>
