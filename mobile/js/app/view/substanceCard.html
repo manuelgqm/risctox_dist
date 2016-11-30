@@ -42,7 +42,10 @@
 		<div data-bind="if: isSection('salud')">
 			<div data-bind="component: 
 				{ name: 'salud'
-				, params: { substanceId: substanceId, salud: salud } 
+				, params: 
+					{ substanceId: substanceId
+					, featuredLists: identificacion.featuredLists
+					, salud: salud } 
 				}">
 			</div>
 		</div>
