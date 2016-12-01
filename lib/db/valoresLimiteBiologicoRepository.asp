@@ -28,18 +28,8 @@ function extractValorLimiteBiologico(substance, connection, indicador, valor, mo
 	result.add "indicador", substance.item(indicador)
 	result.add "valor", substance.item(valor)
 	result.add "momento", substance.item(momento)
-	result.add "notas", obtainNotasValoresLimiteBiologico(substance.item(notas), connection)
+	result.add "notas", obtainDefinitions(substance.item(notas), connection)
 
 	set extractValorLimiteBiologico = result
-end function
-
-function obtainNotasValoresLimiteBiologico(byVal notasSrz, connection)
-	dim result : result = Array()
-	Dim notas
-	if isNull(notasSrz) then 
-		notasSrz = ""
-	end if
-	notas = split(notasSrz, ",")
-	obtainNotasValoresLimiteBiologico = findDefinitions(notas, connection)
 end function
 %>

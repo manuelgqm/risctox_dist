@@ -1,4 +1,20 @@
 <%
+function obtainDefinitions(byVal keysSrz, connection)
+	optainDefinitions = Array()
+	Dim keys
+	if isNull(keysSrz) or keysSrz = "" then 
+		exit function
+	end if
+	keys = split(keysSrz, ",")
+	dim i, key
+	dim keysFormated : keysFormated = array()
+	for i = 0 to Ubound(keys)
+		key = replace(keys(i), " ", "")
+		if len(key) then arrayPush keysFormated, key
+	next
+	obtainDefinitions = findDefinitions(keysFormated, connection)
+end function
+
 function findDefinitions(keys, connection)
 	Dim result : result = Array()
 	dim keysQueryFormatedSrz : keysQueryFormatedSrz =  formatKeysQueryList(keys)

@@ -36,7 +36,7 @@ function findSaludFields(id_sustancia, connection)
 	dim substanceDic : set substanceDic = recodsetToDictionary(substanceRecordset)
 	substanceRecordset.close()
 	set substanceRecordset = nothing
-	dim substance : set substance = extractSubstanceSaludFields(id_sustancia, substanceDic)
+	dim substance : set substance = extractSubstanceSaludFields(id_sustancia, substanceDic, connection)
 
 	set findSaludFields = substance
 end function
@@ -342,12 +342,12 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	set extractSubstanceLevelOneFields = substance
 end function
 
-function extractSubstanceSaludFields(substanceId, substanceDic)
+function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
 	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
 	substance.add "volumen_iarc", substanceDic("volumen_iarc")
 	substance.add "notas_iarc", substanceDic("notas_iarc")
-	substance.add "nivel_disruptor", obtainNivelDisruptor(substanceDic("notas_iarc"))
+	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), connection)
 
 	set extractSubstanceSaludFields = substance
 end function
@@ -676,18 +676,21 @@ function obtainNumsIcsc(numsIcscSrz)
 	obtainNumsIcsc = result
 end function
 
-function obtainNivelDisruptor(nivelDisruptor)
-	obtainNivelDisruptor = Array()
-	if nivelDisruptor = "" then
-		exit function
-	end if
-	dim nivelesDisruptor : nivelesDisruptor = split(nivelDisruptor, ",")
-	dim i, nivelFormated
-	for i = 0 to ubound(nivelesDisruptor)
-		nivelFormated = trim(nivelesDisruptor(i))
+'function obtainNivelDisruptor(nivelDisruptor)
+'	obtainNivelDisruptor = Array()
+'	if nivelDisruptor = "" then
+'		exit function
+'	end if
+'	dim nivelesDisruptor : nivelesDisruptor = split(nivelDisruptor, ",")
+'	dim i, nivelFormated
+'	dim nivelesFormated = Array()
+'	for i = 0 to ubound(nivelesDisruptor)
+'		nivelFormated = trim(nivelesDisruptor(i))
 '		arrayPush obtainNivelDisruptor, dame_definicion(nivelFormated)
-		arrayPush obtainNivelDisruptor, nivelFormated
-	next
+'		if len(nivelarrayPush nivelesFormated, nivelFormated
+'	next
+
+'	obtainNivelDisruptor = findDefinitions(nivelesDisruptor, connection)
 	
-end function
+'end function
 %>

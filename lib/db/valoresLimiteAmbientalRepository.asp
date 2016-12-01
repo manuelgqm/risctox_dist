@@ -32,24 +32,8 @@ function extractValorLimiteAmbiental(substance, connection, estado, ed_ppm, ed_m
 	result.add "ed_mg_m3", substance.item(ed_mg_m3)
 	result.add "ec_ppm", substance.item(ec_ppm)
 	result.add "ec_mg_m3", substance.item(ec_mg_m3)
-	result.add "notas", obtainNotasValoresLimiteAmbiental(substance.item(notas), connection)
+	result.add "notas", obtainDefinitions(substance.item(notas), connection)
 
 	set extractValorLimiteAmbiental = result
-end function
-
-function obtainNotasValoresLimiteAmbiental(byVal notasSrz, connection)
-	dim result : result = Array()
-	Dim notas
-	if isNull(notasSrz) then 
-		notasSrz = ""
-	end if
-	notas = split(notasSrz, ",")
-	dim i, nota
-	dim notasCleared : notasCleared = array()
-	for i = 0 to Ubound(notas)
-		nota = replace(notas(i), " ", "")
-		if len(nota) then arrayPush notasCleared, nota
-	next
-	obtainNotasValoresLimiteAmbiental = findDefinitions(notasCleared, connection)
 end function
 %>
