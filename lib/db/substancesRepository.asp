@@ -346,6 +346,7 @@ function extractSubstanceSaludFields(substanceId, substanceDic)
 	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
 	substance.add "volumen_iarc", substanceDic("volumen_iarc")
 	substance.add "notas_iarc", substanceDic("notas_iarc")
+	substance.add "nivel_disruptor", obtainNivelDisruptor(substanceDic("notas_iarc"))
 
 	set extractSubstanceSaludFields = substance
 end function
@@ -431,11 +432,17 @@ function composeSaludQuery(id_sustancia)
 	dim sql
 	sql = _
 		"SELECT " &_
-			"iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc " &_
+			"sus.id, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, neurodis.nivel_disruptor " &_
 		"FROM " &_
+			"dn_risc_sustancias as sus " &_
+		"LEFT JOIN " &_
 			"dn_risc_sustancias_iarc as iarc " &_
+				"ON sus.id = iarc.id_sustancia " &_
+		"LEFT JOIN " &_
+			"dn_risc_sustancias_neuro_disruptor as neurodis " &_
+				"ON sus.id = neurodis.id_sustancia " &_
 		"WHERE " &_
-			"iarc.id_sustancia = " & id_sustancia
+			"sus.id = " & id_sustancia
 	composeSaludQuery = sql
 end function
 
@@ -666,5 +673,20 @@ function obtainNumsIcsc(numsIcscSrz)
 	next
 
 	obtainNumsIcsc = result
+end function
+
+function obtainNivelDisruptor(nivelDisruptor)
+	obtainNivelDisruptor = Array()
+	if nivelDisruptor = "" then
+		exit function
+	end if
+	dim nivelesDisruptor : nivelesDisruptor = split(nivelDisruptor, ",")
+	dim i, nivelFormated
+	for i = 0 to ubound(nivelesDisruptor)
+		nivelFormated = trim(nivelesDisruptor(i))
+'		arrayPush obtainNivelDisruptor, dame_definicion(nivelFormated)
+		arrayPush obtainNivelDisruptor, nivelFormated
+	next
+	
 end function
 %>
