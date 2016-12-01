@@ -309,6 +309,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	substance.Add "num_ce_einecs", substanceDic("num_ce_einecs")
 	substance.Add "num_ce_elincs", substanceDic("num_ce_elincs")
 	substance.Add "num_rd", substanceDic("num_rd")
+	substance.Add "nums_icsc", obtainNumsIcsc(substanceDic("num_icsc"))
 	substance.Add "pictogramasRd", findPictogramasRd1272(substanceDic("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceDic, connection)
 	substance.Add "notas_rd1272", obtainNotasRd1272(substanceDic("notas_rd1272"), connection)
@@ -375,7 +376,7 @@ end function
 function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 	sql = _
 		"SELECT " &_
-			"sus.id as substanceId, sus.nombre, sus.num_cas, sus.num_ce_einecs, sus.num_ce_elincs, sus.num_rd, " &_
+			"sus.id as substanceId, sus.nombre, sus.num_cas, sus.num_ce_einecs, sus.num_ce_elincs, sus.num_rd, sus.num_icsc, " &_
 			"sus.simbolos_rd1272, sus.notas_rd1272, " &_
 			"sus.clasificacion_rd1272_1, sus.clasificacion_rd1272_2, sus.clasificacion_rd1272_3, " &_
 			"sus.clasificacion_rd1272_4, sus.clasificacion_rd1272_5, sus.clasificacion_rd1272_6, " &_
@@ -627,6 +628,10 @@ end function
 function recodsetToDictionary(recordset)
 	set result = Server.CreateObject("Scripting.Dictionary")
 	dim key
+	if recordset.eof then
+		set recodsetToDictionary = result
+		exit function
+	end if
 	for each key in recordset.fields
 		result.add key.name, key.Value
 	next
@@ -636,5 +641,30 @@ end function
 function isSubstanceExplosive(clasificacion_rd1272_1)
 	isSubstanceExplosive = false
 	if clasificacion_rd1272_1 = "Expl., ****;" then isSubstanceExplosive = true
+end function
+
+function obtainNumsIcsc(numsIcscSrz)
+	dim icsc
+	dim result : result = Array()
+	dim numsIcsc : numsIcsc = split(numsIcscSrz, "@")
+	dim i, centena, max, min
+	for i = 0 to ubound(numsIcsc)
+		current = cstr(numsIcsc(i))
+		if len(current) <> 4 then
+			obtainNumsIcsc = result
+			exit function
+		end if
+		centena = mid(current, 1, 2)
+		max = cstr(clng(centena & "01"))
+		if max = "1" then max = "0"
+		min = cstr(clng(centena) + 1) & "00"
+		set icsc = Server.CreateObject("Scripting.Dictionary")
+		icsc.add "id", current
+		icsc.add "max", max
+		icsc.add "min", min
+		result = arrayPushDictionary(result, icsc)
+	next
+
+	obtainNumsIcsc = result
 end function
 %>

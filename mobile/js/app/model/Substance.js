@@ -8,6 +8,7 @@ define(['Server'], function(Server){
 			, num_ce_einecs: null
 			, num_ce_elincs: null
 			, num_rd: null
+			, nums_icsc: null
 			, pictogramasRd: null
 			, clasificacionesRd1272: null
 			, notas_rd1272: null

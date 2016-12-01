@@ -79,6 +79,17 @@
 	</ul>
 </div>
 
+<div data-bind="if: nums_icsc">
+	<div class="text-muted" style="display: inline;">
+		Ficha Internacional de Seguridad Química (<a href="http://www.insht.es" target="_blank">INSHT</a>):
+	</div>
+	<ul class="list-comma" data-bind="foreach: nums_icsc" style="display: inline;">
+		<li>
+			<a href="#" target="_blank" data-bind="attr: { href: $parent.getInshtUrl($data) }, text: id"></a>
+		</li>
+	</ul>
+</div>
+
 <h5 class="text-info" data-bind="if: hasClassificationOrLabelingRd1272">
 	<div class="dropdown" style="display:inline">
 		<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>

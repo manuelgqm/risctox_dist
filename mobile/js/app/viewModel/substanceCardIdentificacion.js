@@ -96,7 +96,16 @@ define(
 			this.hasValoresLimite = ko.computed(function()
 				{ return this.hasValoresLimiteAmbiental() || this.hasValoresLimiteBiologico() }
 			, this);
-			
+
+			this.getInshtUrl = function (num_icsc) {
+				return "http://www.insht.es/InshtWeb/Contenidos/Documentacion/FichasTecnicas/FISQ/Ficheros/" 
+					+ num_icsc.max().toString()
+					+ "a" 
+					+ num_icsc.min().toString()
+					+ "/nspn" 
+					+ num_icsc.id().toString() + ".pdf";
+			}
+
 			return this
 		};
 
