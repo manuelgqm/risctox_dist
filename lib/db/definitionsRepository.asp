@@ -1,16 +1,16 @@
 <%
-function findDefinitions(notas, connection)
+function findDefinitions(keys, connection)
 	Dim result : result = Array()
-	dim definitionKeysQueryFormatedSrz : definitionKeysQueryFormatedSrz =  formatDefinitionKeysQueryList(notas)
-	Dim notasDefinitionsQuery : notasDefinitionsQuery = composeDefinitionsQuery(definitionKeysQueryFormatedSrz)
-	if definitionKeysQueryFormatedSrz = "" then
+	dim keysQueryFormatedSrz : keysQueryFormatedSrz =  formatKeysQueryList(keys)
+	Dim definitionsQuery : definitionsQuery = composeQuery(keysQueryFormatedSrz)
+	if keysQueryFormatedSrz = "" then
 		findDefinitions = result
 		exit function
 	end if
-	Dim definitionsRecordset : set definitionsRecordset = connection.execute(notasDefinitionsQuery)
-	Dim i, definitionId, definitionText, nota
-	For i = 0 to Ubound(notas)
-		set nota = Server.CreateObject("Scripting.Dictionary")
+	Dim definitionsRecordset : set definitionsRecordset = connection.execute(definitionsQuery)
+	Dim i, definitionId, definitionText, key
+	For i = 0 to Ubound(keys)
+		set key = Server.CreateObject("Scripting.Dictionary")
 		definitionId = ""
 		definitionText = ""
 		if not definitionsRecordset.EOF then
@@ -18,10 +18,10 @@ function findDefinitions(notas, connection)
 			definitionText = definitionsRecordset("definicion").value
 			definitionsRecordset.moveNext
 		end if
-		nota.add "id", definitionId
-		nota.add "description", definitionText
-		nota.add "key", notas(i)
-		result = arrayPushDictionary(result, nota)
+		key.add "id", definitionId
+		key.add "description", definitionText
+		key.add "key", keys(i)
+		result = arrayPushDictionary(result, key)
 	next
 
 	definitionsRecordset.close
@@ -29,30 +29,30 @@ function findDefinitions(notas, connection)
 	findDefinitions = result
 end function
 
-function formatDefinitionKeysQueryList(byVal definitionKeys)
+function formatKeysQueryList(byVal keys)
 	dim result : result = ""
 	dim format1 : format1 = Array("1", "2", "3", "4", "5", "6", "7", "8", "o")
 	dim format2 : format2 = Array("F", "I", "S")
-	dim i, definitionKeyFormated, definitionKey
-	for i = 0 to ubound(definitionKeys)
-		definitionKey = trim(definitionKeys(i))
-		definitionKeyFormated = definitionKey
-		if inArray(definitionKey, format1) then
-			definitionKeyFormated = "(" & definitionKey & ")"
+	dim i, definitionKeyFormated, key
+	for i = 0 to ubound(keys)
+		key = trim(keys(i))
+		definitionKeyFormated = key
+		if inArray(key, format1) then
+			definitionKeyFormated = "(" & key & ")"
 		end if
-		if inArray(definitionKey, format2) then
-			definitionKeyFormated = lcase(definitionKey) & "."
+		if inArray(key, format2) then
+			definitionKeyFormated = lcase(key) & "."
 		end if
-		definitionKeys(i) = definitionKeyFormated
+		keys(i) = definitionKeyFormated
 	next
-	definitionKeys = arrayWrapItems(definitionKeys, "'", "'")
-	result = join(definitionKeys, ",")
-	formatDefinitionKeysQueryList = result
+	keys = arrayWrapItems(keys, "'", "'")
+	result = join(keys, ",")
+	formatKeysQueryList = result
 end function
 
-function composeDefinitionsQuery(definitionKeysQueryFormatedSrz)
+function composeQuery(keysQueryFormatedSrz)
 	Dim sql
-	sql = "SELECT id, palabra, dbo.udf_StripHTML(definicion) as definicion FROM rq_definiciones where palabra in (" & definitionKeysQueryFormatedSrz & ")"
-	composeDefinitionsQuery = sql
+	sql = "SELECT id, palabra, dbo.udf_StripHTML(definicion) as definicion FROM rq_definiciones where palabra in (" & keysQueryFormatedSrz & ")"
+	composeQuery = sql
 end function
 %>
