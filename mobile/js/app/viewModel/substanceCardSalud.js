@@ -5,8 +5,8 @@ define(
 		function viewModel(card){
 			Object.assign(this, card.salud);
 			this.featuredLists = card.featuredLists;
-			this.isCancerigenoIarc  =  this.featuredLists().filter( list => 
-				list == 'cancer_iarc' ).length != 0;
+			this.isCancerigenoIarc = this.inList('cancer_iarc');
+			this.isDisruptor = this.inList("de");
 		};
 
 		viewModel.prototype.isCancerigeno = function(){
@@ -25,6 +25,9 @@ define(
 			return inCancerigenosLists;
 		};
 
+		viewModel.prototype.inList = function (listName) {
+			return this.featuredLists().indexOf(listName) != -1;
+		};
 
 		return { viewModel: viewModel, template: template };
 	}
