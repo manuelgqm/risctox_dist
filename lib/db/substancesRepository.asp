@@ -9,6 +9,7 @@
 <!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
 <!--#include file="valoresLimiteAmbientalRepository.asp"-->
 <!--#include file="valoresLimiteBiologicoRepository.asp"-->
+<!--#include file="definitionsRepository.asp"-->
 <%
 function findSubstance(id_sustancia, connection)
 	sql = composeSubstanceQuery( id_sustancia )
