@@ -68,7 +68,7 @@ end function
 
 function composeQuery(keysQueryFormatedSrz)
 	Dim sql
-	sql = "SELECT id, palabra, dbo.udf_StripHTML(definicion) as definicion FROM rq_definiciones where palabra in (" & keysQueryFormatedSrz & ")"
+	sql = "SELECT id, palabra, definicion as definicion FROM rq_definiciones where palabra in (" & keysQueryFormatedSrz & ")"
 	composeQuery = sql
 end function
 %>
