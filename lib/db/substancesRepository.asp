@@ -348,6 +348,9 @@ function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	substance.add "volumen_iarc", substanceDic("volumen_iarc")
 	substance.add "notas_iarc", substanceDic("notas_iarc")
 	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), connection)
+	substance.add "efecto_neurotoxico", substanceDic("efecto_neurotoxico")
+	substance.add "fuente_neurotoxico", substanceDic("fuente_neurotoxico")
+	substance.add "nivel_neurotoxico", substanceDic("nivel_neurotoxico")
 
 	set extractSubstanceSaludFields = substance
 end function
@@ -433,7 +436,8 @@ function composeSaludQuery(id_sustancia)
 	dim sql
 	sql = _
 		"SELECT " &_
-			"sus.id, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, neurodis.nivel_disruptor " &_
+			"sus.id, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, " &_
+			"neurodis.nivel_disruptor, neurodis.efecto_neurotoxico, neurodis.fuente_neurotoxico, neurodis.nivel_neurotoxico " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
 		"LEFT JOIN " &_
