@@ -15,7 +15,16 @@ define(
 					, "neurotoxico_nivel"
 					]
 				return inLists(neurotoxicosLists, this.featuredLists()) || this.efecto_neurotoxico == 'OTOTÓXICO';
-			}
+			};
+			this.isCancerigeno = function(){
+				var cancerigenosLists = 
+					[ 'cancer_rd'
+					, 'cancer_danesa'
+					, 'cancer_iarc'
+					, 'cancer_otras'
+					, 'cancer_mama' ]
+				return inLists(cancerigenosLists, this.featuredLists());
+			};
 
 			var inLists = function(list1, list2){
 				var ocurrences = list1.filter( element1 => 
@@ -25,22 +34,6 @@ define(
 				).length;
 				return ocurrences != 0;	
 			}
-		};
-
-		viewModel.prototype.isCancerigeno = function(){
-			var cancerigenosLists = 
-				[ 'cancer_rd'
-				, 'cancer_danesa'
-				, 'cancer_iarc'
-				, 'cancer_otras'
-				, 'cancer_mama' ]
-			var inCancerigenosLists = cancerigenosLists.filter( 
-				cancerigeno => 
-					this.featuredLists().filter( featured =>
-						cancerigeno == featured
-					).length != 0
-				).length != 0;
-			return inCancerigenosLists;
 		};
 
 		viewModel.prototype.inList = function (listName) {
