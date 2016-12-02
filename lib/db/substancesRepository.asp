@@ -352,6 +352,7 @@ function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	substance.add "efecto_neurotoxico", obtainEfectosNeurotoxico(substanceDic("efecto_neurotoxico"), featuredLists, connection)
 	substance.add "fuente_neurotoxico", obtainFuentesNeurotoxico(substanceDic("fuente_neurotoxico"), featuredLists, connection)
 	substance.add "nivel_neurotoxico", obtainDefinitions("Nivel " & substanceDic("nivel_neurotoxico"), connection)
+	substance.add "nivel_tpr", obtainNivelTpr(substanceDic, connection)
 
 	set extractSubstanceSaludFields = substance
 end function
@@ -438,7 +439,10 @@ function composeSaludQuery(id_sustancia)
 	sql = _
 		"SELECT " &_
 			"sus.id, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, " &_
-			"neurodis.nivel_disruptor, neurodis.efecto_neurotoxico, neurodis.fuente_neurotoxico, neurodis.nivel_neurotoxico " &_
+			"neurodis.nivel_disruptor, neurodis.efecto_neurotoxico, neurodis.fuente_neurotoxico, neurodis.nivel_neurotoxico, " &_
+			"sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, " &_
+			"sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, " &_
+			"sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15 " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
 		"LEFT JOIN " &_
@@ -713,5 +717,39 @@ function obtainFuentesNeurotoxico(fuentesSrz, featuredLists, connection)
 	obtainFuentesNeurotoxico = obtainDefinitions( _
 		join(fuentes, ",") _
 		, connection )
+end function
+
+function obtainNivelTpr(substanceDic, connection)
+	set obtainNivelTpr = Server.CreateObject("Scripting.Dictionary")
+	dim clasificaciones : clasificaciones = _
+		substanceDic("clasificacion_1") &_
+		substanceDic("clasificacion_2") &_
+		substanceDic("clasificacion_3") &_
+		substanceDic("clasificacion_4") &_
+		substanceDic("clasificacion_5") &_
+		substanceDic("clasificacion_6") &_
+		substanceDic("clasificacion_7") &_
+		substanceDic("clasificacion_8") &_
+		substanceDic("clasificacion_9") &_
+		substanceDic("clasificacion_10") &_
+		substanceDic("clasificacion_11") &_
+		substanceDic("clasificacion_12") &_
+		substanceDic("clasificacion_13") &_
+		substanceDic("clasificacion_14") &_
+		substanceDic("clasificacion_15")
+	clasificaciones = replace(clasificaciones, " ", "")
+	dim posicion : posicion = instr(clasificaciones, "Repr.Cat.")
+	if posicion = 0 then _
+		exit function
+
+	obtainNivelTpr = obtainDefinitions( "TR" &_
+		replace( _
+			replace( _
+				replace( _
+					mid(clasificaciones, posicion + 9, 1), "1", "1A" _
+				), "2", "1B"_
+			), "3", "2" _
+		) _
+	, connection)
 end function
 %>

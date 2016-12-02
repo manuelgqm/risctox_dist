@@ -15,7 +15,6 @@ define(
 					, "neurotoxico_danesa"
 					, "neurotoxico_nivel" ]
 				, featuredLists) || this.efecto_neurotoxico == 'OTOTÓXICO';
-
 			this.isCancerigeno = featuredLists =>
 				inLists(
 					[ 'cancer_rd'
@@ -24,6 +23,8 @@ define(
 					, 'cancer_otras'
 					, 'cancer_mama' ]
 				, featuredLists);
+			this.isToxicoReproduccion = featuredLists =>
+				inLists(['tpr'], featuredLists);
 
 			var inLists = function(list1, list2) {
 				return list1.filter( element => 
