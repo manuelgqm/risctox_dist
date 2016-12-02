@@ -344,13 +344,14 @@ end function
 
 function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim featuredLists : featuredLists = obtainFeaturedLists(substanceId, connection)
 	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
 	substance.add "volumen_iarc", substanceDic("volumen_iarc")
 	substance.add "notas_iarc", substanceDic("notas_iarc")
 	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), connection)
-	substance.add "efecto_neurotoxico", substanceDic("efecto_neurotoxico")
-	substance.add "fuente_neurotoxico", substanceDic("fuente_neurotoxico")
-	substance.add "nivel_neurotoxico", substanceDic("nivel_neurotoxico")
+	substance.add "efecto_neurotoxico", obtainEfectosNeurotoxico(substanceDic("efecto_neurotoxico"), featuredLists, connection)
+	substance.add "fuente_neurotoxico", obtainFuentesNeurotoxico(substanceDic("fuente_neurotoxico"), featuredLists, connection)
+	substance.add "nivel_neurotoxico", obtainDefinitions("Nivel " & substanceDic("nivel_neurotoxico"), connection)
 
 	set extractSubstanceSaludFields = substance
 end function
@@ -680,21 +681,37 @@ function obtainNumsIcsc(numsIcscSrz)
 	obtainNumsIcsc = result
 end function
 
-'function obtainNivelDisruptor(nivelDisruptor)
-'	obtainNivelDisruptor = Array()
-'	if nivelDisruptor = "" then
-'		exit function
-'	end if
-'	dim nivelesDisruptor : nivelesDisruptor = split(nivelDisruptor, ",")
-'	dim i, nivelFormated
-'	dim nivelesFormated = Array()
-'	for i = 0 to ubound(nivelesDisruptor)
-'		nivelFormated = trim(nivelesDisruptor(i))
-'		arrayPush obtainNivelDisruptor, dame_definicion(nivelFormated)
-'		if len(nivelarrayPush nivelesFormated, nivelFormated
-'	next
+function obtainEfectosNeurotoxico(byVal efectosSrz, featuredLists, connection)
+	obtainEfectosNeurotoxico = obtainDefinitions( _ 
+		replace(efectosSrz, "/", ",") _
+		, connection)
+	dim efectos : efectos = split(efectosSrz, "/")
+	if not( _
+		inArray("neurotoxico_rd", featuredLists) _
+		or inArray("neurotoxico_danesa", featuredLists) _
+		) then exit function
+	if not inArray("SNC", efectos) then _
+		arrayPush efectos, "SNC"
 
-'	obtainNivelDisruptor = findDefinitions(nivelesDisruptor, connection)
-	
-'end function
+	obtainEfectosNeurotoxico = obtainDefinitions( _
+		join(efectos, ",") _
+		, connection )
+end function
+
+function obtainFuentesNeurotoxico(fuentesSrz, featuredLists, connection)
+	obtainFuentesNeurotoxico = obtainDefinitions(fuentesSrz, connection)
+	dim fuentes : fuentes = split(fuentesSrz)
+	if not( _
+		inArray("neurotoxico_rd", featuredLists) _
+		or inArray("neurotoxico_danesa", featuredLists) _
+		) then exit function
+	if not inArray("363", fuentes) then _
+		arrayPush fuentes, "363"
+	if not inArray("EPA-R67", featuredLists) then _
+		arrayPush fuentes, "EPA-R67"
+
+	obtainFuentesNeurotoxico = obtainDefinitions( _
+		join(fuentes, ",") _
+		, connection )
+end function
 %>

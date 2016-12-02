@@ -9,7 +9,7 @@ function obtainDefinitions(byVal keysSrz, connection)
 	dim i, key
 	dim keysFormated : keysFormated = array()
 	for i = 0 to Ubound(keys)
-		key = replace(keys(i), " ", "")
+		key = trim(keys(i))
 		if len(key) then arrayPush keysFormated, key
 	next
 	obtainDefinitions = findDefinitions(keysFormated, connection)
