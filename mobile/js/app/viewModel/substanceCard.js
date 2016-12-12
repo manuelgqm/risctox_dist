@@ -26,7 +26,7 @@ define(
 
 		Object.assign(card, new ViewModel(card, cardView));
 
-		var loadSection = ko.computed(function() {
+		ko.computed(function() {
 			section = card[card.section()];
 			if (Object.keys(section).length) {
 				return true;
@@ -60,10 +60,20 @@ define(
 			card[card.section()] = load(card.section(), card.substanceId);
 		}, this);
 
-		ko.components.register('identificacion', { require: 'app/viewModel/substanceCardIdentificacion' });
-		ko.components.register('salud', { require: 'app/viewModel/substanceCardSalud' });
-		ko.components.register('normativa', { require: 'app/viewModel/substanceCardNormativa' });
-		ko.components.register('medioAmbiente', { require: 'app/viewModel/substanceCardMedioAmbiente' });
+		var registerComponent = function(componentName, viewModelName){
+			if (ko.components.isRegistered(componentName)) {
+				return false;
+			};
+			ko.components.register(componentName, 
+				{ require: 'app/viewModel/' + viewModelName }
+			);
+			return true;
+		};
+
+		registerComponent('identificacion', 'substanceCardIdentificacion');
+		registerComponent('salud', 'substanceCardSalud');
+		registerComponent('normativa', 'substanceCardNormativa');
+		registerComponent('medioAmbiente', 'substanceCardMedioAmbiente');
 
 		card.render();
 		card.bind();
