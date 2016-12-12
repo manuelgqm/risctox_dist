@@ -7,6 +7,8 @@ define(function(){
 			, efecto_neurotoxico: null
 			, fuente_neurotoxico: null
 			, nivel_neurotoxico: null
+			, nivel_disruptor: null
+			, nivel_tpr: null
 			}
 	}
 });

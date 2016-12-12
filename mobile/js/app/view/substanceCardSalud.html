@@ -22,7 +22,7 @@
 </div>
 <div data-bind="if: isNeurotoxico">
 	<h5 class="text-info">Neurotóxico</h5>
-	<div data-binf="if: efecto_neurotoxico">
+	<div data-bind="if: efecto_neurotoxico">
 		<div class="col-xs-3 text-muted">Efecto:</div>
 		<div class="col-xs-9">
 			<ul class="base-ul" data-bind="foreach: efecto_neurotoxico">
@@ -33,7 +33,7 @@
 			</ul>
 		</div>
 	</div>
-	<div data-binf="if: nivel_neurotoxico">
+	<div data-bind="if: nivel_neurotoxico">
 		<div class="col-xs-3 text-muted">Nivel:</div>
 		<div class="col-xs-9">
 			<ul class="base-ul" data-bind="foreach: nivel_neurotoxico">
@@ -44,7 +44,7 @@
 			</ul>
 		</div>
 	</div>
-	<div data-binf="if: fuente_neurotoxico">
+	<div data-bind="if: fuente_neurotoxico">
 		<div class="col-xs-3 text-muted">Fuente:</div>
 		<div class="col-xs-9">
 			<ul class="base-ul" data-bind="foreach: fuente_neurotoxico">
