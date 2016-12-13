@@ -297,7 +297,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 		, getListaNegraClassifications( _
 			substance("featuredLists"), substance("frasesR"), substanceRecordset("mpmb") _
 		)
-
+	
 	set extractSubstance = substance
 end function
 
@@ -345,6 +345,10 @@ end function
 function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
 	dim featuredLists : featuredLists = obtainFeaturedLists(substanceId, connection)
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
+	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
 	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
 	substance.add "volumen_iarc", substanceDic("volumen_iarc")
 	substance.add "notas_iarc", substanceDic("notas_iarc")
@@ -358,6 +362,10 @@ function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 end function
 
 function extractGrupoIarc(grupo)
+	extractGrupoIarc = grupo
+	if isNull(grupo) then 
+		exit function
+	end if
 	extractGrupoIarc = ""
 	extractGrupoIarc = _
 		trim( _
@@ -453,6 +461,7 @@ function composeSaludQuery(id_sustancia)
 				"ON sus.id = neurodis.id_sustancia " &_
 		"WHERE " &_
 			"sus.id = " & id_sustancia
+
 	composeSaludQuery = sql
 end function
 
