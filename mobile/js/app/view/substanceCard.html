@@ -10,19 +10,19 @@
 				identif.
 			</a>
 		</li>	
-		<li role="presentation" data-bind="if: hasSaludInfo, css: { active: section == 'salud' }">
+		<li role="presentation" data-bind="if: hasSalud, css: { active: section == 'salud' }">
 			<a data-bind="click: function() { setSection('salud') }">
 				<img src="js/app/view/image/ico_danos_sl.jpg" alt=""><br>
 				r. salud
 			</a>
 		</li>	
-		<li role="presentation" data-bind="if: hasNormativaInfo, css: { active: section == 'normativa' }">
+		<li role="presentation" data-bind="if: hasNormativa, css: { active: section == 'normativa' }">
 			<a data-bind="click: function() { setSection('normativa') }">
 				<img src="js/app/view/image/ico_normativa.jpg" alt=""><br>
 				normat.
 			</a>
 		</li>	
-		<li role="presentation" data-bind="css: { active: section == 'medioAmbiente' }">
+		<li role="presentation" data-bind="if: hasMedioAmbiente, css: { active: section == 'medioAmbiente' }">
 			<a data-bind="click: function() { setSection('medioAmbiente') }">
 				<img src="js/app/view/image/ico_danos_ma.jpg" alt=""><br>
 				medio am.

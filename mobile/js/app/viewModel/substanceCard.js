@@ -68,7 +68,7 @@ define(
 			card[card.section()] = load(card.section(), card.substanceId);
 		}, this);
 
-		card.hasSaludInfo = ko.computed( () =>
+		card.hasSalud = ko.computed( () =>
 			inLists(
 				[ "cancer_iarc"
 				, "de"
@@ -85,13 +85,17 @@ define(
 			|| this.efecto_neurotoxico == 'OTOTÓXICO'
 		);
 
-		card.hasNormativaInfo = ko.computed( () => 
+		card.hasNormativa = ko.computed( () => 
 			inLists(
 				[ "restringias"
 				, "prohibidas_embarazadas"
 				, "prohibidas_lactentes" ]
 			, card.identificacion.featuredLists())
 		);
+
+		card.hasMedioAmbiente = ko.computed( () =>
+			false
+		)
 
 		var registerComponent = function(componentName, viewModelName){
 			if (ko.components.isRegistered(componentName)) {
