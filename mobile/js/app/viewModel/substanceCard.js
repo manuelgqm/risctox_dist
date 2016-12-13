@@ -85,6 +85,14 @@ define(
 			|| this.efecto_neurotoxico == 'OTOTÓXICO'
 		);
 
+		card.hasNormativaInfo = ko.computed( () => 
+			inLists(
+				[ "restringias"
+				, "prohibidas_embarazadas"
+				, "prohibidas_lactentes" ]
+			, card.identificacion.featuredLists())
+		);
+
 		var registerComponent = function(componentName, viewModelName){
 			if (ko.components.isRegistered(componentName)) {
 				return false;

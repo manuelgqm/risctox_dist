@@ -16,7 +16,7 @@
 				r. salud
 			</a>
 		</li>	
-		<li role="presentation" data-bind="css: { active: section == 'normativa' }">
+		<li role="presentation" data-bind="if: hasNormativaInfo, css: { active: section == 'normativa' }">
 			<a data-bind="click: function() { setSection('normativa') }">
 				<img src="js/app/view/image/ico_normativa.jpg" alt=""><br>
 				normat.
