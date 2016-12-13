@@ -11,6 +11,14 @@ define(
 ], function(ko, mapping, ViewModel, cardView, SubstanceModel, SubstanceSaludModel, Server){
 	return function(args){
 		Object.assign(ko, mapping);
+		var inLists = function(list1, list2) {
+			if (!list1 || !list2)
+				return false;
+			return list1.filter( element => 
+				list2.indexOf(element) != -1
+			).length != 0;
+		};
+
 		var card = 
 			{ domId : 'card'
 			, section : ko.observable(args.section || 'identificacion')
@@ -22,9 +30,9 @@ define(
 			, medioAmbiente: {}
 			, setSection: function(section) 
 				{ this.section(section) }
-			}
-
+			};
 		Object.assign(card, new ViewModel(card, cardView));
+		ko.fromJS(card);
 
 		ko.computed(function() {
 			section = card[card.section()];
@@ -59,6 +67,23 @@ define(
 			};
 			card[card.section()] = load(card.section(), card.substanceId);
 		}, this);
+
+		card.hasSaludInfo = ko.computed( () =>
+			inLists(
+				[ "cancer_iarc"
+				, "de"
+				, 'cancer_rd'
+				, 'cancer_danesa'
+				, 'cancer_iarc'
+				, 'cancer_otras'
+				, 'cancer_mama'
+				, "neurotoxico"
+				, "neurotoxico_rd"
+				, "neurotoxico_danesa"
+				, "neurotoxico_nivel" ]
+			, card.identificacion.featuredLists()) 
+			|| this.efecto_neurotoxico == 'OTOTÓXICO'
+		);
 
 		var registerComponent = function(componentName, viewModelName){
 			if (ko.components.isRegistered(componentName)) {

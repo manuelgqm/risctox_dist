@@ -10,7 +10,7 @@
 				identif.
 			</a>
 		</li>	
-		<li role="presentation" data-bind="css: { active: section == 'salud' }">
+		<li role="presentation" data-bind="if: hasSaludInfo, css: { active: section == 'salud' }">
 			<a data-bind="click: function() { setSection('salud') }">
 				<img src="js/app/view/image/ico_danos_sl.jpg" alt=""><br>
 				r. salud
