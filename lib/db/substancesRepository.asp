@@ -355,7 +355,9 @@ function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), connection)
 	substance.add "efecto_neurotoxico", obtainEfectosNeurotoxico(substanceDic("efecto_neurotoxico"), featuredLists, connection)
 	substance.add "fuente_neurotoxico", obtainFuentesNeurotoxico(substanceDic("fuente_neurotoxico"), featuredLists, connection)
-	substance.add "nivel_neurotoxico", obtainDefinitions("Nivel " & substanceDic("nivel_neurotoxico"), connection)
+	dim nivel_neurotoxico_key
+	nivel_neurotoxico_key = obtainNivelNeurotoxicoKey(substanceDic("nivel_neurotoxico"))
+	substance.add "nivel_neurotoxico", obtainDefinitions(nivel_neurotoxico_key, connection)
 	substance.add "nivel_tpr", obtainNivelTpr(substanceDic, connection)
 
 	set extractSubstanceSaludFields = substance
@@ -696,9 +698,8 @@ end function
 
 function obtainEfectosNeurotoxico(byVal efectosSrz, featuredLists, connection)
 	obtainEfectosNeurotoxico = efectosSrz
-	if isNull(efectosSrz) then
+	if isNull(efectosSrz) then _
 		exit function
-	end if
 	obtainEfectosNeurotoxico = obtainDefinitions( _ 
 		replace(efectosSrz, "/", ",") _
 		, connection)
@@ -717,6 +718,8 @@ end function
 
 function obtainFuentesNeurotoxico(fuentesSrz, featuredLists, connection)
 	obtainFuentesNeurotoxico = obtainDefinitions(fuentesSrz, connection)
+	if isNull(fuentesSrz) then _
+		exit function
 	dim fuentes : fuentes = split(fuentesSrz)
 	if not( _
 		inArray("neurotoxico_rd", featuredLists) _
@@ -764,5 +767,13 @@ function obtainNivelTpr(substanceDic, connection)
 			), "3", "2" _
 		) _
 	, connection)
+end function
+
+function obtainNivelNeurotoxicoKey(nivel)
+	obtainNivelNeurotoxicoKey = nivel
+	if isNull(nivel) or nivel = "" then _
+		exit function
+	
+	obtainNivelNeurotoxicoKey = "Nivel " &  nivel
 end function
 %>
