@@ -695,6 +695,10 @@ function obtainNumsIcsc(numsIcscSrz)
 end function
 
 function obtainEfectosNeurotoxico(byVal efectosSrz, featuredLists, connection)
+	obtainEfectosNeurotoxico = efectosSrz
+	if isNull(efectosSrz) then
+		exit function
+	end if
 	obtainEfectosNeurotoxico = obtainDefinitions( _ 
 		replace(efectosSrz, "/", ",") _
 		, connection)
