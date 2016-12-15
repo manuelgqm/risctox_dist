@@ -1,5 +1,5 @@
 <div data-bind="if: isCancerigeno">
-	<h5 class="text-info">Cancerígeno<h5>
+    <h5 class="text-info">Cancerígeno<h5>
 	<div class="row" data-bind="if: isCancerigenoIarc">
 		<div class="col-xs-3 text-muted">Según IARC:</div>
 		<div class="col-xs-9">
@@ -10,58 +10,69 @@
 			</ul>
 		</div>
 	</div>
+	<div class="row" data-bind="if: isCancerOtras">
+		<div class="col-xs-12">
+			<a role="button" data-toggle="collapse" aria-expanded="false" href="#collapseCancerOtrasFuentes" aria-controls="collapseCancerOtrasFuentes" data-bind="click: loadCancerOtras">
+				Cancerígeno según otras fuentes <span class="glyphicon glyphicon-menu-down" ></span>
+			</a>
+			<div class="collapse" id="collapseCancerOtrasFuentes">
+		  		<div>Fuentes ...</div>
+			</div>
+		</div>
+	</div>
 </div>
+
 <div data-bind="if: isDisruptor">
 	<h5 class="text-info">Disruptor endocrino</h5>
-	<div class="col-xs-3 text-muted">Fuente:</div>
-	<div class="col-xs-9">
-		<ul class="base-ul" data-bind="foreach: nivel_disruptor">
-			<li data-bind="html: description"></li>
-		</ul>
-	</div>
+    <div class="col-xs-3 text-muted">Fuente:</div>
+    <div class="col-xs-9">
+        <ul class="base-ul" data-bind="foreach: nivel_disruptor">
+            <li data-bind="html: description"></li>
+        </ul>
+    </div>
 </div>
 <div data-bind="if: isNeurotoxico">
-	<h5 class="text-info">Neurotóxico</h5>
-	<div data-bind="if: efecto_neurotoxico">
-		<div class="col-xs-3 text-muted">Efecto:</div>
-		<div class="col-xs-9">
-			<ul class="base-ul" data-bind="foreach: efecto_neurotoxico">
-				<li>
-					<span data-bind="text: key"></span>:&nbsp;
-					<span data-bind="html: description" class="small"></span>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div data-bind="if: nivel_neurotoxico">
-		<div class="col-xs-3 text-muted">Nivel:</div>
-		<div class="col-xs-9">
-			<ul class="base-ul" data-bind="foreach: nivel_neurotoxico">
-				<li>
-					<span data-bind="text: key"></span>:&nbsp;
-					<span data-bind="html: description" class="small"></span>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div data-bind="if: fuente_neurotoxico">
-		<div class="col-xs-3 text-muted">Fuente:</div>
-		<div class="col-xs-9">
-			<ul class="base-ul" data-bind="foreach: fuente_neurotoxico">
-				<li data-bind="html: description" class="small"></li>
-			</ul>
-		</div>
-	</div>
+    <h5 class="text-info">Neurotóxico</h5>
+    <div data-bind="if: efecto_neurotoxico">
+        <div class="col-xs-3 text-muted">Efecto:</div>
+        <div class="col-xs-9">
+            <ul class="base-ul" data-bind="foreach: efecto_neurotoxico">
+                <li>
+                    <span data-bind="text: key"></span>:&nbsp;
+                    <span data-bind="html: description" class="small"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-bind="if: nivel_neurotoxico">
+        <div class="col-xs-3 text-muted">Nivel:</div>
+        <div class="col-xs-9">
+            <ul class="base-ul" data-bind="foreach: nivel_neurotoxico">
+                <li>
+                    <span data-bind="text: key"></span>:&nbsp;
+                    <span data-bind="html: description" class="small"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-bind="if: fuente_neurotoxico">
+        <div class="col-xs-3 text-muted">Fuente:</div>
+        <div class="col-xs-9">
+            <ul class="base-ul" data-bind="foreach: fuente_neurotoxico">
+                <li data-bind="html: description" class="small"></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <div data-bind="if: isToxicoReproduccion">
-	<h5 class="text-info">Tóxico para la reproducción</h5>
-	<div class="col-xs-3 text-muted">Según R. 1272/2008</div>
-	<div class="col-xs-9">
-		<ul class="base-ul" data-bind="foreach: nivel_tpr">
-			<li>
-				<span data-bind="text: key"></span>:&nbsp;
-				<span data-bind="html: description" class="small"></span>
-			</li>
-		</ul>
-	</div>
+    <h5 class="text-info">Tóxico para la reproducción</h5>
+    <div class="col-xs-3 text-muted">Según R. 1272/2008</div>
+    <div class="col-xs-9">
+        <ul class="base-ul" data-bind="foreach: nivel_tpr">
+            <li>
+                <span data-bind="text: key"></span>:&nbsp;
+                <span data-bind="html: description" class="small"></span>
+            </li>
+        </ul>
+    </div>
 </div>

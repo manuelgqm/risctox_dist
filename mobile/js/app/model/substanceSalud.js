@@ -8,7 +8,8 @@ define(function(){
 			, fuente_neurotoxico: null
 			, nivel_neurotoxico: null
 			, nivel_disruptor: null
-			, nivel_tpr: null
-			}
+			, nivel_tpr: null 
+			, categorias_cancer_otras: null
+			, fuentes_cancer_otras: null }
 	}
 });

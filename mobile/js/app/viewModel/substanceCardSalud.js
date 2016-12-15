@@ -33,6 +33,10 @@ define(
 				, featuredLists)
 			);
 			this.isToxicoReproduccion = ko.computed( () => inLists(['tpr'], featuredLists));
+			this.isCancerOtras = ko.computed( () => inLists(['cancer_otras'], featuredLists));
+			this.loadCancerOtras = function(){
+				console.log(this)
+			};
 			
 		};
 
