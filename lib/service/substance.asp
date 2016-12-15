@@ -32,6 +32,8 @@ function findSection()
 			set findSection = obtainIdentificacionFields(substanceId)
 		case("salud"):
 			set findSection = obtainSaludFields(substanceId)
+		case("medioAmbiente"):
+			set findSection = obtainMedioAmbienteFields(substanceId)
 		case else:
 			set findSection = Server.CreateObject("Scripting.Dictionary")
 	end select
@@ -52,6 +54,14 @@ function obtainSaludFields(substanceId)
 	dim i, key
 	dim dictKeys : dictKeys = substance.fields.Keys
 	set obtainSaludFields = removeDictionaryEmptyFields(substance.fields)
+end function
+
+function obtainMedioAmbienteFields(substanceId)
+	dim substance : set substance = new SubstanceClass
+	substance.obtainMedioAmbienteFields substanceId, objConnection2
+	dim i, key
+	dim dictKeys : dictKeys = substance.fields.Keys
+	set obtainMedioAmbienteFields = removeDictionaryEmptyFields(substance.fields)
 end function
 
 function search()

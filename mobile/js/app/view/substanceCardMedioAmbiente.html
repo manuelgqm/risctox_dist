@@ -1,1 +1,17 @@
-<div data-bind="text: nombre"></div>
+<div data-bind="if: isTpb">
+	<div class="text-info">Tóxica, Persistente y Bioacumulativa</div>
+	<div class="row" data-bind="if: enlace_tpb">
+		<div class="col-xs-3 text-muted small">Más información:</div>
+		<div class="col-xs-9">
+			<a data-bind="text: anchor_tpb, attr: { href: enlace_tpb }"></a>
+		</div>
+	</div>
+	<div class="row" data-bind="if: fuentes_tpb">
+		<div class="col-xs-3 text-muted">Fuentes:</div>
+		<div class="col-xs-9">
+			<ul class="base-ul" data-bind="foreach: fuentes_tpb">
+				<li data-bind="html: description"></li>
+			</ul>
+		</div>
+	</div>
+</div>

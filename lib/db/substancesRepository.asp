@@ -41,6 +41,17 @@ function findSaludFields(id_sustancia, connection)
 	set findSaludFields = substance
 end function
 
+function findMedioAmbienteFields(id_sustancia, connection)
+	dim sql : sql = composeMedioAmbienteQuery(id_sustancia)
+	dim substanceRecordset : set substanceRecordset = connection.execute(sql)
+	dim substanceDic : set substanceDic = recodsetToDictionary(substanceRecordset)
+	substanceRecordset.close()
+	set substanceRecordset = nothing
+	dim substance : set substance = extractSubstanceMedioAmbienteFields(id_sustancia, substanceDic, connection)
+
+	set findMedioAmbienteFields = substance
+end function
+
 ' PRIVATE
 function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
@@ -363,6 +374,19 @@ function extractSubstanceSaludFields(substanceId, substanceDic, connection)
 	set extractSubstanceSaludFields = substance
 end function
 
+function extractSubstanceMedioAmbienteFields(substanceId, substanceDic, connection)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
+	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
+	substance.add "anchor_tpb", substanceDic("anchor_tpb")
+	substance.add "enlace_tpb", substanceDic("enlace_tpb")
+	substance.add "fuentes_tpb", obtainDefinitions(substanceDic("fuentes_tpb"), connection)
+
+	set extractSubstanceMedioAmbienteFields = substance
+end function
+
 function extractGrupoIarc(grupo)
 	extractGrupoIarc = grupo
 	if isNull(grupo) then 
@@ -465,6 +489,19 @@ function composeSaludQuery(id_sustancia)
 			"sus.id = " & id_sustancia
 
 	composeSaludQuery = sql
+end function
+
+function composeMedioAmbienteQuery(substanceId)
+	dim sql
+	sql = _
+		"SELECT " &_
+			"anchor_tpb, enlace_tpb, fuentes_tpb " &_
+		"FROM " &_
+			"dn_risc_sustancias_ambiente " &_
+		"WHERE " &_
+			"id_sustancia = " & substanceId
+
+	composeMedioAmbienteQuery = sql
 end function
 
 function removeVlbFromNotes(notes)

@@ -31,6 +31,11 @@ Class SubstanceClass
 		Me.fields = fields
 	end function
 
+	Public function obtainMedioAmbienteFields(id_sustancia, connection)
+		dim fields : set fields = findMedioAmbienteFields(id_sustancia, connection)
+		Me.fields = fields
+	end function
+
 	Public function inList(listName)
 		inList = inArray(listName, Me.fields.Item("featuredLists"))
 	end function

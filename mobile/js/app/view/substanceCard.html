@@ -63,7 +63,10 @@
 		<div data-bind="if: isSection('medioAmbiente')">
 			<div data-bind="component: 
 				{ name: 'medioAmbiente'
-				, params: { substanceId: substanceId, identificacion: identificacion } 
+				, params: 
+					{ substanceId: substanceId
+					, featuredLists: identificacion.featuredLists
+					, medioAmbiente: medioAmbiente } 
 				}">
 			</div>
 		</div>

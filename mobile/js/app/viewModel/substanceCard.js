@@ -1,14 +1,16 @@
 define(
 	[ 'knockout'
 	, 'knockout-mapping'
+	, 'Server'
 	, 'app/viewModel/viewModel'
 	, 'text!app/view/substanceCard.html'
 	, 'app/model/Substance'
 	, 'app/model/SubstanceSalud'
-	, 'Server'
+	, 'app/model/SubstanceMedioAmbiente'
 	, 'css!app/view/style/substanceCard'
 	, 'css!app/view/style/layout.css'
-], function(ko, mapping, ViewModel, cardView, SubstanceModel, SubstanceSaludModel, Server){
+], function(ko, mapping, Server, ViewModel, template, SubstanceModel, SubstanceSaludModel, SubstanceMedioAmbienteModel) {
+	'use strict';
 	return function(args){
 		Object.assign(ko, mapping);
 		var inLists = function(list1, list2) {
@@ -31,11 +33,11 @@ define(
 			, setSection: function(section) 
 				{ this.section(section) }
 			};
-		Object.assign(card, new ViewModel(card, cardView));
+		Object.assign(card, new ViewModel(card, template));
 		ko.fromJS(card);
 
 		ko.computed(function() {
-			section = card[card.section()];
+			var section = card[card.section()];
 			if (Object.keys(section).length) {
 				return true;
 			};
@@ -63,6 +65,7 @@ define(
 				switch(sectionName){
 					case("salud") : return new SubstanceSaludModel();
 					case("identificacion") : return new SubstanceModel();
+					case("medioAmbiente") : return new SubstanceMedioAmbienteModel();
 				};
 			};
 			card[card.section()] = load(card.section(), card.substanceId);
@@ -94,8 +97,8 @@ define(
 		);
 
 		card.hasMedioAmbiente = ko.computed( () =>
-			false
-		)
+			inLists(['tpb'], card.identificacion.featuredLists())
+		);
 
 		var registerComponent = function(componentName, viewModelName){
 			if (ko.components.isRegistered(componentName)) {
