@@ -14,14 +14,6 @@ function addSubstanceGroupsAssociatedFields(substance, substanceGroupsRecordset)
 	set addSubstanceGroupsAssociatedFields = substance
 end function
 
-function getRecordsetSubstanceGroups(id_sustancia, connection)
-	dim sqlQuery
-
-	sqlQuery = "SELECT gr.*, gr.id AS item_id, gr.nombre as name, gr.descripcion as description FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " ORDER BY nombre"
-
-	set getRecordsetSubstanceGroups = connection.execute(sqlQuery)
-end function
-
 function extractSubstanceGroups(substanceGroupsRecordset)
 	dim result : result = Array()
 	dim group
@@ -45,8 +37,16 @@ function extractSubstanceGroups(substanceGroupsRecordset)
 end function
 
 ' PRIVATE
-function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeysArray)
-	dim substanceGroupFieldName, lastSubstanceGroupValue, currentSubstanceGroupValue, currentSubstanceValue
+function getRecordsetSubstanceGroups(id_sustancia, connection)
+	dim sqlQuery
+
+	sqlQuery = "SELECT gr.*, gr.id AS item_id, gr.nombre as name, gr.descripcion as description FROM dn_risc_grupos gr, dn_risc_sustancias_por_grupos sg WHERE sg.id_grupo=gr.id AND sg.id_sustancia=" & id_sustancia & " ORDER BY nombre"
+
+	set getRecordsetSubstanceGroups = connection.execute(sqlQuery)
+end function
+
+function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeys)
+	dim substanceGroupFieldName, currentSubstanceGroupValue, currentSubstanceValue
 	dim fieldName
 	fieldName = "asoc_" & listName
 
@@ -54,17 +54,17 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 		set evaluaCamposListaAsociada = substance
 	end if
 
-	for i = 0 to UBound(groupKeysArray)
-		currentGroupKey = groupKeysArray(i)
+	for i = 0 to UBound(groupKeys)
+		currentGroupKey = groupKeys(i)
 		currentSubstanceValue = substance.Item(currentGroupKey)
-		if varType(currentSubstanceValue) = 1 then currentSubstanceValue = ""
+		if isNull(currentSubstanceValue) then currentSubstanceValue = ""
 		substanceGroupFieldName = fieldName & "_" & currentGroupKey
 
 		if FieldExists(substanceGroupsRecordset, substanceGroupFieldName) then
 
 			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
 
-			if varType(currentSubstanceGroupValue) = 1 then currentSubstanceGroupValue = ""
+			if isNull(currentSubstanceGroupValue) then currentSubstanceGroupValue = ""
 
 			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
 				if currentSubstanceValue <> "" then
@@ -74,7 +74,6 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 				end if
 			end if
 
-			lastSubstanceGroupValue = currentSubstanceValue
 			substance.Item(currentGroupKey) = currentSubstanceValue
 		end if
 	next
