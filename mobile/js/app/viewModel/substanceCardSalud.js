@@ -1,7 +1,8 @@
 define(
 	[ 'knockout'
+	, 'Server'
 	, 'text!app/view/substanceCardSalud.html' ]
-	, function(ko, template){
+	, function(ko, Server, template){
 		function viewModel(card){
 			Object.assign(this, card.salud);
 			var featuredLists = card.featuredLists();
@@ -35,7 +36,14 @@ define(
 			this.isToxicoReproduccion = ko.computed( () => inLists(['tpr'], featuredLists));
 			this.isCancerOtras = ko.computed( () => inLists(['cancer_otras'], featuredLists));
 			this.loadCancerOtras = function(){
-				console.log(this)
+				var self = this;
+				if (this.categorias_cancer_otras()) return false;
+				new Server("substance").request(
+					{ substanceId: card.substanceId
+					, action: "findCancerOtras"
+					}).done(function(output){
+						ko.fromJS(output.data, self);
+					});
 			};
 			
 		};

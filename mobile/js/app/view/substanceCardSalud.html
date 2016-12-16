@@ -16,7 +16,17 @@
 				Cancerígeno según otras fuentes <span class="glyphicon glyphicon-menu-down" ></span>
 			</a>
 			<div class="collapse" id="collapseCancerOtrasFuentes">
-		  		<div>Fuentes ...</div>
+		  		<div data-bind="foreach: categorias_cancer_otras">
+		  			<div class="row">
+		  				<div class="col-xs-3 text-muted">
+		  					Según <span data-bind="text: fuente"></span>:
+		  				</div>
+		  				<div class="col-xs-9">
+		  					<span data-bind="text: categoria()[0].key"></span>:&nbsp;
+		  					<span data-bind="html: categoria()[0].description" class="small"></span>
+		  				</div>
+		  			</div>
+		  		</div>
 			</div>
 		</div>
 	</div>

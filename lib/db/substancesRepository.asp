@@ -52,6 +52,17 @@ function findMedioAmbienteFields(id_sustancia, connection)
 	set findMedioAmbienteFields = substance
 end function
 
+function findCancerOtrasFields(id_sustancia, connection)
+	dim sql : sql = composeCancerOtrasQuery(id_sustancia)
+	dim substanceRecordset : set substanceRecordset = connection.execute(sql)
+	dim substanceDic : set substanceDic = recodsetToDictionary(substanceRecordset)
+	substanceRecordset.close()
+	set substanceRecordset = nothing
+	dim substance : set substance = extractCancerOtrasFields(id_sustancia, substanceDic, connection)
+
+	set findCancerOtrasFields = substance
+end function
+
 ' PRIVATE
 function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
@@ -387,6 +398,19 @@ function extractSubstanceMedioAmbienteFields(substanceId, substanceDic, connecti
 	set extractSubstanceMedioAmbienteFields = substance
 end function
 
+function extractCancerOtrasFields(substanceId, substanceDic, connection)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroups(substanceId, connection)
+	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	substance.add "categorias_cancer_otras", obtainCategoriasCancerOtras( _
+		substanceDic("categoria_cancer_otras") _
+		, substanceDic("fuente") _
+		, connection )
+
+	set extractCancerOtrasFields = substance
+end function
+
 function extractGrupoIarc(grupo)
 	extractGrupoIarc = grupo
 	if isNull(grupo) then 
@@ -502,6 +526,19 @@ function composeMedioAmbienteQuery(substanceId)
 			"id_sustancia = " & substanceId
 
 	composeMedioAmbienteQuery = sql
+end function
+
+function composeCancerOtrasQuery(substanceId)
+	dim sql
+	sql = _
+		"SELECT " &_
+			"categoria_cancer_otras, fuente " &_
+		"FROM " &_
+			"dn_risc_sustancias_cancer_otras "	 &_
+		"WHERE " &_
+			"id_sustancia = " & substanceId
+
+	composeCancerOtrasQuery = sql
 end function
 
 function removeVlbFromNotes(notes)
@@ -812,5 +849,24 @@ function obtainNivelNeurotoxicoKey(nivel)
 		exit function
 	
 	obtainNivelNeurotoxicoKey = "Nivel " &  nivel
+end function
+
+function obtainCategoriasCancerOtras(categoriasSrz, fuentesSrz, connection)
+	obtainCategoriasCancerOtras = Array()
+	if isNull(categoriasSrz) _
+		or categoriasSrz = "" _
+		or isNull(fuentesSrz) _
+		or fuentesSrz = "" then _
+		exit function
+	dim element
+	dim categorias : categorias = split(categoriasSrz, ", ")
+	dim fuentes : fuentes = split(fuentesSrz, ", ")
+	dim i
+	for i = 0 to Ubound(categorias)
+		set element = Server.CreateObject("Scripting.Dictionary")
+		element.add "categoria", obtainDefinitions(categorias(i), connection)
+		element.add "fuente", fuentes(i)
+		obtainCategoriasCancerOtras = arrayPushDictionary(obtainCategoriasCancerOtras, element)
+	next
 end function
 %>
