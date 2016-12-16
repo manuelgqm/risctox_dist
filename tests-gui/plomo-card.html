@@ -267,6 +267,31 @@
 	<td>*Grupo: 2A*Volumen: (VOL. 23, SUPL.7; 1987)*</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>link=Cancerígeno según otras fuentes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div &gt; div.row &gt; div.col-xs-9</td>
+	<td>*G-A3:&nbsp;&nbsp;Carcinógeno animal . “La evidencia disponible sugiere que el agente no es probable que causa cáncer en humanos excepto bajo niveles y rutas de exposición poco comunes o poco probables.”*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='collapseCancerOtrasFuentes']/div/div[2]/div[2]</td>
+	<td>N-2:&nbsp;&nbsp;Se puede anticipar razonablemente que sea carcinógeno.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='collapseCancerOtrasFuentes']/div/div[3]/div[2]</td>
+	<td>CP:&nbsp;&nbsp;Agente que el Estado de California conoce que causan cáncer</td>
+</tr>
+<tr>
 	<td>verifyText</td>
 	<td>//div[@id='card-main']/div[2]/div/div[2]/div[2]</td>
 	<td>*Sustancia que aparece en el listados de Scorecard*Sustancia con capacidad de disrupción endocrina que aparece en el listado de Our Stolen Future, con sus referencias bibliográficas.*</td>
@@ -298,7 +323,7 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>100</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
@@ -315,6 +340,31 @@
 	<td>verifyText</td>
 	<td>//div[@id='card-main']/div[3]/div/div[3]/h5</td>
 	<td>Prohibida para trabajadoras lactantes</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='card']/ul/li[4]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.text-info</td>
+	<td>Tóxica, Persistente y Bioacumulativa</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.col-xs-9</td>
+	<td>Lead</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='card-main']/div[4]/div/div/div[3]/div[2]</td>
+	<td>Convenio para la protección del medio ambiente marino del Atlántico del nordeste: OSPAR</td>
 </tr>
 </tbody></table>
 </body>

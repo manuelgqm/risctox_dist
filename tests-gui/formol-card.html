@@ -298,13 +298,38 @@
 </tr>
 <tr>
 	<td>pause</td>
-	<td>100</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyText</td>
 	<td>css=div.col-xs-9</td>
 	<td>*Grupo: 1*Volumen: (VOL. 88, 100F; 2012)*</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Cancerígeno según otras fuentes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div &gt; div.row &gt; div.col-xs-9</td>
+	<td>*G-A2:&nbsp;&nbsp;Sospechas de ser carcinógeno humano.*</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='collapseCancerOtrasFuentes']/div/div[2]/div[2]</td>
+	<td>N-1:&nbsp;&nbsp;Carcinógeno conocido.</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='collapseCancerOtrasFuentes']/div/div[3]/div[2]</td>
+	<td>CP:&nbsp;&nbsp;Agente que el Estado de California conoce que causan cáncer</td>
 </tr>
 <tr>
 	<td>verifyText</td>
