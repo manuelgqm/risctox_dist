@@ -46,7 +46,7 @@ function getRecordsetSubstanceGroups(id_sustancia, connection)
 end function
 
 function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName, groupKeys)
-	dim substanceGroupFieldName, currentSubstanceGroupValue, currentSubstanceValue
+	dim currentFieldName, currentSubstanceGroupValue, currentSubstanceValue
 	dim fieldName
 	fieldName = "asoc_" & listName
 
@@ -58,27 +58,29 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 		currentGroupKey = groupKeys(i)
 		currentSubstanceValue = substance.Item(currentGroupKey)
 		if isNull(currentSubstanceValue) then currentSubstanceValue = ""
-		substanceGroupFieldName = fieldName & "_" & currentGroupKey
+		currentFieldName = fieldName & "_" & currentGroupKey
 
-		if FieldExists(substanceGroupsRecordset, substanceGroupFieldName) then
-
-			currentSubstanceGroupValue = substanceGroupsRecordset( substanceGroupFieldName )
-
+		if FieldExists(substanceGroupsRecordset, currentFieldName) then
+			currentSubstanceGroupValue = substanceGroupsRecordset(currentFieldName)
 			if isNull(currentSubstanceGroupValue) then currentSubstanceGroupValue = ""
-
-			if inStr(lcase(currentSubstanceValue), lcase(currentSubstanceGroupValue)) = 0 then
-				if currentSubstanceValue <> "" then
-					currentSubstanceValue = currentSubstanceValue & ", " & currentSubstanceGroupValue
-				else
-					currentSubstanceValue = currentSubstanceGroupValue
-				end if
-			end if
-
-			substance.Item(currentGroupKey) = currentSubstanceValue
+			substance(currentGroupKey) = appendNotPresentValue(currentSubstanceValue, currentSubstanceGroupValue)
 		end if
 	next
 
 	set evaluaCamposListaAsociada = substance
+end function
+
+function appendNotPresentValue(value, otherValue)
+	dim valueF : valueF = lCase(trim(value))
+	dim otherValueF : otherValueF = lCase(trim(otherValue))
+	appendNotPresentValue = value
+	if inStr(valueF, otherValueF) <> 0 then _
+		exit function
+	if value = "" then
+		appendNotPresentValue = otherValue
+		exit function
+	end if
+	appendNotPresentValue = value & ", " & otherValue
 end function
 
 function collectSubstanceTables()
