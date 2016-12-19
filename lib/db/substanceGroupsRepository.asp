@@ -49,25 +49,29 @@ function evaluaCamposListaAsociada(substance, substanceGroupsRecordset, listName
 	dim currentFieldName, currentSubstanceGroupValue, currentSubstanceValue
 	dim fieldName
 	fieldName = "asoc_" & listName
-
 	if not FieldExists(substanceGroupsRecordset, fieldName) then
 		set evaluaCamposListaAsociada = substance
+		exit function
 	end if
-
 	for i = 0 to UBound(groupKeys)
 		currentGroupKey = groupKeys(i)
-		currentSubstanceValue = substance.Item(currentGroupKey)
-		if isNull(currentSubstanceValue) then currentSubstanceValue = ""
+		currentSubstanceValue = getNonNullValue(substance(currentGroupKey))
 		currentFieldName = fieldName & "_" & currentGroupKey
-
 		if FieldExists(substanceGroupsRecordset, currentFieldName) then
-			currentSubstanceGroupValue = substanceGroupsRecordset(currentFieldName)
-			if isNull(currentSubstanceGroupValue) then currentSubstanceGroupValue = ""
+			currentSubstanceGroupValue = getNonNullValue(substanceGroupsRecordset(currentFieldName))
 			substance(currentGroupKey) = appendNotPresentValue(currentSubstanceValue, currentSubstanceGroupValue)
 		end if
 	next
 
 	set evaluaCamposListaAsociada = substance
+end function
+
+function getNonNullValue(value)
+	getNonNullValue = ""
+	if isNull(value) then _
+		exit function
+
+	getNonNullValue = value
 end function
 
 function appendNotPresentValue(value, otherValue)
