@@ -74,17 +74,37 @@ function getNonNullValue(value)
 	getNonNullValue = value
 end function
 
-function appendNotPresentValue(value, otherValue)
-	dim valueF : valueF = lCase(trim(value))
-	dim otherValueF : otherValueF = lCase(trim(otherValue))
-	appendNotPresentValue = value
-	if inStr(valueF, otherValueF) <> 0 then _
+function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
+	appendNotPresentValue = valuesSrz1
+	if isEmpty(valuesSrz2) then _
 		exit function
-	if value = "" then
-		appendNotPresentValue = otherValue
+	if isEmpty(valuesSrz1) then
+		appendNotPresentValue = valuesSrz2
 		exit function
 	end if
-	appendNotPresentValue = value & ", " & otherValue
+	dim i
+	dim valuesSrz1LCased : valuesSrz1LCased = lCase(valuesSrz1)
+	dim values1 : values1 = split(valuesSrz1, ", ")
+	dim values1LCased : values1LCased = split(valuesSrz1LCased, ", ")
+	dim values2 : values2 = split(valuesSrz2, ", ")
+	for i = 0 to UBound(values2)
+		if not inArray( _
+			lcase(values2(i)) _ 
+			, values1LCased) then _
+				arrayPush values1, values2(i)
+	next
+
+	appendNotPresentValue = join(values1, ", ")
+end function
+
+function isEmpty(value)
+	isEmpty = true
+	if isNull(value) then _
+		exit function
+	if value = "" then _
+		exit function
+
+	isEmpty = false
 end function
 
 function collectSubstanceTables()
