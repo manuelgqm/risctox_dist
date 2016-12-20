@@ -9,6 +9,7 @@ define(function(){
 			, nivel_neurotoxico: null
 			, nivel_disruptor: null
 			, nivel_tpr: null 
-			, categorias_cancer_otras: null }
+			, categorias_cancer_otras: null 
+			, enfermedades_profesionales: null }
 	}
 });

@@ -5,6 +5,7 @@ define(
 	, function(ko, Server, template){
 		function viewModel(card){
 			Object.assign(this, card.salud);
+			var self = this;
 			var featuredLists = card.featuredLists();
 			var inLists = function(list1, list2) {
 				if (!list1 || !list2)
@@ -35,15 +36,29 @@ define(
 			);
 			this.isToxicoReproduccion = ko.computed( () => inLists(['tpr'], featuredLists));
 			this.isCancerOtras = ko.computed( () => inLists(['cancer_otras'], featuredLists));
+			this.isEnfermedad = ko.computed( () => inLists(['eepp'], featuredLists));
 			this.loadCancerOtras = function(){
-				var self = this;
-				if (this.categorias_cancer_otras()) return false;
+				if (this.categorias_cancer_otras()) 
+					return false;
 				new Server("substance").request(
 					{ substanceId: card.substanceId
-					, action: "findCancerOtras"
-					}).done(function(output){
-						ko.fromJS(output.data, self);
-					});
+					, action: "findCancerOtras"	}
+				).done(function(output){
+					ko.fromJS(output.data, self);
+				})
+			};
+			this.loadEnfermedades = function(){
+				if (this.enfermedades_profesionales())
+					return false;
+				new Server("substance").request(
+					{ substanceId: card.substanceId
+					, action: "findEnfermedades" }
+				).done(function(output){
+					ko.fromJS(output.data, self);
+				})
+			};
+			this.getCollapseEnfermedadId = function(args){ 
+				return 'enfermedadesId' + args.id();
 			};
 			
 		};

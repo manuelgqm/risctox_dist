@@ -63,6 +63,17 @@ function findCancerOtrasFields(id_sustancia, connection)
 	set findCancerOtrasFields = substance
 end function
 
+function findEnfermedadesFields(id_sustancia, connection)
+	dim sql : sql = composeEnfermedadesQuery(id_sustancia)
+	dim substanceRecordset : set substanceRecordset = connection.execute(sql)
+	dim substanceDics : substanceDics = recodsetToDictionaryArray(substanceRecordset)
+	substanceRecordset.close()
+	set substanceRecordset = nothing
+	dim substance : set substance = extractEnfermedadesFields(substanceDics)
+	
+	set findEnfermedadesFields = substance
+end function
+
 ' PRIVATE
 function extractSubstance(id_sustancia, substanceRecordset, connection)
 	set substance = Server.CreateObject("Scripting.Dictionary")
@@ -411,6 +422,14 @@ function extractCancerOtrasFields(substanceId, substanceDic, connection)
 	set extractCancerOtrasFields = substance
 end function
 
+function extractEnfermedadesFields(substanceDics)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim enfermedades : enfermedades = obtainEnfermedades(substanceDics)
+	substance.add "enfermedades_profesionales", enfermedades
+
+	set extractEnfermedadesFields = substance
+end function
+
 function extractGrupoIarc(grupo)
 	extractGrupoIarc = grupo
 	if isNull(grupo) then 
@@ -539,6 +558,27 @@ function composeCancerOtrasQuery(substanceId)
 			"id_sustancia = " & substanceId
 
 	composeCancerOtrasQuery = sql
+end function
+
+function composeEnfermedadesQuery(substanceId)
+	dim sql
+	sql = _
+		"SELECT " &_
+		"DISTINCT enf.id, enf.listado, enf.nombre, enf.sintomas, enf.actividades " &_
+		"FROM " &_
+			"dn_risc_enfermedades AS enf " &_
+			"LEFT JOIN dn_risc_grupos_por_enfermedades AS gpe " &_
+				"ON enf.id = gpe.id_enfermedad " &_
+			"LEFT JOIN dn_risc_sustancias_por_grupos AS spg " &_
+				"ON gpe.id_grupo = spg.id_grupo " &_
+			"LEFT JOIN dn_risc_sustancias_por_enfermedades AS spe " &_
+				"ON spe.id_enfermedad = enf.id " &_
+			"WHERE " &_
+				"spg.id_sustancia = " & substanceId & " " &_ 
+				"OR spe.id_sustancia = " & substanceId & " " &_
+			"ORDER BY " &_
+				"enf.listado, enf.nombre"
+	composeEnfermedadesQuery = sql
 end function
 
 function removeVlbFromNotes(notes)
@@ -729,15 +769,29 @@ end function
 
 function recodsetToDictionary(recordset)
 	set result = Server.CreateObject("Scripting.Dictionary")
-	dim key
 	if recordset.eof then
 		set recodsetToDictionary = result
 		exit function
 	end if
+	dim key
 	for each key in recordset.fields
 		result.add key.name, key.Value
 	next
 	set recodsetToDictionary = result
+end function
+
+function recodsetToDictionaryArray(recordset)
+	dim result : result = Array()
+	if recordset.eof then
+		recodsetToDictionaryArray = result
+		exit function
+	end if
+	while not recordset.eof
+		result = arrayPushDictionary(result, recodsetToDictionary(recordset))
+		recordset.movenext
+	wend
+
+	recodsetToDictionaryArray = result
 end function
 
 function isSubstanceExplosive(clasificacion_rd1272_1)
@@ -868,5 +922,42 @@ function obtainCategoriasCancerOtras(categoriasSrz, fuentesSrz, connection)
 		element.add "fuente", fuentes(i)
 		obtainCategoriasCancerOtras = arrayPushDictionary(obtainCategoriasCancerOtras, element)
 	next
+end function
+
+function obtainEnfermedades(substanceDics)
+	dim result : result = Array()
+	dim key, enfermedad
+	for each key in substanceDics
+		set enfermedad = Server.CreateObject("Scripting.Dictionary")
+		enfermedad.add "id", key("id")
+		enfermedad.add "listado", formatEnfermedades(key("listado"))
+		enfermedad.add "nombre", formatEnfermedades(key("nombre"))
+		enfermedad.add "sintomas", crLfToBr(key("sintomas"))
+		enfermedad.add "actividades", crLfToBr(key("actividades"))
+		result = arrayPushDictionary(result, enfermedad)
+	next
+	
+	obtainEnfermedades = result
+end function
+
+function formatEnfermedades(value)
+	formatEnfermedades = ""
+	if isEmpty(value) then _
+		exit function
+	formatEnfermedades = capitalize( _
+		trim( _
+			replace( _
+				replace(value, "Enfermedades", "") _
+			, "profesionales", "") _
+		) _
+	)
+end function
+
+function capitalize(str)
+	capitalize = UCase(Left(str, 1)) & Mid(str, 2)
+end function
+
+function crLfToBr(value)
+	crLfToBr = replace(value, vbCrlf, "<br>")
 end function
 %>

@@ -86,3 +86,26 @@
         </ul>
     </div>
 </div>
+<div data-bind="if: isEnfermedad">
+    <a role="button" data-toggle="collapse" aria-expanded="false" href="#collapseEnfermedades" aria-controls="collapseEnfermedades" data-bind="click: loadEnfermedades">
+        Enfermedades profesionales <span class="glyphicon glyphicon-menu-down" ></span>
+    </a>
+    <div class="collapse" id="collapseEnfermedades">
+        <div data-bind="foreach: enfermedades_profesionales" class="base-ul" style="padding-left:5px; margin-bottom: 8px;">
+            <a data-bind="attr: { href: '#' + $parent.getCollapseEnfermedadId($data), 'aria-controls': $parent.getCollapseEnfermedadId($data) }" role="button" data-toggle="collapse" aria-expanded="false">
+                <span data-bind="text: nombre"></span>&nbsp;<span class="glyphicon glyphicon-menu-down" ></span>
+            </a><br>
+            <div class="collapse" data-bind="attr: { id: $parent.getCollapseEnfermedadId($data) }">
+                <div data-bind="text: listado" class="text-muted"></div>
+                <div data-bind="if: actividades">
+                    <span>Actividades: </span><br>
+                    <span class="small" data-bind="html: actividades"></span>
+                </div>
+                <div data-bind="if: sintomas">
+                    <span>Sintomas: </span><br>
+                    <span class="small" data-bind="html: actividades"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

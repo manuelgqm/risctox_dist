@@ -43,15 +43,20 @@ function findCancerOtras()
 	dim substanceId : substanceId = obtainSanitizedQueryParameter("substanceId")
 	dim substance : set substance = new SubstanceClass
 	substance.obtainCancerOtrasFields substanceId, objConnection2
-	dim dictKeys : dictKeys = substance.fields.Keys
 	
 	set findCancerOtras = removeDictionaryEmptyFields(substance.fields)	
+end function
+
+function findEnfermedades()
+	dim substanceId : substanceId = obtainSanitizedQueryParameter("substanceId")
+	dim substance : set substance = new SubstanceClass
+	substance.obtainEnfermedadesFields substanceId, objConnection2
+	set findEnfermedades = substance.fields
 end function
 
 function obtainIdentificacionFields(substanceId)
 	dim substance : set substance = new SubstanceClass
 	substance.obtainLevelOneFields substanceId, objConnection2
-	dim dictKeys : dictKeys = substance.fields.Keys
 	
 	set obtainIdentificacionFields = removeDictionaryEmptyFields(substance.fields)
 end function
@@ -59,14 +64,12 @@ end function
 function obtainSaludFields(substanceId)
 	dim substance : set substance = new SubstanceClass
 	substance.obtainSaludFields substanceId, objConnection2
-	dim dictKeys : dictKeys = substance.fields.Keys
 	set obtainSaludFields = removeDictionaryEmptyFields(substance.fields)
 end function
 
 function obtainMedioAmbienteFields(substanceId)
 	dim substance : set substance = new SubstanceClass
 	substance.obtainMedioAmbienteFields substanceId, objConnection2
-	dim dictKeys : dictKeys = substance.fields.Keys
 	set obtainMedioAmbienteFields = removeDictionaryEmptyFields(substance.fields)
 end function
 

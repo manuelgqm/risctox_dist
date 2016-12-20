@@ -217,7 +217,11 @@ class JSON
 		i = 0
 		for each key in val
 			if i > 0 then write(",")
-			toJSON key, val(key), true
+			if typeName(val(key)) = Dictionary then
+				generateValue(val(key))
+			else 
+				toJSON key, val(key), true
+			end if
 			i = i + 1
 		next
 		write("}")
