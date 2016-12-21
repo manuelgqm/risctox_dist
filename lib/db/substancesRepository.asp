@@ -405,6 +405,9 @@ function extractSubstanceMedioAmbienteFields(substanceId, substanceDic, connecti
 	substance.add "anchor_tpb", substanceDic("anchor_tpb")
 	substance.add "enlace_tpb", substanceDic("enlace_tpb")
 	substance.add "fuentes_tpb", obtainDefinitions(substanceDic("fuentes_tpb"), connection)
+	substance.add "directiva_aguas", substanceDic("directiva_aguas")
+	substance.add "clasif_mma", substanceDic("clasif_mma")
+	substance.add "sustancia_prioritaria", substanceDic("sustancia_prioritaria")
 
 	set extractSubstanceMedioAmbienteFields = substance
 end function
@@ -539,6 +542,7 @@ function composeMedioAmbienteQuery(substanceId)
 	sql = _
 		"SELECT " &_
 			"anchor_tpb, enlace_tpb, fuentes_tpb " &_
+			"directiva_aguas, clasif_mma, sustancia_prioritaria " &_
 		"FROM " &_
 			"dn_risc_sustancias_ambiente " &_
 		"WHERE " &_

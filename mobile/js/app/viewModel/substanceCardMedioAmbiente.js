@@ -13,6 +13,11 @@ define(
 				).length != 0;
 			};
 			this.isTpb = ko.computed( () =>	inLists(['tpb'], featuredLists) );
+			this.isToxicaAgua = ko.computed( () => inLists(['directiva_aguas', 'alemana'], featuredLists) );
+			this.isDirectivaAguas = ko.computed( () =>
+				inLists(['directiva_aguas'], featuredLists)
+				|| this.directiva_aguas()
+			, this);
 		};
 
 		return { viewModel: viewModel, template: template };
