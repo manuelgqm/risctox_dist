@@ -18,6 +18,7 @@ define(
 				inLists(['directiva_aguas'], featuredLists)
 				|| this.directiva_aguas()
 			, this);
+			this.isPrioritaria = ko.computed( () => inLists(['sustancias_prioritarias'], featuredLists) );
 		};
 
 		return { viewModel: viewModel, template: template };
