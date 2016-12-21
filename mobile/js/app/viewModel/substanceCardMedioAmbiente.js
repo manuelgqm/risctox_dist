@@ -19,6 +19,10 @@ define(
 				|| this.directiva_aguas()
 			, this);
 			this.isPrioritaria = ko.computed( () => inLists(['sustancias_prioritarias'], featuredLists) );
+			this.isMedioAmbienteAlemania = ko.computed( () =>
+				this.clasif_mma()
+				&& !isNaN(!isNaN(this.clasif_mma()[0].key()))
+			, this);
 		};
 
 		return { viewModel: viewModel, template: template };

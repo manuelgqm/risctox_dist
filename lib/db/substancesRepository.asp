@@ -406,7 +406,7 @@ function extractSubstanceMedioAmbienteFields(substanceId, substanceDic, connecti
 	substance.add "enlace_tpb", substanceDic("enlace_tpb")
 	substance.add "fuentes_tpb", obtainDefinitions(substanceDic("fuentes_tpb"), connection)
 	substance.add "directiva_aguas", substanceDic("directiva_aguas")
-	substance.add "clasif_mma", substanceDic("clasif_mma")
+	substance.add "clasif_mma", obtainClasifMma(substanceDic("clasif_mma"), connection)
 	substance.add "sustancia_prioritaria", substanceDic("sustancia_prioritaria")
 
 	set extractSubstanceMedioAmbienteFields = substance
@@ -963,5 +963,13 @@ end function
 
 function crLfToBr(value)
 	crLfToBr = replace(value, vbCrlf, "<br>")
+end function
+
+function obtainClasifMma(byVal clasif, connection)
+	dim key : key = ""
+	clasif = trim(clasif)
+	if (0 < clasif < 4 ) then _
+		key = clasif + "."
+	obtainClasifMma = obtainDefinitions(key, connection)
 end function
 %>
