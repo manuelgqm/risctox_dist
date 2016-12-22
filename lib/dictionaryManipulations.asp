@@ -21,6 +21,8 @@ function hasValue(var)
 			if ubound(var) > -1 then hasValue = true
 		case 8204:
 			if ubound(var) > -1 then hasValue = true
+		case vbBoolean:
+			hasValue = true
 	end select
 end function
 %>

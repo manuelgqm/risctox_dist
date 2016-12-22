@@ -541,7 +541,7 @@ function composeMedioAmbienteQuery(substanceId)
 	dim sql
 	sql = _
 		"SELECT " &_
-			"anchor_tpb, enlace_tpb, fuentes_tpb " &_
+			"anchor_tpb, enlace_tpb, fuentes_tpb, " &_
 			"directiva_aguas, clasif_mma, sustancia_prioritaria " &_
 		"FROM " &_
 			"dn_risc_sustancias_ambiente " &_
