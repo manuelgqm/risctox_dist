@@ -31,4 +31,7 @@ ul.base-ul>li{ list-style: none; margin-left: 0px; padding-top: 3px }
 .card-tabs>li>a{
 	padding: 6px 8px !important;
 }
+.card-tabs{
+	margin-bottom: 6px !important;
+}
 #card-main{ margin-bottom: 8px; }

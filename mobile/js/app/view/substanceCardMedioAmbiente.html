@@ -1,36 +1,42 @@
 <div data-bind="if: isTpb" class="panel panel-default">
-	<div class="panel-heading panel-title">Tóxica, Persistente y Bioacumulativa</div>
-	<div class="panel-body">
-		<div class="row" data-bind="if: enlace_tpb">
-			<div class="col-xs-3 text-muted small">Más información:</div>
-			<div class="col-xs-9">
-				<a data-bind="text: anchor_tpb, attr: { href: enlace_tpb }"></a>
-			</div>
-		</div>
-		<div class="row" data-bind="if: fuentes_tpb">
-			<div class="col-xs-3 text-muted">Fuentes:</div>
-			<div class="col-xs-9">
-				<ul class="base-ul" data-bind="foreach: fuentes_tpb">
-					<li data-bind="html: description"></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="panel-heading panel-title">Tóxica, Persistente y Bioacumulativa</div>
+    <div class="panel-body">
+        <div class="row" data-bind="if: enlace_tpb">
+            <div class="col-xs-3 text-muted small">Más información:</div>
+            <div class="col-xs-9">
+                <a data-bind="text: anchor_tpb, attr: { href: enlace_tpb }"></a>
+            </div>
+        </div>
+        <div class="row" data-bind="if: fuentes_tpb">
+            <div class="col-xs-3 text-muted">Fuentes:</div>
+            <div class="col-xs-9">
+                <ul class="base-ul" data-bind="foreach: fuentes_tpb">
+                    <li data-bind="html: description"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 <div data-bind="if: isToxicaAgua" class="panel panel-default">
-	<div class="panel-heading panel-title">Tóxica para el agua</div>
-	<div class="list-group">
-		<div data-bind="if: isDirectivaAguas" class="list-group-item">
-			Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a>
-		</div>
-		<div data-bind="if: isPrioritaria" class="list-group-item">
-			Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a>	
-		</div>
-		<div data-bind="if: isMedioAmbienteAlemania" class="list-group-item">
-			Según <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministerio de Medio Ambiente de Alemania</a>
-			<div data-bind="foreach: clasif_mma">
-				Clasificacion: <span data-bind="text: key"></span>&nbsp;<span data-bind="text: description"></span>
-			</div>
-		</div>
-	</div>
+    <div class="panel-heading panel-title">Tóxica para el agua</div>
+    <div class="list-group">
+        <!--ko if: isDirectivaAguas -->
+        <div class="list-group-item">
+            Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a>
+        </div>
+        <!--/ko  -->
+        <!--ko if: isPrioritaria -->
+        <div class="list-group-item">
+            Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a>
+        </div>
+        <!--/ko  -->
+        <!-- ko if: isMedioAmbienteAlemannia -->
+        <div class="list-group-item">
+            Según <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministerio de Medio Ambiente de Alemania</a>
+            <div data-bind="foreach: clasif_mma">
+                Clasificacion <span data-bind="text: key"></span>:&nbsp;<span data-bind="text: description"></span>
+            </div>
+        </div>
+        <!--/ko -->
+    </div>
 </div>
