@@ -967,13 +967,12 @@ end function
 
 function obtainClasifMma(byVal clasif, connection)
 	dim key : key = ""
-	if isEmpty(clasif) then
-		obtainClasifMma = vbNull
+	obtainClasifMma = ""
+	if not isNumeric(clasif) then _
 		exit function
-	end if
-	clasif = trim(clasif)
 	if (0 < clasif < 4 ) then _
 		key = clasif + "."
+
 	obtainClasifMma = obtainDefinitions(key, connection)
 end function
 %>
