@@ -23,6 +23,12 @@ define(
 				this.clasif_mma()
 				&& !isNaN(!isNaN(this.clasif_mma()[0].key()))
 			, this);
+			this.isContaminanteAire = ko.computed( () =>
+				inLists(['ozono', 'clima', 'aire'], featuredLists)
+			);
+			this.isCalidadAire = ko.computed( () => inLists(['aire'], featuredLists) );
+			this.isDanoOzono = ko.computed( () => inLists(['ozono'], featuredLists) );
+			this.isCambioClima = ko.computed( () => inLists(['clima'], featuredLists) );
 		};
 
 		return { viewModel: viewModel, template: template };

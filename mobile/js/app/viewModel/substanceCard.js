@@ -97,7 +97,15 @@ define(
 		);
 
 		card.hasMedioAmbiente = ko.computed( () =>
-			inLists(['tpb'], card.identificacion.featuredLists())
+			inLists(
+				[ 'tpb'
+				, 'directiva_aguas'
+				, 'alemana'
+				, 'sustancias_prioritarias'
+				, 'ozono'
+				, 'clima'
+				, 'aire' ]
+			, card.identificacion.featuredLists())
 		);
 
 		var registerComponent = function(componentName, viewModelName){

@@ -40,3 +40,26 @@
         <!--/ko -->
     </div>
 </div>
+<div data-bind="if: isContaminanteAire" class="panel panel-default">
+    <div class="panel-heading panel-title">Contaminante del aire</div>
+    <div class="list-group">
+        <!--ko if: isCalidadAire -->
+        <div class="list-group-item">
+            <b>Calidad del aire:</b>
+            Sustancia incluida en la <a href="abreenlace.asp?idenlace=2234" target="_blank">Directiva 96/62/CE</a> de 27 de septiembre sobre evaluación y gestión de la calidad del aire ambiente
+        </div>
+        <!--/ko  -->
+        <!--ko if: isDanoOzono -->
+        <div class="list-group-item">
+            <b>Capa de ozono:</b>
+            Sustancia que agota la capa de ozono, según <a href="abreenlace.asp?idenlace=2229" target="_blank">Reglamento (CE) 2037/2000</a> del Parlamento Europeo y del Consejo, de 29 de junio de 2000
+        </div>
+        <!--/ko  -->
+        <!-- ko if: isCambioClima -->
+        <div class="list-group-item">
+            <b>Cámbio climático:</b>
+            Sustancia incluida en el listado del <a href="abreenlace.asp?idenlace=2230" target="_blank">Protocolo de Kyoto</a>
+        </div>
+        <!--/ko -->
+    </div>
+</div>
