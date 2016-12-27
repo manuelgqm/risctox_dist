@@ -104,7 +104,12 @@ define(
 					+ num_icsc.min().toString()
 					+ "/nspn" 
 					+ num_icsc.id().toString() + ".pdf";
-			}
+			};
+
+			this.hasClasificacionRd363 = true;
+			this.loadClasificacionRd363 = function(){
+				console.log("load...")
+			};
 
 			return this
 		};
