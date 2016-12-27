@@ -32,6 +32,6 @@ ul.base-ul>li{ list-style: none; margin-left: 0px; padding-top: 3px }
 	padding: 6px 8px !important;
 }
 .card-tabs{
-	margin-bottom: 6px !important;
+	margin-bottom: 10px !important;
 }
-#card-main{ margin-bottom: 8px; }
+#card-main{ margin-bottom: 10px; }
