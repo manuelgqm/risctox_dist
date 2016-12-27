@@ -1,6 +1,6 @@
-<div data-bind="if: isCancerigeno">
-    <h5 class="text-info">Cancerígeno<h5>
-	<div class="row" data-bind="if: isCancerigenoIarc">
+<div data-bind="if: isCancerigeno" class="panel panel-default">
+    <div class="panel-heading panel-title">Cancerígeno</div>
+	<div class="row panel-body" data-bind="if: isCancerigenoIarc">
 		<div class="col-xs-3 text-muted">Según IARC:</div>
 		<div class="col-xs-9">
 			<ul class="base-ul">
@@ -10,43 +10,81 @@
 			</ul>
 		</div>
 	</div>
-	<div class="row" data-bind="if: isCancerOtras">
-		<div class="col-xs-12">
-			<a role="button" data-toggle="collapse" aria-expanded="false" href="#collapseCancerOtrasFuentes" aria-controls="collapseCancerOtrasFuentes" data-bind="click: loadCancerOtras">
-				Cancerígeno según otras fuentes <span class="glyphicon glyphicon-menu-down" ></span>
-			</a>
-			<div class="collapse" id="collapseCancerOtrasFuentes">
-		  		<div data-bind="foreach: categorias_cancer_otras">
-		  			<div class="row">
-		  				<div class="col-xs-3 text-muted">
-		  					Según <span data-bind="text: fuente"></span>:
-		  				</div>
-		  				<div class="col-xs-9">
-		  					<span data-bind="text: categoria()[0].key"></span>:&nbsp;
-		  					<span data-bind="html: categoria()[0].description" class="small"></span>
-		  				</div>
-		  			</div>
-		  		</div>
-			</div>
-		</div>
+</div>
+
+<div data-bind="if: isCancerOtras" class="panel panel-default">
+	<div role="button" data-toggle="collapse" aria-expanded="false" href="#collapseCancerOtrasFuentes" aria-controls="collapseCancerOtrasFuentes" data-bind="click: loadCancerOtras" class="panel-heading panel-title">
+		Cancerígeno según otras fuentes <span class="glyphicon glyphicon-menu-down" ></span>
+	</div>
+	<div class="collapse panel-body" id="collapseCancerOtrasFuentes">
+  		<div data-bind="foreach: categorias_cancer_otras">
+  			<div class="row">
+  				<div class="col-xs-3 text-muted">
+  					Según <span data-bind="text: fuente"></span>:
+  				</div>
+  				<div class="col-xs-9">
+  					<span data-bind="text: categoria()[0].key"></span>:&nbsp;
+  					<span data-bind="html: categoria()[0].description" class="small"></span>
+  				</div>
+  			</div>
+  		</div>
 	</div>
 </div>
 
-<div data-bind="if: isDisruptor">
-	<h5 class="text-info">Disruptor endocrino</h5>
-    <div class="col-xs-3 text-muted">Fuente:</div>
-    <div class="col-xs-9">
-        <ul class="base-ul" data-bind="foreach: nivel_disruptor">
-            <li data-bind="html: description"></li>
-        </ul>
+<div data-bind="if: isDisruptor" class="panel panel-default">
+	<div class="panel-heading panel-title">Disruptor endocrino</div>
+    <div class="row panel-body">
+        <div class="col-xs-2 text-muted">Fuente:</div>
+        <div class="col-xs-10">
+            <ul class="base-ul" data-bind="foreach: nivel_disruptor">
+                <li data-bind="html: description"></li>
+            </ul>
+        </div>
     </div>
 </div>
-<div data-bind="if: isNeurotoxico">
-    <h5 class="text-info">Neurotóxico</h5>
-    <div data-bind="if: efecto_neurotoxico">
-        <div class="col-xs-3 text-muted">Efecto:</div>
+
+<div data-bind="if: isNeurotoxico" class="panel panel-default">
+    <div class="panel-heading panel-title">Neurotóxico</div>
+    <div class="panel-body">
+        <div data-bind="if: efecto_neurotoxico" class="row">
+            <div class="col-xs-2 text-muted">Efecto:</div>
+            <div class="col-xs-10">
+                <ul class="base-ul" data-bind="foreach: efecto_neurotoxico">
+                    <li>
+                        <span data-bind="text: key"></span>:&nbsp;
+                        <span data-bind="html: description" class="small"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-bind="if: nivel_neurotoxico" class="row">
+            <div class="col-xs-2 text-muted">Nivel:</div>
+            <div class="col-xs-10">
+                <ul class="base-ul" data-bind="foreach: nivel_neurotoxico">
+                    <li>
+                        <span data-bind="text: key"></span>:&nbsp;
+                        <span data-bind="html: description" class="small"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-bind="if: fuente_neurotoxico" class="row">
+            <div class="col-xs-2 text-muted">Fuente:</div>
+            <div class="col-xs-10">
+                <ul class="base-ul" data-bind="foreach: fuente_neurotoxico">
+                    <li data-bind="html: description" class="small"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="if: isToxicoReproduccion" class="panel panel-default">
+    <div class="panel-heading panel-title">Tóxico para la reproducción</div>
+    <div class="row panel-body">
+        <div class="col-xs-3 text-muted">Según R. 1272/2008</div>
         <div class="col-xs-9">
-            <ul class="base-ul" data-bind="foreach: efecto_neurotoxico">
+            <ul class="base-ul" data-bind="foreach: nivel_tpr">
                 <li>
                     <span data-bind="text: key"></span>:&nbsp;
                     <span data-bind="html: description" class="small"></span>
@@ -54,56 +92,26 @@
             </ul>
         </div>
     </div>
-    <div data-bind="if: nivel_neurotoxico">
-        <div class="col-xs-3 text-muted">Nivel:</div>
-        <div class="col-xs-9">
-            <ul class="base-ul" data-bind="foreach: nivel_neurotoxico">
-                <li>
-                    <span data-bind="text: key"></span>:&nbsp;
-                    <span data-bind="html: description" class="small"></span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div data-bind="if: fuente_neurotoxico">
-        <div class="col-xs-3 text-muted">Fuente:</div>
-        <div class="col-xs-9">
-            <ul class="base-ul" data-bind="foreach: fuente_neurotoxico">
-                <li data-bind="html: description" class="small"></li>
-            </ul>
-        </div>
-    </div>
 </div>
-<div data-bind="if: isToxicoReproduccion">
-    <h5 class="text-info">Tóxico para la reproducción</h5>
-    <div class="col-xs-3 text-muted">Según R. 1272/2008</div>
-    <div class="col-xs-9">
-        <ul class="base-ul" data-bind="foreach: nivel_tpr">
-            <li>
-                <span data-bind="text: key"></span>:&nbsp;
-                <span data-bind="html: description" class="small"></span>
-            </li>
-        </ul>
-    </div>
-</div>
-<div data-bind="if: isEnfermedad">
-    <a role="button" data-toggle="collapse" aria-expanded="false" href="#collapseEnfermedades" aria-controls="collapseEnfermedades" data-bind="click: loadEnfermedades">
+
+<div data-bind="if: isEnfermedad" class="panel panel-default">
+    <div role="button" data-toggle="collapse" aria-expanded="false" href="#collapseEnfermedades" aria-controls="collapseEnfermedades" data-bind="click: loadEnfermedades" class="panel-heading panel-title">
         Enfermedades profesionales <span class="glyphicon glyphicon-menu-down" ></span>
-    </a>
-    <div class="collapse" id="collapseEnfermedades">
-        <div data-bind="foreach: enfermedades_profesionales" class="base-ul" style="padding-left:5px; margin-bottom: 8px;">
-            <a data-bind="attr: { href: '#' + $parent.getCollapseEnfermedadId($data), 'aria-controls': $parent.getCollapseEnfermedadId($data) }" role="button" data-toggle="collapse" aria-expanded="false">
+    </div>
+    <div class="collapse panel-body" id="collapseEnfermedades">
+        <div data-bind="foreach: enfermedades_profesionales" class="list-group" style="padding-left:5px; margin-bottom: 8px;">
+            <div data-bind="attr: { href: '#' + $parent.getCollapseEnfermedadId($data), 'aria-controls': $parent.getCollapseEnfermedadId($data) }" role="button" data-toggle="collapse" aria-expanded="false" class="list-group-item">
                 <span data-bind="text: nombre"></span>&nbsp;<span class="glyphicon glyphicon-menu-down" ></span>
-            </a><br>
-            <div class="collapse" data-bind="attr: { id: $parent.getCollapseEnfermedadId($data) }">
-                <div data-bind="text: listado" class="text-muted"></div>
-                <div data-bind="if: actividades">
-                    <span>Actividades: </span><br>
-                    <span class="small" data-bind="html: actividades"></span>
-                </div>
-                <div data-bind="if: sintomas">
-                    <span>Sintomas: </span><br>
-                    <span class="small" data-bind="html: actividades"></span>
+                <div class="collapse" data-bind="attr: { id: $parent.getCollapseEnfermedadId($data) }">
+                    <div data-bind="text: listado" class="text-muted"></div>
+                    <div data-bind="if: actividades">
+                        <span>Actividades: </span><br>
+                        <span class="small" data-bind="html: actividades"></span>
+                    </div>
+                    <div data-bind="if: sintomas">
+                        <span>Sintomas: </span><br>
+                        <span class="small" data-bind="html: actividades"></span>
+                    </div>
                 </div>
             </div>
         </div>
