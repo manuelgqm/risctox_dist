@@ -10,12 +10,6 @@ define(function(){
 			, nivel_disruptor: null
 			, nivel_tpr: null 
 			, categorias_cancer_otras: null 
-			, enfermedades_profesionales: null 
-			, clasificacionesRd363: null
-			, concentracionEtiquetadoRd363: null
-			, simbolosRd363: null
-			, frases_r_danesa: null
-			, frases_s: null
-			, notas_rd_363: null }
+			, enfermedades_profesionales: null }
 	}
 });

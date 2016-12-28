@@ -6,6 +6,19 @@ function findClasificacionesRd1272(substance, connection)
 	findClasificacionesRd1272 = clasificaciones
 end function
 
+function findClasificacionesRd363(frasesRSrz, connection)
+	findClasificacionesRd363 = Array()
+	dim frasesR : frasesR = split(frasesRSrz, ", ")
+	dim i
+	dim fraseR
+	for i = 0 to Ubound(frasesR)
+		set fraseR = Server.CreateObject("Scripting.Dictionary")
+		fraseR.add "name", frasesR(i)
+		fraseR.add "description", findFraseRDescription(frasesR(i), connection)
+		findClasificacionesRd363 = arrayPushDictionary(findClasificacionesRd363, fraseR)
+	next
+end function
+
 function getClasificacionesRaw(substance)
 	Dim result : result = Array( _
 			substance.item("clasificacion_rd1272_1"), _
@@ -113,6 +126,18 @@ function findFraseHDescription(frase, connection)
 	objRst.close()
 	set objRst = nothing
 	findFraseHDescription = result
+end function
+
+function findFraseRDescription(byVal frase, connection)
+	findFraseRDescription = ""
+	frase = replace(frase, "-", "/")
+	dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_r WHERE frase = '" & frase & "'"
+	dim recordset : set recordset = connection.execute(sql)
+	if recordset.eof then _
+		exit function
+	findFraseRDescription = recordset("texto").value
+	recordset.close
+	set recordset = nothing
 end function
 
 function findCategoriaPeligroDescription(categoria, connection)
