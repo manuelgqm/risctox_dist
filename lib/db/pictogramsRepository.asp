@@ -16,12 +16,10 @@ function findPictograms(byVal simbolosSrz, connection)
 End function
 
 function extractPictograms(simbolo, connection)
-	dim sql, simbolosRecodset
+	dim sql
 	dim pictogram : Set pictogram = Server.CreateObject("Scripting.Dictionary")
 	simbolo = trim(simbolo)
-	
-	sql = "SELECT imagen, descripcion FROM dn_simbolos WHERE simbolo='" & simbolo & "'"
-	set simbolosRecodset = connection.execute(sql)
+	dim simbolosRecodset : set simbolosRecodset = findSimbolos(simbolo, connection)
 	if simbolosRecodset.eof then
 		pictogram.add "name", simbolo
 		pictogram.add "image", ""
@@ -38,6 +36,11 @@ function extractPictograms(simbolo, connection)
 	simbolosRecodset.close()
 	set simbolosRecodset = nothing
 	Set extractPictograms = pictogram
+end function
+
+function findSimbolos(simbolo, connection)
+	dim sql : sql = "SELECT imagen, descripcion FROM dn_simbolos WHERE simbolo='" & simbolo & "'"
+	set findSimbolos = connection.execute(sql)
 end function
 
 function getImageUrl(image, simbolo)
