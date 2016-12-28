@@ -1,21 +1,18 @@
 <%
-function findPictogramasRd1272(simbolosRdString, connection)
-	Dim simbolosRd, i, simbolo, pictogram
-	Dim pictograms : pictograms = Array()
-	
-	simbolosRdString = removeTailSeparator(simbolosRdString, ",")
-	if isNull(simbolosRdString) then
-		findPictogramasRd1272 = pictograms
+function findPictograms(byVal simbolosSrz, connection)
+	findPictograms = Array()
+	if isNull(simbolosSrz) then _
 		exit function
-	end if
-	simbolosRd = split(simbolosRdString, ",")
-	for i = 0 to ubound(simbolosRd)
-		simbolo = trim(simbolosRd(i))
+	simbolosSrz = replace(simbolosSrz, ";", ",")
+	simbolosSrz = removeTailSeparator(simbolosSrz, ",")
+	dim simbolos
+	simbolos = split(simbolosSrz, ",")
+	dim i, simbolo, pictogram
+	for i = 0 to ubound(simbolos)
+		simbolo = trim(simbolos(i))
 		Set pictogram = extractPictograms(simbolo, connection)
-		pictograms = arrayPushDictionary(pictograms, pictogram)
+		findPictograms = arrayPushDictionary(findPictograms, pictogram)
 	next
-	
-	findPictogramasRd1272 = pictograms
 End function
 
 function extractPictograms(simbolo, connection)

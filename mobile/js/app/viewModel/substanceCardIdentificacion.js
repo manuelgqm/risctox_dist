@@ -25,7 +25,7 @@ define(
 
 			this.hasClassificationOrLabelingRd1272 = ko.computed(function()
 				{ return ( 
-					this.pictogramasRd()
+					this.pictogramasRd1272()
 					|| this.clasificacionesRd1272()
 					|| this.notas_rd1272()
 					|| this.concentracionEtiquetadoRd1272()
@@ -107,9 +107,6 @@ define(
 			};
 
 			this.hasClasificacionRd363 = true;
-			this.loadClasificacionRd363 = function(){
-				console.log("load...")
-			};
 
 			return this
 		};

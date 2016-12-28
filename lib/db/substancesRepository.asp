@@ -322,7 +322,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "aplicaciones", findSubstanceApplications(id_sustancia, connection)
 	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
-	substance.Add "pictogramasRd", findPictogramasRd1272(substance.item("simbolos_rd1272"), connection)
+	substance.Add "pictogramasRd1272", findPictograms(substance.item("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance, connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substance)
 	substance.Add _
@@ -344,7 +344,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	substance.Add "num_ce_elincs", substanceDic("num_ce_elincs")
 	substance.Add "num_rd", substanceDic("num_rd")
 	substance.Add "nums_icsc", obtainNumsIcsc(substanceDic("num_icsc"))
-	substance.Add "pictogramasRd", findPictogramasRd1272(substanceDic("simbolos_rd1272"), connection)
+	substance.Add "pictogramasRd1272", findPictograms(substanceDic("simbolos_rd1272"), connection)
 	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceDic, connection)
 	substance.Add "notas_rd1272", obtainNotasRd1272(substanceDic("notas_rd1272"), connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceDic)
@@ -371,6 +371,12 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 			substance("featuredLists"), substance("frasesR"), substanceDic("mpmb") _
 		)
 	substance.add "explosiva", isSubstanceExplosive(substanceDic("clasificacion_rd1272_1"))
+	substance.add "pictogramasRd363", findPictograms(substanceDic("simbolos"), connection)
+	'substance.add "clasificacionesRd363", obtainClasificacionesRd363(substanceDic, connection)
+'	substance.add "concentracionEtiquetadoRd363", obtainConcentracionEtiquetadoRd363(substanceDic, connection)
+'	substance.add "frases_r_danesa", substanceDic("frases_r_danesa")
+'	substance.add "frases_s", substanceDic("frases_s")
+'	substance.add "notas_rd_363", obtainNotasRd363("notas_rd_363")
 
 	set extractSubstanceLevelOneFields = substance
 end function
@@ -502,7 +508,8 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus_vl.ib_4, sus_vl.vlb_4, sus_vl.momento_4, sus_vl.notas_vlb_4, " &_
 			"sus_vl.ib_5, sus_vl.vlb_5, sus_vl.momento_5, sus_vl.notas_vlb_5, " &_
 			"sus_vl.ib_6, sus_vl.vlb_6, sus_vl.momento_6, sus_vl.notas_vlb_6, " &_
-			"sus_amb.mpmb " &_
+			"sus_amb.mpmb" &_
+			", sus.simbolos " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
 		"LEFT JOIN dn_risc_sustancias_vl as sus_vl " &_
