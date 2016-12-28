@@ -180,12 +180,15 @@
 		Clasificación y etiquetado RD 363/1995 <span class="glyphicon glyphicon-menu-down" ></span>
 	</div>
 	<div class="collapse panel-body row" id="collapseClasificacionRd363">
+		<!-- ko if: pictogramasRd363 -->
 		<div class="col-xs-3 vertical-distributed-container" data-bind="foreach: pictogramasRd363">
 			<div class="small text-muted">
 				<img aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
 				<span data-bind="text: description"></span>
 			</div>
 		</div>
+		<!-- /ko -->
+		<!-- ko if: clasificacionesRd363 -->
 		<div class="col-xs-9">
 			<div class="list-group-item">
 				<ul data-bind="foreach: clasificacionesRd363" class="base-ul small">
@@ -195,6 +198,19 @@
 				</ul>
 			</div>
 		</div>
+		<!-- /ko -->
+		<!-- ko if: mustShowFrasesRDanesa -->
+		<div class="col-xs-9">
+			<div class="list-group-item">
+				<div class="list-group-item-heading">Frases R según clasificación de la EPA danesa</div>
+				<ul data-bind="foreach: frasesRDanesa" class="base-ul">
+					<li data-bind="if: name">
+						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /ko -->
 	</div>
 </div>
 <!-- /ko -->

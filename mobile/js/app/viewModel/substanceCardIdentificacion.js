@@ -106,7 +106,15 @@ define(
 					+ num_icsc.id().toString() + ".pdf";
 			};
 
-			this.hasClasificacionRd363 = true;
+			this.mustShowFrasesRDanesa = ko.computed( () =>
+				this.frasesRDanesa() && !this.frasesR()
+			, this);
+
+			this.hasClasificacionRd363 = ko.computed( () =>
+				this.pictogramasRd363()
+				|| this.frasesR()
+				|| this.mustShowFrasesRDanesa()
+			, this);
 
 			return this
 		};
@@ -116,6 +124,7 @@ define(
 
 		var hasItems = function(list, elementName)
 			{ 	
+				if (!list) return false
 				return list
 				.map(element => element[elementName])
 				.filter(element => element() ? true : false)
@@ -123,7 +132,8 @@ define(
 			}
 
 		var hasNotas = function(valoresLimite)
-			{ return valoresLimite
+			{ 	if (!valoresLimite) return false
+				return valoresLimite
 				.map(element => hasItems(element.notas(), "key") )
 				.filter(element => element ? true : false)
 				.length != 0;
