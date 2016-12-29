@@ -380,7 +380,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	, connection)
 	substance.add "frasesS", findFrasesS(substanceDic("frases_s"), connection)
 	substance.Add "notas_rd363", obtainNotasRd363(substanceDic("notas_rd_363"), connection)
-'	substance.add "concentracionEtiquetadoRd363", obtainConcentracionEtiquetadoRd363(substanceDic, connection)
+	substance.add "concentracionEtiquetadoRd363", obtainConcentracionEtiquetadoRd363(substanceDic)
 
 	set extractSubstanceLevelOneFields = substance
 end function
@@ -495,6 +495,16 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, " &_
 			"sus.clasificacion_10, sus.clasificacion_11, sus.clasificacion_12, " &_
 			"sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15, " &_
+			"sus.conc_1, sus.conc_2, sus.conc_3, " &_
+			"sus.conc_4, sus.conc_5, sus.conc_6, " &_
+			"sus.conc_7, sus.conc_8, sus.conc_9, " &_
+			"sus.conc_10, sus.conc_11, sus.conc_12, " &_
+			"sus.conc_13, sus.conc_14, sus.conc_15, " &_
+			"sus.eti_conc_1, sus.eti_conc_2, sus.eti_conc_3, " &_
+			"sus.eti_conc_4, sus.eti_conc_5, sus.eti_conc_6, " &_
+			"sus.eti_conc_7, sus.eti_conc_8, sus.eti_conc_9, " &_
+			"sus.eti_conc_10, sus.eti_conc_11, sus.eti_conc_12, " &_
+			"sus.eti_conc_13, sus.eti_conc_14, sus.eti_conc_15, " &_
 			"sus_vl.estado_1, sus_vl.estado_2, sus_vl.estado_3, sus_vl.estado_4, sus_vl.estado_5, sus_vl.estado_6, " &_
 			"sus_vl.vla_ed_ppm_1, sus_vl.vla_ed_ppm_2, sus_vl.vla_ed_ppm_3, " &_
 			"sus_vl.vla_ed_ppm_4, sus_vl.vla_ed_ppm_5, sus_vl.vla_ed_ppm_6, " &_

@@ -143,7 +143,7 @@
 			<!-- /ko -->
 	
 			<!-- ko if: concentracionEtiquetadoRd1272 -->
-			<table class="table-condensed small list-group-item">
+			<table class="table small list-group-item">
 				<thead>
 					<tr>
 						<th>Concentración</th>
@@ -171,59 +171,80 @@
 	<div role="button" data-toggle="collapse" aria-expanded="false" href="#collapseClasificacionRd363" aria-controls="collapseClasificacionRd363" class="panel-heading panel-title">
 		Clasificación y etiquetado RD 363/1995 <span class="glyphicon glyphicon-menu-down" ></span>
 	</div>
-	<div class="collapse panel-body row" id="collapseClasificacionRd363">
-		<!-- ko if: pictogramasRd363 -->
-		<div class="col-xs-3 vertical-distributed-container" data-bind="foreach: pictogramasRd363">
-			<div class="small text-muted">
-				<img aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
-				<span data-bind="text: description"></span>
+		<div class="collapse panel-body" id="collapseClasificacionRd363">
+			<div class="row">
+				<!-- ko if: pictogramasRd363 -->
+				<div class="col-xs-3 vertical-distributed-container" data-bind="foreach: pictogramasRd363">
+					<div class="small text-muted">
+						<img aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
+						<span data-bind="text: description"></span>
+					</div>
+				</div>
+				<!-- /ko -->
+				<div class="col-xs-9">
+					<!-- ko if: frasesR -->
+					<div class="list-group-item">
+						<ul data-bind="foreach: frasesR" class="base-ul small">
+							<li data-bind="if: name">
+								<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+							</li>
+						</ul>
+					</div>
+					<!-- /ko -->
+					<!-- ko if: mustShowFrasesRDanesa -->
+					<div class="list-group-item">
+						<div class="list-group-item-heading">Frases R según clasificación de la EPA danesa</div>
+						<ul data-bind="foreach: frasesRDanesa" class="base-ul">
+							<li data-bind="if: name">
+								<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+							</li>
+						</ul>
+					</div>
+					<!-- /ko -->
+					<!-- ko if: frasesS -->
+					<div class="list-group-item">
+						<ul data-bind="foreach: frasesS" class="base-ul small">
+							<li data-bind="if: name">
+								<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+							</li>
+						</ul>
+					</div>
+					<!-- /ko -->
+					<!-- ko if: notas_rd363 -->
+					<div class="list-group-item">
+						<b class="small">Notas: </b>
+						<ul class="list-comma" data-bind="foreach: notas_rd363" style="display:inline">
+							<li>
+								<div class="dropdown" data-bind="visible: description" style="display:inline">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
+									<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- /ko -->
+				</div>
 			</div>
-		</div>
+		<!-- ko if: concentracionEtiquetadoRd363 -->
+		<table class="table small">
+			<thead>
+				<tr>
+					<th>Concentración</th>
+					<th>Etiquetado</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: concentracionEtiquetadoRd363">
+				<tr data-bind="ifnot: concentracion">
+					<td data-bind="html: etiquetado" colspan="2"></td>
+				</tr>
+				<tr data-bind="if: concentracion">
+					<td data-bind="html: concentracion"></td>
+					<td data-bind="html: etiquetado"></td>
+				</tr>
+			</tbody>
+		</table>
 		<!-- /ko -->
-		<!-- ko if: frasesR -->
-		<div class="col-xs-9">
-			<div class="list-group-item">
-				<ul data-bind="foreach: frasesR" class="base-ul small">
-					<li data-bind="if: name">
-						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
-					</li>
-				</ul>
-			</div>
-			<!-- ko if: mustShowFrasesRDanesa -->
-			<div class="list-group-item">
-				<div class="list-group-item-heading">Frases R según clasificación de la EPA danesa</div>
-				<ul data-bind="foreach: frasesRDanesa" class="base-ul">
-					<li data-bind="if: name">
-						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
-					</li>
-				</ul>
-			</div>
-			<!-- /ko -->
-			<!-- ko if: frasesS -->
-			<div class="list-group-item">
-				<ul data-bind="foreach: frasesS" class="base-ul small">
-					<li data-bind="if: name">
-						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
-					</li>
-				</ul>
-			</div>
-			<!-- /ko -->
-			<!-- ko if: notas_rd363 -->
-			<div class="list-group-item">
-				<b class="small">Notas: </b>
-				<ul class="list-comma" data-bind="foreach: notas_rd363" style="display:inline">
-					<li>
-						<div class="dropdown" data-bind="visible: description" style="display:inline">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
-							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<!-- /ko -->
 		</div>
-		<!-- /ko -->
-	</div>
 </div>
 <!-- /ko -->
 

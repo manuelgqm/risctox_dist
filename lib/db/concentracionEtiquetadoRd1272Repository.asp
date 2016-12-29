@@ -12,6 +12,63 @@ function obtainConcentracionEtiquetadoRd1272(substance)
 	obtainConcentracionEtiquetadoRd1272 = etiConcList
 end function
 
+function obtainConcentracionEtiquetadoRd363(substance)
+	obtainConcentracionEtiquetadoRd363 = Array()
+	dim etiquetas : etiquetas = Array( _
+		"eti_conc_1", _
+		"eti_conc_2", _
+		"eti_conc_3", _
+		"eti_conc_4", _
+		"eti_conc_5", _
+		"eti_conc_6", _
+		"eti_conc_7", _
+		"eti_conc_8", _
+		"eti_conc_9", _
+		"eti_conc_10", _
+		"eti_conc_11", _
+		"eti_conc_12", _
+		"eti_conc_13", _
+		"eti_conc_14", _
+		"eti_conc_15" _
+	)
+	dim concentraciones : concentraciones = Array( _
+		"conc_1", _
+		"conc_2", _
+		"conc_3", _
+		"conc_4", _
+		"conc_5", _
+		"conc_6", _
+		"conc_7", _
+		"conc_8", _
+		"conc_9", _
+		"conc_10", _
+		"conc_11", _
+		"conc_12", _
+		"conc_13", _
+		"conc_14", _
+		"conc_15" _
+	)
+	dim i, currentEtiqueta, currentConcentracion, etiConc
+	for i = 0 to Ubound(etiquetas)
+		currentEtiqueta = getField(substance, etiquetas(i))
+		currentConcentracion = getField(substance, concentraciones(i))
+		set etiConc = Server.CreateObject("Scripting.Dictionary")
+		if not isEmpty(currentEtiqueta) and not isEmpty(currentConcentracion) then
+			etiConc.add "concentracion", currentConcentracion
+			etiConc.add "etiquetado", currentEtiqueta
+			obtainConcentracionEtiquetadoRd363 = arrayPushDictionary(obtainConcentracionEtiquetadoRd363, etiConc)
+		end if
+	next
+end function
+
+function getField(substance, byVal fieldName)
+	getField = ""
+	dim value : value = substance(fieldName)
+	if isEmpty(value) then _
+		exit function
+	getField = encodeHTMLEntities( replace(value, ":", "") )
+end function
+
 function extractEtiConcList(substance)
 	Dim result : result = Array()
 	Dim etiquetas : etiquetas = Array( _
@@ -91,7 +148,6 @@ function obtainConcentracionEtiquetado(etiquetado, concentracion)
 		set obtainConcentracionEtiquetado = etiConc
 		exit function
 	end if
-
 
 	set obtainConcentracionEtiquetado = etiConc
 	exit function
