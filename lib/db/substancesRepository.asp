@@ -6,7 +6,7 @@
 <!--#include file="pictogramsRepository.asp"-->
 <!--#include file="frasesRepository.asp"-->
 <!--#include file="notasRdRepository.asp"-->
-<!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
+<!--#include file="concentracionEtiquetadoRdRepository.asp"-->
 <!--#include file="valoresLimiteAmbientalRepository.asp"-->
 <!--#include file="valoresLimiteBiologicoRepository.asp"-->
 <!--#include file="definitionsRepository.asp"-->
