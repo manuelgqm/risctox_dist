@@ -9,13 +9,30 @@ end function
 function findClasificacionesRd363(frasesRSrz, connection)
 	findClasificacionesRd363 = Array()
 	dim frasesR : frasesR = split(frasesRSrz, ", ")
-	dim i
-	dim fraseR
+	dim i, fraseR
 	for i = 0 to Ubound(frasesR)
 		set fraseR = Server.CreateObject("Scripting.Dictionary")
 		fraseR.add "name", frasesR(i)
 		fraseR.add "description", findFraseRDescription(frasesR(i), connection)
 		findClasificacionesRd363 = arrayPushDictionary(findClasificacionesRd363, fraseR)
+	next
+end function
+
+function findFrasesS(byVal frasesSSrz, connection)
+	findFrasesS = Array()
+	frasesSSrz = replace( _
+		replace( _
+			replace( frasesSSrz, "(", "") _
+		, ")", "") _
+	, "S:", "")
+	dim frasesS : frasesS = split(frasesSSrz, "-")
+	dim i, fraseS, fraseSName
+	for i = 0 to Ubound(frasesS)
+		set fraseS = Server.CreateObject("Scripting.Dictionary")
+		fraseSName = "S" & trim(frasesS(i))
+		fraseS.add "name", fraseSName
+		fraseS.add "description", findFraseSDescription(fraseSName, connection)
+		findFrasesS = arrayPushDictionary(findFrasesS, fraseS)
 	next
 end function
 
@@ -140,9 +157,20 @@ function findFraseRDescription(byVal frase, connection)
 	set recordset = nothing
 end function
 
+function findFraseSDescription(byVal frase, connection)
+	findFraseSDescription = ""
+	frase = replace(frase, "-", "/")
+	dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_s WHERE frase = '" & frase & "'"
+	dim recordset : set recordset = connection.execute(sql)
+	if recordset.eof then _
+		exit function
+	findFraseSDescription = recordset("texto").value
+	recordset.close
+	set recordset = nothing
+end function
+
 function findCategoriaPeligroDescription(categoria, connection)
 	Dim result : result = ""
-	' Sustituye "-" por "/" para unificar formato
 	frase = replace(categoria, "-", "/")
 	Dim sql, objRst
 	sql = "SELECT texto FROM dn_risc_categorias_peligro WHERE frase = '" & categoria & "'"

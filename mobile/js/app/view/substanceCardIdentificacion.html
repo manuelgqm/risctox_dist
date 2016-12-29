@@ -197,10 +197,7 @@
 					</li>
 				</ul>
 			</div>
-		</div>
-		<!-- /ko -->
-		<!-- ko if: mustShowFrasesRDanesa -->
-		<div class="col-xs-9">
+			<!-- ko if: mustShowFrasesRDanesa -->
 			<div class="list-group-item">
 				<div class="list-group-item-heading">Frases R según clasificación de la EPA danesa</div>
 				<ul data-bind="foreach: frasesRDanesa" class="base-ul">
@@ -209,6 +206,16 @@
 					</li>
 				</ul>
 			</div>
+			<!-- /ko -->
+			<!-- ko if: frasesS -->
+			<div class="list-group-item">
+				<ul data-bind="foreach: frasesS" class="base-ul small">
+					<li data-bind="if: name">
+						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+					</li>
+				</ul>
+			</div>
+			<!-- /ko -->
 		</div>
 		<!-- /ko -->
 	</div>
