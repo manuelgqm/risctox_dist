@@ -62,33 +62,30 @@ function extractFrasesH(frasesHRaw, connection)
 	Next
 end function
 
-function obtainFraseH(clasificacionRaw, connection)
-	Dim result : Set result = Server.CreateObject("Scripting.Dictionary")
-	
-	Dim clasificacionDecomposed : clasificacionDecomposed = getClasificacionDecomposed(clasificacionRaw)
-	Dim categoriaPeligroRaw	: categoriaPeligroRaw = clasificacionDecomposed(0)
-	Dim categoriaPeligroDecomposed : categoriaPeligroDecomposed = split(categoriaPeligroRaw, ",")
-	Dim frase : frase = obtainFrase(clasificacionDecomposed)
-	result.add "frase", frase
-	result.add "fraseDescription", findFraseHDescription(frase, connection)
-	result.add "categoriaPeligro", obtainCategoriaPeligro(categoriaPeligroDecomposed)
-	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed, connection)
-
-	Set obtainFraseH = result
+function obtainFraseH(fraseHRaw, connection)
+	set obtainFraseH = Server.CreateObject("Scripting.Dictionary")
+	dim fraseHDecomposed : fraseHDecomposed = getClasificacionDecomposed(fraseHRaw)
+	dim peligroRaw	: peligroRaw = fraseHDecomposed(0)
+	dim peligroDecomposed : peligroDecomposed = split(peligroRaw, ",")
+	dim frase : frase = obtainFrase(fraseHDecomposed)
+	obtainFraseH.add "fraseH", frase
+	obtainFraseH.add "fraseHDescription", findFraseHDescription(frase, connection)
+	obtainFraseH.add "peligro", obtainPeligro(peligroDecomposed)
+	obtainFraseH.add "peligroDescription", obtainpeligroDescription(peligroDecomposed, connection)
 end function
 
-function getClasificacionDecomposed(clasificacionRaw)
-	Dim result : result = split(clasificacionRaw, ";")
+function getClasificacionDecomposed(fraseHRaw)
+	Dim result : result = split(fraseHRaw, ";")
 	result(0) = trim(result(0))
 	result(1) = trim(result(1))
 	
 	getClasificacionDecomposed = result
 end function
 
-function obtainFrase(clasificacionDecomposed)
-	Dim frase : frase = clasificacionDecomposed(0)
-	if ubound(clasificacionDecomposed)>0 then
-		frase = clasificacionDecomposed(1)
+function obtainFrase(fraseHDecomposed)
+	Dim frase : frase = fraseHDecomposed(0)
+	if ubound(fraseHDecomposed)>0 then
+		frase = fraseHDecomposed(1)
 	end if
 	if frase = "H???" then
 		frase = "Gases a presión"
@@ -97,24 +94,24 @@ function obtainFrase(clasificacionDecomposed)
 	obtainFrase = frase
 end function
 
-function obtainCategoriaPeligro(categoriaPeligroDecomposed)
+function obtainpeligro(peligroDecomposed)
 	Dim result : result = ""
-	if ubound(categoriaPeligroDecomposed) > 0 then
-		result = "Cat. " + categoriaPeligroDecomposed(1)
+	if ubound(peligroDecomposed) > 0 then
+		result = "Cat. " + peligroDecomposed(1)
 	end if
 
-	obtainCategoriaPeligro = result
+	obtainpeligro = result
 end function
 
-function obtaincategoriaPeligroDescription(categoriaPeligroDecomposed, connection)
+function obtainpeligroDescription(peligroDecomposed, connection)
 	Dim result : result = ""
-	if ubound(categoriaPeligroDecomposed) < 0 then
-		obtaincategoriaPeligroDescription = result
+	if ubound(peligroDecomposed) < 0 then
+		obtainpeligroDescription = result
 		Exit function
 	end if
-	result = findCategoriaPeligroDescription(categoriaPeligroDecomposed(0), connection)
+	result = findpeligroDescription(peligroDecomposed(0), connection)
 
-	obtaincategoriaPeligroDescription = result
+	obtainpeligroDescription = result
 end function
 
 function findFraseHDescription(frase, connection)
@@ -160,7 +157,7 @@ function findFraseSDescription(byVal frase, connection)
 	set recordset = nothing
 end function
 
-function findCategoriaPeligroDescription(categoria, connection)
+function findpeligroDescription(categoria, connection)
 	Dim result : result = ""
 	frase = replace(categoria, "-", "/")
 	Dim sql, objRst
@@ -174,6 +171,6 @@ function findCategoriaPeligroDescription(categoria, connection)
 
 	objRst.close()
 	set objRst=nothing
-	findCategoriaPeligroDescription = result
+	findpeligroDescription = result
 end function
 %>
