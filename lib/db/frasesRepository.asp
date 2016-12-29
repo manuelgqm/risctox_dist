@@ -109,59 +109,39 @@ function findFraseHDescription(byVal frase, connection)
 	findFraseHDescription = ""
 	frase = replace(frase, "-", "/")
 	frase = replace(frase, "*", "")
-	Dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
-	dim recordset : set recordset = connection.execute(sql)
-	if recordset.eof then _
-		exit function
-	findFraseHDescription = recordset("texto").value
-	recordset.close
-	set recordset = nothing
+	Dim sql : sql = "SELECT texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
+	findFraseHDescription = getFieldTexto(sql, connection)
 end function
 
 function findFraseRDescription(byVal frase, connection)
 	findFraseRDescription = ""
 	frase = replace(frase, "-", "/")
-	dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_r WHERE frase = '" & frase & "'"
-	dim recordset : set recordset = connection.execute(sql)
-	if recordset.eof then _
-		exit function
-	findFraseRDescription = recordset("texto").value
-	recordset.close
-	set recordset = nothing
+	dim sql : sql = "SELECT texto FROM dn_risc_frases_r WHERE frase = '" & frase & "'"
+	findFraseRDescription = getFieldTexto(sql, connection)
 end function
 
 function findFraseSDescription(byVal frase, connection)
 	findFraseSDescription = ""
 	frase = replace(frase, "-", "/")
-	dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_s WHERE frase = '" & frase & "'"
-	dim recordset : set recordset = connection.execute(sql)
-	if recordset.eof then _
-		exit function
-	findFraseSDescription = recordset("texto").value
-	recordset.close
-	set recordset = nothing
+	dim sql : sql = "SELECT texto FROM dn_risc_frases_s WHERE frase = '" & frase & "'"
+	findFraseSDescription = getFieldTexto(sql, connection)
 end function
 
-function findpeligroDescription(categoria, connection)
+function findPeligroDescription(categoria, connection)
 	findpeligroDescription = ""
 	frase = replace(categoria, "-", "/")
 	Dim sql, recordset
 	sql = "SELECT texto FROM dn_risc_categorias_peligro WHERE frase = '" & categoria & "'"
-	set recordset = connection.execute(sql)
-	if recordset.eof then _
-		exit function
-	findpeligroDescription = recordset("texto").value
-	recordset.close()
-	set recordset=nothing
+	findPeligroDescription = getFieldTexto(sql, connection)
 end function
 
-'function getFieldTexto(sql, connection)
-'	getFieldTexto = ""
-'	dim recondset : set recordset = connection.execute(sql)
-'	if recordset.eof then _
-'		exit function
-'	getFieldTexto = recordset("texto").value
-'	recordset.close()
-'	set recordset = nothing
-'end function
+function getFieldTexto(sql, connection)
+	getFieldTexto = ""
+	dim recondset : set recordset = connection.execute(sql)
+	if recordset.eof then _
+		exit function
+	getFieldTexto = recordset("texto").value
+	recordset.close()
+	set recordset = nothing
+end function
 %>

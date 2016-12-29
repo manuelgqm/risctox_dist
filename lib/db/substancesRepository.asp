@@ -4,7 +4,7 @@
 <!--#include file="substanceApplicationsRepository.asp"-->
 <!--#include file="substanceCompaniesRepository.asp"-->
 <!--#include file="pictogramsRepository.asp"-->
-<!--#include file="classificationsRd1272Repository.asp"-->
+<!--#include file="frasesRepository.asp"-->
 <!--#include file="notasRd1272Repository.asp"-->
 <!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
 <!--#include file="valoresLimiteAmbientalRepository.asp"-->
