@@ -18,7 +18,7 @@ function findfrasesH(substance, connection)
 		substance.item("clasificacion_rd1272_15") _
 	)
 
-	findfrasesH = extractClasificaciones(frasesH, connection)
+	findfrasesH = extractFrasesH(frasesH, connection)
 end function
 
 function findFrasesR(frasesRSrz, connection)
@@ -51,17 +51,15 @@ function findFrasesS(byVal frasesSSrz, connection)
 	next
 end function
 
-function extractClasificaciones(clasificacionesRaw, connection)
+function extractFrasesH(frasesHRaw, connection)
+	extractFrasesH = Array()
 	Dim i
-	Dim result : result = Array()
-	For i = 0 to UBound(clasificacionesRaw)
-		if clasificacionesRaw(i) <> "" then
-			Set clasificacion = obtainClasificacion(clasificacionesRaw(i), connection)
-			result = arrayPushDictionary(result, clasificacion)
+	For i = 0 to UBound(frasesHRaw)
+		if frasesHRaw(i) <> "" then
+			Set clasificacion = obtainClasificacion(frasesHRaw(i), connection)
+			extractFrasesH = arrayPushDictionary(extractFrasesH, clasificacion)
 		end if
 	Next
-
-	extractClasificaciones = result
 end function
 
 function obtainClasificacion(clasificacionRaw, connection)
