@@ -345,7 +345,7 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	substance.Add "num_rd", substanceDic("num_rd")
 	substance.Add "nums_icsc", obtainNumsIcsc(substanceDic("num_icsc"))
 	substance.Add "pictogramasRd1272", findPictograms(substanceDic("simbolos_rd1272"), connection)
-	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substanceDic, connection)
+	substance.Add "frasesH", findFrasesH(substanceDic, connection)
 	substance.Add "notas_rd1272", obtainNotasRd1272(substanceDic("notas_rd1272"), connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substanceDic)
 

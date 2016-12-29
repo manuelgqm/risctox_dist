@@ -26,7 +26,7 @@ define(
 			this.hasClassificationOrLabelingRd1272 = ko.computed(function()
 				{ return ( 
 					this.pictogramasRd1272()
-					|| this.clasificacionesRd1272()
+					|| this.frasesH()
 					|| this.notas_rd1272()
 					|| this.concentracionEtiquetadoRd1272()
 					)

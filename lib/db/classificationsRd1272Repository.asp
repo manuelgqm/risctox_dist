@@ -1,9 +1,9 @@
 <%
-function findClasificacionesRd1272(substance, connection)
+function findfrasesH(substance, connection)
 	Dim clasificacionesRaw : clasificacionesRaw = getClasificacionesRaw(substance)
 	dim clasificaciones : clasificaciones = extractClasificaciones(clasificacionesRaw, connection)
 
-	findClasificacionesRd1272 = clasificaciones
+	findfrasesH = clasificaciones
 end function
 
 function findFrasesR(frasesRSrz, connection)

@@ -10,7 +10,7 @@ define(['Server'], function(Server){
 			, num_rd: null
 			, nums_icsc: null
 			, pictogramasRd1272: null
-			, clasificacionesRd1272: null
+			, frasesH: null
 			, notas_rd1272: null
 			, concentracionEtiquetadoRd1272: null
 			, valoresLimiteAmbiental: [ 
