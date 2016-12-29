@@ -53,7 +53,7 @@ end function
 
 function extractFrasesH(frasesHRaw, connection)
 	extractFrasesH = Array()
-	Dim i, fraseH
+	dim i, fraseH
 	For i = 0 to UBound(frasesHRaw)
 		if not isEmpty(frasesHRaw(i)) then
 			Set fraseH = obtainFraseH(frasesHRaw(i), connection)
@@ -64,37 +64,37 @@ end function
 
 function obtainFraseH(fraseHRaw, connection)
 	set obtainFraseH = Server.CreateObject("Scripting.Dictionary")
-	dim fraseHDecomposed : fraseHDecomposed = getClasificacionDecomposed(fraseHRaw)
+	dim fraseHDecomposed : fraseHDecomposed = decomposeFraseH(fraseHRaw)
 	dim peligroRaw	: peligroRaw = fraseHDecomposed(0)
 	dim peligroDecomposed : peligroDecomposed = split(peligroRaw, ",")
-	dim frase : frase = obtainFrase(fraseHDecomposed)
+	dim frase : frase = extractFraseH(fraseHDecomposed)
 	obtainFraseH.add "fraseH", frase
 	obtainFraseH.add "fraseHDescription", findFraseHDescription(frase, connection)
 	obtainFraseH.add "peligro", obtainPeligro(peligroDecomposed)
 	obtainFraseH.add "peligroDescription", obtainpeligroDescription(peligroDecomposed, connection)
 end function
 
-function getClasificacionDecomposed(fraseHRaw)
+function decomposeFraseH(fraseHRaw)
 	Dim result : result = split(fraseHRaw, ";")
 	result(0) = trim(result(0))
 	result(1) = trim(result(1))
 	
-	getClasificacionDecomposed = result
+	decomposeFraseH = result
 end function
 
-function obtainFrase(fraseHDecomposed)
-	Dim frase : frase = fraseHDecomposed(0)
+function extractFraseH(fraseHDecomposed)
+	Dim fraseH : fraseH = fraseHDecomposed(0)
 	if ubound(fraseHDecomposed)>0 then
-		frase = fraseHDecomposed(1)
+		fraseH = fraseHDecomposed(1)
 	end if
-	if frase = "H???" then
-		frase = "Gases a presión"
+	if fraseH = "H???" then
+		fraseH = "Gases a presión"
 	end if
 
-	obtainFrase = frase
+	extractFraseH = fraseH
 end function
 
-function obtainpeligro(peligroDecomposed)
+function obtainPeligro(peligroDecomposed)
 	Dim result : result = ""
 	if ubound(peligroDecomposed) > 0 then
 		result = "Cat. " + peligroDecomposed(1)
