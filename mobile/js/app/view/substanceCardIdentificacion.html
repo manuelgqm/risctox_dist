@@ -144,7 +144,7 @@
 							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
 							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
 						</div>
-						<span  data-bind="text: value"></span>
+						<span  data-bind="text: key"></span>
 					</li>
 				</ul>
 			</div>
@@ -212,6 +212,20 @@
 				<ul data-bind="foreach: frasesS" class="base-ul small">
 					<li data-bind="if: name">
 						<b data-bind="html: name"></b>: <span data-bind="html: description"></span>
+					</li>
+				</ul>
+			</div>
+			<!-- /ko -->
+			<!-- ko if: notas_rd363 -->
+			<div class="list-group-item">
+				<b class="small">Notas: </b>
+				<ul class="list-comma" data-bind="foreach: notas_rd363" style="display:inline">
+					<li>
+						<span data-bind="text: key"></span>
+						<div class="dropdown" data-bind="visible: description" style="display:inline">
+							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+						</div>
 					</li>
 				</ul>
 			</div>

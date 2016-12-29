@@ -46,6 +46,7 @@ define(['Server'], function(Server){
 			, pictogramasRd363: null
 			, frasesRDanesa: null
 			, frasesS: null
+			, notas_rd363: null
 			, descriptions: 
 				{ nombre: 'Se ha asignado el nombre en español que aparece en la base de datos EINECS del Bureau Europeo de Sustancias Químicas'
 				, sinonimos: 'Se han incluido otros nombres encontrados en la normativa o en las bases de datos utilizadas para construir la RISCTOX'

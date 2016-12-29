@@ -5,7 +5,7 @@
 <!--#include file="substanceCompaniesRepository.asp"-->
 <!--#include file="pictogramsRepository.asp"-->
 <!--#include file="frasesRepository.asp"-->
-<!--#include file="notasRd1272Repository.asp"-->
+<!--#include file="notasRdRepository.asp"-->
 <!--#include file="concentracionEtiquetadoRd1272Repository.asp"-->
 <!--#include file="valoresLimiteAmbientalRepository.asp"-->
 <!--#include file="valoresLimiteBiologicoRepository.asp"-->
@@ -379,8 +379,8 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 		)_
 	, connection)
 	substance.add "frasesS", findFrasesS(substanceDic("frases_s"), connection)
+	substance.Add "notas_rd363", obtainNotasRd363(substanceDic("notas_rd_363"), connection)
 '	substance.add "concentracionEtiquetadoRd363", obtainConcentracionEtiquetadoRd363(substanceDic, connection)
-'	substance.add "notas_rd_363", obtainNotasRd363("notas_rd_363")
 
 	set extractSubstanceLevelOneFields = substance
 end function
@@ -513,7 +513,7 @@ function composeSubstanceLevelOneFieldsQuery(id_sustancia)
 			"sus_vl.ib_5, sus_vl.vlb_5, sus_vl.momento_5, sus_vl.notas_vlb_5, " &_
 			"sus_vl.ib_6, sus_vl.vlb_6, sus_vl.momento_6, sus_vl.notas_vlb_6, " &_
 			"sus_amb.mpmb" &_
-			", sus.simbolos, sus.frases_r_danesa, sus.frases_s " &_
+			", sus.simbolos, sus.frases_r_danesa, sus.frases_s, sus.notas_rd_363 " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
 		"LEFT JOIN dn_risc_sustancias_vl as sus_vl " &_
