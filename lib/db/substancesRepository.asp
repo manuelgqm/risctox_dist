@@ -323,7 +323,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
 	substance.Add "pictogramasRd1272", findPictograms(substance.item("simbolos_rd1272"), connection)
-	substance.Add "clasificacionesRd1272", findClasificacionesRd1272(substance, connection)
+	substance.Add "frasesH", findfrasesH(substance, connection)
 	substance.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(substance)
 	substance.Add _
 		"listaNegraClassifications" _
