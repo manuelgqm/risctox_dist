@@ -871,7 +871,7 @@ sub ap2_clasificacion_notas_rd1272()
 		for i = 0 to notas_rd1272LastId
 			set nota = substance.Item("notas_rd1272")(i)
 		%>
-			<b><%=nota.item("value")%></b>&nbsp;
+			<b><%=nota.item("key")%></b>&nbsp;
 			<% if nota.item("id")<>""then %>
 			<a onclick=window.open('ver_definicion.asp?id=<%=nota.item("id")%>','def','width=600,height=400,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a><br />
 			<%end if%>

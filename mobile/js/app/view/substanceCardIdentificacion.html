@@ -105,10 +105,10 @@
 	
 	<div class="row row-xs-flex-center panel-body">
 		<!-- ko if: pictogramasRd1272 -->
-		<div class="col-xs-3 text-muted small vertical-distributed-container" data-bind="foreach: pictogramasRd1272">
-			<div class="dropdown vertical-distributed-container">
-				<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
-				<span class="dropdown-menu dropdown-content" style="vertical-align: middle" data-bind="text: description"></span>
+		<div class="col-xs-3 vertical-distributed-container" data-bind="foreach: pictogramasRd1272">
+			<div class="small text-muted vertical-distributed-container">
+				<img data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
+				<div data-bind="text: description"></div>
 			</div>
 		</div>
 		<!-- /ko -->
@@ -135,7 +135,7 @@
 					<li>
 						<div class="dropdown" data-bind="visible: description" style="display:inline">
 							<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
-							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
 						</div>
 					</li>
 				</ul>
@@ -175,9 +175,9 @@
 			<div class="row">
 				<!-- ko if: pictogramasRd363 -->
 				<div class="col-xs-3 vertical-distributed-container" data-bind="foreach: pictogramasRd363">
-					<div class="small text-muted">
-						<img aria-haspopup="true" aria-expanded="true" data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
-						<span data-bind="text: description"></span>
+					<div class="small text-muted vertical-distributed-container">
+						<img data-bind="attr: { src: imageUrl, alt: description }" class="pictogramaImg" />
+						<div data-bind="text: description"></div>
 					</div>
 				</div>
 				<!-- /ko -->
@@ -217,7 +217,7 @@
 							<li>
 								<div class="dropdown" data-bind="visible: description" style="display:inline">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
-									<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
+									<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
 								</div>
 							</li>
 						</ul>
