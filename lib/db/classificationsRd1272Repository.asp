@@ -84,53 +84,38 @@ end function
 
 function extractFraseH(fraseHDecomposed)
 	Dim fraseH : fraseH = fraseHDecomposed(0)
-	if ubound(fraseHDecomposed)>0 then
+	if ubound(fraseHDecomposed)>0 then _
 		fraseH = fraseHDecomposed(1)
-	end if
-	if fraseH = "H???" then
+	if fraseH = "H???" then _
 		fraseH = "Gases a presión"
-	end if
 
 	extractFraseH = fraseH
 end function
 
 function obtainPeligro(peligroDecomposed)
-	Dim result : result = ""
-	if ubound(peligroDecomposed) > 0 then
-		result = "Cat. " + peligroDecomposed(1)
-	end if
-
-	obtainpeligro = result
+	obtainPeligro = ""
+	if ubound(peligroDecomposed) > 0 then _
+		obtainPeligro = "Cat. " + peligroDecomposed(1)
 end function
 
 function obtainpeligroDescription(peligroDecomposed, connection)
-	Dim result : result = ""
-	if ubound(peligroDecomposed) < 0 then
-		obtainpeligroDescription = result
-		Exit function
-	end if
-	result = findpeligroDescription(peligroDecomposed(0), connection)
-
-	obtainpeligroDescription = result
+	obtainpeligroDescription = ""
+	if ubound(peligroDecomposed) < 0 then _
+		exit function
+	obtainpeligroDescription = findpeligroDescription(peligroDecomposed(0), connection)
 end function
 
-function findFraseHDescription(frase, connection)
-	Dim result : result = ""
-	' Sustituye "-" por "/" para unificar formato
+function findFraseHDescription(byVal frase, connection)
+	findFraseHDescription = ""
 	frase = replace(frase, "-", "/")
 	frase = replace(frase, "*", "")
-	Dim sql, objRst
-	sql = "SELECT dbo.udf_StripHTML(texto) as texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
-	set objRst = connection.execute(sql)
-	if (objRst.eof) then
-		findFraseHDescription = result
-		Exit function
-	end if
-	result = objRst("texto")
-
-	objRst.close()
-	set objRst = nothing
-	findFraseHDescription = result
+	Dim sql : sql = "SELECT texto as texto FROM dn_risc_frases_h WHERE frase = '" & frase & "'"
+	dim recordset : set recordset = connection.execute(sql)
+	if recordset.eof then _
+		exit function
+	findFraseHDescription = recordset("texto").value
+	recordset.close
+	set recordset = nothing
 end function
 
 function findFraseRDescription(byVal frase, connection)
@@ -158,19 +143,25 @@ function findFraseSDescription(byVal frase, connection)
 end function
 
 function findpeligroDescription(categoria, connection)
-	Dim result : result = ""
+	findpeligroDescription = ""
 	frase = replace(categoria, "-", "/")
-	Dim sql, objRst
+	Dim sql, recordset
 	sql = "SELECT texto FROM dn_risc_categorias_peligro WHERE frase = '" & categoria & "'"
-	set objRst = connection.execute(sql)
-	if (objRst.eof) then
-		findFraseHDescription = result
-		Exit function
-	end if
-	result = objRst("texto")
-
-	objRst.close()
-	set objRst=nothing
-	findpeligroDescription = result
+	set recordset = connection.execute(sql)
+	if recordset.eof then _
+		exit function
+	findpeligroDescription = recordset("texto").value
+	recordset.close()
+	set recordset=nothing
 end function
+
+'function getFieldTexto(sql, connection)
+'	getFieldTexto = ""
+'	dim recondset : set recordset = connection.execute(sql)
+'	if recordset.eof then _
+'		exit function
+'	getFieldTexto = recordset("texto").value
+'	recordset.close()
+'	set recordset = nothing
+'end function
 %>
