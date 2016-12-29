@@ -55,7 +55,7 @@ function extractFrasesH(frasesHRaw, connection)
 	extractFrasesH = Array()
 	Dim i
 	For i = 0 to UBound(frasesHRaw)
-		if frasesHRaw(i) <> "" then
+		if not isEmpty(frasesHRaw(i)) then
 			Set clasificacion = obtainClasificacion(frasesHRaw(i), connection)
 			extractFrasesH = arrayPushDictionary(extractFrasesH, clasificacion)
 		end if
