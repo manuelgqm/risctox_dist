@@ -141,10 +141,9 @@
 				<ul class="list-comma" data-bind="foreach: notas_rd1272" style="display:inline">
 					<li>
 						<div class="dropdown" data-bind="visible: description" style="display:inline">
-							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
 							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
 						</div>
-						<span  data-bind="text: key"></span>
 					</li>
 				</ul>
 			</div>
@@ -221,9 +220,8 @@
 				<b class="small">Notas: </b>
 				<ul class="list-comma" data-bind="foreach: notas_rd363" style="display:inline">
 					<li>
-						<span data-bind="text: key"></span>
 						<div class="dropdown" data-bind="visible: description" style="display:inline">
-							<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
 							<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="text: description"></span>
 						</div>
 					</li>
