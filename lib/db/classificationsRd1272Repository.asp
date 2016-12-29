@@ -53,16 +53,16 @@ end function
 
 function extractFrasesH(frasesHRaw, connection)
 	extractFrasesH = Array()
-	Dim i
+	Dim i, fraseH
 	For i = 0 to UBound(frasesHRaw)
 		if not isEmpty(frasesHRaw(i)) then
-			Set clasificacion = obtainClasificacion(frasesHRaw(i), connection)
-			extractFrasesH = arrayPushDictionary(extractFrasesH, clasificacion)
+			Set fraseH = obtainFraseH(frasesHRaw(i), connection)
+			extractFrasesH = arrayPushDictionary(extractFrasesH, fraseH)
 		end if
 	Next
 end function
 
-function obtainClasificacion(clasificacionRaw, connection)
+function obtainFraseH(clasificacionRaw, connection)
 	Dim result : Set result = Server.CreateObject("Scripting.Dictionary")
 	
 	Dim clasificacionDecomposed : clasificacionDecomposed = getClasificacionDecomposed(clasificacionRaw)
@@ -74,7 +74,7 @@ function obtainClasificacion(clasificacionRaw, connection)
 	result.add "categoriaPeligro", obtainCategoriaPeligro(categoriaPeligroDecomposed)
 	result.add "categoriaPeligroDescription", obtaincategoriaPeligroDescription(categoriaPeligroDecomposed, connection)
 
-	Set obtainClasificacion = result
+	Set obtainFraseH = result
 end function
 
 function getClasificacionDecomposed(clasificacionRaw)
