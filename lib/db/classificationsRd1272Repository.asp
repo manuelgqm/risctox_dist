@@ -1,9 +1,24 @@
 <%
 function findfrasesH(substance, connection)
-	Dim clasificacionesRaw : clasificacionesRaw = getClasificacionesRaw(substance)
-	dim clasificaciones : clasificaciones = extractClasificaciones(clasificacionesRaw, connection)
+	dim frasesH : frasesH = Array( _
+		substance.item("clasificacion_rd1272_1"), _
+		substance.item("clasificacion_rd1272_2"), _
+		substance.item("clasificacion_rd1272_3"), _
+		substance.item("clasificacion_rd1272_4"), _
+		substance.item("clasificacion_rd1272_5"), _
+		substance.item("clasificacion_rd1272_6"), _
+		substance.item("clasificacion_rd1272_7"), _
+		substance.item("clasificacion_rd1272_8"), _
+		substance.item("clasificacion_rd1272_9"), _
+		substance.item("clasificacion_rd1272_10"), _
+		substance.item("clasificacion_rd1272_11"), _
+		substance.item("clasificacion_rd1272_12"), _
+		substance.item("clasificacion_rd1272_13"), _
+		substance.item("clasificacion_rd1272_14"), _
+		substance.item("clasificacion_rd1272_15") _
+	)
 
-	findfrasesH = clasificaciones
+	findfrasesH = extractClasificaciones(frasesH, connection)
 end function
 
 function findFrasesR(frasesRSrz, connection)
@@ -35,28 +50,6 @@ function findFrasesS(byVal frasesSSrz, connection)
 		findFrasesS = arrayPushDictionary(findFrasesS, fraseS)
 	next
 end function
-
-function getClasificacionesRaw(substance)
-	Dim result : result = Array( _
-			substance.item("clasificacion_rd1272_1"), _
-			substance.item("clasificacion_rd1272_2"), _
-			substance.item("clasificacion_rd1272_3"), _
-			substance.item("clasificacion_rd1272_4"), _
-			substance.item("clasificacion_rd1272_5"), _
-			substance.item("clasificacion_rd1272_6"), _
-			substance.item("clasificacion_rd1272_7"), _
-			substance.item("clasificacion_rd1272_8"), _
-			substance.item("clasificacion_rd1272_9"), _
-			substance.item("clasificacion_rd1272_10"), _
-			substance.item("clasificacion_rd1272_11"), _
-			substance.item("clasificacion_rd1272_12"), _
-			substance.item("clasificacion_rd1272_13"), _
-			substance.item("clasificacion_rd1272_14"), _
-			substance.item("clasificacion_rd1272_15") _
-		)
-
-	getClasificacionesRaw = result
-End function
 
 function extractClasificaciones(clasificacionesRaw, connection)
 	Dim i
