@@ -2,71 +2,65 @@
 <div class="list-group">
 	<div class="list-group-item">
 		<div class="row" data-bind="if: nombre">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Nombre:</a>
 					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.nombre"></span>
 				</div>
-				Nombre:
 			</div>	
-			<div class="col-xs-8" data-bind="html: nombre"></div>
+			<div class="col-xs-9" data-bind="html: nombre"></div>
 		</div>
 		
 		<div class="row" data-bind="if: sinonimos">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sinónimos:</a>
 					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.sinonimos"></span>
 				</div>
-				Sinónimos:
 			</div>
-			<ul class="col-xs-8 small list-comma" data-bind="foreach: sinonimos">
+			<ul class="col-xs-9 small list-comma" data-bind="foreach: sinonimos">
 				<li data-bind="html: $data"></li>
 			</ul>
 		</div>
 		
 		<div class="row" data-bind="if: num_cas">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">CAS:</a>
 					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_cas"></span>
 				</div>
-				CAS:
 			</div>
-			<div class="col-xs-8" data-bind="text: num_cas"></div>
+			<div class="col-xs-9" data-bind="text: num_cas"></div>
 		</div>
 		
 		<div class="row" data-bind="if: hasEinecs">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">EINECS:</a>
 					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_ce_einecs"></span>
 				</div>
-				EINECS:
 			</div>
-			<div class="col-xs-8" data-bind="text: num_ce_einecs"></div>
+			<div class="col-xs-9" data-bind="text: num_ce_einecs"></div>
 		</div>
 		
 		<div class="row" data-bind="if: hasElincs">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ELINCS:</a>
 					<span class="dropdown-menu dropdown-content" data-bind="text: descriptions.num_ce_einecs"></span>
 				</div>
-				ELINCS:
 			</div>
-			<div class="col-xs-8" data-bind="text: num_ce_elincs"></div>
+			<div class="col-xs-9" data-bind="text: num_ce_elincs"></div>
 		</div>
 		
 		<div class="row" data-bind="if: num_rd">
-			<div class="col-xs-4 text-muted">
+			<div class="col-xs-3">
 				<div class="dropdown" style="display:inline">
-					<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+					<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Nº índice:</a>
 					<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.num_rd"></span>
 				</div>
-				Nº índice:
 			</div>
-			<div class="col-xs-8" data-bind="text: num_rd"></div>
+			<div class="col-xs-9" data-bind="text: num_rd"></div>
 		</div>
 	</div>
 	
@@ -74,10 +68,9 @@
 	<div class="list-group-item">
 		<div class="text-muted list-group-item-heading">
 			<div class="dropdown" style="display:inline">
-				<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+				<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Lista negra ISTAS:</a>
 				<span class="dropdown-menu dropdown-content dropdown-menu-large" data-bind="text: descriptions.listaNegra"></span>
 			</div>
-			Lista negra ISTAS:
 		</div>
 		<ul class="list-comma" data-bind="foreach: listaNegraClassifications">
 			<li data-bind="text: $data"></li>
@@ -244,30 +237,27 @@
 	</div>
 	<div class="list-group">
 		<div class="list-group-item">
-			<table class="table small">
+			<table class="table">
 				<div class="list-group-item-heading">Ambientales</div>
 				<thead>
 					<tr>
 						<th data-bind="visible: hasVlaEstado">
 							<div class="dropdown" style="display:inline">
-								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Estado</a>
 								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEstado"></span>
 							</div>
-							Estado
 						</th>
 						<th data-bind="visible: hasVlaEd">
 							<div class="dropdown" style="display:inline">
-								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">VLA-ED</a>
 								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEd"></span>
 							</div>
-							VLA-ED
 						</th>
 						<th data-bind="visible: hasVlaEc">
 							<div class="dropdown" style="display:inline">
-								<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+								<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">VLA-EC</a>
 								<span class="dropdown-menu dropdown-menu-large dropdown-content" data-bind="text: descriptions.vlaEc"></span>
 							</div>
-							VLA-EC
 						</th>
 						<th data-bind="visible: hasVlaNotas">Notas</th>
 					</tr>
@@ -295,11 +285,10 @@
 						<td data-bind="visible: $parent.hasVlaNotas">
 							<ul class="list-comma" data-bind="foreach: notas">
 								<li>
-									<div class="dropdown" style="display:inline" data-bind="if: description">
-										<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+									<div class="dropdown" style="display:inline">
+										<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
 										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
 									</div>
-									<span data-bind="text: key"></span>
 								</li>
 							</ul> 
 						</td>
@@ -314,7 +303,7 @@
 				</a> -->
 				Biológicos
 			</div>
-			<table class="table small">
+			<table class="table">
 				<thead>
 					<tr>
 						<th data-bind="visible: hasVlbIb">Indicador</th>
@@ -336,10 +325,9 @@
 							<ul class="list-comma" data-bind="foreach: notas">
 								<li>
 									<div class="dropdown" style="display:inline" data-bind="if: description">
-										<span class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+										<a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" data-bind="text: key"></a>
 										<span class="dropdown-menu dropdown-content dropdown-menu-right" data-bind="html: description"></span>
 									</div>
-									<span data-bind="text: key"></span>
 								</li>
 							</ul> 
 						</td>
