@@ -6,15 +6,15 @@ function findClasificacionesRd1272(substance, connection)
 	findClasificacionesRd1272 = clasificaciones
 end function
 
-function findClasificacionesRd363(frasesRSrz, connection)
-	findClasificacionesRd363 = Array()
+function findFrasesR(frasesRSrz, connection)
+	findFrasesR = Array()
 	dim frasesR : frasesR = split(frasesRSrz, ", ")
 	dim i, fraseR
 	for i = 0 to Ubound(frasesR)
 		set fraseR = Server.CreateObject("Scripting.Dictionary")
 		fraseR.add "name", frasesR(i)
 		fraseR.add "description", findFraseRDescription(frasesR(i), connection)
-		findClasificacionesRd363 = arrayPushDictionary(findClasificacionesRd363, fraseR)
+		findFrasesR = arrayPushDictionary(findFrasesR, fraseR)
 	next
 end function
 

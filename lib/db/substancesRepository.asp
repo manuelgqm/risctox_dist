@@ -364,16 +364,16 @@ function extractSubstanceLevelOneFields(substanceId, substanceDic, connection)
 	set substanceGroupsRecordset = nothing
 	substance.Add "aplicaciones", findSubstanceApplications(substanceId, connection)
 	substance.Add "featuredLists", obtainFeaturedLists(substanceId, connection)
-	substance.Add "frasesR", joinFrases("R", substanceDic)
+	substance.Add "frasesRSrz", joinFrases("R", substanceDic)
 	substance.Add _
 		"listaNegraClassifications" _
 		, getListaNegraClassifications( _
-			substance("featuredLists"), substance("frasesR"), substanceDic("mpmb") _
+			substance("featuredLists"), substance("frasesRSrz"), substanceDic("mpmb") _
 		)
 	substance.add "explosiva", isSubstanceExplosive(substanceDic("clasificacion_rd1272_1"))
 	substance.add "pictogramasRd363", findPictograms(substanceDic("simbolos"), connection)
-	substance.add "clasificacionesRd363", findClasificacionesRd363(substance("frasesR"), connection)
-	substance.add "frasesRDanesa", findClasificacionesRd363( _
+	substance.add "frasesR", findFrasesR(substance("frasesRSrz"), connection)
+	substance.add "frasesRDanesa", findFrasesR( _
 		joinFrasesRDanesa( _
 			substanceDic("frases_r_danesa") _
 		)_
