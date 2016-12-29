@@ -13,7 +13,7 @@ define(
 				).length != 0;
 			};
 			this.isTpb = ko.computed( () =>	inLists(['tpb'], featuredLists) );
-			this.isToxicaAgua = ko.computed( () => inLists(['directiva_aguas', 'alemana'], featuredLists) );
+			this.isToxicaAgua = ko.computed( () => inLists(['directiva_aguas', 'alemana', 'sustancias_prioritarias'], featuredLists) );
 			this.isDirectivaAguas = ko.computed( () => inLists(['directiva_aguas'], featuredLists) );
 			this.isPrioritaria = ko.computed( () => inLists(['sustancias_prioritarias'], featuredLists) );
 			this.isMedioAmbienteAlemania = ko.computed( () => inLists(['alemana'], featuredLists) );

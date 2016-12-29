@@ -1,4 +1,5 @@
-<div data-bind="if: isTpb" class="panel panel-default">
+<!-- ko if: isTpb-->
+<div class="panel panel-default">
     <div class="panel-heading panel-title">Tóxica, Persistente y Bioacumulativa</div>
     <div class="panel-body">
         <div class="row" data-bind="if: enlace_tpb">
@@ -17,7 +18,10 @@
         </div>
     </div>
 </div>
-<div data-bind="if: isToxicaAgua" class="panel panel-default">
+<!-- /ko -->
+
+<!-- ko if: isToxicaAgua -->
+<div class="panel panel-default">
     <div class="panel-heading panel-title">Tóxica para el agua</div>
     <div class="list-group">
         <!--ko if: isDirectivaAguas -->
@@ -40,7 +44,10 @@
         <!--/ko -->
     </div>
 </div>
-<div data-bind="if: isContaminanteAire" class="panel panel-default">
+<!-- /ko -->
+
+<!-- ko if: isContaminanteAire -->
+<div class="panel panel-default">
     <div class="panel-heading panel-title">Contaminante del aire</div>
     <div class="list-group">
         <!--ko if: isCalidadAire -->
@@ -63,3 +70,4 @@
         <!--/ko -->
     </div>
 </div>
+<!-- /ko -->
