@@ -79,7 +79,7 @@ function search()
 	dim code : code = obtainSanitizedQueryParameter("code")
 	dim searchType : searchType = getSearchType(name)
 	name = replace(name, "*", "")
-	dim searchQuery : searchQuery = obtainSearchQuery(name, code, searchType)
+	dim searchQuery : searchQuery = obtainSearchQuery(name, code, searchType, "")
 	dim substancesRecordset : Set substancesRecordset = Server.CreateObject("ADODB.Recordset")
 	const adOpenStatic = 3
 	const adCmdText = 1

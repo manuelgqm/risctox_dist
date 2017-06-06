@@ -1,12 +1,12 @@
 <!--#include file="../listas.asp"-->
 <%
-function doSearch(displayMode)
+function doSearch(displayMode, listName)
 	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	Dim nombre, numero, tipobus
 	nombre = lcase(EliminaInyeccionSQL(request.form("nombre")))
 	numero = EliminaInyeccionSQL(request.form("numero"))
 	tipobus = EliminaInyeccionSQL(request.form("tipobus"))
-	if nombre = "" and numero = "" then
+	if nombre = "" and numero = "" and listName = "" then
 		set doSearch = result
 		exit function
 	end if
@@ -19,11 +19,10 @@ function doSearch(displayMode)
 		numRecordsByPage=50
 	end if
 
-
 	select case displayMode
 
 		case "search":
-			dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus)
+			dim searchQuery : searchQuery = obtainSearchQuery(nombre, numero, tipobus, listName)
 
 			Set objRst = Server.CreateObject("ADODB.Recordset")
 			objRst.Open searchQuery, objConnection2, adOpenStatic, adCmdText
@@ -47,16 +46,14 @@ function doSearch(displayMode)
 
 	end select 'cual busc
 
-	'RESULTADOS DE BUSQUEDA (para busc 1 y busc 2)
-	'seleccionamos datos a mostrar de los x registros que toquen
+	'RESULTADOS DE BUSQUEDA
 	if numRecordsFound>0 then
 
-		'vemos que registros hay que mostrar
-		currentPageInitialRecordNumber=(currentPageNumber*numRecordsByPage)-numRecordsByPage
-		currentPageFinalRecordNumber=currentPageInitialRecordNumber+numRecordsByPage
+		currentPageInitialRecordNumber = (currentPageNumber * numRecordsByPage) - numRecordsByPage
+		currentPageFinalRecordNumber = currentPageInitialRecordNumber + numRecordsByPage
 
-		if currentPageFinalRecordNumber>=numRecordsFound-1 then
-			currentPageFinalRecordNumber=numRecordsFound
+		if currentPageFinalRecordNumber >= numRecordsFound - 1 then
+			currentPageFinalRecordNumber = numRecordsFound
 		end if
 
 		currentPageFinalRecordNumber=currentPageFinalRecordNumber-1
@@ -121,7 +118,7 @@ function formatHtmlTable(arrayDatos _
 	formatHtmlTable = "<table class='tabla3' width='90%' align='center' border='0' cellpadding='4' cellspacing='0'>" & tableContent & "</table>"
 end function
 
-function obtainSearchQuery(byVal nombre, byVal numero, tipobus)
+function obtainSearchQuery(byVal nombre, byVal numero, tipobus, listName)
 	dim condicion : condicion = ""
 
 	if nombre <> "" or numero <> "" then
@@ -161,9 +158,21 @@ function obtainSearchQuery(byVal nombre, byVal numero, tipobus)
 	sqls = sqls & " from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
 	sqls = sqls & " FULL OUTER JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
 
-	sqls = sqls & get_string_tablas(0) 'magic number 0 means basic type of buscador'
+	sqls = sqls & get_string_tablas(listName) 'magic number 0 means basic type of buscador'
 
 	if condicion <> "" then sqls = sqls & " WHERE (" & condicion & ")"
+
+	if listName<>"" then
+
+		if condicion="" then
+			sqls = sqls & " WHERE ("
+		else
+			sqls = sqls & " AND ("
+		end if
+
+		sqls = sqls & get_string_codicion( listName ) & ")"
+
+	end if
 	
 	sqls = sqls & " ORDER BY sus.nombre"
 
@@ -177,5 +186,15 @@ function serializeIds(list)
 	next
 
 	serializeIds = result
+end function
+
+function obtainListTitle(listName)
+	dim result : result = ""
+	select case listName:
+		case "candidatas_reach": result = "Sustancias candidatas REACH"
+		case "pesticidas_autorizadas": result = "Sustancias pesticidas autorizadas"
+	end select
+
+	obtainListTitle = result
 end function
 %>

@@ -9,7 +9,8 @@ dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
 if displayMode = "1" or displayMode = "" then
 	displayMode = "search"
 end if
-dim search : set search = doSearch(displayMode)
+dim listName : listName = request("listName")
+dim search : set search = doSearch(displayMode, listName)
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -69,6 +70,7 @@ dim search : set search = doSearch(displayMode)
 
 					<form action="dn_risctox_buscador2.asp" method="post" name="myform" onSubmit="primerapag();">
 						<input type="hidden" name='displayMode' value='<%=displayMode%>' />	
+						<input type="hidden" name='listName' value='<%=listName%>' />	
 						<input type="hidden" name='currentPageNumber' value='<%=search.item("currentPageNumber")%>' />	
 						<input type="hidden" name='numRecordsFound' value='<%=search.item("numRecordsFound")%>' />		
 						<input type="hidden" name='substancesFoundedIdsSrz' value='<%=search.item("substancesFoundedIdsSrz")%>' />
@@ -94,6 +96,9 @@ dim search : set search = doSearch(displayMode)
 								<td colspan="2" align="center"><input type="submit" value="Buscar" /> <input type="reset" value="Borrar" /></td>
 							</tr>
 						</table>
+
+						<p class=titulo3><%=obtainListTitle(listName)%></p>
+
 						<%
 						if displayMode<>"" then
 							if search.item("numRecordsFound") = 0  then
