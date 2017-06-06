@@ -155,8 +155,8 @@ function obtainSearchQuery(byVal nombre, byVal numero, tipobus, listName)
 	end if
 
 	sqls = "select distinct sus.id, sus.nombre "
-	sqls = sqls & " from dn_risc_sustancias as sus FULL OUTER JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
-	sqls = sqls & " FULL OUTER JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
+	sqls = sqls & " from dn_risc_sustancias as sus LEFT JOIN dn_risc_sinonimos as sin ON (sus.id=sin.id_sustancia) "
+	sqls = sqls & " LEFT JOIN dn_risc_nombres_comerciales as com ON (sus.id=com.id_sustancia) "
 
 	sqls = sqls & get_string_tablas(listName) 'magic number 0 means basic type of buscador'
 
