@@ -1,11 +1,9 @@
 <%
-dim URL, baseURL
-url = request.ServerVariables("url")
+dim url, baseURL
 baseURL = "risctox.istas.net"
 http_host = request.ServerVariables("http_host")
-if inStr(http_host & url, baseURL) = 0 then 
-		if inStr(http_host, "istas.net") = 0 then baseURL = http_host & "/" & baseURL
-		response.redirect "http://" & baseURL
+if inStr(http_host, baseURL) = 0 and inStr(http_host, "localhost") = 0 and inStr(http_host, "vtest") = 0 then 
+	response.redirect "http://" & baseURL
 end if
 %>
 <!--#include file="EliminaInyeccionSQL.asp"-->
