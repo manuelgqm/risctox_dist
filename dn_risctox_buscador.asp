@@ -7,10 +7,15 @@
 
 <!--#include file="lib/visitsRecorder.asp"-->
 <%
+Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"
+
 '+++++++ XIP +++++
 	id_ecogente = session("id_ecogente")
 
-	idpagina = 626	'--- página buscador, sólo para registrar estadísticas
+	idpagina = 626	'--- pÃ¡gina buscador, sÃ³lo para registrar estadÃ­sticas
 
 FUNCTION vistaprevia(texto)
 		texto = replace(texto,chr(13),"<br>")
@@ -44,7 +49,7 @@ FUNCTION vistaprevia(texto)
 %>
 
 <%
-'si busc está vacio, mostramos formulario; si es 1, han dado a "buscar"; si es dos, han dado a paginación
+'si busc estÃ¡ vacio, mostramos formulario; si es 1, han dado a "buscar"; si es dos, han dado a paginaciÃ³n
 busc = request.form("busc")
 busc = EliminaInyeccionSQL(busc)
 
@@ -68,10 +73,10 @@ busc = EliminaInyeccionSQL(busc)
 <title>ISTAS: risctox</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="Title" content="ECOinformas" />
-<meta name="Author" content="XiP multimèdia" />
-<meta name="description" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Subject" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Keywords" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Author" content="XiP multimÃ¨dia" />
+<meta name="description" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Subject" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Keywords" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
 <meta name="Language" content="Spanish" />
 <meta name="Revisit" content="15 days" />
 <meta name="Distribution" content="Global" />
@@ -97,7 +102,7 @@ function primerapag()
 
 	{
 
-		alert("Por favor, introduzca sus criterios de búsqueda");
+		alert("Por favor, introduzca sus criterios de bÃºsqueda");
 
 	}
 
@@ -124,7 +129,7 @@ function primerapag()
 <div class="texto">
 <!-- ################ CONTENIDO ###################### -->
 
-<% if 1=0 then %><p class=campo>Est&aacute;s en: <a href=index.asp?idpagina=550>prevención riesgo químico</a> &gt; bbdd risctox</p><% end if %>
+<% if 1=0 then %><p class=campo>Est&aacute;s en: <a href=index.asp?idpagina=550>prevenciÃ³n riesgo quÃ­mico</a> &gt; bbdd risctox</p><% end if %>
 <table width="100%" border="0">
                 <tr>
                 <td></td>
@@ -157,7 +162,7 @@ function primerapag()
 		</select></td>
 	</tr>
 	<tr>
-		<td align="right"><strong>Número CAS/CE/RD</strong></td>
+		<td align="right"><strong>NÃºmero CAS/CE/RD</strong></td>
 		<td><input type="text" name="numero" value="<%=numero%>" /></td>
 	</tr>
 	<tr>
@@ -172,7 +177,7 @@ function primerapag()
         <tr>
           <td colspan="2" align="center">
           <%
-            ' Para centrar la lista negra dependerá del navegador
+            ' Para centrar la lista negra dependerÃ¡ del navegador
             if (navegador() = "FF") then
               w="45%"
             else
@@ -183,7 +188,7 @@ function primerapag()
             <table border="0" width="<%=w%>">
               <tr>
                 <td class="subtitulo3" align="left">
-                  <img src="imagenes/ico_lista_negra.gif" alt="Lista negra de ISTAS" align="absmiddle">&nbsp;<a onclick=window.open('ver_definicion.asp?id=195','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:hand'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> <a href="dn_risctox_negra.asp" class="subtitulo3" onClick="alert('La lista negra de ISTAS puede tardar unos segundos en generarse debido a su gran tamaño.\n\nPor favor, espere.');">Lista negra de ISTAS</a>
+                  <img src="imagenes/ico_lista_negra.gif" alt="Lista negra de ISTAS" align="absmiddle">&nbsp;<a onclick=window.open('ver_definicion.asp?id=195','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:hand'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> <a href="dn_risctox_negra.asp" class="subtitulo3" onClick="alert('La lista negra de ISTAS puede tardar unos segundos en generarse debido a su gran tamaÃ±o.\n\nPor favor, espere.');">Lista negra de ISTAS</a>
                 </td>
               <!--
               <tr>
@@ -198,50 +203,50 @@ function primerapag()
 
 				<tr><td valign="top" width="45%">
 					<table width="100%" align="center" border="0">
-					<tr><td class="subtitulo3"><img src="imagenes/ico_danos_sl.gif" alt="Riesgos específicos para la salud" align="absmiddle">&nbsp;Riesgos específicos para la salud</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(607)%>Cancerígenos y mutágenos:</li><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_cym.asp" onClick="alert('Esta lista puede tardar unos segundos en generarse debido a su complejidad.\n\nPor favor, espere.');">Según R. 1272/2008</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_cym2.asp">Según IARC</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_cym3.asp">Según otras fuentes</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_mama.asp">Según SSI (cáncer de mama)</a><br><br>
+					<tr><td class="subtitulo3"><img src="imagenes/ico_danos_sl.gif" alt="Riesgos especÃ­ficos para la salud" align="absmiddle">&nbsp;Riesgos especÃ­ficos para la salud</td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(607)%>CancerÃ­genos y mutÃ¡genos:</li><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=cym" onClick="alert('Esta lista puede tardar unos segundos en generarse debido a su complejidad.\n\nPor favor, espere.');">SegÃºn R. 1272/2008</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=cym2">SegÃºn IARC</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=cym3">SegÃºn otras fuentes</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=mama">SegÃºn SSI (cÃ¡ncer de mama)</a><br><br>
 					</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(609)%><a href="dn_risctox_tpr.asp">Tóxicos para la reproducción</a></li>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(609)%><a href="dn_risctox_buscador2.asp?listName=tpr">TÃ³xicos para la reproducciÃ³n</a></li>
 
 					</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(610)%><a href="dn_risctox_dis.asp">Disruptores endocrinos</a></li></td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(611)%><a href="dn_risctox_neu.asp">Neurotóxicos</a><br>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(610)%><a href="dn_risctox_buscador2.asp?listName=dis">Disruptores endocrinos</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(611)%><a href="dn_risctox_buscador2.asp?listName=neu">NeurotÃ³xicos</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;&nbsp;<% call lista(1190)%><a href="dn_risctox_oto.asp">Ototóxicos</a></li><br>
+					&nbsp;&nbsp;&nbsp;<% call lista(1190)%><a href="dn_risctox_buscador2.asp?listName=oto">OtotÃ³xicos</a></li><br>
 
 
 					</td></tr>
 
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(612)%><a href="dn_risctox_sen.asp">Sensibilizantes</a><br>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(612)%><a href="dn_risctox_buscador2.asp?listName=sen">Sensibilizantes</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;&nbsp;<a href="dn_risctox_sen_reach.asp">Alérgenos REACH</a></li><br></td></tr>
+					&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=sen_reach">AlÃ©rgenos REACH</a></li><br></td></tr>
 					<tr><td class="texto">&nbsp;</td></tr>
 					</table>
 				</td><td valign="top" width="45%">
 					<table width="100%" align="center">
 
-					<tr><td class="subtitulo3"><img src="imagenes/ico_danos_ma.gif" alt="Riesgos específicos medioambiente" align="absmiddle">&nbsp;Riesgos específicos medioambiente</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(613)%><a href="dn_risctox_pyb.asp">Tóxicas, persistentes y bioacumulativas</a></li></td></tr>
-                    <tr><td class="texto"><li class=vineta_risctox><% call lista(613)%><a href="dn_risctox_mpmb.asp">mPmB</a></li></td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(614)%>Toxicidad acuática:</li><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_tac.asp">Directiva de aguas</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_tac2.asp">Peligrosas agua Alemania</a><br>
+					<tr><td class="subtitulo3"><img src="imagenes/ico_danos_ma.gif" alt="Riesgos especÃ­ficos medioambiente" align="absmiddle">&nbsp;Riesgos especÃ­ficos medioambiente</td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(613)%><a href="dn_risctox_buscador2.asp?listName=pyb">TÃ³xicas, persistentes y bioacumulativas</a></li></td></tr>
+                    <tr><td class="texto"><li class=vineta_risctox><% call lista(613)%><a href="dn_risctox_buscador2.asp?listName=mpmb">mPmB</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(614)%>Toxicidad acuÃ¡tica:</li><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=tac">Directiva de aguas</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=tac2">Peligrosas agua Alemania</a><br>
 					</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(615)%>Daño a la atmósfera:</li><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_dat.asp">Capa de Ozono</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_dat2.asp">Cambio climático</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_dat3.asp">Calidad del aire</a>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(615)%>DaÃ±o a la atmÃ³sfera:</li><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=dat">Capa de Ozono</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=dat2">Cambio climÃ¡tico</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=dat3">Calidad del aire</a>
 					</td></tr>
 					<tr><td class="texto"><li class=vineta_risctox>Contaminantes de suelos:</li><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<% call lista(1195)%><a href='dn_risctox_co_suelos.asp'>Según RD 9/2005</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<% call lista(1195)%><a href='dn_risctox_buscador2.asp?listName=cos'>SegÃºn RD 9/2005</a><br>
 					</td>
 					</tr>
 
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(1185)%><a href="dn_risctox_cop.asp">Contaminantes&nbsp;Orgánicos&nbsp;Persistentes&nbsp;(COP's)</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(1185)%><a href="dn_risctox_buscador2.asp?listName=cop">Contaminantes&nbsp;OrgÃ¡nicos&nbsp;Persistentes&nbsp;(COP's)</a></li></td></tr>
 
 					<tr><td class="texto">&nbsp;</td></tr>
 					</table>
@@ -253,29 +258,29 @@ function primerapag()
 				<td valign="top" width="45%">
 					<table width="100%" align="center">
 					<tr><td class="subtitulo3"><img src="imagenes/ico_normativa.gif" alt="Normativa sobre salud laboral" align="absmiddle">&nbsp;Normativa sobre salud laboral</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(616)%>Límites de exposición profesional:</li>
-					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_vl1.asp">Valores Límite Ambientales</a></td></tr></table>
-					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_vl2.asp">Valores Límite Ambientales Cancerígenos</a></td></tr></table>
-					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_vl3.asp">Valores Límite Biológicos</a></td></tr></table>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(616)%>LÃ­mites de exposiciÃ³n profesional:</li>
+					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=vl1">Valores LÃ­mite Ambientales</a></td></tr></table>
+					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=vl2">Valores LÃ­mite Ambientales CancerÃ­genos</a></td></tr></table>
+					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=vl3">Valores LÃ­mite BiolÃ³gicos</a></td></tr></table>
 					</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(617)%><a href="dn_risctox_enf.asp">Enfermedades profesionales</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(617)%><a href="dn_risctox_buscador2.asp?listName=enf">Enfermedades profesionales</a></li></td></tr>
 					<tr><td class="texto">&nbsp;</td></tr>
 					</table>
 				</td>
 				<td valign="top" width="45%">
 					<table width="100%" align="center">
 					<tr><td class="subtitulo3"><img src="imagenes/ico_normativa.gif" alt="Normativa ambiental" align="absmiddle">&nbsp;Normativa ambiental</td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(618)%><a href="dn_risctox_res.asp">Residuos peligrosos</a></li></td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(619)%><a href="dn_risctox_ver.asp">Vertidos</a></li></td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(620)%><a href="dn_risctox_emi.asp">Emisiones</a></li></td></tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(621)%><a href="dn_risctox_cov.asp">COV</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(618)%><a href="dn_risctox_buscador2.asp?listName=res">Residuos peligrosos</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(619)%><a href="dn_risctox_buscador2.asp?listName=ver">Vertidos</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(620)%><a href="dn_risctox_buscador2.asp?listName=emi">Emisiones</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(621)%><a href="dn_risctox_buscador2.asp?listName=cov">COV</a></li></td></tr>
 					<tr><td class="texto"><li class=vineta_risctox><% call lista(622)%>IPPC:</a></li>
-                    <table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_lpc.asp?filtro=ep1">PRTR (Agua)</a></td></tr></table>
-					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_lpc.asp?filtro=ep2">PRTR (Aire)</a></td></tr></table>
-					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_lpc.asp?filtro=ep3">PRTR (Suelo)</a></td></tr></table>
+                    <table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=ep1">PRTR (Agua)</a></td></tr></table>
+					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=ep2">PRTR (Aire)</a></td></tr></table>
+					<table cellpadding=0 cellspacing=0 border=0><tr><td class="campo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="campo"><a href="dn_risctox_buscador2.asp?listName=ep3">PRTR (Suelo)</a></td></tr></table>
                     </td>
                     </tr>
-					<tr><td class="texto"><li class=vineta_risctox><% call lista(623)%><a href="dn_risctox_acm.asp">Accidentes graves</a></li></td></tr>
+					<tr><td class="texto"><li class=vineta_risctox><% call lista(623)%><a href="dn_risctox_buscador2.asp?listName=acm">Accidentes graves</a></li></td></tr>
 					<tr><td class="texto">&nbsp;</td></tr>
 					</table>
 				</td></tr>
@@ -286,21 +291,21 @@ function primerapag()
 				<tr>
 					<td valign="top" width="90%" colspan="2">
 						<table width="100%" align="center">
-						<tr><td class="subtitulo3"><img src="imagenes/ico_normativa.gif" alt="Normativa sobre restricción/prohibición de sustancias" align="absmiddle">&nbsp;Normativa sobre restricci&oacute;n / prohibici&oacute;n de sustancias</td></tr>
+						<tr><td class="subtitulo3"><img src="imagenes/ico_normativa.gif" alt="Normativa sobre restricciÃ³n/prohibiciÃ³n de sustancias" align="absmiddle">&nbsp;Normativa sobre restricci&oacute;n / prohibici&oacute;n de sustancias</td></tr>
 <%
-'<!-- Tras conversación mantenida con Tatiana el 30/11/2010, se elimina esta lista ya que todas las sustancias están en restringidas -->
+'<!-- Tras conversaciÃ³n mantenida con Tatiana el 30/11/2010, se elimina esta lista ya que todas las sustancias estÃ¡n en restringidas -->
 '<!--						<tr><td class="texto"><li class=vineta_risctox><a href="./dn_risctox_prohibidas.asp">Sustancias prohibidas</a></li></td></tr>-->
 %>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1193)%><a href="./dn_risctox_restringidas.asp">Sustancias restringidas REACH</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="./spl_risctox_candidatas_reach.asp">Sustancias candidatas REACH</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="./spl_risctox_autorizacion_reach.asp">Sustancias sujetas a autorización de REACH</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1188)%><a href="spl_risctox_prohibidas_embarazadas.asp">Prohibidas para trabajadoras embarazadas</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1188)%><a href="spl_risctox_prohibidas_lactantes.asp">Prohibidas para trabajadoras lactantes</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1192)%><a href="./spl_risctox_biocidas_prohibidas.asp">Sustancias Biocidas prohibidas</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1192)%><a href="./spl_risctox_biocidas_autorizadas.asp">Sustancias Biocidas autorizadas</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1191)%><a href="./spl_risctox_pesticidas_autorizadas.asp">Sustancias Pesticidas autorizadas</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1191)%><a href="./spl_risctox_pesticidas_prohibidas.asp">Sustancias Pesticidas prohibidas</a></li></td></tr>
-						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="ist_risctox_corap.asp?f=corap">Sustancias bajo evaluación. CoRAP</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1193)%><a href="./dn_risctox_buscador2.asp?listName=rest">Sustancias restringidas REACH</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="./dn_risctox_buscador2.asp?listName=candidatas_reach">Sustancias candidatas REACH</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="./dn_risctox_buscador2.asp?listName=autorizacion_reach">Sustancias sujetas a autorizaciÃ³n de REACH</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1188)%><a href="dn_risctox_buscador2.asp?listName=pro_emb">Prohibidas para trabajadoras embarazadas</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1188)%><a href="dn_risctox_buscador2.asp?listName=pro_lac">Prohibidas para trabajadoras lactantes</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1192)%><a href="./dn_risctox_buscador2.asp?listName=biocidas_prohibidas">Sustancias Biocidas prohibidas</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1192)%><a href="./dn_risctox_buscador2.asp?listName=biocidas_autorizadas">Sustancias Biocidas autorizadas</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1191)%><a href="./dn_risctox_buscador2.asp?listName=pesticidas_autorizadas">Sustancias Pesticidas autorizadas</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1191)%><a href="./dn_risctox_buscador2.asp?listName=pesticidas_prohibidas">Sustancias Pesticidas prohibidas</a></li></td></tr>
+						<tr><td class="texto"><li class=vineta_risctox><% call lista(1194)%><a href="dn_risctox_buscador2.asp?listName=corap">Sustancias bajo evaluaciÃ³n. CoRAP</a></li></td></tr>
 						<tr><td class="texto">&nbsp;</td></tr>
 						</table>
 					</td>
@@ -312,7 +317,7 @@ function primerapag()
 
 <br>
 <br>
-Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una Fundación de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
+Esta pÃ¡gina ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una FundaciÃ³n de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
 
 
 		  </div>

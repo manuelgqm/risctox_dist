@@ -1,10 +1,16 @@
+<%@ LANGUAGE="VBSCRIPT" LCID="1034" CODEPAGE="65001"%>	
 <!--#include file="adovbs.inc"-->
 <!--#include file="config/dbConnection.asp"-->
-<!--#include file="dn_funciones_comunes.asp"-->
-<!--#include file="dn_funciones_texto.asp"-->
+<!--#include file="lib/dn_funciones_comunes_utf-8.asp"-->
+<!--#include file="lib/dn_funciones_texto_utf-8.asp"-->
 <!--#include file="dn_restringida.asp"-->
 <!--#include file="lib/db/substancesSearch.asp"-->
 <%
+Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"
+
 dim displayMode : displayMode = EliminaInyeccionSQL(request.form("displayMode"))
 if displayMode = "1" or displayMode = "" then
 	displayMode = "search"
@@ -17,12 +23,12 @@ dim search : set search = doSearch(displayMode, listName)
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>ISTAS: risctox</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="Title" content="ECOinformas" />
-<meta name="Author" content="XiP multimèdia" />
-<meta name="description" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Subject" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Keywords" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Author" content="XiP multimÃ¨dia" />
+<meta name="description" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Subject" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
+<meta name="Keywords" content="InformaciÃ³n, formaciÃ³n y asesoramiento sobre medio ambiente para trabajadores de PYME" />
 <meta name="Language" content="Spanish" />
 <meta name="Revisit" content="15 days" />
 <meta name="Distribution" content="Global" />
@@ -89,7 +95,7 @@ dim search : set search = doSearch(displayMode, listName)
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right"><strong>Número CAS/CE/RD</strong></td>
+								<td align="right"><strong>NÃºmero CAS/CE/RD</strong></td>
 								<td><input type="text" name="numero" value="<%=search.item("numero")%>" /></td>
 							</tr>	
 							<tr>
@@ -123,7 +129,7 @@ dim search : set search = doSearch(displayMode, listName)
 					<!-- ############ FIN DE CONTENIDO ################## -->
 					<br>
 					<br>
-					Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una Fundación de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
+					Esta pÃ¡gina ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una FundaciÃ³n de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
 				</div>
 				<p>&nbsp;</p>
 			</div>
@@ -139,7 +145,7 @@ dim search : set search = doSearch(displayMode, listName)
 
 <%
 function obtainPagerHtml(numRecordsFound, numRecordsByPage, currentPageNumber)
-	dim html : html = "<strong>Páginas: </strong><br />"
+	dim html : html = "<strong>PÃ¡ginas: </strong><br />"
 	dim pagesCount : pagesCount = roundsup(numRecordsFound/numRecordsByPage)
 	if currentPageNumber>1 then
 		html = html & "<a href=""#"" onclick=""cambiapag(" & currentPageNumber-1 & ")"">&lt; Anterior</a>"
