@@ -223,7 +223,7 @@ function primerapag()
 
 					<tr><td class="texto"><li class=vineta_risctox><% call lista(612)%><a href="dn_risctox_buscador2.asp?listName=sen">Sensibilizantes</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=sen_reach">Alérgenos REACH</a></li><br></td></tr>
+					&nbsp;&nbsp;&nbsp;<a href="dn_risctox_buscador2.asp?listName=sen">Alérgenos REACH</a></li><br></td></tr>
 					<tr><td class="texto">&nbsp;</td></tr>
 					</table>
 				</td><td valign="top" width="45%">
