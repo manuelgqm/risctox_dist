@@ -411,7 +411,10 @@ end function
 ' ###################################################
 
 function espaciar (byval cadena)
-	' Mete espacios en nombres para que se puedan partir sin necesidad de br
+	if isNull(cadena) then 
+		espaciar = ""
+		exit function
+	end if
 	cadena = replace (cadena, "-", " - ")
 	cadena = replace (cadena, "(", " (")
 	cadena = replace (cadena, ")", ") ")
@@ -423,7 +426,7 @@ function espaciar (byval cadena)
 	cadena = replace (cadena, "  ", " ")
 	cadena = replace (cadena, "  ", " ")
 	cadena = replace (cadena, "  ", " ")
-  cadena = replace (cadena, "@", "@ ")
+  	cadena = replace (cadena, "@", "@ ")
 
 	espaciar = cadena
 end function
