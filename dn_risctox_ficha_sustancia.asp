@@ -2336,7 +2336,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	Fuente: <a href="http://echa.europa.eu/chem_data/authorisation_process/candidate_list_table_en.asp" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
+                    	Fuente: <a href="https://echa.europa.eu/es/candidate-list-table" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
                     </td>
 				</tr>
 			</table>
@@ -2350,7 +2350,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
             			<table>
 				<tr>
                 	<td class="subtitulo3">
-                    	Fuente: <a href="http://echa.europa.eu/reach/authorisation_under_reach/authorisation_list_en.asp" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
+                    	Fuente: <a href="https://echa.europa.eu/es/addressing-chemicals-of-concern/authorisation/recommendation-for-inclusion-in-the-authorisation-list/authorisation-list" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
                     </td>
 				</tr>
 			</table>
