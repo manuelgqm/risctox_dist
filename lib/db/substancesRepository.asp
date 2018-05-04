@@ -11,8 +11,8 @@
 <!--#include file="valoresLimiteBiologicoRepository.asp"-->
 <!--#include file="definitionsRepository.asp"-->
 <%
-function findSubstance(id_sustancia, connection)
-	sql = composeSubstanceQuery( id_sustancia )
+function findSubstance(id_sustancia, lang, connection)
+	sql = composeSubstanceQuery(id_sustancia, lang)
 	set substanceRecordset = connection.execute(sql)
 	set substance = extractSubstance(id_sustancia, substanceRecordset, connection)
 	substanceRecordset.close()
@@ -70,7 +70,7 @@ function findEnfermedadesFields(id_sustancia, connection)
 	substanceRecordset.close()
 	set substanceRecordset = nothing
 	dim substance : set substance = extractEnfermedadesFields(substanceDics)
-	
+
 	set findEnfermedadesFields = substance
 end function
 
@@ -234,7 +234,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 	substance.Add "vla_ec_ppm_6", substanceRecordset("vla_ec_ppm_6").Value
 	substance.Add "vla_ec_mg_m3_6", substanceRecordset("vla_ec_mg_m3_6").Value
 	substance.Add "notas_vla_6", removeVlbFromNotes(substanceRecordset("notas_vla_6").Value)
-	
+
 	substance.Add "ib_1", substanceRecordset("ib_1").Value
 	substance.Add "vlb_1", substanceRecordset("vlb_1").Value
 	substance.Add "momento_1", substanceRecordset("momento_1").Value
@@ -330,7 +330,7 @@ function extractSubstance(id_sustancia, substanceRecordset, connection)
 		, getListaNegraClassifications( _
 			substance("featuredLists"), substance("frasesR"), substanceRecordset("mpmb") _
 		)
-	
+
 	set extractSubstance = substance
 end function
 
@@ -445,7 +445,7 @@ end function
 
 function extractGrupoIarc(grupo)
 	extractGrupoIarc = grupo
-	if isNull(grupo) then 
+	if isNull(grupo) then
 		exit function
 	end if
 	extractGrupoIarc = ""
@@ -456,7 +456,68 @@ function extractGrupoIarc(grupo)
 			)
 end function
 
-function composeSubstanceQuery(id_sustancia)
+function composeSubstanceQuery(id_sustancia, lang)
+	if lang = "en" then
+		composeSubstanceQuery = _
+			"SELECT nombre_ing as nombre, nombre_ing, num_rd, num_ce_einecs, num_ce_elincs, num_cas, " &_
+			"cas_alternativos, num_onu, num_icsc, formula_molecular, estructura_molecular, simbolos, " &_
+			"clasificacion_1, clasificacion_2, clasificacion_3, clasificacion_4, clasificacion_5, " &_
+			"clasificacion_6, clasificacion_7, clasificacion_8, clasificacion_9, clasificacion_10, " &_
+			"clasificacion_11, clasificacion_12, clasificacion_13, clasificacion_14, clasificacion_15, " &_
+			"frases_s, " &_
+			"conc_1, conc_2, conc_3, conc_4, conc_5, conc_6, conc_7, conc_8, conc_9, conc_10, " &_
+			"conc_11, conc_12, conc_13, conc_14, conc_15, " &_
+			"eti_conc_1, eti_conc_2, eti_conc_3, eti_conc_4, eti_conc_5, eti_conc_6, eti_conc_7, " &_
+			"eti_conc_8, eti_conc_9, eti_conc_10, eti_conc_11, eti_conc_12, eti_conc_13, eti_conc_14, eti_conc_15, " &_
+			"notas_rd_363, notas_xml, frases_r_danesa, " &_
+			"clasificacion_rd1272_1, clasificacion_rd1272_2, clasificacion_rd1272_3, clasificacion_rd1272_4, " &_
+			"clasificacion_rd1272_5, clasificacion_rd1272_6, clasificacion_rd1272_7, clasificacion_rd1272_8, " &_
+			"clasificacion_rd1272_9, clasificacion_rd1272_10, clasificacion_rd1272_11, clasificacion_rd1272_12, " &_
+			"clasificacion_rd1272_13, clasificacion_rd1272_14, clasificacion_rd1272_15, " &_
+			"conc_rd1272_1, conc_rd1272_2, conc_rd1272_3, conc_rd1272_4, conc_rd1272_5, " &_
+			"conc_rd1272_6, conc_rd1272_7, conc_rd1272_8, conc_rd1272_9, conc_rd1272_10, " &_
+			"conc_rd1272_11, conc_rd1272_12, conc_rd1272_13, conc_rd1272_14, conc_rd1272_15, " &_
+			"eti_conc_rd1272_1, eti_conc_rd1272_2, eti_conc_rd1272_3, eti_conc_rd1272_4, eti_conc_rd1272_5, " &_
+			"eti_conc_rd1272_6, eti_conc_rd1272_7, eti_conc_rd1272_8, eti_conc_rd1272_9, eti_conc_rd1272_10, " &_
+			"eti_conc_rd1272_11, eti_conc_rd1272_12, eti_conc_rd1272_13, eti_conc_rd1272_14, eti_conc_rd1272_15, " &_
+			"notas_rd1272, simbolos_rd1272, clases_categorias_peligro_rd1272, " &_
+			"estado_1, estado_2, estado_3, estado_4, estado_5, estado_6, " &_
+			"vla_ed_ppm_1, vla_ed_ppm_2, vla_ed_ppm_3, vla_ed_ppm_4, vla_ed_ppm_5, vla_ed_ppm_6, " &_
+			"vla_ed_mg_m3_1, vla_ed_mg_m3_2, vla_ed_mg_m3_3, vla_ed_mg_m3_4, vla_ed_mg_m3_5, vla_ed_mg_m3_6, " &_
+			"vla_ec_ppm_1, vla_ec_ppm_2, vla_ec_ppm_3, vla_ec_ppm_4, vla_ec_ppm_5, vla_ec_ppm_6, " &_
+			"vla_ec_mg_m3_1, vla_ec_mg_m3_2, vla_ec_mg_m3_3, vla_ec_mg_m3_4, vla_ec_mg_m3_5, vla_ec_mg_m3_6, " &_
+			"notas_vla_1, notas_vla_2, notas_vla_3, notas_vla_4, notas_vla_5, notas_vla_6, " &_
+			"ib_1, ib_2, ib_3, ib_4, ib_5, ib_6, " &_
+			"vlb_1, vlb_2, vlb_3, vlb_4, vlb_5, vlb_6, " &_
+			"momento_1, momento_2, momento_3, momento_4, momento_5, momento_6, " &_
+			"notas_vlb_1, notas_vlb_2, notas_vlb_3, notas_vlb_4, notas_vlb_5, notas_vlb_6, " &_
+			"notas_cancer_rd, grupo_iarc, volumen_iarc, " &_
+			"notas_iarc_ing as notas_iarc, " &_
+			"categoria_cancer_otras, fuente, nivel_disruptor, efecto_neurotoxico, nivel_neurotoxico, " &_
+			"fuente_neurotoxico, enlace_tpb, anchor_tpb, fuentes_tpb, mpmb, directiva_aguas, clasif_mma, " &_
+			"sustancia_prioritaria, dano_calidad_aire, dano_ozono, dano_cambio_clima, " &_
+			"sus_amb.comentarios as comentarios_ma, sus.comentarios as comentarios_sustancia, " &_
+			"toxicidad_suelo, sustancia_prohibida, sustancia_restringida, " &_
+			"cancer_mama, cancer_mama_fuente, cop, enlace_cop " &_
+			"FROM dn_risc_sustancias AS sus " &_
+			"FULL OUTER JOIN dn_risc_sustancias_vl AS sus_vl " &_
+				"ON sus.id = sus_vl.id_sustancia " &_
+			"FULL OUTER JOIN dn_risc_sustancias_iarc AS sus_iarc " &_
+				"ON sus.id = sus_iarc.id_sustancia " &_
+			"FULL OUTER JOIN dn_risc_sustancias_cancer_otras AS sus_cancer_otras " &_
+				"ON sus.id = sus_cancer_otras.id_sustancia " &_
+			"FULL OUTER JOIN dn_risc_sustancias_neuro_disruptor AS sus_neuro_disruptor " &_
+				"ON sus.id = sus_neuro_disruptor.id_sustancia " &_
+			"FULL OUTER JOIN dn_risc_sustancias_ambiente AS sus_amb " &_
+				"ON sus.id = sus_amb.id_sustancia " &_
+			"FULL OUTER JOIN dn_risc_sustancias_mama_cop AS sus_mama_cop " &_
+				"ON sus.id = sus_mama_cop.id_sustancia " &_
+			"FULL OUTER JOIN spl_risc_sustancias_prohibidas_embarazadas as sus_prohibidas_embarazadas " &_
+				"ON sus.id = sus_prohibidas_embarazadas.id_sustancia " &_
+			"WHERE sus.id = " & id_sustancia
+		exit function
+	end if
+
 	sql = "SELECT *,dn_risc_sustancias_ambiente.comentarios as comentarios_ma, dn_risc_sustancias.comentarios as comentarios_sustancia "
 	sql = sql & " FROM dn_risc_sustancias  "
 	sql = sql & " FULL OUTER JOIN dn_risc_sustancias_vl ON dn_risc_sustancias.id = dn_risc_sustancias_vl.id_sustancia  "
@@ -599,7 +660,7 @@ function composeEnfermedadesQuery(substanceId)
 			"LEFT JOIN dn_risc_sustancias_por_enfermedades AS spe " &_
 				"ON spe.id_enfermedad = enf.id " &_
 			"WHERE " &_
-				"spg.id_sustancia = " & substanceId & " " &_ 
+				"spg.id_sustancia = " & substanceId & " " &_
 				"OR spe.id_sustancia = " & substanceId & " " &_
 			"ORDER BY " &_
 				"enf.listado, enf.nombre"
@@ -727,8 +788,8 @@ sub printSusbtance(substance)
 			for k = 0 to ubound(substance.item(key))
 				if vartype(substance.item(key)(k)) = 9 then
 					for each u in substance.item(key)(k)
-						response.write substance.item(key)(k).item(u) 
-					next	
+						response.write substance.item(key)(k).item(u)
+					next
 				else
 					response.write substance.item(key)(k) & ","
 				end if
@@ -769,7 +830,7 @@ function getListaNegraClassifications(featuredLists, frasesR, mpmb)
 		, "sensibilizante_reach" _
 		), featuredLists) then arrayPush result, "sensibilizante"
 	if anyElementInArray(Array _
-		("tpr", "tpr_danesa" _ 
+		("tpr", "tpr_danesa" _
 		), featuredLists) then arrayPush result, "tóxica para la reproducción"
 	if stringContains(frasesR, "R33") then
 		arrayPush result, "bioacumulativa"
@@ -853,7 +914,7 @@ function obtainEfectosNeurotoxico(byVal efectosSrz, featuredLists, connection)
 	obtainEfectosNeurotoxico = efectosSrz
 	if isNull(efectosSrz) then _
 		exit function
-	obtainEfectosNeurotoxico = obtainDefinitions( _ 
+	obtainEfectosNeurotoxico = obtainDefinitions( _
 		replace(efectosSrz, "/", ",") _
 		, connection)
 	dim efectos : efectos = split(efectosSrz, "/")
@@ -926,7 +987,7 @@ function obtainNivelNeurotoxicoKey(nivel)
 	obtainNivelNeurotoxicoKey = nivel
 	if isNull(nivel) or nivel = "" then _
 		exit function
-	
+
 	obtainNivelNeurotoxicoKey = "Nivel " &  nivel
 end function
 
@@ -961,7 +1022,7 @@ function obtainEnfermedades(substanceDics)
 		enfermedad.add "actividades", crLfToBr(key("actividades"))
 		result = arrayPushDictionary(result, enfermedad)
 	next
-	
+
 	obtainEnfermedades = result
 end function
 

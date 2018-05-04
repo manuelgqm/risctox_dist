@@ -1,4 +1,4 @@
-<%@ LANGUAGE="VBSCRIPT" LCID="1034" CODEPAGE="65001"%>	
+<%@ LANGUAGE="VBSCRIPT" LCID="1034" CODEPAGE="65001"%>
 <!--#include file="dn_restringida.asp"-->
 <!--#include file="config/dbConnection.asp"-->
 <!--#include file="lib/dn_funciones_texto_utf-8.asp"-->
@@ -19,7 +19,7 @@ errores = ""
 id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
 set mySubstance = new SubstanceClass
-mySubstance.find id_sustancia, objConnection2
+mySubstance.find id_sustancia, "es", objConnection2
 Set substance = mySubstance.fields
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 

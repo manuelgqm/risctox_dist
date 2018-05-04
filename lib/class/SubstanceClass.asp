@@ -14,9 +14,9 @@ Class SubstanceClass
 	End property
 
 ' PUBLIC METHODS'
-	Public function find(id_sustancia, connection)
+	Public function find(id_sustancia, lang, connection)
 		dim fields
-		set fields = findSubstance(id_sustancia, connection)
+		set fields = findSubstance(id_sustancia, lang, connection)
 		Me.Fields = fields
 	end function
 
