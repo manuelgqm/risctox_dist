@@ -254,25 +254,36 @@ function formatHtmlUnorderedList(elements)
 end function
 
 sub ap1_identificacion()
+	array_nombres = split(espaciar(substance.item("nombre")), "@")
+	nombre = array_nombres(0)
+
+	sinonimos=""
+	if UBound(array_nombres) > 0 then
+		sinonimos = "<ul>"
+		For i = LBound(array_nombres) + 1 To UBound(array_nombres)
+			sinonimos = sinonimos & "<li>" & h(espaciar(array_nombres(i))) & "</li>"
+		Next
+		sinonimos = sinonimos & "</ul>"
+	end if
 %>
 	<tr>
 		<td class="subtitulo3" align="right" valign="top">
-			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Name:
+			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Chemical name:
 		</td>
 		<td class="texto" valign="middle">
-			<b><%=espaciar(substance.Item("nombre"))%></b>
+			<b><%=nombre%></b>
 		</td>
 	</tr>
 
 	<%
-	if ( ubound(substance.Item("sinonimos")) > -1 ) then
+	if (sinonimos<>"") then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Sinónimos:
+				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Synonyms:
 			</td>
 			<td class="texto" valign="middle">
-				<%=formatHtmlUnorderedList(substance.Item("sinonimos"))%>
+				<%=sinonimos%>
 			</td>
 		</tr>
 	<%
