@@ -307,21 +307,21 @@ sub ap1_identificacion()
 	<% if (substance.Item("num_cas") <> "") or (substance.Item("num_ce_einecs") <> "") or (substance.Item("num_ce_elincs") <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				Números de Identificación:
+				Identification numbers:
 			</td>
 			<td class="texto" valign="middle">
-				<% if (substance.Item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS</b>: "&substance.Item("num_cas")&"<br/>" %>
-				<% if (substance.Item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS alternativos</b>: "&substance.Item("cas_alternativos") &"<br/>" %>
+				<% if (substance.Item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CAS</b>: " & substance.Item("num_cas") & "<br/>" %>
+				<% if (substance.item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>Alternative CAS</b>: " & substance.item("cas_alternativos") & "<br/>" %>
 				<%
 					if (substance.Item("num_ce_einecs") <> "") then
 						'Sergio, si empieza por 4 y num_ce_elincs<>'' muestro el num_ce_elincs
-						if (mid(substance.Item("num_ce_einecs"),1,1)="4" and substance.Item("num_ce_elincs") <> "") then
-							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&substance.Item("num_ce_elincs")&"<br/>"
+						if (mid(num_ce_einecs, 1, 1) = "4" and substance.Item("num_ce_elincs") <> "") then
+							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>EC ELINCS</b>: " & substance.Item("num_ce_elincs") & "<br/>"
 						else
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE EINECS</b>: "&substance.Item("num_ce_einecs")&"<br/>"
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>EC EINECS</b>: " & substance.Item("num_ce_einecs") & "<br/>"
 						end if
 					elseif (substance.Item("num_ce_elincs") <> "") then
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>CE ELINCS</b>: "&substance.Item("num_ce_elincs")&"<br/>"
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>EC ELINCS</b>: " & substance.Item("num_ce_elincs") & "<br/>"
 					end if
 				%>
 			</td>
