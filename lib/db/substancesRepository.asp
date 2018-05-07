@@ -460,7 +460,7 @@ function composeSubstanceQuery(id_sustancia, lang)
 	if lang = "en" then
 		composeSubstanceQuery = _
 			"SELECT nombre_ing as nombre, nombre_ing, num_rd, num_ce_einecs, num_ce_elincs, num_cas, " &_
-			"cas_alternativos, num_onu, num_icsc, formula_molecular, estructura_molecular, simbolos, " &_
+			"cas_alternativos, num_icsc, formula_molecular, estructura_molecular, simbolos, " &_
 			"clasificacion_1, clasificacion_2, clasificacion_3, clasificacion_4, clasificacion_5, " &_
 			"clasificacion_6, clasificacion_7, clasificacion_8, clasificacion_9, clasificacion_10, " &_
 			"clasificacion_11, clasificacion_12, clasificacion_13, clasificacion_14, clasificacion_15, " &_
@@ -497,7 +497,6 @@ function composeSubstanceQuery(id_sustancia, lang)
 			"fuente_neurotoxico, enlace_tpb, anchor_tpb, fuentes_tpb, mpmb, directiva_aguas, clasif_mma, " &_
 			"sustancia_prioritaria, dano_calidad_aire, dano_ozono, dano_cambio_clima, " &_
 			"sus_amb.comentarios as comentarios_ma, sus.comentarios as comentarios_sustancia, " &_
-			"toxicidad_suelo, sustancia_prohibida, sustancia_restringida, " &_
 			"cancer_mama, cancer_mama_fuente, cop, enlace_cop " &_
 			"FROM dn_risc_sustancias AS sus " &_
 			"FULL OUTER JOIN dn_risc_sustancias_vl AS sus_vl " &_
