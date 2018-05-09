@@ -5,7 +5,7 @@
 
 <%
 	' Register pages to test
-	Call ASPUnit.AddPage("TestSubstance.asp")
+	Call ASPUnit.AddPage("substancesRepositoryInternationalTest.asp")
 
 	' Execute tests
 	Call ASPUnit.Run()
