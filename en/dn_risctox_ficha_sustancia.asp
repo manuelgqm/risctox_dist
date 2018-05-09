@@ -269,10 +269,10 @@ sub ap1_identificacion()
 %>
 	<tr>
 		<td class="subtitulo3" align="right" valign="top">
-			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Chemical name:
+			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>&nbsp;<span id="name.label">Chemical name:</a>
 		</td>
 		<td class="texto" valign="middle">
-			<b><span id="label_nombre"><%=nombre%></div></b>
+			<b><span id="name.value"><%=nombre%></div></b>
 		</td>
 	</tr>
 
