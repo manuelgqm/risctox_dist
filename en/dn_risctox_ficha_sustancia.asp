@@ -281,10 +281,10 @@ sub ap1_identificacion()
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Synonyms:
+				<a onclick=window.open('ver_definicion.asp?id=83','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>&nbsp;<span id="synonyms.label">Synonyms:</span>
 			</td>
 			<td class="texto" valign="middle">
-				<%=sinonimos%>
+				<span id="synonyms.value"><%=sinonimos%></span>
 			</td>
 		</tr>
 	<%
