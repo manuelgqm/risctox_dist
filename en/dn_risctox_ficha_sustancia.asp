@@ -3,6 +3,7 @@
 <!--#include file="../config/dbConnection.asp"-->
 <!--#include file="../lib/dn_funciones_texto_utf-8.asp"-->
 <!--#include file="../lib/dn_funciones_comunes_utf-8.asp"-->
+<!--#include file="../lib/class/SubstanceInternationalClass.asp"-->
 <!--#include file="../lib/class/SubstanceClass.asp"-->
 <!--#include file="../lib/visitsRecorder.asp"-->
 <!--#include file="../lib/urlManipulations.asp"-->
@@ -271,7 +272,7 @@ sub ap1_identificacion()
 			<a onclick=window.open('ver_definicion.asp?id=82','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> Chemical name:
 		</td>
 		<td class="texto" valign="middle">
-			<b><%=nombre%></b>
+			<b><span id="label_nombre"><%=nombre%></div></b>
 		</td>
 	</tr>
 
