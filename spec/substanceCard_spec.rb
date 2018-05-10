@@ -90,7 +90,73 @@ describe "'ziram' substance card" do
         'Methyl cymate'
       ]
       expect(name_element.value).to include_all synonyms
+      expect(name_element.label).to include('Synonyms')
     end
+  end
+
+  it "should have correct trade names" do
+    trade_name = SpanElement.new("trade_name", @browser)
+    trade_names = [
+      "Aaprotect",
+      "Aavolex",
+      "Aazira",
+      "Accelerator L",
+      "Aceto ZDED",
+      "Aceto ZDMD",
+      "Alcobam ZM",
+      "Antene",
+      "Corona Corozate",
+      "Corozate",
+      "Cuman",
+      "Cuman L",
+      "Cymate",
+      "Drupina 90",
+      "Eptac 1",
+      "Fuclasin",
+      "Fuclasin Ultra",
+      "Fuklasin",
+      "Hermat ZDM",
+      "Hexazir",
+      "KarbamWhite",
+      "Methasan",
+      "Methazate",
+      "Mezene",
+      "Milbam",
+      "Molurame",
+      "Mycronil",
+      "Pomarsol Z - forte",
+      "Prodaram",
+      "Rhodiacid",
+      "Soxinal PZ",
+      "Soxinol PZ",
+      "Tricarbamix Z",
+      "Triscabol",
+      "Tsimat",
+      "Vancide",
+      "Vancide MZ - 96",
+      "Vulcacure",
+      "Vulcacure ZM",
+      "Vulkacite L",
+      "Z 75",
+      "Zarlate",
+      "ZC",
+      "Z - C Spray",
+      "Zerlate",
+      "Zimate",
+      "Zincmate",
+      "Ziram F4",
+      "Ziram W76",
+      "Ziramvis",
+      "Zirasan",
+      "Zirasan 90",
+      "Zirberk",
+      "Zirex 90",
+      "Ziride",
+      "Zirthane",
+      "Zitox"
+    ]
+    expect(trade_name.label).to include 'Trade name'
+    expect(trade_name.value).to include_all trade_names
   end
 
   it "should had correct identification numbers" do

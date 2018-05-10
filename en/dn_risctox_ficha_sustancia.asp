@@ -297,10 +297,10 @@ sub ap1_identificacion()
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				Nombre comercial:
+				<span id="trade_name.label">Trade name</span>:
 			</td>
 			<td class="texto" valign="middle">
-				<%=nombre_comercial%>
+				<span id="trade_name.value"><%=nombre_comercial%></span>
 			</td>
 		</tr>
 	<% end if ' hay nombre comercial? %>
