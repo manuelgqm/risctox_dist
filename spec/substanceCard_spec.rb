@@ -1,4 +1,5 @@
 require 'watir'
+require_relative 'support/include_all_matcher'
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -53,29 +54,30 @@ describe "'ziram' substance card" do
 
     it "should had correct synonyms" do
       name_element = SpanElement.new("synonyms", @browser)
-      expect(name_element.label).to include ('Synonyms')
-      expect(name_element.value).to include ('Zinc dimethyldithiocarbamate')
-      expect(name_element.value).to include ('Methyl zimate')
-      expect(name_element.value).to include ('Dimethyldithiocarbamic acid zinc salt')
-      expect(name_element.value).to include ('Bis (dimethylcarbamodithioato - S, S`) zinc')
-      expect(name_element.value).to include ('Bis (dimethyldithiocarbamato) zinc')
-      expect(name_element.value).to include ('Zinc bis (dimethylthiocarbamoyl) disulfide')
-      expect(name_element.value).to include ('Carbazinc')
-      expect(name_element.value).to include ('Fungostop')
-      expect(name_element.value).to include ('Zinc bis (dimethyldithiocarbamoyl) disulfide')
-      expect(name_element.value).to include ('Methyl Ziram')
-      expect(name_element.value).to include ('Dimethylcarbamodithioic acid, zinc complex')
-      expect(name_element.value).to include ('Dimethyldithiocarbamate zinc salt')
-      expect(name_element.value).to include ('Zinc N, N - dimethyldithiocarbamate')
-      expect(name_element.value).to include ('Amylzimate')
-      expect(name_element.value).to include ('Carbamic acid, dimethyldithio - , zinc salt (2:1)')
-      expect(name_element.value).to include ('Ciram')
-      expect(name_element.value).to include ('Methyl zineb')
-      expect(name_element.value).to include ('Bis (dimethylcarbamodithiato - S, S`) - zinc')
-      expect(name_element.value).to include ('(SP - 4 - 1) - Bis (dimethylcarbamodithiato - S, S`) - zinc')
-      expect(name_element.value).to include ('(T - 4) - Bis (dimethylcarbamodithioato - S, S`) - zinc')
-      expect(name_element.value).to include ('(T - 4) - Bis (dimethyldithiocarbamato - S, S` ) zinc')
-      expect(name_element.value).to include ('Methyl cymate')
+      synonyms = [
+        'Methyl zimate',
+        'Dimethyldithiocarbamic acid zinc salt',
+        'Bis (dimethylcarbamodithioato - S, S`) zinc',
+        'Bis (dimethyldithiocarbamato) zinc',
+        'Zinc bis (dimethylthiocarbamoyl) disulfide',
+        'Carbazinc',
+        'Fungostop',
+        'Zinc bis (dimethyldithiocarbamoyl) disulfide',
+        'Methyl Ziram',
+        'Dimethylcarbamodithioic acid, zinc complex',
+        'Dimethyldithiocarbamate zinc salt',
+        'Zinc N, N - dimethyldithiocarbamate',
+        'Amylzimate',
+        'Carbamic acid, dimethyldithio - , zinc salt (2:1)',
+        'Ciram',
+        'Methyl zineb',
+        'Bis (dimethylcarbamodithiato - S, S`) - zinc',
+        '(SP - 4 - 1) - Bis (dimethylcarbamodithiato - S, S`) - zinc',
+        '(T - 4) - Bis (dimethylcarbamodithioato - S, S`) - zinc',
+        '(T - 4) - Bis (dimethyldithiocarbamato - S, S` ) zinc',
+        'Methyl cymate'
+      ]
+      expect(name_element.value).to include_all synonyms
     end
   end
 
