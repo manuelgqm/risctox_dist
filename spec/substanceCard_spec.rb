@@ -36,6 +36,17 @@ describe "'hydrogen cyanide' substance card" do
       expect(name_element.label).to include ('Synonyms')
       expect(name_element.value).to include ('hydrocyanic acid')
     end
+
+    it "should had correct identification numbers" do
+      identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
+      expect(identification_number_label_text).to include ('Identification numbers')
+      name_element = SpanElement.new("cas_num", @browser)
+      expect(name_element.label).to include ('CAS')
+      expect(name_element.value).to include ('74-90-8')
+      name_element = SpanElement.new("ec_einecs_num", @browser)
+      expect(name_element.label).to include ('EC EINECS')
+      expect(name_element.value).to include ('200-821-6')
+    end
   end
 
 end
@@ -55,6 +66,7 @@ describe "'ziram' substance card" do
     it "should had correct synonyms" do
       name_element = SpanElement.new("synonyms", @browser)
       synonyms = [
+        'Zinc dimethyldithiocarbamate',
         'Methyl zimate',
         'Dimethyldithiocarbamic acid zinc salt',
         'Bis (dimethylcarbamodithioato - S, S`) zinc',
@@ -79,6 +91,17 @@ describe "'ziram' substance card" do
       ]
       expect(name_element.value).to include_all synonyms
     end
+  end
+
+  it "should had correct identification numbers" do
+    identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
+    expect(identification_number_label_text).to include ('Identification numbers')
+    name_element = SpanElement.new("cas_num", @browser)
+    expect(name_element.value).to include ('137-30-4')
+    expect(name_element.label).to include ('CAS')
+    name_element = SpanElement.new("ec_einecs_num", @browser)
+    expect(name_element.label).to include ('EC EINECS')
+    expect(name_element.value).to include ('205-288-3')
   end
 
 end
