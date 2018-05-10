@@ -4,11 +4,11 @@ RSpec::Matchers.define :include_all do |include_items|
     @errors.empty?
   end
 
-  failure_message_for_should do |given|
+  failure_message do |given|
     "did not include \"#{@errors.join('\", \"')}\""
   end
 
-  failure_message_for_should_not do |given|
+  failure_message_when_negated do |given|
      "everything was included"
   end
 
