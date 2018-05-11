@@ -3,8 +3,8 @@
 <!--#include file="../config/dbConnection.asp"-->
 <!--#include file="../lib/dn_funciones_texto_utf-8.asp"-->
 <!--#include file="../lib/dn_funciones_comunes_utf-8.asp"-->
-<!--#include file="../lib/class/SubstanceInternationalClass.asp"-->
 <!--#include file="../lib/class/SubstanceClass.asp"-->
+<!--#include file="../lib/class/SubstanceInternationalClass.asp"-->
 <!--#include file="../lib/visitsRecorder.asp"-->
 <!--#include file="../lib/urlManipulations.asp"-->
 
@@ -20,8 +20,11 @@ errores = ""
 id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 
 set mySubstance = new SubstanceClass
+set mySubstanceInternational = new SubstanceClassInternational
 mySubstance.find id_sustancia, "en", objConnection2
+mySubstanceInternational.obtainIdentification id_sustancia, "en", objConnection2
 Set substance = mySubstance.fields
+Set substance_international = mySubstanceInternational.fields
 if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
 
 dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
@@ -330,15 +333,15 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = formatHtmlGlossaryLinksString(substance.item("grupos"), "grupos")
+		grupos = formatHtmlGlossaryLinksString(substance_international.item("grupos"), "grupos")
 		if (grupos <> "") then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				Grupos:
+				<span id="groups.label">Groups</span>:
 			</td>
 			<td class="texto" valign="middle">
-				<%=grupos%>
+				<span id="groups.value"><%=grupos%></span>
 			</td>
 		</tr>
 	<% end if ' hay grupos? %>

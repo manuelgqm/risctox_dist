@@ -1,5 +1,5 @@
 <!--#include file="synonymsRepository.asp"-->
-<!--#include file="substanceGroupsRepository.asp"-->
+<!--#include file="substanceGroupsRepositoryInternational.asp"-->
 <!--#include file="substanceApplicationsRepository.asp"-->
 <!--#include file="substanceCompaniesRepository.asp"-->
 <%
@@ -9,7 +9,7 @@ function findIdentification(substance_id, lang, connection)
 	dim identification : set identification = recodsetToDictionary(identification_rs)
 	identification_rs.close()
 	set identification_rs = nothing
-	
+
 	set findIdentification = extractIdentification(substance_id, identification, lang, connection)
 end function
 
@@ -23,6 +23,12 @@ function extractIdentification(substance_id, identification, lang, connection)
 	result.add "num_ce_einecs", identification("num_ce_einecs")
 	result.add "num_ce_elincs", identification("num_ce_elincs")
 	result.add "num_rd", identification("num_rd")
+	dim substanceGroupsRecordset 
+	set substanceGroupsRecordset = getRecordsetSubstanceGroupsInternational(substance_id, lang, connection)
+	result.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
+	set result = addSubstanceGroupsAssociatedFields(result, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
 
 	set extractIdentification = result
 end function
@@ -33,7 +39,7 @@ function composeIdentificationQuery(substance_id)
 			"nombre_ing as nombre, nombre_ing, num_rd, num_ce_einecs, num_ce_elincs, num_cas, " &_
 			"cas_alternativos, num_icsc " &_
 		"FROM " &_
-			"dn_risc_sustancias" &_
+			"dn_risc_sustancias " &_
 		"WHERE " &_
 			"id = " & substance_id
 end function

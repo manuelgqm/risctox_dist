@@ -1,5 +1,5 @@
 class Hydrogen_cyanide
-  attr_reader :name, :synonyms, :cas_num, :ce_einecs_num
+  attr_reader :name, :synonyms, :cas_num, :ce_einecs_num, :groups
 
   def initialize(browser)
     @browser = browser
@@ -7,6 +7,7 @@ class Hydrogen_cyanide
     @synonyms = ["hydrocyanic acid"]
     @cas_num = "74-90-8"
     @ce_einecs_num = "200-821-6"
+    @groups = ["cyanides", "cyanides"]
   end
 
   def go

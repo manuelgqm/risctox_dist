@@ -2,6 +2,7 @@
 <!--#include file="../stringManipulations.asp"-->
 <!--#include file="../dictionaryManipulations.asp"-->
 <!--#include file="../db/substancesRepositoryInternational.asp"-->
+
 <%
 Class SubstanceClassInternational
 	Private mFields
@@ -14,9 +15,9 @@ Class SubstanceClassInternational
 	End property
 
 ' PUBLIC
-	Public function obtainIdentification(id_sustancia, connection)
+	Public function obtainIdentification(id_sustancia, lang, connection)
 		dim fields
-		set fields = findIdentification(id_sustancia, connection)
+		set fields = findIdentification(id_sustancia, lang, connection)
 		Me.fields = fields
 	End function
 

@@ -1,7 +1,7 @@
 require 'watir'
 
 class Ziram
-  attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num
+  attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups
   def initialize(browser)
     @browser = browser
     @name = "ziram"
@@ -90,6 +90,7 @@ class Ziram
     ]
     @cas_num = "137-30-4"
     @ec_einecs_num = "205-288-3"
+    @groups = ["organo phosphorus and carbamates"]
   end
 
   def go
