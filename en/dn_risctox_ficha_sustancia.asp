@@ -257,6 +257,18 @@ function formatHtmlUnorderedList(elements)
 	formatHtmlUnorderedList = list
 end function
 
+function formatHtmlIcscList(icsc_nums)
+  dim i, result
+  result = ""
+
+  for i = 0 to ubound(icsc_nums)
+    icsc_num = icsc_nums(i).item("id")
+    result = result & "<a href='http://www.ilo.org/dyn/icsc/showcard.display?p_lang=en&p_card_id='" & icsc_num & " target='_blank'>" & icsc_num & "</a>"
+  next
+
+  formatHtmlIcscList = result
+end function
+
 sub ap1_identificacion()
 	array_nombres = split(espaciar(substance.item("nombre")), "@")
 	nombre = array_nombres(0)
@@ -360,39 +372,22 @@ sub ap1_identificacion()
 		</tr>
 	<% end if %>
 
-
-
 	<%
-		if (substance.Item("num_icsc") <> "") then
+		if UBound(substance_international.Item("icsc_nums")) >= 0 then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				 Ficha Internacional de Seguridad Química (<a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("INSHT")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" class="subtitulo3">INSHT</a>)
+				 <span id="icsc_nums.label">
+           International Chemical Safety Card (<a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("ICSC")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" class="subtitulo3">ICSC</a>)
+         <span>
 			</td>
 			<td class="texto" valign="middle">
-          <%
-
-            array_icsc=split(substance.Item("num_icsc"), "@")
-
-            for i=0 to ubound(array_icsc)
-            	substance.Item("num_icsc") = cstr(array_icsc(i))
-            	if len(substance.Item("num_icsc"))=4 then
-            		centena_icsc = mid(substance.Item("num_icsc"),1,2)
-            		icsc_max = cstr(clng(centena_icsc&"01"))
-            		if icsc_max="1" then icsc_max="0"
-            		icsc_min = cstr(clng(centena_icsc)+1) & "00"
-            	end if
-
-          %>
-
-              <a href="http://www.insht.es/InshtWeb/Contenidos/Documentacion/FichasTecnicas/FISQ/Ficheros/<%=icsc_max%>a<%=icsc_min%>/nspn<%= array_icsc(i) %>.pdf" target="_blank"><%= array_icsc(i) %></a>
-
-          <%
-
-            next
-
-          %>
-
+        <span id="icsc_nums.value">
+        <%
+        icsc_nums_list = formatHtmlIcscList(substance_international.Item("icsc_nums"))
+        response.write icsc_nums_list
+        %>
+        </span>
 			</td>
 		</tr>
 	<% end if %>

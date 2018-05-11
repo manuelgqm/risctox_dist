@@ -30,7 +30,8 @@ function extractIdentification(substance_id, identification, lang, connection)
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
 	result.add "applications", findSubstanceApplicationsInternational(substance_id, lang, connection)
-
+	result.add "icsc_nums", obtainNumsIcsc(identification("num_icsc"))
+	
 	set extractIdentification = result
 end function
 
@@ -53,6 +54,31 @@ function obtainNombre(nombre, lang)
 	end if
 
 	obtainNombre = nombre
+end function
+
+function obtainNumsIcsc(numsIcscSrz)
+	dim icsc
+	dim result : result = Array()
+	dim numsIcsc : numsIcsc = split(numsIcscSrz, "@")
+	dim i, centena, max, min
+	for i = 0 to ubound(numsIcsc)
+		current = cstr(numsIcsc(i))
+		if len(current) <> 4 then
+			obtainNumsIcsc = result
+			exit function
+		end if
+		centena = mid(current, 1, 2)
+		max = cstr(clng(centena & "01"))
+		if max = "1" then max = "0"
+		min = cstr(clng(centena) + 1) & "00"
+		set icsc = Server.CreateObject("Scripting.Dictionary")
+		icsc.add "id", current
+		icsc.add "max", max
+		icsc.add "min", min
+		result = arrayPushDictionary(result, icsc)
+	next
+
+	obtainNumsIcsc = result
 end function
 
 sub printSusbtance(substance)

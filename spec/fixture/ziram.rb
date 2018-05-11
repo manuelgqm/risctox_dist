@@ -1,7 +1,7 @@
 require 'watir'
 
 class Ziram
-  attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups, :uses
+  attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups, :uses, :icsc_nums
   def initialize(browser)
     @browser = browser
     @name = "ziram"
@@ -92,6 +92,8 @@ class Ziram
     @ec_einecs_num = "205-288-3"
     @groups = ["organo phosphorus and carbamates"]
     @uses = ["fungicide", "pesticide"]
+    @icsc_nums = ["0348"]
+    @icsc_nums_links = ["http://www.ilo.org/dyn/icsc/showcard.display?p_lang=en&p_card_id=0348"]
   end
 
   def go
