@@ -347,15 +347,15 @@ sub ap1_identificacion()
 	<% end if ' hay grupos? %>
 
 	<%
-		usos = formatHtmlGlossaryLinksString(substance.Item("aplicaciones"), "usos")
+		usos = formatHtmlGlossaryLinksString(substance_international.Item("applications"), "usos")
 		if (usos <> "") then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
-				Usos:
+				<span id="uses.label">Uses</span>:
 			</td>
 			<td class="texto" valign="middle">
-				<%=usos%>
+				<span id="uses.value"><%=usos%></span>
 			</td>
 		</tr>
 	<% end if %>

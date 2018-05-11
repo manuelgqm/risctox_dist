@@ -1,6 +1,6 @@
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceGroupsRepositoryInternational.asp"-->
-<!--#include file="substanceApplicationsRepository.asp"-->
+<!--#include file="substanceApplicationsRepositoryInternational.asp"-->
 <!--#include file="substanceCompaniesRepository.asp"-->
 <%
 function findIdentification(substance_id, lang, connection)
@@ -23,12 +23,13 @@ function extractIdentification(substance_id, identification, lang, connection)
 	result.add "num_ce_einecs", identification("num_ce_einecs")
 	result.add "num_ce_elincs", identification("num_ce_elincs")
 	result.add "num_rd", identification("num_rd")
-	dim substanceGroupsRecordset 
+	dim substanceGroupsRecordset
 	set substanceGroupsRecordset = getRecordsetSubstanceGroupsInternational(substance_id, lang, connection)
 	result.Add "grupos", extractSubstanceGroups(substanceGroupsRecordset)
 	set result = addSubstanceGroupsAssociatedFields(result, substanceGroupsRecordset)
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
+	result.add "applications", findSubstanceApplicationsInternational(substance_id, lang, connection)
 
 	set extractIdentification = result
 end function

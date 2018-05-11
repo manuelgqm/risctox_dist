@@ -58,6 +58,12 @@ describe "'hydrogen cyanide' substance card" do
     expect(groups_element.value).to include_all @hydrogen_cyanide.groups
   end
 
+  it "should had correct substance uses" do
+    groups_element = SpanElement.new("uses", @browser)
+    expect(groups_element.label).to include 'Uses'
+    expect(groups_element.value).to include_all @hydrogen_cyanide.uses
+  end
+
 end
 
 describe "'ziram' substance card" do
@@ -102,6 +108,12 @@ describe "'ziram' substance card" do
     groups_element = SpanElement.new("groups", @browser)
     expect(groups_element.label).to include 'Groups'
     expect(groups_element.value).to include_all @ziram.groups
+  end
+
+  it "should had correct substance uses" do
+    element = SpanElement.new("uses", @browser)
+    expect(element.label).to include 'Uses'
+    expect(element.value).to include_all @ziram.uses
   end
 
 end
