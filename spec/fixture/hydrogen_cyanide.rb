@@ -1,6 +1,6 @@
 class Hydrogen_cyanide
   attr_reader :name, :synonyms, :cas_num, :ce_einecs_num, :groups, :uses
-  attr_reader :icsc_nums, :rd_num, :molecular_formula
+  attr_reader :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
 
   def initialize(browser)
     @browser = browser
@@ -14,6 +14,7 @@ class Hydrogen_cyanide
     @icsc_nums_links = ["http://www.ilo.org/dyn/icsc/showcard.display?p_lang=en&p_card_id=0492"]
     @rd_num = "006-006-00-X"
     @molecular_formula = "CHN"
+    @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, may cause long term adverse effects in the aquatic environment"
   end
 
   def go

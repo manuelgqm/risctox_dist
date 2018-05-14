@@ -29,7 +29,7 @@ class PageObject
 
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
-    element = @browser.td(:id => element_id)
+    element = @browser.element(:id => element_id)
     @browser.execute_script(script, element)
   end
 end
@@ -47,13 +47,13 @@ describe "'hydrogen cyanide' substance card" do
       expect(name_element.value).to include @hydrogen_cyanide.name
     end
 
-    it "should had correct synonyms" do
+    it "must have valid synonyms" do
       name_element = SpanElement.new("synonyms", @browser)
       expect(name_element.label).to include ('Synonyms')
       expect(name_element.value).to include_all @hydrogen_cyanide.synonyms
     end
 
-    it "should had correct identification numbers" do
+    it "must have valid identification numbers" do
       identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
       expect(identification_number_label_text).to include ('Identification numbers')
       name_element = SpanElement.new("cas_num", @browser)
@@ -65,19 +65,19 @@ describe "'hydrogen cyanide' substance card" do
     end
   end
 
-  it "should had correct substance groups" do
+  it "must have valid substance groups" do
     groups_element = SpanElement.new("groups", @browser)
     expect(groups_element.label).to include 'Groups'
     expect(groups_element.value).to include_all @hydrogen_cyanide.groups
   end
 
-  it "should had correct substance uses" do
+  it "must have valid substance uses" do
     groups_element = SpanElement.new("uses", @browser)
     expect(groups_element.label).to include 'Uses'
     expect(groups_element.value).to include_all @hydrogen_cyanide.uses
   end
 
-  it "should had correct icsc numbers" do
+  it "must have valid icsc numbers" do
     element = SpanElement.new("icsc_nums", @browser)
     expect(element.label).to include 'International Chemical Safety Card (ICSC)'
     expect(element.value).to include_all @hydrogen_cyanide.icsc_nums
@@ -94,6 +94,10 @@ describe "'hydrogen cyanide' substance card" do
     element = SpanElement.new("molecular_formula", @browser)
     expect(element.label).to include "Molecular formula"
     expect(element.value).to include @hydrogen_cyanide.molecular_formula
+    page.toggle("secc-concern_trade_union_list")
+    element = SpanElement.new("concern_trade_union_reasons", @browser)
+    expect(element.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
+    expect(element.value).to include @hydrogen_cyanide.concern_trade_union_reasons
   end
 
 end
@@ -111,7 +115,7 @@ describe "'ziram' substance card" do
       expect(name_element.value).to include @ziram.name
     end
 
-    it "should had correct synonyms" do
+    it "must have valid synonyms" do
       name_element = SpanElement.new("synonyms", @browser)
       expect(name_element.label).to include('Synonyms')
       expect(name_element.value).to include_all @ziram.synonyms
@@ -125,7 +129,7 @@ describe "'ziram' substance card" do
     expect(trade_name.value).to include_all @ziram.trade_names
   end
 
-  it "should had correct identification numbers" do
+  it "must have valid identification numbers" do
     identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
     expect(identification_number_label_text).to include ('Identification numbers')
     name_element = SpanElement.new("cas_num", @browser)
@@ -136,25 +140,25 @@ describe "'ziram' substance card" do
     expect(name_element.value).to include @ziram.ec_einecs_num
   end
 
-  it "should had correct substance groups" do
+  it "must have valid substance groups" do
     groups_element = SpanElement.new("groups", @browser)
     expect(groups_element.label).to include 'Groups'
     expect(groups_element.value).to include_all @ziram.groups
   end
 
-  it "should had correct substance uses" do
+  it "must have valid substance uses" do
     element = SpanElement.new("uses", @browser)
     expect(element.label).to include 'Uses'
     expect(element.value).to include_all @ziram.uses
   end
 
-  it "should had correct icsc numbers" do
+  it "must have valid icsc numbers" do
     element = SpanElement.new("icsc_nums", @browser)
     expect(element.label).to include 'International Chemical Safety Card (ICSC)'
     expect(element.value).to include_all @ziram.icsc_nums
   end
 
-  it "should had addition information" do
+  it "must have additional valid information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
     page = PageObject.new(@browser)
@@ -165,6 +169,10 @@ describe "'ziram' substance card" do
     element = SpanElement.new("molecular_formula", @browser)
     expect(element.label).to include "Molecular formula"
     expect(element.value).to include @ziram.molecular_formula
+    page.toggle("secc-concern_trade_union_list")
+    element = SpanElement.new("concern_trade_union_reasons", @browser)
+    expect(element.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
+    expect(element.value).to include @ziram.concern_trade_union_reasons
   end
 
 end

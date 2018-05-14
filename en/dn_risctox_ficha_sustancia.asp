@@ -404,17 +404,17 @@ sub ap1_identificacion()
 				<span id="additional_information.label">Additional information</span>&nbsp;<% plegador "secc-masinformacion", "img-masinformacion" %>
 			</td>
 			<td class="texto" valign="middle" id="secc-masinformacion" style="display:none">
-				<% if (substance.Item("num_rd") <> "") then %>
+				<% if (substance_international.Item("num_rd") <> "") then %>
           <a onclick = window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>
           <img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>
           &nbsp;<b><span id="rd_num.label">Index No</span></b>:
-          &nbsp;<span id="rd_num.value"><%= substance.Item("num_rd") %></span><br/>
+          &nbsp;<span id="rd_num.value"><%= substance_international.Item("num_rd") %></span><br/>
         <% end if %>
-				<% if (substance.Item("formula_molecular") <> "") then %>
-          <span id="molecular_formula.label"><b>Molecular formula</span></b>:
-          <span id="molecular_formula.value"><%= substance.Item("formula_molecular") %><br/>
+				<% if (substance_international.Item("molecular_formula") <> "") then %>
+          <b><span id="molecular_formula.label">Molecular formula</span></b>:
+          <span id="molecular_formula.value"><%= substance_international.Item("molecular_formula") %><br/>
         <% end if %>
-				<% if (substance.Item("estructura_molecular") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/"&substance.Item("estructura_molecular")&"' /><br/>" %>
+				<% if (substance_international.Item("molecular_structure") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/" & substance_international.Item("molecular_structure")&"' /><br/>" %>
 
 				<% if (substance.Item("notas_xml") <> "") then %>
           <a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("ECB")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
@@ -432,7 +432,7 @@ sub ap1_identificacion()
 		<td valign="top" colspan="2">
 			<!-- Lista negra -->
 
-			<% ap2_clasificacion_lista_negra(mySubstance) %>
+			<% concern_trade_union_list(mySubstance) %>
 		</td>
 	</tr>
 <%
@@ -1330,18 +1330,89 @@ end sub
 
 ' ##################################################################################
 
-sub ap2_clasificacion_lista_negra(mySubstance)
-	' Muestra el etiquetado
+sub concern_trade_union_list(mySubstance)
+  Set substance = mySubstance.fields
 
-	if mySubstance.hasListaNegraClassifications() then
+  concern_lists = array("cancer_rd", "cancer_danesa", "cancer_iarc_excepto_grupo_3", "cancer_otras", "de", "neurotoxico", "tpb", "sensibilizante", "sensibilizante_danesa", "sensibilizante_reach", "tpr", "tpr_danesa", "mutageno_rd", "mutageno_danesa", "cancer_mama", "cop")
+  if mySubstance.inLists(concern_lists) or (instr(frases_r,"R53")<>0) or (instr(frases_r,"R50-53")<>0) or (instr(frases_r,"R51-53")<>0) or (instr(frases_r,"R52-53")<>0) or (instr(frases_r,"R58")<>0) then
 
     ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
     sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
     objConnection2.execute(sqlListaNegra),,adexecutenorecords
 
+    ' OK, continuamos...
+
+		razones = ""
+
+    carcinogenic_lists = array("cancer_rd", "cancer_danesa", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama")
+		if mySubstance.inLists(carcinogenic_lists) then
+			razones = razones & ", carcinogenic"
+		end if
+
+		if mySubstance.inList("cop") then
+			razones = razones & ", POP"
+		end if
+
+    mutagenic_lists = Array("mutageno_rd", "mutageno_danesa")
+    if mySubstance.inLists(mutagenic_lists) then
+			razones = razones & ", mutagenic"
+		end if
+
+		if mySubstance.inList("de") then
+			razones = razones & ", endocrine disrupter"
+		end if
+
+    neurotoxic_lists = Array("neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
+		if mySubstance.inLists(neurotoxic_lists) then
+			razones = razones & ", neurotoxic"
+		end if
+
+    sentitiser_lists = Array("sensibilizante", "sensibilizante_danesa", "sensibilizante_reach")
+    if mySubstance.inLists(sentitiser_lists) then
+			razones = razones & ", sensitizer"
+		end if
+
+    tpr_lists = Array("tpr", "tpr_danesa")
+		if mySubstance.inLists(tpr_lists) then
+			razones = razones & ", toxic for reproduction"
+		end if
+
+    if stringContains(substance("frasesR"), "R58") or stringContains(substance("frasesR"),"R33") then
+			razones = razones & ", bioaccumulative"
+		end if
+
+		if stringContains(substance("frasesR"),"R58") then
+			razones = razones & ", may cause long term adverse effects on the environment"
+		end if
+
+		if mySubstance.inList("tpb") then
+			razones = razones & ", toxic, persistent and bioaccumulative"
+		end if
+
+    cas_nums = array("87-68-3", "133-49-3", "75-74-1")
+    if anyElementInArray(cas_nums, Array(substance("cas_num"))) then
+			razones = razones & ", very persistent and very bioaccumulative"
+		end if
+
+    r_phrases_aquatic_environment = Array("R53", "R50-53", "R51-53", "R52-53")
+    frases_r_list = split(substance("frasesR"), ", ")
+    if anyElementInArray(r_phrases_aquatic_environment, frases_r_list) then
+			razones = razones & ", may cause long term adverse effects in the aquatic environment"
+		end if
+		' Quitamos, si existe, el espacio y coma y despu�s convertimos el primer caracter en may�scula
+		if (Len(razones)>0) then
+			razones = Right(razones,Len(razones)-2)
+			razones = UCase(Left(razones,1)) + Right(razones,Len(razones)-1)
+		end if
 %>
-		<p id="ap2_clasificacion_lista_negra_titulo" class="subtitulo3">&nbsp;<img src="../imagenes/icono_atencion_20.png" align="absmiddle" /> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Lista negra")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Sustancia incluida en la Lista negra de ISTAS <% plegador "secc-listanegra", "img-listanegra" %></p>
-		<p id="secc-listanegra" class="texto" style="display:none">Esta sustancia está incluida en la Lista negra de ISTAS por los siguientes motivos: <%=arraySerialize(mySubstance.fields.item("listaNegraClassifications"))%></p>
+		<p id="concern_trade_union_list_title" class="subtitulo3">&nbsp;
+			<img src="../imagenes/icono_atencion_20.png" align="absmiddle" />
+			<a onclick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("Lista negra")%>','def','width=300,height=200,scrollbars=yes,resizable=yes')" style="cursor:pointer"><img src="imagenes/ayuda.gif" width="14" height="14" align="absmiddle" border="0" /></a>&nbsp;Substance included in the List of Substances of concern for Trade Unions<% plegador "secc-concern_trade_union_list", "img-listanegra" %>
+		</p>
+		<p id="secc-concern_trade_union_list" class="texto" style="display:none">
+			<span id="concern_trade_union_reasons.label">This substance is included in the List of Substances of concern for Trade Unions for the following reasons:</span><br/>
+      <span id="concern_trade_union_reasons.value"><%=razones%>
+		</p>
 
 <%
 	end if

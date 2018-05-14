@@ -2,7 +2,7 @@ require 'watir'
 
 class Ziram
   attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups
-  attr_reader :uses, :icsc_nums, :rd_num, :molecular_formula
+  attr_reader :uses, :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
   def initialize(browser)
     @browser = browser
     @name = "ziram"
@@ -97,6 +97,7 @@ class Ziram
     @icsc_nums_links = ["http://www.ilo.org/dyn/icsc/showcard.display?p_lang=en&p_card_id=0348"]
     @rd_num = "006-012-00-2"
     @molecular_formula = "C6H12N2S4Zn"
+    @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, sensitizer, may cause long term adverse effects in the aquatic environment"
   end
 
   def go

@@ -31,7 +31,9 @@ function extractIdentification(substance_id, identification, lang, connection)
 	set substanceGroupsRecordset = nothing
 	result.add "applications", findSubstanceApplicationsInternational(substance_id, lang, connection)
 	result.add "icsc_nums", obtainNumsIcsc(identification("num_icsc"))
-	
+	result.add "molecular_formula", identification("formula_molecular")
+	result.add "molecular_structure", identification("estructura_molecular")
+
 	set extractIdentification = result
 end function
 
@@ -39,7 +41,7 @@ function composeIdentificationQuery(substance_id)
 	composeIdentificationQuery = _
 		"SELECT " &_
 			"nombre_ing as nombre, nombre_ing, num_rd, num_ce_einecs, num_ce_elincs, num_cas, " &_
-			"cas_alternativos, num_icsc " &_
+			"cas_alternativos, num_icsc, formula_molecular, estructura_molecular " &_
 		"FROM " &_
 			"dn_risc_sustancias " &_
 		"WHERE " &_
