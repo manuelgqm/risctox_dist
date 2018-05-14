@@ -21,6 +21,19 @@ class SpanElement
 
 end
 
+class PageObject
+
+  def initialize(browser)
+    @browser = browser
+  end
+
+  def toggle(element_id)
+    script = "arguments[0].setAttribute('style', 'display:block')"
+    element = @browser.td(:id => element_id)
+    @browser.execute_script(script, element)
+  end
+end
+
 describe "'hydrogen cyanide' substance card" do
   before(:all) do
     @hydrogen_cyanide = Hydrogen_cyanide.new(@browser)
@@ -73,9 +86,8 @@ describe "'hydrogen cyanide' substance card" do
   it "should had addition information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
-    script = "arguments[0].setAttribute('style', 'display:block')"
-    mas_informacion_element = @browser.td(:id => "secc-masinformacion")
-    @browser.execute_script(script, mas_informacion_element)
+    page = PageObject.new(@browser)
+    page.toggle("secc-masinformacion")
     element = SpanElement.new("rd_num", @browser)
     expect(element.label).to include "Index No"
     expect(element.value).to include @hydrogen_cyanide.rd_num
@@ -145,9 +157,8 @@ describe "'ziram' substance card" do
   it "should had addition information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
-    script = "arguments[0].setAttribute('style', 'display:block')"
-    mas_informacion_element = @browser.td(:id => "secc-masinformacion")
-    @browser.execute_script(script, mas_informacion_element)
+    page = PageObject.new(@browser)
+    page.toggle("secc-masinformacion")
     element = SpanElement.new("rd_num", @browser)
     expect(element.label).to include "Index No"
     expect(element.value).to include @ziram.rd_num
