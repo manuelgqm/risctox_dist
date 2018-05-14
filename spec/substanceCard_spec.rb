@@ -7,7 +7,7 @@ browser = Watir::Browser.new :chrome, headless: true
 
 RSpec.configure do |config|
   # only used on headed browser option
-  config.before(:each) { @browser = browser }
+  config.before(:all) { @browser = browser }
   config.after(:suite) { browser.close unless browser.nil? }
 end
 
@@ -22,7 +22,7 @@ class SpanElement
 end
 
 describe "'hydrogen cyanide' substance card" do
-  before(:each) do
+  before(:all) do
     @hydrogen_cyanide = Hydrogen_cyanide.new(@browser)
     @hydrogen_cyanide.go
   end
@@ -87,7 +87,7 @@ describe "'hydrogen cyanide' substance card" do
 end
 
 describe "'ziram' substance card" do
-  before(:each) do
+  before(:all) do
     @ziram = Ziram.new(@browser)
     @ziram.go
   end
