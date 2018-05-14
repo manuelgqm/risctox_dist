@@ -70,6 +70,20 @@ describe "'hydrogen cyanide' substance card" do
     expect(element.value).to include_all @hydrogen_cyanide.icsc_nums
   end
 
+  it "should had addition information" do
+    additional_information_text = @browser.span(:id => "additional_information.label").text
+    expect(additional_information_text).to include "Additional information"
+    script = "arguments[0].setAttribute('style', 'display:block')"
+    mas_informacion_element = @browser.td(:id => "secc-masinformacion")
+    @browser.execute_script(script, mas_informacion_element)
+    element = SpanElement.new("rd_num", @browser)
+    expect(element.label).to include "Index No"
+    expect(element.value).to include @hydrogen_cyanide.rd_num
+    element = SpanElement.new("molecular_formula", @browser)
+    expect(element.label).to include "Molecular formula"
+    expect(element.value).to include @hydrogen_cyanide.molecular_formula
+  end
+
 end
 
 describe "'ziram' substance card" do
@@ -126,6 +140,20 @@ describe "'ziram' substance card" do
     element = SpanElement.new("icsc_nums", @browser)
     expect(element.label).to include 'International Chemical Safety Card (ICSC)'
     expect(element.value).to include_all @ziram.icsc_nums
+  end
+
+  it "should had addition information" do
+    additional_information_text = @browser.span(:id => "additional_information.label").text
+    expect(additional_information_text).to include "Additional information"
+    script = "arguments[0].setAttribute('style', 'display:block')"
+    mas_informacion_element = @browser.td(:id => "secc-masinformacion")
+    @browser.execute_script(script, mas_informacion_element)
+    element = SpanElement.new("rd_num", @browser)
+    expect(element.label).to include "Index No"
+    expect(element.value).to include @ziram.rd_num
+    element = SpanElement.new("molecular_formula", @browser)
+    expect(element.label).to include "Molecular formula"
+    expect(element.value).to include @ziram.molecular_formula
   end
 
 end

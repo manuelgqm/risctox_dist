@@ -401,11 +401,19 @@ sub ap1_identificacion()
 	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top" width="35%">
-				Más información <% plegador "secc-masinformacion", "img-masinformacion" %>
+				<span id="additional_information.label">Additional information</span>&nbsp;<% plegador "secc-masinformacion", "img-masinformacion" %>
 			</td>
 			<td class="texto" valign="middle" id="secc-masinformacion" style="display:none">
-				<% if (substance.Item("num_rd") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b>Nº &iacute;ndice</b>: "&substance.Item("num_rd")&"<br/>" %>
-				<% if (substance.Item("formula_molecular") <> "") then response.write "<b>Fórmula molecular</b>: "&substance.Item("formula_molecular")&"<br/>" %>
+				<% if (substance.Item("num_rd") <> "") then %>
+          <a onclick = window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>
+          <img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>
+          &nbsp;<b><span id="rd_num.label">Index No</span></b>:
+          &nbsp;<span id="rd_num.value"><%= substance.Item("num_rd") %></span><br/>
+        <% end if %>
+				<% if (substance.Item("formula_molecular") <> "") then %>
+          <span id="molecular_formula.label"><b>Molecular formula</span></b>:
+          <span id="molecular_formula.value"><%= substance.Item("formula_molecular") %><br/>
+        <% end if %>
 				<% if (substance.Item("estructura_molecular") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/"&substance.Item("estructura_molecular")&"' /><br/>" %>
 
 				<% if (substance.Item("notas_xml") <> "") then %>
@@ -485,8 +493,13 @@ sub ap2_clasificacion_rd1272()
 	<table id="tabla_clasificacionm_rd1272" class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
   <tr>
 		<td class="celdaabajo" colspan="2" align="center">
-			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=280','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)
-			<a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">
+        <a onclick=window.open('ver_definicion.asp?id=280', 'def', 'width=300, height=200, scrollbars=yes, resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' />
+        </a>
+        <span id="1271_classification.label">
+          CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)
+	         <a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+         </span>
 			</td></tr></table>
 		</td>
 	</tr>
@@ -3051,7 +3064,8 @@ sub plegador(byval id_bloque, byval id_imagen)
   id_bloque=aplana(id_bloque)
   id_imagen=aplana(id_imagen)
 %>
-  <a href="javascript:toggle('<%= id_bloque %>', '<%= id_imagen %>');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+  <a href="javascript:toggle('<%= id_bloque %>', '<%= id_imagen %>');"
+     class="toggler"><img src="../imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
 <%
 end sub
 

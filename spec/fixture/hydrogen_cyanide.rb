@@ -1,5 +1,6 @@
 class Hydrogen_cyanide
-  attr_reader :name, :synonyms, :cas_num, :ce_einecs_num, :groups, :uses, :icsc_nums
+  attr_reader :name, :synonyms, :cas_num, :ce_einecs_num, :groups, :uses
+  attr_reader :icsc_nums, :rd_num, :molecular_formula
 
   def initialize(browser)
     @browser = browser
@@ -11,6 +12,8 @@ class Hydrogen_cyanide
     @uses = ["pesticide"]
     @icsc_nums = ["0492"]
     @icsc_nums_links = ["http://www.ilo.org/dyn/icsc/showcard.display?p_lang=en&p_card_id=0492"]
+    @rd_num = "006-006-00-X"
+    @molecular_formula = "CHN"
   end
 
   def go
