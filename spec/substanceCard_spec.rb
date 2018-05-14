@@ -2,177 +2,135 @@ require 'watir'
 require_relative 'support/include_all_matcher'
 require_relative 'fixture/ziram'
 require_relative 'fixture/hydrogen_cyanide'
+require_relative 'substance_card_page_object'
 
 browser = Watir::Browser.new :chrome, headless: true
 
 RSpec.configure do |config|
-  # only used on headed browser option
   config.before(:all) { @browser = browser }
-  config.after(:suite) { browser.close unless browser.nil? }
-end
-
-class SpanElement
-  attr_reader :label, :value
-
-  def initialize(hash, browser)
-    @label = browser.span(:id => hash + ".label").text
-    @value = browser.span(:id => hash + ".value").text
-  end
-
-end
-
-class PageObject
-
-  def initialize(browser)
-    @browser = browser
-  end
-
-  def toggle(element_id)
-    script = "arguments[0].setAttribute('style', 'display:block')"
-    element = @browser.element(:id => element_id)
-    @browser.execute_script(script, element)
-  end
+  config.after(:suite) { browser.close unless browser.nil? } # only used on headed browser option
 end
 
 describe "'hydrogen cyanide' substance card" do
   before(:all) do
-    @hydrogen_cyanide = Hydrogen_cyanide.new(@browser)
-    @hydrogen_cyanide.go
+    @hydrogen_cyanide = Hydrogen_cyanide.new(953980)
+    @page = PageObject.new(@browser, @hydrogen_cyanide.id)
+    @page.go
   end
 
   describe "that has valid field labels and values" do
     it "should had a correct name" do
-      name_element = SpanElement.new("name", @browser)
-      expect(name_element.label).to include ('Chemical name')
-      expect(name_element.value).to include @hydrogen_cyanide.name
+      expect(@page.name.label).to include ('Chemical name')
+      expect(@page.name.value).to include @hydrogen_cyanide.name
     end
 
     it "must have valid synonyms" do
-      name_element = SpanElement.new("synonyms", @browser)
-      expect(name_element.label).to include ('Synonyms')
-      expect(name_element.value).to include_all @hydrogen_cyanide.synonyms
+      expect(@page.synonyms.label).to include ('Synonyms')
+      expect(@page.synonyms.value).to include_all @hydrogen_cyanide.synonyms
     end
 
     it "must have valid identification numbers" do
       identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
       expect(identification_number_label_text).to include ('Identification numbers')
-      name_element = SpanElement.new("cas_num", @browser)
-      expect(name_element.label).to include ('CAS')
-      expect(name_element.value).to include @hydrogen_cyanide.cas_num
-      name_element = SpanElement.new("ec_einecs_num", @browser)
-      expect(name_element.label).to include ('EC EINECS')
-      expect(name_element.value).to include @hydrogen_cyanide.ce_einecs_num
+      expect(@page.cas_num.label).to include ('CAS')
+      expect(@page.cas_num.value).to include @hydrogen_cyanide.cas_num
+      expect(@page.ec_einecs_num.label).to include ('EC EINECS')
+      expect(@page.ec_einecs_num.value).to include @hydrogen_cyanide.ce_einecs_num
     end
   end
 
   it "must have valid substance groups" do
-    groups_element = SpanElement.new("groups", @browser)
-    expect(groups_element.label).to include 'Groups'
-    expect(groups_element.value).to include_all @hydrogen_cyanide.groups
+    expect(@page.groups.label).to include 'Groups'
+    expect(@page.groups.value).to include_all @hydrogen_cyanide.groups
   end
 
   it "must have valid substance uses" do
-    groups_element = SpanElement.new("uses", @browser)
-    expect(groups_element.label).to include 'Uses'
-    expect(groups_element.value).to include_all @hydrogen_cyanide.uses
+    expect(@page.uses.label).to include 'Uses'
+    expect(@page.uses.value).to include_all @hydrogen_cyanide.uses
   end
 
   it "must have valid icsc numbers" do
-    element = SpanElement.new("icsc_nums", @browser)
-    expect(element.label).to include 'International Chemical Safety Card (ICSC)'
-    expect(element.value).to include_all @hydrogen_cyanide.icsc_nums
+    expect(@page.icsc_nums.label).to include 'International Chemical Safety Card (ICSC)'
+    expect(@page.icsc_nums.value).to include_all @hydrogen_cyanide.icsc_nums
   end
 
   it "should had addition information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
-    page = PageObject.new(@browser)
-    page.toggle("secc-masinformacion")
-    element = SpanElement.new("rd_num", @browser)
-    expect(element.label).to include "Index No"
-    expect(element.value).to include @hydrogen_cyanide.rd_num
-    element = SpanElement.new("molecular_formula", @browser)
-    expect(element.label).to include "Molecular formula"
-    expect(element.value).to include @hydrogen_cyanide.molecular_formula
-    page.toggle("secc-concern_trade_union_list")
-    element = SpanElement.new("concern_trade_union_reasons", @browser)
-    expect(element.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
-    expect(element.value).to include @hydrogen_cyanide.concern_trade_union_reasons
+
+    @page.toggle("secc-masinformacion")
+    expect(@page.rd_num.label).to include "Index No"
+    expect(@page.rd_num.value).to include @hydrogen_cyanide.rd_num
+    expect(@page.molecular_formula.label).to include "Molecular formula"
+    expect(@page.molecular_formula.value).to include @hydrogen_cyanide.molecular_formula
+
+    @page.toggle("secc-concern_trade_union_list")
+    expect(@page.concern_trade_union_reasons.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
+    expect(@page.concern_trade_union_reasons.value).to include @hydrogen_cyanide.concern_trade_union_reasons
   end
 
 end
 
 describe "'ziram' substance card" do
   before(:all) do
-    @ziram = Ziram.new(@browser)
-    @ziram.go
+    @ziram = Ziram.new(954057)
+    @page = PageObject.new(@browser, @ziram.id)
+    @page.go
   end
 
   describe "that has valid field labels and values" do
     it "should had a correct name" do
-      name_element = SpanElement.new("name", @browser)
-      expect(name_element.label).to include ('Chemical name')
-      expect(name_element.value).to include @ziram.name
+      expect(@page.name.label).to include ('Chemical name')
+      expect(@page.name.value).to include @ziram.name
     end
 
     it "must have valid synonyms" do
-      name_element = SpanElement.new("synonyms", @browser)
-      expect(name_element.label).to include('Synonyms')
-      expect(name_element.value).to include_all @ziram.synonyms
+      expect(@page.synonyms.label).to include('Synonyms')
+      expect(@page.synonyms.value).to include_all @ziram.synonyms
     end
   end
 
   it "should have correct trade names" do
-    trade_name = SpanElement.new("trade_name", @browser)
-
-    expect(trade_name.label).to include 'Trade name'
-    expect(trade_name.value).to include_all @ziram.trade_names
+    expect(@page.trade_name.label).to include 'Trade name'
+    expect(@page.trade_name.value).to include_all @ziram.trade_names
   end
 
   it "must have valid identification numbers" do
     identification_number_label_text = @browser.span(:id => "identification_numbers.label").text
     expect(identification_number_label_text).to include ('Identification numbers')
-    name_element = SpanElement.new("cas_num", @browser)
-    expect(name_element.label).to include ('CAS')
-    expect(name_element.value).to include @ziram.cas_num
-    name_element = SpanElement.new("ec_einecs_num", @browser)
-    expect(name_element.label).to include ('EC EINECS')
-    expect(name_element.value).to include @ziram.ec_einecs_num
+    expect(@page.cas_num.label).to include ('CAS')
+    expect(@page.cas_num.value).to include @ziram.cas_num
+    expect(@page.ec_einecs_num.label).to include ('EC EINECS')
+    expect(@page.ec_einecs_num.value).to include @ziram.ec_einecs_num
   end
 
   it "must have valid substance groups" do
-    groups_element = SpanElement.new("groups", @browser)
-    expect(groups_element.label).to include 'Groups'
-    expect(groups_element.value).to include_all @ziram.groups
+    expect(@page.groups.label).to include 'Groups'
+    expect(@page.groups.value).to include_all @ziram.groups
   end
 
   it "must have valid substance uses" do
-    element = SpanElement.new("uses", @browser)
-    expect(element.label).to include 'Uses'
-    expect(element.value).to include_all @ziram.uses
+    expect(@page.uses.label).to include 'Uses'
+    expect(@page.uses.value).to include_all @ziram.uses
   end
 
   it "must have valid icsc numbers" do
-    element = SpanElement.new("icsc_nums", @browser)
-    expect(element.label).to include 'International Chemical Safety Card (ICSC)'
-    expect(element.value).to include_all @ziram.icsc_nums
+    expect(@page.icsc_nums.label).to include 'International Chemical Safety Card (ICSC)'
+    expect(@page.icsc_nums.value).to include_all @ziram.icsc_nums
   end
 
   it "must have additional valid information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
-    page = PageObject.new(@browser)
-    page.toggle("secc-masinformacion")
-    element = SpanElement.new("rd_num", @browser)
-    expect(element.label).to include "Index No"
-    expect(element.value).to include @ziram.rd_num
-    element = SpanElement.new("molecular_formula", @browser)
-    expect(element.label).to include "Molecular formula"
-    expect(element.value).to include @ziram.molecular_formula
-    page.toggle("secc-concern_trade_union_list")
-    element = SpanElement.new("concern_trade_union_reasons", @browser)
-    expect(element.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
-    expect(element.value).to include @ziram.concern_trade_union_reasons
+    @page.toggle("secc-masinformacion")
+    expect(@page.rd_num.label).to include "Index No"
+    expect(@page.rd_num.value).to include @ziram.rd_num
+    expect(@page.molecular_formula.label).to include "Molecular formula"
+    expect(@page.molecular_formula.value).to include @ziram.molecular_formula
+
+    @page.toggle("secc-concern_trade_union_list")
+    expect(@page.concern_trade_union_reasons.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
+    expect(@page.concern_trade_union_reasons.value).to include @ziram.concern_trade_union_reasons
   end
 
 end

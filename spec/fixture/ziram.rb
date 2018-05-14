@@ -1,10 +1,11 @@
 require 'watir'
 
 class Ziram
+  attr_reader :id
   attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups
   attr_reader :uses, :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
-  def initialize(browser)
-    @browser = browser
+  def initialize(substance_id)
+    @id = substance_id
     @name = "ziram"
     @synonyms = [
       'Zinc dimethyldithiocarbamate',
@@ -100,7 +101,4 @@ class Ziram
     @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, sensitizer, may cause long term adverse effects in the aquatic environment"
   end
 
-  def go
-    @browser.goto("http://localhost:8081/en/dn_risctox_ficha_sustancia.asp?id_sustancia=954057")
-  end
 end
