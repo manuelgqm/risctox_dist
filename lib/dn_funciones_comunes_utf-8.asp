@@ -383,6 +383,29 @@ function describe_frase(tipo, byval frase)
 	describe_frase = descripcion
 end function
 
+function describe_frase_international(tipo, byval frase, lang)
+	frase = replace(frase, "-", "/")
+
+	texto_field_name = "texto"
+	if lang = "en" then
+		texto_field_name = "texto_ing"
+	end if
+
+	sql = "SELECT " & texto_field_name & " FROM dn_risc_frases_" & tipo & " WHERE frase='" & frase & "'"
+	set objRst = objConnection2.execute(sql)
+
+	if (objRst.eof) then
+		descripcion = ""
+	else
+		descripcion = objRst(texto_field_name)
+	end if
+
+	objRst.close()
+	set objRst = nothing
+
+	describe_frase_international = descripcion
+end function
+
 ' #############################################################################
 
 function describe_frase_s(byval frase)
@@ -427,6 +450,36 @@ function describe_categoria_peligro(byval frase)
 	set objRst=nothing
 
 	describe_categoria_peligro = descripcion
+end function
+
+function describe_categoria_peligro_international(byval frase, lang)
+	frase = replace(frase, "-", "/")
+	frase_field_name = "frase"
+	texto_field_name = "texto"
+
+	if lang = "en" then
+		texto_field_name = "texto_ing"
+		frase_field_name = "frase_ing"
+	end if
+	sql = "SELECT " & texto_field_name & ", " & frase_field_name & " FROM dn_risc_categorias_peligro WHERE frase='" & frase & "'"
+	set objRst=objConnection2.execute(sql)
+
+	if (objRst.eof) then
+		frase = ""
+		descripcion = ""
+	else
+		frase = objRst(frase_field_name)
+		descripcion = objRst(texto_field_name)
+	end if
+
+	objRst.close()
+	set objRst = nothing
+
+	Dim fraseArray(1)
+	fraseArray(0) = frase
+	fraseArray(1) = descripcion
+
+	describe_categoria_peligro_international = fraseArray
 end function
 
 ' #############################################################################

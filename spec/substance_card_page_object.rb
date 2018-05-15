@@ -53,6 +53,10 @@ class PageObject
     element("rd1272_symbols")
   end
 
+  def H_phrases
+    element("H_phrases")
+  end
+
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
     element = @browser.element(:id => element_id)

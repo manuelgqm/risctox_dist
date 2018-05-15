@@ -72,6 +72,7 @@ describe "'hydrogen cyanide' substance card" do
   it "must have valid rd1272 classification" do
     @page.toggle("secc-clasificacion-rd1272")
     expect(@page.rd1272_symbols.text).to include_all @hydrogen_cyanide.rd1272_symbols
+    expect(@page.H_phrases.text).to include_all @hydrogen_cyanide.h_phrases
   end
 
 end
@@ -141,6 +142,7 @@ describe "'ziram' substance card" do
   it "must have valid rd1272 classification" do
     @page.toggle("secc-clasificacion-rd1272")
     expect(@page.rd1272_symbols.text).to include_all @ziram.rd1272_symbols
+    expect(@page.H_phrases.text).to include_all @ziram.H_phrases
   end
 
 end

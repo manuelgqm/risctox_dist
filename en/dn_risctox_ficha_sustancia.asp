@@ -606,81 +606,74 @@ sub ap2_clasificacion_frases_h()
 	' Muestra las frases H segun clasificacion_rd1272_1 hasta clasificacion_rd1272_15
 
 	' Montamos frases H
-	frases_h=monta_frases("H", substance.Item("clasificacion_rd1272_1"), substance.Item("clasificacion_rd1272_2"), substance.Item("clasificacion_rd1272_3"), substance.Item("clasificacion_rd1272_4"), substance.Item("clasificacion_rd1272_5"), substance.Item("clasificacion_rd1272_6"), substance.Item("clasificacion_rd1272_7"), substance.Item("clasificacion_rd1272_8"), substance.Item("clasificacion_rd1272_9"), substance.Item("clasificacion_rd1272_10"), substance.Item("clasificacion_rd1272_11"), substance.Item("clasificacion_rd1272_12"), substance.Item("clasificacion_rd1272_13"), substance.Item("clasificacion_rd1272_14"), substance.Item("clasificacion_rd1272_15"))
+	frases_h = monta_frases("H", substance.Item("clasificacion_rd1272_1"), substance.Item("clasificacion_rd1272_2"), substance.Item("clasificacion_rd1272_3"), substance.Item("clasificacion_rd1272_4"), substance.Item("clasificacion_rd1272_5"), substance.Item("clasificacion_rd1272_6"), substance.Item("clasificacion_rd1272_7"), substance.Item("clasificacion_rd1272_8"), substance.Item("clasificacion_rd1272_9"), substance.Item("clasificacion_rd1272_10"), substance.Item("clasificacion_rd1272_11"), substance.Item("clasificacion_rd1272_12"), substance.Item("clasificacion_rd1272_13"), substance.Item("clasificacion_rd1272_14"), substance.Item("clasificacion_rd1272_15"))
 
-	if (frases_h <> "") then
-%>
-		<p id="ap2_clasificacion_frases_r_titulo" class="ficha_titulo_2" style="margin-bottom: -10px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases H")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='../imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Frases H</p>
-<%
-'		bucle_frases "h", frases_h
-		muestra_clasificacion 1, substance.Item("clasificacion_rd1272_1")
-		muestra_clasificacion 2, substance.Item("clasificacion_rd1272_2")
-		muestra_clasificacion 3, substance.Item("clasificacion_rd1272_3")
-		muestra_clasificacion 4, substance.Item("clasificacion_rd1272_4")
-		muestra_clasificacion 5, substance.Item("clasificacion_rd1272_5")
-		muestra_clasificacion 6, substance.Item("clasificacion_rd1272_6")
-		muestra_clasificacion 7, substance.Item("clasificacion_rd1272_7")
-		muestra_clasificacion 8, substance.Item("clasificacion_rd1272_8")
-		muestra_clasificacion 9, substance.Item("clasificacion_rd1272_9")
-		muestra_clasificacion 10, substance.Item("clasificacion_rd1272_10")
-		muestra_clasificacion 11, substance.Item("clasificacion_rd1272_11")
-		muestra_clasificacion 12, substance.Item("clasificacion_rd1272_12")
-		muestra_clasificacion 13, substance.Item("clasificacion_rd1272_13")
-		muestra_clasificacion 14, substance.Item("clasificacion_rd1272_14")
-		muestra_clasificacion 15, substance.Item("clasificacion_rd1272_15")
-	end if
+	if frases_h = "" then
+    exit sub
+  end if
+  %>
+	<p id="ap2_clasificacion_frases_r_titulo" class="ficha_titulo_2" style="margin-bottom: -10px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases H")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> H-phrases</p>
+  <span id="H_phrases">
+  <%
+	muestra_clasificacion 1, substance.Item("clasificacion_rd1272_1")
+	muestra_clasificacion 2, substance.Item("clasificacion_rd1272_2")
+	muestra_clasificacion 3, substance.Item("clasificacion_rd1272_3")
+	muestra_clasificacion 4, substance.Item("clasificacion_rd1272_4")
+	muestra_clasificacion 5, substance.Item("clasificacion_rd1272_5")
+	muestra_clasificacion 6, substance.Item("clasificacion_rd1272_6")
+	muestra_clasificacion 7, substance.Item("clasificacion_rd1272_7")
+	muestra_clasificacion 8, substance.Item("clasificacion_rd1272_8")
+	muestra_clasificacion 9, substance.Item("clasificacion_rd1272_9")
+	muestra_clasificacion 10, substance.Item("clasificacion_rd1272_10")
+	muestra_clasificacion 11, substance.Item("clasificacion_rd1272_11")
+	muestra_clasificacion 12, substance.Item("clasificacion_rd1272_12")
+	muestra_clasificacion 13, substance.Item("clasificacion_rd1272_13")
+	muestra_clasificacion 14, substance.Item("clasificacion_rd1272_14")
+	muestra_clasificacion 15, substance.Item("clasificacion_rd1272_15")
+
 	' 23/06/2014 - SPL - Por indicación de Tatiana se pone esta definición.
 	if (trim(substance.Item("clasificacion_rd1272_1"))="Expl., ****;") then
 		%>
-		<p><b>Explosiva</b>: Peligros físicos que deben confirmarse mediante ensayos</p>
+		<p><b>Explosive</b>: Physical hazards that need to be confirmed by testing</p>
 		<%
 	end if
+  %></span><%
 
 end sub
 
 ' ##################################################################################
 
 sub muestra_clasificacion(numero, clasificacion)
-	if (len(trim(clasificacion))>0) then
-		' El formato de la clasificacion es Código - Categoria: Frase H
-		array_clasificacion = split(clasificacion, ";")
-		clas_cat_peligro = trim(array_clasificacion(0))
-		if ubound(array_clasificacion)>0 then
-			frase = trim(array_clasificacion(1))
-		else frase = trim(array_clasificacion(0))
-		end if
-%>
-	    <blockquote style="margin-left: 10px; margin-bottom: -20px;">
-<%
-			descripcion = describe_frase("h", replace (frase, "*", ""))
-			' Para ver definición de los *
- 			frase = buscaDefinicionAsteriscos(frase)
+	if isEmpty(clasificacion) then
+    exit sub
+  end if
 
- 			' Las frases H??? son Gases a presión. Cambio solicitado por Tatiana en abril 2012
- 			if (frase="H???") then
-%>
-	        <b>Gases a presi&oacute;n </b>
-<%
- 			else
-%>
-	        <b><%=frase%></b>: <%= descripcion %>
-					<% if ubound(array_clasificacion)>0 then %>
-						<a href="javascript:toggle('<%= "secc-categpeligro-"+CStr(numero) %>', '<%= "img-fraseh-"+CStr(numero) %>');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="<%= "img-fraseh-"+CStr(numero) %>" alt="Pulse para ver el etiquetado" title="Pulse para ver el etiquetado" /></a>
-					<% end if %>
-	        <br/>
-    		<blockquote style="margin-left: 30px; margin-top: 12px; display:none" id="secc-categpeligro-<%=numero%>">
-<%
-				muestra_frase_clasificacion_rd1272 clas_cat_peligro
-%>
-		    </blockquote>
-<%
-			end if
-%>
-    	</blockquote>
-
-	    <br clear="all" />
-<%
+	array_clasificacion = split(clasificacion, ";")
+	clas_cat_peligro = trim(array_clasificacion(0))
+	if ubound(array_clasificacion)>0 then
+		frase = trim(array_clasificacion(1))
 	end if
+  descripcion = describe_frase_international("h", replace(frase, "*", ""), lang)
+  frase = buscaDefinicionAsteriscos(frase)
+
+  %>
+  <blockquote style="margin-left: 10px; margin-bottom: -20px;">
+  <%
+  ' Las frases H??? son Gases a presión. Cambio solicitado por Tatiana en abril 2012
+	if (frase = "H???") then
+    %><b>Gases under pressure</b><%
+	else
+  %>
+  <b><%= frase %></b>: <%= descripcion %>
+  <br/>
+	<blockquote style="margin-left: 30px; margin-top: 12px;" id="secc-categpeligro-<%=numero%>">
+    <% muestra_frase_clasificacion_rd1272 clas_cat_peligro %>
+  </blockquote>
+  <% end if %>
+	</blockquote>
+
+  <br clear="all" />
+<%
 end sub
 
 
@@ -773,23 +766,22 @@ response.write frases
 <%
 end sub
 
-
-
 sub muestra_frase_clasificacion_rd1272(frase)
-			if not(trim(frase)="") then
-				arrFrase = split(frase, ",")
-				descripcion = describe_categoria_peligro(arrFrase(0))
-				frase = arrFrase(0)
-				if (ubound(arrFrase)>0)then
-					categoria = "Cat. " + arrFrase(1)
-				else
-					categoria = ""
-				end if
-%>
-				  <b><%=frase%> (<%=buscaDefinicionAsteriscos(categoria)%>)</b>:
-		        <%= descripcion %><br />
-<%
-			end if
+  if isEmpty(frase) then
+    exit sub
+  end if
+	arrFrase = split(frase, ",")
+	frase_descripcion = describe_categoria_peligro_international(arrFrase(0), lang)
+	frase = frase_descripcion(0)
+  descripcion = frase_descripcion(1)
+	if (ubound(arrFrase)>0)then
+		categoria = "Cat. " + arrFrase(1)
+	else
+		categoria = ""
+	end if
+
+  response.write "<b>" & frase & " (" & buscaDefinicionAsteriscos(categoria) & ")</b>:&nbsp;"
+  response.write descripcion & "<br />"
 
 end sub
 
