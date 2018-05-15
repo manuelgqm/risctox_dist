@@ -75,10 +75,16 @@ function obtainFraseH(fraseHRaw, connection)
 end function
 
 function decomposeFraseH(fraseHRaw)
-	Dim result : result = split(fraseHRaw, ";")
-	result(0) = trim(result(0))
-	result(1) = trim(result(1))
-	
+	dim result : result = Array("", "")
+	dim fasesH : frasesH = split(fraseHRaw, ";")
+
+	if Ubound(frasesH) > 0 then
+		result(0) = trim(frasesH(0))
+		result(1) = trim(frasesH(1))
+	else
+		result(1) = fraseHRaw
+	end if
+
 	decomposeFraseH = result
 end function
 
