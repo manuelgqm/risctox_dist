@@ -1,13 +1,3 @@
-class PageElement
-  attr_reader :label, :value
-
-  def initialize(hash, browser)
-    @label = browser.element(:id => hash + ".label").text
-    @value = browser.element(:id => hash + ".value").text
-  end
-
-end
-
 class PageObject
 
   def initialize(browser, substance_id)
@@ -16,47 +6,51 @@ class PageObject
   end
 
   def name
-    element("name")
+    field_element("name")
   end
 
   def rd_num
-    element("rd_num")
+    field_element("rd_num")
   end
 
   def molecular_formula
-    element("molecular_formula")
+    field_element("molecular_formula")
   end
 
   def concern_trade_union_reasons
-    element("concern_trade_union_reasons")
+    field_element("concern_trade_union_reasons")
   end
 
   def synonyms
-    element("synonyms")
+    field_element("synonyms")
   end
 
   def cas_num
-    element("cas_num")
+    field_element("cas_num")
   end
 
   def ec_einecs_num
-    element("ec_einecs_num")
+    field_element("ec_einecs_num")
   end
 
   def groups
-    element("groups")
+    field_element("groups")
   end
 
   def uses
-    element("uses")
+    field_element("uses")
   end
 
   def icsc_nums
-    element("icsc_nums")
+    field_element("icsc_nums")
   end
 
   def trade_name
-    element("trade_name")
+    field_element("trade_name")
+  end
+
+  def rd1272_symbols
+    element("rd1272_symbols")
   end
 
   def toggle(element_id)
@@ -70,7 +64,29 @@ class PageObject
   end
 
   private
+
+  def field_element(id)
+    return PageField.new(id, @browser)
+  end
+
   def element(id)
     return PageElement.new(id, @browser)
+  end
+end
+
+class PageField
+  attr_reader :label, :value
+
+  def initialize(hash, browser)
+    @label = browser.element(:id => hash + ".label").text
+    @value = browser.element(:id => hash + ".value").text
+  end
+end
+
+class PageElement
+  attr_reader :text
+
+  def initialize(id, browser)
+    @text = browser.element(:id => id).text
   end
 end

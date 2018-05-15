@@ -434,6 +434,7 @@ end function
 function describe_simbolo(byval simbolo)
 	' Devuelve la descripción del símbolo consultando la base de datos
 	sql="SELECT descripcion FROM dn_simbolos WHERE simbolo='"&trim(simbolo)&"'"
+
 	set objRst=objConnection2.execute(sql)
 
 	if (objRst.eof) then
@@ -446,6 +447,30 @@ function describe_simbolo(byval simbolo)
 	set objRst=nothing
 
 	describe_simbolo = descripcion
+end function
+
+function get_symbol_description(byval simbolo, lang)
+	' Devuelve la descripción del símbolo consultando la base de datos
+	dim description_field_name : description_field_name = "descripcion"
+
+	if lang = "en" then
+		description_field_name = "descripcion_ing"
+	end if
+
+	sql = "SELECT " & description_field_name & " FROM dn_simbolos WHERE simbolo='" & trim(simbolo) & "'"
+
+	set objRst=objConnection2.execute(sql)
+
+	if (objRst.eof) then
+		descripcion = ""
+	else
+		descripcion = objRst(description_field_name)
+	end if
+
+	objRst.close()
+	set objRst = nothing
+
+	get_symbol_description = descripcion
 end function
 
 ' #############################################################################
@@ -823,7 +848,7 @@ function esta_en_lista(byval lista, byval id_sustancia)
 
 		case "cancer_otras": ' Cancerígena según otras fuentes
       sql_lista = parentesis_where(sql_lista_cancer_otras) & " OR ("&monta_condicion_grupo("asoc_cancer_otras")&") )"
-			
+
 		case "cancer_otras_excepto_grupo_4":
       sql_lista = parentesis_where(sql_lista_cancer_otras) & " OR ("&monta_condicion_grupo("asoc_cancer_otras")&") ) AND dn_risc_sustancias_cancer_otras.categoria_cancer_otras not like '%G-A4%'"
 
@@ -983,7 +1008,7 @@ function esta_en_lista(byval lista, byval id_sustancia)
 
 		case "pesticidas_prohibidas":
 			sql_lista = parentesis_where(sql_lista_pesticidas_prohibidas) & "(sus.id=pesticidas_prohibidas.id_sustancia)  OR ("&monta_condicion_grupo("asoc_pesticidas_prohibidas")&"))"
-			
+
 		case "corap"
 			sql_lista = sql_lista_corap & "(sus.id = sustancias_corap.id_sustancia)"
 
@@ -995,7 +1020,7 @@ function esta_en_lista(byval lista, byval id_sustancia)
 	'if lista="alemana" then response.write sql_lista
 	'response.write "<br /><br />"&lista&": "&sql_lista
 	'response.write "<!--"&sql_lista&"-->"
-	
+
 	set obj_rst_lista = objConnection2.execute(sql_lista)
 	if (obj_rst_lista.eof) then
 		esta = false

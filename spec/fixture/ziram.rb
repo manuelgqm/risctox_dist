@@ -4,6 +4,8 @@ class Ziram
   attr_reader :id
   attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups
   attr_reader :uses, :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
+  attr_reader :rd1272_symbols
+
   def initialize(substance_id)
     @id = substance_id
     @name = "ziram"
@@ -99,6 +101,7 @@ class Ziram
     @rd_num = "006-012-00-2"
     @molecular_formula = "C6H12N2S4Zn"
     @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, sensitizer, may cause long term adverse effects in the aquatic environment"
+    @rd1272_symbols = ["Acute toxicity (oral, dermal, inhalation)", "Respiratory sensitisation", "Corrosive to metals", "Hazardous to the aquatic environment", "Danger"]
   end
 
 end

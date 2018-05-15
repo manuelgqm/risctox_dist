@@ -29,19 +29,21 @@ if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indic
 
 dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
 
+dim lang : lang = "en"
+
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>ISTAS: risctox</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>RISCTOX: Toxic and hazardous substances database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="Title" content="Risctox" />
-<meta name="Author" content="SPL Sistemas de Información, SL - www.spl-ssi.com" />
-<meta name="description" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Subject" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Keywords" content="Información, formación y asesoramiento sobre medio ambiente para trabajadores de PYME" />
-<meta name="Language" content="Spanish" />
+<meta name="Author" content="SPL Sistemas de Informaci&oacute;n - www.spl-ssi.com" />
+<meta name="description" content="RISCTOX: Toxic and hazardous substances database" />
+<meta name="Subject" content="RISCTOX: Toxic and hazardous substances database" />
+<meta name="Keywords" content="RISCTOX: Toxic and hazardous substances database" />
+<meta name="Language" content="English" />
 <meta name="Revisit" content="15 days" />
 <meta name="Distribution" content="Global" />
 <meta name="Robots" content="All" />
@@ -491,36 +493,30 @@ sub ap2_clasificacion_rd1272()
 %>
 	<!-- ################ Clasificación ###################### -->
 	<table id="tabla_clasificacionm_rd1272" class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
-  <tr>
-		<td class="celdaabajo" colspan="2" align="center">
-			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">
-        <a onclick=window.open('ver_definicion.asp?id=280', 'def', 'width=300, height=200, scrollbars=yes, resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' />
-        </a>
-        <span id="1271_classification.label">
-          CLASIFICACIÓN Y ETIQUETADO (Reglamento 1272/2008)
-	         <a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
-         </span>
+    <tr><td class="celdaabajo" colspan="2" align="center">
+			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=280','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+      &nbsp;<span id="1272_classification.label">CLASSIFICATION AND LABELLING (Regulation 1272/2008)</span>
+			<a href="javascript:toggle('secc-clasificacion-rd1272', 'img-mas_clasificacion-rd1272');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-rd1272" alt="Click for more information" title="Click for more information" /></a>
 			</td></tr></table>
-		</td>
-	</tr>
-	<!-- Simbolos y frases H -->
-	<tr><td>
-		<table id="secc-clasificacion-rd1272" style="display:none">
-			<tr>
-				<td valign="top">
-					<% ap2_clasificacion_simbolos_rd1272() %>
-				</td>
-				<td valign="top">
-					<% ap2_clasificacion_frases_h() %>
-					<br>
-					<% ap2_clasificacion_notas_rd1272() %>
-					<br>
-					<% ap2_clasificacion_etiquetado_rd1272() %>
-				</td>
-			</tr>
+		</td></tr>
 
-		</table>
-	</td></tr>
+    <!-- Simbolos y frases H -->
+  	<tr><td>
+  		<table id="secc-clasificacion-rd1272" style="display:none">
+  			<tr>
+  				<td valign="top">
+  					<% ap2_clasificacion_simbolos_rd1272() %>
+  				</td>
+  				<td valign="top">
+  					<% ap2_clasificacion_frases_h() %>
+  					<br>
+  					<% ap2_clasificacion_notas_rd1272() %>
+  					<br>
+  					<% ap2_clasificacion_etiquetado_rd1272() %>
+  				</td>
+  			</tr>
+  		</table>
+  	</td></tr>
 	</table>
 <%
 	end if
@@ -540,7 +536,7 @@ sub ap2_clasificacion_simbolos()
 		for i=0 to ubound(array_simbolos)
 			simbolo = trim(array_simbolos(i))
 			imagen = imagen_simbolo(simbolo)
-			descripcion = describe_simbolo(simbolo)
+			descripcion = get_symbol_description(simbolo, lang)
       if (trim(simbolo) <> "") then
 %>
 			<img src="../imagenes/pictogramas/<%= imagen %>" title="<%= simbolo %>; <%= descripcion %>" width="75px" /><br/>
@@ -557,38 +553,35 @@ end sub ' ap2_clasificacion_simbolos
 ' ##################################################################################
 
 sub ap2_clasificacion_simbolos_rd1272()
-	if (substance.Item("simbolos_rd1272") <> "") then
-%>
-		<p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Pictogramas y palabras de advertencia</p>
-		<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
-<%
-		' Tiene símbolos, muestro cada uno
-		substance.Item("simbolos") = replace(substance.Item("simbolos_rd1272"), ",", ";")
-		array_simbolos = split(substance.Item("simbolos"), ";")
-		for i=0 to ubound(array_simbolos)
-			simbolo = trim(array_simbolos(i))
-			imagen = ""
-			descripcion = ""
-			if (left(simbolo,3) = "GHS") then
-				imagen = imagen_simbolo(simbolo)
-				descripcion = describe_simbolo(simbolo)
-			else ' Peligro
-				descripcion = "<b style='background-color:red;color:#FFF;'>"+simbolo+"</b>"
-			end if
-			if (imagen<>"") then
-%>
-			<img src="../imagenes/pictogramas/<%= imagen %>" title="<%= simbolo %>; <%= descripcion %>" width="75px" /><br/>
-<%
-			end if
-%>
-			<%= descripcion %>
-			<br/><br/>
-<%
-		next
-%>
-		</p>
-<%
-	end if
+	if (substance.Item("simbolos_rd1272") = "") then
+    exit sub
+  end if
+
+  substance.Item("simbolos") = replace(substance.Item("simbolos_rd1272"), ",", ";")
+	array_simbolos = split(substance.Item("simbolos"), ";")
+  symbols_html = ""
+	for i=0 to ubound(array_simbolos)
+		simbolo = trim(array_simbolos(i))
+		imagen = ""
+		descripcion = ""
+		if left(simbolo, 3) = "GHS" then
+			imagen = imagen_simbolo(simbolo)
+			descripcion = get_symbol_description(simbolo, lang)
+		else ' Peligro
+			descripcion = "<b style='background-color:red;color:#FFF;'>" + traduceSimbolo(simbolo) + "</b>"
+		end if
+		if imagen <> "" then
+      symbols_html = symbols_html & "<img src='../imagenes/pictogramas/" & imagen  & "' title='" & simbolo & "; " & descripcion & "'' width='75px' /><br/>"
+		end if
+    symbols_html = symbols_html & descripcion & "<br/><br/>"
+	next
+
+  %>
+  <p id="ap2_clasificacion_simbolos_titulo" class="ficha_titulo_2">Pictograms and signal words</p>
+	<p id="ap2_clasificacion_simbolos_cuerpo" class="texto" align="center">
+    <span id="rd1272_symbols"><%= symbols_html %></span>
+	</p>
+  <%
 end sub ' ap2_clasificacion_simbolos_rd1272
 
 ' ##################################################################################
@@ -3164,5 +3157,50 @@ function aplana(byval cadena)
   cadena = quitartildes(cadena)
   cadena = replace(cadena, " ", "")
   aplana = cadena
+end function
+
+function traduceSimbolo(s)
+	s = replace(s, "Peligro","Danger")
+	s = replace(s, "Atención","Warning")
+	traduceSimbolo = s
+end function
+
+function traduceEtiquetado(s)
+	s = replace(s, "Expl. inest.","Unst. Expl")
+	s = replace(s, "Expl.","Expl.")
+	s = replace(s, "Gas infl.","Flam. Gas")
+	s = replace(s, "Aerosol infl.","")
+	s = replace(s, "Gas comb.","Ox. Gas")
+	s = replace(s, "Gas a pres.","Press. Gas")
+	s = replace(s, "Líq. infl.","Flam. Liq.")
+	s = replace(s, "Sól. infl.","Flam. Sol.")
+	s = replace(s, "Autorreact.","Self-react.")
+	s = replace(s, "Líq. pir.","Pyr. Liq.")
+	s = replace(s, "Sól. pir.","Pyr. Sol.")
+	s = replace(s, "Calent. esp.","Self-heat.")
+	s = replace(s, "Reac. agua","Water-react.")
+	s = replace(s, "Líq. comb.","Ox. Liq.")
+	s = replace(s, "Sól. comb.// Ojo","Ox. Sol.")
+	s = replace(s, "Sól. comb.// ","Oxid. Sol.")
+	s = replace(s, "Peróx. org.","Org. Perox.")
+	s = replace(s, "Corr. met.","Met. Corr.")
+	s = replace(s, "Tox. ag.","Acute Tox.")
+	s = replace(s, "Corr. cut.","Skin Corr.")
+	s = replace(s, "Irrit. cut.","Skin Irrit.")
+	s = replace(s, "Les. oc.","Eye Dam.")
+	s = replace(s, "Irrit. oc.","Eye Irrit.")
+	s = replace(s, "Sens. resp.","Resp. Sens.")
+	s = replace(s, "Sens. cut.","Skin Sens.")
+	s = replace(s, "Muta.","Muta.")
+	s = replace(s, "Carc.","Carc.")
+	s = replace(s, "Repr.","Repr.")
+	s = replace(s, "Lact.","Lact.")
+	s = replace(s, "STOT única","STOT SE")
+	s = replace(s, "STOT repe.","STOT RE")
+	s = replace(s, "Tox. asp.","Asp. Tox.")
+	s = replace(s, "Acuático agudo.","Aquatic Acute")
+	s = replace(s, "Acuático crónico.","Aquatic Chronic")
+	s = replace(s, "Ozono","Ozone")
+	traduceEtiquetado = s
 end function
 %>

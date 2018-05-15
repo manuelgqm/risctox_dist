@@ -54,7 +54,7 @@ describe "'hydrogen cyanide' substance card" do
     expect(@page.icsc_nums.value).to include_all @hydrogen_cyanide.icsc_nums
   end
 
-  it "should had addition information" do
+  it "must have valid additional information" do
     additional_information_text = @browser.span(:id => "additional_information.label").text
     expect(additional_information_text).to include "Additional information"
 
@@ -67,6 +67,11 @@ describe "'hydrogen cyanide' substance card" do
     @page.toggle("secc-concern_trade_union_list")
     expect(@page.concern_trade_union_reasons.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
     expect(@page.concern_trade_union_reasons.value).to include @hydrogen_cyanide.concern_trade_union_reasons
+  end
+
+  it "must have valid rd1272 classification" do
+    @page.toggle("secc-clasificacion-rd1272")
+    expect(@page.rd1272_symbols.text).to include_all @hydrogen_cyanide.rd1272_symbols
   end
 
 end
@@ -131,6 +136,11 @@ describe "'ziram' substance card" do
     @page.toggle("secc-concern_trade_union_list")
     expect(@page.concern_trade_union_reasons.label).to include "This substance is included in the List of Substances of concern for Trade Unions for the following reasons:"
     expect(@page.concern_trade_union_reasons.value).to include @ziram.concern_trade_union_reasons
+  end
+
+  it "must have valid rd1272 classification" do
+    @page.toggle("secc-clasificacion-rd1272")
+    expect(@page.rd1272_symbols.text).to include_all @ziram.rd1272_symbols
   end
 
 end

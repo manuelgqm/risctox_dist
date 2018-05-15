@@ -2,6 +2,7 @@ class Hydrogen_cyanide
   attr_reader :id
   attr_reader :name, :synonyms, :cas_num, :ce_einecs_num, :groups, :uses
   attr_reader :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
+  attr_reader :rd1272_symbols
 
   def initialize(substance_id)
     @id = substance_id
@@ -16,6 +17,7 @@ class Hydrogen_cyanide
     @rd_num = "006-006-00-X"
     @molecular_formula = "CHN"
     @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, may cause long term adverse effects in the aquatic environment"
+    @rd1272_symbols = ["Flammable gases", "Acute toxicity (oral, dermal, inhalation)", "Hazardous to the aquatic environment", "Danger"]
   end
 
 end
