@@ -336,7 +336,7 @@ sub ap1_identificacion()
 						if (mid(num_ce_einecs, 1, 1) = "4" and substance.Item("num_ce_elincs") <> "") then
 							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.Item("num_ce_elincs") & "</span><br/>"
 						else
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_einecs_num.label'>EC EINECS</span></b>:&bnsp;<span id='ec_einecs_num.value'>" & substance.Item("num_ce_einecs") & "</span><br/>"
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_einecs_num.label'>EC EINECS</span></b>:&nbsp;<span id='ec_einecs_num.value'>" & substance.Item("num_ce_einecs") & "</span><br/>"
 						end if
 					elseif (substance.Item("num_ce_elincs") <> "") then
 						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.Item("num_ce_elincs") & "</span><br/>"
@@ -917,61 +917,57 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_etiquetado_rd1272()
-	' Muestra el etiquetado
 
-	if ((substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "")) then
+	if not ((substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "")) then
+    exit sub
+  end if
 
-%>
-	<span id="ap2_clasificacion_etiquetado_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=279','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> Etiquetado <% plegador "secc-etiquetado_rd1272", "img-etiquetado-rd1272" %></span>
+  %>
+	<span id="ap2_clasificacion_etiquetado_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=279','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>&nbsp;Labeling&nbsp;</span>
 
+  <fieldset id="secc-etiquetado_rd1272" style="margin: 15px 45px;">
+  <span id="rd1272_labeling">
+   <%
+  	if (substance.Item("conc_rd1272_1") & substance.Item("conc_rd1272_2"))<>"" then
+  		if (substance.Item("conc_rd1272_1")) = "" then
+  			if substance.Item("eti_conc_rd1272_1") <> "" then
+  			   response.write "Factor " & substance.Item("eti_conc_rd1272_1")
+  			end if
+  		end if
 
-  <fieldset id="secc-etiquetado_rd1272" style="display:none; margin: 15px 45px;">
-<%
-	if (substance.Item("conc_rd1272_1") & substance.Item("conc_rd1272_2"))<>"" then
-		if (substance.Item("conc_rd1272_1"))="" then
-			if substance.Item("eti_conc_rd1272_1")<>"" then
-%>
-			Factor <%= substance.Item("eti_conc_rd1272_1") %>
-<%
-			end if
-		end if
-
-%>
-	<table cellspacing="0" cellpadding="3" width="100%" align="center">
-		<tr>
-			<th class="subtitulo3 celdaabajo">Concentración</th><th class="subtitulo3 celdaabajo">Etiquetado</th>
-		</tr>
-<%
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_1"), substance.Item("eti_conc_rd1272_1")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_2"), substance.Item("eti_conc_rd1272_2")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_3"), substance.Item("eti_conc_rd1272_3")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_4"), substance.Item("eti_conc_rd1272_4")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_5"), substance.Item("eti_conc_rd1272_5")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_6"), substance.Item("eti_conc_rd1272_6")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_7"), substance.Item("eti_conc_rd1272_7")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_8"), substance.Item("eti_conc_rd1272_8")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_9"), substance.Item("eti_conc_rd1272_9")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_10"), substance.Item("eti_conc_rd1272_10")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_11"), substance.Item("eti_conc_rd1272_11")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_12"), substance.Item("eti_conc_rd1272_12")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_13"), substance.Item("eti_conc_rd1272_13")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_14"), substance.Item("eti_conc_rd1272_14")
-	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_15"), substance.Item("eti_conc_rd1272_15")
-%>
-	</table>
-<%
-	else
-		if substance.Item("eti_conc_rd1272_1")<>"" then
-%>
-			Factor <%= substance.Item("eti_conc_rd1272_1") %>
-<%
-		end if
-	end if
-%>
+      %>
+    	<table cellspacing="0" cellpadding="3" width="100%" align="center">
+    		<tr>
+    			<th class="subtitulo3 celdaabajo">Concentration</th><th class="subtitulo3 celdaabajo">Labeling</th>
+    		</tr>
+      <%
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_1"), substance.Item("eti_conc_rd1272_1")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_2"), substance.Item("eti_conc_rd1272_2")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_3"), substance.Item("eti_conc_rd1272_3")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_4"), substance.Item("eti_conc_rd1272_4")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_5"), substance.Item("eti_conc_rd1272_5")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_6"), substance.Item("eti_conc_rd1272_6")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_7"), substance.Item("eti_conc_rd1272_7")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_8"), substance.Item("eti_conc_rd1272_8")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_9"), substance.Item("eti_conc_rd1272_9")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_10"), substance.Item("eti_conc_rd1272_10")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_11"), substance.Item("eti_conc_rd1272_11")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_12"), substance.Item("eti_conc_rd1272_12")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_13"), substance.Item("eti_conc_rd1272_13")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_14"), substance.Item("eti_conc_rd1272_14")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_15"), substance.Item("eti_conc_rd1272_15")
+      %>
+  	</table>
+    <%
+  	else
+  		if substance.Item("eti_conc_rd1272_1")<>"" then
+  			response.write "Factor " & substance.Item("eti_conc_rd1272_1")
+  		end if
+  	end if
+    %>
+  </span>
   </fieldset>
-
-<%
-	end if
+  <%
 end sub
 
 

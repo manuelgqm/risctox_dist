@@ -4,7 +4,7 @@ class Ziram
   attr_reader :id
   attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups
   attr_reader :uses, :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
-  attr_reader :rd1272_symbols, :H_phrases
+  attr_reader :rd1272_symbols, :H_phrases, :rd1272_labeling
 
   def initialize(substance_id)
     @id = substance_id
@@ -103,6 +103,7 @@ class Ziram
     @concern_trade_union_reasons = "Endocrine disrupter, neurotoxic, sensitizer, may cause long term adverse effects in the aquatic environment"
     @rd1272_symbols = ["Acute toxicity (oral, dermal, inhalation)", "Respiratory sensitisation", "Corrosive to metals", "Hazardous to the aquatic environment", "Danger"]
     @H_phrases = ["H330: Fatal if inhaled", "Acute Tox. (Cat. 2 *): Acute toxicity", "H302: Harmful if swallowed", "Acute Tox. (Cat. 4 *): Acute toxicity", "H373 **: May cause damage to organs through prolonged or repeated exposure", "STOT RE (Cat. 2 *): Specific target organ toxicity - repeated exposure", "H335: May cause respiratory irritation", "STOT SE (Cat. 3): Specific target organ toxicity - single exposure", "H318: Causes serious eye damage", "Eye Dam. (Cat. 1): Serious eye damage/eye irritation", "H317: May cause an allergic skin reaction", "Skin Sens. (Cat. 1): Respiratory/skin sensitization", "H400: Very toxic to aquatic life", "Aquatic Acute (Cat. 1): Hazardous to the aquatic environment", "H410: Very toxic to aquatic life with long lasting effects", "Aquatic Chronic (Cat. 1): Hazardous to the aquatic environment"]
+    @rd1272_labeling = ["Factor M = 100"]
   end
 
 end

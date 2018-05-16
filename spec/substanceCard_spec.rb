@@ -143,6 +143,7 @@ describe "'ziram' substance card" do
     @page.toggle("secc-clasificacion-rd1272")
     expect(@page.rd1272_symbols.text).to include_all @ziram.rd1272_symbols
     expect(@page.H_phrases.text).to include_all @ziram.H_phrases
+    expect(@page.rd1272_labeling.text).to include_all @ziram.rd1272_labeling
   end
 
 end

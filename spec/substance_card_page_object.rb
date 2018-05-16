@@ -57,6 +57,10 @@ class PageObject
     element("H_phrases")
   end
 
+  def rd1272_labeling
+    element("rd1272_labeling")
+  end
+
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
     element = @browser.element(:id => element_id)
@@ -64,7 +68,7 @@ class PageObject
   end
 
   def go
-    @browser.goto("http://localhost:8081/en/dn_risctox_ficha_sustancia.asp?id_sustancia=" + @substance_id.to_s)
+    @browser.goto("http://localhost:8081/en/dn_risctox_ficha_sustancia_new.asp?id_sustancia=" + @substance_id.to_s)
   end
 
   private
