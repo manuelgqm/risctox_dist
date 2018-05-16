@@ -928,7 +928,7 @@ sub ap2_clasificacion_etiquetado_rd1272()
   <fieldset id="secc-etiquetado_rd1272" style="margin: 15px 45px;">
   <span id="rd1272_labeling">
    <%
-  	if (substance.Item("conc_rd1272_1") & substance.Item("conc_rd1272_2"))<>"" then
+  	if not isEmpty(substance.Item("conc_rd1272_1")) or not isEmpty(substance.Item("conc_rd1272_2")) then
   		if (substance.Item("conc_rd1272_1")) = "" then
   			if substance.Item("eti_conc_rd1272_1") <> "" then
   			   response.write "Factor " & substance.Item("eti_conc_rd1272_1")
@@ -979,32 +979,30 @@ sub ap2_clasificacion_etiquetado_fila(tipo_frase, byval c, byval e)
 	  c = replace (c, ">", "&gt;")
 
 	  if (c <> "") and (e <> "") then
-%>
+      %>
 			<tr>
 				<td class="celdaabajo"><%= h(c) %></td><td class="celdaabajo"><%= h(traduceEtiquetado(e)) %> </td>
 			</tr>
-<%
+      <%
 	  end if
-  else
-  	if (not isnull(e) and e = "*") then
-%>
-			<tr>
-				<td class="celdaabajo" colspan="2">
-				This entry has specific concentration limits for acute toxicity according to RD 363/1995 which can not "be matched" with the concentration limits under the CLP Regulation (by reference, see the section on classification labeling (RD 363/1995) of the substance).
-				</td>
-			</tr>
-<%
-  	end if
+
+    exit sub
   end if
+
+	if e = "*" then
+    %>
+		<tr>
+			<td class="celdaabajo" colspan="2">
+			This entry has specific concentration limits for acute toxicity according to RD 363/1995 which can not "be matched" with the concentration limits under the CLP Regulation (by reference, see the section on classification labeling (RD 363/1995) of the substance).
+			</td>
+		</tr>
+    <%
+	end if
 end sub
-
-
 
 ' ****************
 ' INICIO DE LISTAS RELACIONADAS
 ' ****************
-
-
 
 ' ##################################################################################
 ' VALORES LÍMITE
