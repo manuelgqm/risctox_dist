@@ -1,5 +1,3 @@
-require 'watir'
-
 class Ziram
   attr_reader :id
   attr_reader :name, :synonyms, :trade_names, :cas_num, :ec_einecs_num, :groups

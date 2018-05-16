@@ -981,7 +981,7 @@ sub ap2_clasificacion_etiquetado_fila(tipo_frase, byval c, byval e)
 	  if (c <> "") and (e <> "") then
 %>
 			<tr>
-				<td class="celdaabajo"><%= h(c) %></td><td class="celdaabajo"><%= h(e) %> <a onClick="window.open('busca_frases_<%=tipo_frase%>.asp?id=<%=e%>','fr','width=300,height=200,scrollbars=yes,resizable=yes')" style="text-decoration:none;cursor:pointer"><img src="imagenes/ayuda.gif" border="0" align="absmiddle" alt="busca Frases R"></a></td>
+				<td class="celdaabajo"><%= h(c) %></td><td class="celdaabajo"><%= h(traduceEtiquetado(e)) %> </td>
 			</tr>
 <%
 	  end if
@@ -990,7 +990,7 @@ sub ap2_clasificacion_etiquetado_fila(tipo_frase, byval c, byval e)
 %>
 			<tr>
 				<td class="celdaabajo" colspan="2">
-				Esta entrada tiene límites de concentración específicos para la toxicidad aguda conforme al RD 363/1995 que no pueden «hacerse corresponder» con los límites de concentración con arreglo al Reglamento CLP (como referencia, ver etiquetado del apartado de clasificación (RD 363/1995) de la sustancia).
+				This entry has specific concentration limits for acute toxicity according to RD 363/1995 which can not "be matched" with the concentration limits under the CLP Regulation (by reference, see the section on classification labeling (RD 363/1995) of the substance).
 				</td>
 			</tr>
 <%

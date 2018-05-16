@@ -2,6 +2,7 @@ require 'watir'
 require_relative 'support/include_all_matcher'
 require_relative 'fixture/ziram'
 require_relative 'fixture/hydrogen_cyanide'
+require_relative 'fixture/carbon_disulphide'
 require_relative 'substance_card_page_object'
 
 browser = Watir::Browser.new :chrome, headless: true
@@ -146,4 +147,17 @@ describe "'ziram' substance card" do
     expect(@page.rd1272_labeling.text).to include_all @ziram.rd1272_labeling
   end
 
+end
+
+describe "'carbon disulphide' substance card" do
+  before(:all) do
+    @carbon_disulphide = Carbon_disulphide.new()
+    @page = PageObject.new(@browser, @carbon_disulphide.id)
+    @page.go
+  end
+
+  it "muts have valid rd1272 classification" do
+    @page.toggle("secc-clasificacion-rd1272")
+    expect(@page.rd1272_labeling.text).to include_all @carbon_disulphide.rd1272_labeling
+  end
 end
