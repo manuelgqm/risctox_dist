@@ -1527,43 +1527,56 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		<%
 				end if
 
-
-
-				' IARC -----------------------------------------------------------------------
-				if (mySubstance.inList("cancer_iarc")) then
-		%>
+        if (mySubstance.inList("cancer_iarc")) then
+		      %>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según IARC <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
-		<%
+						<legend class="subtitulo3"><strong><span id="carcinogen_iarc">According to IARC </span><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+	          <%
 						if (trim(substance.Item("grupo_iarc")) <> "") or (trim(substance.Item("volumen_iarc")) <> "") or (trim(substance.Item("notas_iarc")) <> "") then
-		%>
+	          %>
 							<blockquote>
 							<table>
-		<%
+              <%
 							if (trim(substance.Item("grupo_iarc")) <> "") then
-		%>
-								<tr><td class="subtitulo3">Grupo:</td><td><%=trim(replace(ucase(substance.Item("grupo_iarc")), "GRUPO", ""))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(substance.Item("grupo_iarc")))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></td></tr>
-		<%
+	            %>
+								<tr>
+                  <td class="subtitulo3">Group:</td>
+                  <td>
+                      <span id="carcinogen_iarc_group">
+                        <%= trim(replace(ucase(substance.Item("grupo_iarc")), "GRUPO", ""))%>
+                      </span>
+                      &nbsp;<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(substance.Item("grupo_iarc")))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+                  </td>
+                </tr>
+              <%
 							end if
 
 							if (trim(substance.Item("volumen_iarc")) <> "") then
-		%>
-								<tr><td class="subtitulo3">Volumen:</td><td><%=substance.Item("volumen_iarc")%></td></tr>
-		<%
+              %>
+								<tr>
+                  <td class="subtitulo3">Volume:</td>
+                  <td><span id="carcinogen_iarc_volume"><%= substance.Item("volumen_iarc") %></span></td>
+                </tr>
+              <%
 							end if
+
 							if (trim(substance.Item("notas_iarc")) <> "") then
-		%>
-								<tr><td class="subtitulo3">Notas:</td><td><%=substance.Item("notas_iarc")%></td></tr>
-		<%
+	            %>
+								<tr>
+                  <td class="subtitulo3">Notes:</td>
+                  <td><span id="carcinogen_iarc_notes"><%= substance.Item("notas_iarc") %></span></td>
+                </tr>
+              <%
 							end if
-		%>
+	            %>
 							</table>
 							</blockquote>
-		<%
+              <span>
+            <%
 						end if
-		%>
+	          %>
 					</fieldset>
-		<%
+        <%
 				end if
 
 				' Otras fuentes

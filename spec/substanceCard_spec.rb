@@ -15,7 +15,7 @@ RSpec.configure do |config|
   config.after(:suite) { browser.close unless browser.nil? } # only used on headed browser option
 end
 
-describe "'hydrogen cyanide' substance card" do
+xdescribe "'hydrogen cyanide' substance card" do
   before(:all) do
     @hydrogen_cyanide = Hydrogen_cyanide.new(953980)
     @page = PageObject.new(@browser, @hydrogen_cyanide.id)
@@ -81,7 +81,7 @@ describe "'hydrogen cyanide' substance card" do
 
 end
 
-describe "'ziram' substance card" do
+xdescribe "'ziram' substance card" do
   before(:all) do
     @ziram = Ziram.new(954057)
     @page = PageObject.new(@browser, @ziram.id)
@@ -152,7 +152,7 @@ describe "'ziram' substance card" do
 
 end
 
-describe "'carbon disulphide' substance card" do
+xdescribe "'carbon disulphide' substance card" do
   before(:all) do
     @carbon_disulphide = Carbon_disulphide.new()
     @page = PageObject.new(@browser, @carbon_disulphide.id)
@@ -165,7 +165,7 @@ describe "'carbon disulphide' substance card" do
   end
 end
 
-describe "'Glycinato_cadmium' substance card" do
+xdescribe "'Glycinato_cadmium' substance card" do
   before(:all) do
     @glycinato_cadmium = Glycinato_cadmium.new()
     @page = PageObject.new(@browser, @glycinato_cadmium.id)
@@ -188,7 +188,12 @@ describe "'Cadmium' substance card" do
 
   it "must have valid carcinogenic classifications" do
     @page.toggle("secc-Cancerigeno")
+
     expect(@page.carcinogen_rd1272.label).to include "According to R. 1272/2008"
     expect(@page.carcinogen_rd1272.value).to include_all @cadmium.carcinogen_rd1272
+
+    expect(@page.carcinogen_iarc.text).to include "According to IARC"
+    expect(@page.carcinogen_iarc_group.text).to include @cadmium.carcinogen_iarc_group
+    expect(@page.carcinogen_iarc_volume.text).to include @cadmium.carcinogen_iarc_volume
   end
 end
