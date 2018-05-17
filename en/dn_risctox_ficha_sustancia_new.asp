@@ -1105,29 +1105,51 @@ sub ap3_riesgos()
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
-		<br />
+    <br />
 		<div id="ficha">
 		<table width="100%" cellpadding=5>
 			<tr>
 				<td>
-					<a name="identificacion"></a><img src="imagenes/risctox02.gif" alt="Riesgos específicos para la salud" />
+					<a name="identificacion"></a><img src="imagenes/risctox02.gif" alt="Health effects" />
 				</td>
 				<td align="right">
-					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
+					<a href="#"><img src="../imagenes/subir.gif" border=0 alt=subir></a>
 				</td>
 			</tr>
 		</table>
 
 <%
-		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then ap3_riesgos_tabla("Cancerígeno") end if
-		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then ap3_riesgos_tabla("Mutágeno") end if
+		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then
+      ap3_riesgos_tabla("Cancerígeno")
+    end if
 
-		if mySubstance.inList("de") then ap3_riesgos_tabla("Disruptor endocrino") end if
-		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then ap3_riesgos_tabla("Neurotóxico") end if
-		if mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("sensibilizante_reach") then ap3_riesgos_tabla("Sensibilizante") end if
-		if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then ap3_riesgos_tabla("Tóxico para la reproducción") end if
-		if mySubstance.inList("eepp") then ap3_riesgos_enfermedades() end if
-    	if mySubstance.inList("salud") then ap7_salud() end if
+		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then
+      ap3_riesgos_tabla("Mutágeno")
+    end if
+
+		if mySubstance.inList("de") then
+      ap3_riesgos_tabla("Disruptor endocrino")
+    end if
+
+		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then
+      ap3_riesgos_tabla("Neurotóxico")
+    end if
+
+    if mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("sensibilizante_reach") then
+      ap3_riesgos_tabla("Sensibilizante")
+    end if
+
+    if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then
+      ap3_riesgos_tabla("Tóxico para la reproducción")
+    end if
+
+    if mySubstance.inList("eepp") then
+      ap3_riesgos_enfermedades()
+    end if
+
+  	if mySubstance.inList("salud") then
+      ap7_salud()
+    end if
 %>
 
 		<%
@@ -1260,7 +1282,7 @@ sub ap3_riesgos_tabla(byval tipo)
 	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
    	<tr>
 			<td class="celdaabajo" colspan="2" align="center">
-				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><% ap3_riesgos_tabla_ayuda(tipo) %><%=tipo%>
+				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><% ap3_riesgos_tabla_ayuda(tipo) %><%= traduceRiesgo(tipo) %>
 
         <% if ((tipo <> "COV") and (tipo <> "Vertidos") and (tipo <> "IPPC (PRTR Agua)") and (tipo <> "IPPC (PRTR Aire)") and (tipo <> "IPPC (PRTR Suelo)") and (tipo <> "Residuos Peligrosos") and (tipo <> "Accidentes Graves") and (tipo <> "Emisiones Atmosféricas") ) then %>
 
@@ -1415,102 +1437,62 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	select case tipo
 
 	case "Accidente Grave"
-	%>
+    Response.Write "SEVESO (major-accidents)"
 
-    Accidente Grave
-
-
-<%
 	case "Contaminante de suelos"
-	%>
+    Response.Write "According to <a href='http://www.istas.net/web/abreenlace.asp?idenlace=2940' target='_blank'>Spanish RD 9/2005</a>"
 
-    Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2940" target="_blank">Real Decreto 9/2005</a>
-
-
-<%
-
-
-    case "Contaminante Orgánico Persistente (COP)":
-
-%>
-
+  case "Contaminante Orgánico Persistente (COP)":
+    %>
     <fieldset>
-
-      <legend class="subtitulo3"><strong>Según Convenio de Estocolmo</strong></legend>
-
+      <legend class="subtitulo3"><strong>According to Stockholm Convention</strong></legend>
       <ul>
+        <%
+        if isNull(substance.Item("cop")) then
+          substance.Item("cop") = ""
+        end if
 
-<%
+        array_anexos = split(substance.Item("cop"), ";")
+        for i=0 to ubound(array_anexos)
+          Response.Write "<li>" & dame_definicion("COP Anexo " & trim(array_anexos(i))) & "</li>"
+        next
 
-      if isNull(substance.Item("cop")) then
-
-        substance.Item("cop") = ""
-
-      end if
-
-
-
-      array_anexos = split(substance.Item("cop"), ";")
-
-      for i=0 to ubound(array_anexos)
-
-%>
-
-        <li><%=dame_definicion("COP Anexo "&trim(array_anexos(i)))%></li>
-
-<%
-
-      next
-
-%>
-		<%
-	  	if (trim(substance.Item("enlace_cop")) <> "") then
-			response.write "<li><a href='"&substance.Item("enlace_cop")&"' target='_blank'>Más información</a></li>"
-		end if
-	  %>
-
+        if (trim(substance.Item("enlace_cop")) <> "") then
+			   response.write "<li><a href='" & substance.Item("enlace_cop") & "' target='_blank'>Más información</a></li>"
+        end if
+	      %>
       </ul>
-
-
     </fieldset>
 
-<%
-		case "Cancerígeno":
+    <%
+    case "Cancerígeno":
+		  if (mySubstance.inList("cancer_rd")) then
+        %>
+  			<fieldset>
+  				<legend class="subtitulo3"><strong><span id="carcinogen_rd1272.label">According to R. 1272/2008</span></strong></legend>
+  				<blockquote>
+          <span id="carcinogen_rd1272.value">
+          <%
+  				nivel_cancerigeno_rd = dame_nivel_cancerigeno_rd()
+  				' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
+  				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd, "1", "1A")
+  				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "2", "1B")
+  				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "3", "2")
 
-				' Real Decreto ---------------------------------------------------------------
-				if (mySubstance.inList("cancer_rd")) then
-%>
-					<fieldset>
-						<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
-						<blockquote>
-<%
-				nivel_cancerigeno_rd = dame_nivel_cancerigeno_rd()
-				' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
-				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd, "1", "1A")
-				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "2", "1B")
-				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "3", "2")
+  				if (nivel_cancerigeno_rd <> "") then
+  				    response.write "<strong>Carcinogen level:</strong> " & nivel_cancerigeno_rd_txt
+              Response.Write "<a onclick=window.open('ver_definicion.asp?id=" & dame_id_definicion("C") & nivel_cancerigeno_rd_txt & "','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>"
+  				end if
 
-				if (nivel_cancerigeno_rd <> "") then
-							response.write "<strong>Nivel cancerígeno:</strong> "&nivel_cancerigeno_rd_txt
-%>
-					 		<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("C"&nivel_cancerigeno_rd_txt)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-<%
-				end if
-%>
-
-<%
-				if (trim(substance.Item("notas_cancer_rd")) <> "") then
-%>
-							<br/><strong>Notas:</strong> <%=substance.Item("notas_cancer_rd")%>
-<%
-				end if
-%>
-						</blockquote>
-					</fieldset>
-<%
-				end if
-
-
+          if (trim(substance.Item("notas_cancer_rd")) <> "") then
+            Response.Write "<br/><strong>Notas:</strong> " & substance.Item("notas_cancer_rd")
+  				end if
+          %>
+          </span>
+  				</blockquote>
+  			</fieldset>
+        <%
+			end if
 
 				' Lista danesa ---------------------------------------------------------------
 				if (mySubstance.inList("cancer_danesa")) then
@@ -2879,5 +2861,43 @@ function traduceEtiquetado(s)
 	s = replace(s, "Acuático crónico.","Aquatic Chronic")
 	s = replace(s, "Ozono","Ozone")
 	traduceEtiquetado = s
+end function
+
+function traduceRiesgo(riesgo)
+	s = riesgo
+	s = replace(s, "Cancerígeno","Carcinogen")
+	s = replace(s, "Mutágeno","Mutagen")
+	s = replace(s, "Disruptor endocrino","Endocrine disrupter")
+	s = replace(s, "Neurotóxico","Neurotoxic")
+	s = replace(s, "Sensibilizante","Sensitiser")
+	s = replace(s, "Sensibilizante para REACH","REACH Sensitiser")
+	s = replace(s, "Tóxico para la reproducción","Toxic for reproduction")
+	s = replace(s, "mPmB","vPvB")
+	s = replace(s, "Tóxica para el agua","Toxic for water")
+	s = replace(s, "Contaminante de suelos","Soil pollutants")
+	s = replace(s, "Contaminante del aire","Air pollutant")
+	s = replace(s, "Contaminante Orgánico Persistente (COP)","Persistent Organic Pollutant (POP)")
+	s = replace(s, "Residuos Peligrosos","Hazardous waste")
+	s = replace(s, "Vertidos","Spill")
+	s = replace(s, "Accidentes Graves","SEVESO (major-accidents)")
+	s = replace(s, "COV","VOC")
+	s = replace(s, "IPPC (PRTR Agua)","PRTR (water)")
+	s = replace(s, "IPPC (PRTR Aire)","PRTR (air)")
+	s = replace(s, "IPPC (PRTR Suelo)","PRTR (soil)")
+	s = replace(s, "Emisiones Atmosféricas","Atmospheric emissions")
+	s = replace(s, "Prohibida para trabajadoras embarazadas","Prohibited for pregnant workers")
+	s = replace(s, "Prohibida para trabajadoras lactantes","Prohibited for nursing workers")
+	s = replace(s, "Sustancia candidata REACH","REACH candidate list substance")
+	s = replace(s, "Sustancia REACH sujeta a autorización","Substance under REACH authorisation")
+	s = replace(s, "Sustancia biocida autorizada","Authorised biocide substance")
+	s = replace(s, "Sustancia biocida prohibida","Banned biocide substance")
+	s = replace(s, "Sustancia pesticida autorizada","Authorised pesticide substance")
+	s = replace(s, "Sustancia pesticida prohibida","Banned pesticide substance")
+	s = replace(s, "Sustancia restringida","Restricted substance")
+	s = replace(s, "Sustancia prohibida","Banned substance")
+	s = replace(s, "Tóxica, Persistente y Bioacumulativa","Persistent, Bioaccumulative and Toxic")
+	s = replace(s, "Sustancia bajo evaluación. CoRAP","Substance under CoRAP evaluation")
+
+	traduceRiesgo = s
 end function
 %>

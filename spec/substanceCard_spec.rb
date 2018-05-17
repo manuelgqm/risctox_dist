@@ -6,6 +6,7 @@ require_relative 'fixture/ziram'
 require_relative 'fixture/hydrogen_cyanide'
 require_relative 'fixture/carbon_disulphide'
 require_relative 'fixture/glycinato_cadmium'
+require_relative 'fixture/cadmium'
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -176,4 +177,18 @@ describe "'Glycinato_cadmium' substance card" do
     expect(@page.rd1272_notes.text).to include_all @glycinato_cadmium.rd1272_notes
   end
 
+end
+
+describe "'Cadmium' substance card" do
+  before(:all) do
+    @cadmium = Cadmium.new()
+    @page = PageObject.new(@browser, @cadmium.id)
+    @page.go
+  end
+
+  it "must have valid carcinogenic classifications" do
+    @page.toggle("secc-Cancerigeno")
+    expect(@page.carcinogen_rd1272.label).to include "According to R. 1272/2008"
+    expect(@page.carcinogen_rd1272.value).to include_all @cadmium.carcinogen_rd1272
+  end
 end
