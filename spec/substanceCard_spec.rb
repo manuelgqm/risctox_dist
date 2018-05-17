@@ -1,9 +1,11 @@
 require 'watir'
 require_relative 'support/include_all_matcher'
+require_relative 'substance_card_page_object'
+
 require_relative 'fixture/ziram'
 require_relative 'fixture/hydrogen_cyanide'
 require_relative 'fixture/carbon_disulphide'
-require_relative 'substance_card_page_object'
+require_relative 'fixture/glycinato_cadmium'
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -95,8 +97,8 @@ describe "'ziram' substance card" do
       expect(@page.synonyms.label).to include('Synonyms')
       expect(@page.synonyms.value).to include_all @ziram.synonyms
     end
-  end
 
+  end
   it "should have correct trade names" do
     expect(@page.trade_name.label).to include 'Trade name'
     expect(@page.trade_name.value).to include_all @ziram.trade_names
@@ -160,4 +162,18 @@ describe "'carbon disulphide' substance card" do
     @page.toggle("secc-clasificacion-rd1272")
     expect(@page.rd1272_labeling.text).to include_all @carbon_disulphide.rd1272_labeling
   end
+end
+
+describe "'Glycinato_cadmium' substance card" do
+  before(:all) do
+    @glycinato_cadmium = Glycinato_cadmium.new()
+    @page = PageObject.new(@browser, @glycinato_cadmium.id)
+    @page.go
+  end
+
+  it "must have valid rd1272 notes" do
+    @page.toggle("secc-clasificacion-rd1272")
+    expect(@page.rd1272_notes.text).to include_all @glycinato_cadmium.rd1272_notes
+  end
+
 end

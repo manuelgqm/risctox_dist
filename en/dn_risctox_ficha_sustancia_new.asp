@@ -850,18 +850,20 @@ sub ap2_clasificacion_notas_rd1272()
 		exit sub
 	end if
 	%>
-	<p id="ap2_clasificacion_notas_titulo" class="ficha_titulo_2">Notas <% plegador "secc-notas-rd1272", "img-notas-rd1272" %></p>
+	<p id="ap2_clasificacion_notas_titulo" class="ficha_titulo_2">Notes&nbsp;
 	<p class="texto" >
-		<blockquote id="secc-notas-rd1272" style="display:none">
+		<blockquote id="secc-notas-rd1272">
+    <span id="rd1272_notes">
 		<%
 		for i = 0 to notas_rd1272LastId
 			set nota = substance.Item("notas_rd1272")(i)
 		%>
-			<b><%=nota.item("key")%></b>&nbsp;
+			<b><%= replace(nota.item("key"), "Nota", "Note") %></b>&nbsp;
 			<% if nota.item("id")<>""then %>
 			<a onclick=window.open('ver_definicion.asp?id=<%=nota.item("id")%>','def','width=600,height=400,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a><br />
 			<%end if%>
 		<% next %>
+    </span>
 		</blockquote>
 	</p>
 	<%

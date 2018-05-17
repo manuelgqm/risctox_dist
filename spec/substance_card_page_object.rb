@@ -61,6 +61,10 @@ class PageObject
     element("rd1272_labeling")
   end
 
+  def rd1272_notes
+    element("rd1272_notes")
+  end
+
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
     element = @browser.element(:id => element_id)
