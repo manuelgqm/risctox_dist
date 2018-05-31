@@ -310,11 +310,6 @@ else
 
 
 	comentarios_medio_ambiente = objrst("comentarios_ma")
-	toxicidad_suelo = objrst("toxicidad_suelo")
-
-
-
-
 
 	' Sustancia prohibida
 	sustancia_prohibida = objrst("sustancia_prohibida")
