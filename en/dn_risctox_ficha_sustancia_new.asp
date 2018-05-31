@@ -1571,7 +1571,6 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	            %>
 							</table>
 							</blockquote>
-              <span>
             <%
 						end if
 	          %>
@@ -1579,53 +1578,55 @@ sub ap3_riesgos_tabla_contenidos(tipo)
         <%
 				end if
 
-				' Otras fuentes
+				' ntes
 				if (mySubstance.inList("cancer_otras")) then
-
-		%>
-
+		    %>
 		    <fieldset>
-				  <legend class="subtitulo3"><strong>Según otras fuentes</strong></legend>
-
-		<%
-
+				  <legend class="subtitulo3"><strong>According to other sources</strong></legend>
+          <%
 		      if (isNull(substance.Item("categoria_cancer_otras"))) then
-
 		        substance.Item("categoria_cancer_otras") = ""
-
 		      end if
-
-
 
 		      if (isNull(substance.Item("fuente"))) then
-
 		        substance.Item("fuente") = ""
-
 		      end if
-
 
 					array_categorias=split(substance.Item("categoria_cancer_otras"), ",")
 					array_fuentes=split(substance.Item("fuente"), ",")
 
 					' Damos por hecho que hay el mismo numero de categorias y fuentes y que coinciden en orden
-					for i=0 to ubound(array_fuentes)
-		%>
+          Dim fuente : fuente = ""
+          Dim categoria : categoria = ""
+					for i = 0 to ubound(array_fuentes)
+            fuente = trim(array_fuentes(i))
+            categoria = trim(array_categorias(i))
+	        %>
 					<fieldset>
-						<legend class="subtitulo3"><strong>Según <%=trim(array_fuentes(i))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(array_fuentes(i)))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
+						<legend class="subtitulo3">
+              <strong>
+                According to <%= fuente %> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(fuente)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+              </strong>
+            </legend>
 						<blockquote>
 						<table>
-							<tr><td class="subtitulo3"><%=trim(array_categorias(i))%>:</td><td><%= dame_definicion(trim(array_categorias(i))) %></td></tr>
+							<tr>
+                <td class="subtitulo3">
+                  <span id="carcinogen_other_sources_category"><%= categoria %></span>:
+                </td>
+                <td>
+                  <span id="carcinogen_other_sources_definition"><%= get_definition(categoria, "en") %>
+                </td>
+              </tr>
 						</table>
 						</blockquote>
 					</fieldset>
-		<%
+	        <%
 					next
-
-		%>
-
+	        %>
 		    </fieldset>
 
-		<%
+	      <%
 				end if
 
 

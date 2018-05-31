@@ -85,6 +85,14 @@ class PageObject
     element("carcinogen_iarc_notes")
   end
 
+  def carcinogen_other_sources_category
+    element("carcinogen_other_sources_category")
+  end
+
+  def carcinogen_other_sources_definition
+    element("carcinogen_other_sources_definition")
+  end
+
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
     element = @browser.element(:id => element_id)

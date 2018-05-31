@@ -15,7 +15,7 @@ RSpec.configure do |config|
   config.after(:suite) { browser.close unless browser.nil? } # only used on headed browser option
 end
 
-xdescribe "'hydrogen cyanide' substance card" do
+describe "'hydrogen cyanide' substance card" do
   before(:all) do
     @hydrogen_cyanide = Hydrogen_cyanide.new(953980)
     @page = PageObject.new(@browser, @hydrogen_cyanide.id)
@@ -81,7 +81,7 @@ xdescribe "'hydrogen cyanide' substance card" do
 
 end
 
-xdescribe "'ziram' substance card" do
+describe "'ziram' substance card" do
   before(:all) do
     @ziram = Ziram.new(954057)
     @page = PageObject.new(@browser, @ziram.id)
@@ -152,7 +152,7 @@ xdescribe "'ziram' substance card" do
 
 end
 
-xdescribe "'carbon disulphide' substance card" do
+describe "'carbon disulphide' substance card" do
   before(:all) do
     @carbon_disulphide = Carbon_disulphide.new()
     @page = PageObject.new(@browser, @carbon_disulphide.id)
@@ -165,7 +165,7 @@ xdescribe "'carbon disulphide' substance card" do
   end
 end
 
-xdescribe "'Glycinato_cadmium' substance card" do
+describe "'Glycinato_cadmium' substance card" do
   before(:all) do
     @glycinato_cadmium = Glycinato_cadmium.new()
     @page = PageObject.new(@browser, @glycinato_cadmium.id)
@@ -195,5 +195,8 @@ describe "'Cadmium' substance card" do
     expect(@page.carcinogen_iarc.text).to include "According to IARC"
     expect(@page.carcinogen_iarc_group.text).to include @cadmium.carcinogen_iarc_group
     expect(@page.carcinogen_iarc_volume.text).to include @cadmium.carcinogen_iarc_volume
+
+    expect(@page.carcinogen_other_sources_category.text).to include_all @cadmium.carcinogen_other_sources_categories
+    expect(@page.carcinogen_other_sources_definition.text).to include_all @cadmium.carcinogen_other_sources_definitions
   end
 end

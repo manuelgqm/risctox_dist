@@ -582,6 +582,24 @@ function dame_definicion(byval cadena)
 	dame_definicion=definicion
 end function
 
+function get_definition(palabra, lang)
+	Dim definition_fileld_name : definition_fileld_name = "definicion"
+	Dim definition : definition = ""
+
+	if lang = "en" then
+		definition_fileld_name = "definicion_eng"
+	end if
+	sql = "SELECT " & definition_fileld_name & " FROM rq_definiciones where palabra='" & palabra & "'"
+	set objRst = objConnection.execute(sql)
+	if not objRst.eof then
+		definition = objRst(definition_fileld_name)
+	end if
+	objRst.close()
+	set objRst = nothing
+
+	get_definition = definition
+end function
+
 ' ##################################################################################
 
 function parche_definicion(byval cadena, byval tipo)
