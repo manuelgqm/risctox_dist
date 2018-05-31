@@ -496,7 +496,7 @@ function composeSubstanceQuery(id_sustancia, lang)
 			"categoria_cancer_otras, fuente, nivel_disruptor, efecto_neurotoxico, nivel_neurotoxico, " &_
 			"fuente_neurotoxico, enlace_tpb, anchor_tpb, fuentes_tpb, mpmb, directiva_aguas, clasif_mma, " &_
 			"sustancia_prioritaria, dano_calidad_aire, dano_ozono, dano_cambio_clima, " &_
-			"sus_amb.comentarios as comentarios_ma, sus.comentarios as comentarios_sustancia, " &_
+			"sus_amb.comentarios as comentarios_ma, " &_
 			"cancer_mama, cancer_mama_fuente, cop, enlace_cop " &_
 			"FROM dn_risc_sustancias AS sus " &_
 			"FULL OUTER JOIN dn_risc_sustancias_vl AS sus_vl " &_
@@ -517,7 +517,7 @@ function composeSubstanceQuery(id_sustancia, lang)
 		exit function
 	end if
 
-	sql = "SELECT *,dn_risc_sustancias_ambiente.comentarios as comentarios_ma, dn_risc_sustancias.comentarios as comentarios_sustancia "
+	sql = "SELECT *, dn_risc_sustancias_ambiente.comentarios as comentarios_ma "
 	sql = sql & " FROM dn_risc_sustancias  "
 	sql = sql & " FULL OUTER JOIN dn_risc_sustancias_vl ON dn_risc_sustancias.id = dn_risc_sustancias_vl.id_sustancia  "
 	sql = sql & " FULL OUTER JOIN dn_risc_sustancias_iarc ON dn_risc_sustancias.id = dn_risc_sustancias_iarc.id_sustancia  "
