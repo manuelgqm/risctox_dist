@@ -1454,7 +1454,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
         array_anexos = split(substance.Item("cop"), ";")
         for i=0 to ubound(array_anexos)
-          Response.Write "<li>" & dame_definicion("COP Anexo " & trim(array_anexos(i))) & "</li>"
+          Response.Write "<li>" & get_definition("COP Anexo " & trim(array_anexos(i)), "en") & "</li>"
         next
 
         if (trim(substance.Item("enlace_cop")) <> "") then
@@ -1722,7 +1722,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					<%
 					array_niveles=split(substance.Item("nivel_disruptor"), ",")
 					for i=0 to ubound(array_niveles)
-						nivel=dame_definicion(trim(array_niveles(i)))
+						nivel=get_definition(trim(array_niveles(i)), "en")
 						response.write nivel&"<br /><br />"
 					next
 					%>
@@ -1803,7 +1803,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					<%
 					array_fuentes=split(substance.Item("fuente_neurotoxico"), ",")
 					for i=0 to ubound(array_fuentes)
-          				response.write dame_definicion(trim(array_fuentes(i)))
+          				response.write get_definition(trim(array_fuentes(i)), "en")
 
 
 			%>
@@ -1934,13 +1934,13 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						if trim(substance.Item("fuentes_tpb")) <> "" then
 							array_tpb = split(substance.Item("fuentes_tpb"),",")
 							for i=0 to ubound(array_tpb)
-								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
+								response.write "<li>" & get_definition(trim(array_tpb(i)), "en")&"</li>"
 							next
 						end if
 						if trim(substance.Item("fuente_tpb")) <> "" then
 							array_tpb = split(substance.Item("fuente_tpb"),",")
 							for i=0 to ubound(array_tpb)
-								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
+								response.write "<li>" & get_definition(trim(array_tpb(i)), "en")&"</li>"
 							next
 						end if
 
@@ -1955,7 +1955,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<blockquote>
 			<table>
 				<tr>
-					<td class="subtitulo3"><%=dame_definicion("REACH")%></td>
+					<td class="subtitulo3"><%= get_definition("REACH", "en")%></td>
 
 				</tr>
 

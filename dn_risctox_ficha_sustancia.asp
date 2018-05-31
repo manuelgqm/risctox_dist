@@ -1708,7 +1708,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 %>
 
-        <li><%=dame_definicion("COP Anexo "&trim(array_anexos(i)))%></li>
+        <li><%=get_definition("COP Anexo "&trim(array_anexos(i)), "es")%></li>
 
 <%
 
@@ -1871,7 +1871,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						<legend class="subtitulo3"><strong>Según <%=trim(array_fuentes(i))%> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(array_fuentes(i)))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 						<blockquote>
 						<table>
-							<tr><td class="subtitulo3"><%=trim(array_categorias(i))%>:</td><td><%= dame_definicion(trim(array_categorias(i))) %></td></tr>
+							<tr><td class="subtitulo3"><%=trim(array_categorias(i))%>:</td><td><%= get_definition(trim(array_categorias(i)), "es") %></td></tr>
 						</table>
 						</blockquote>
 					</fieldset>
@@ -1978,7 +1978,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					<%
 					array_niveles=split(substance.Item("nivel_disruptor"), ",")
 					for i=0 to ubound(array_niveles)
-						nivel=dame_definicion(trim(array_niveles(i)))
+						nivel=get_definition(trim(array_niveles(i)), "es")
 						response.write nivel&"<br /><br />"
 					next
 					%>
@@ -2059,7 +2059,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 					<%
 					array_fuentes=split(substance.Item("fuente_neurotoxico"), ",")
 					for i=0 to ubound(array_fuentes)
-          				response.write dame_definicion(trim(array_fuentes(i)))
+          				response.write get_definition(trim(array_fuentes(i)), "es")
 
 
 			%>
@@ -2190,13 +2190,13 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						if trim(substance.Item("fuentes_tpb")) <> "" then
 							array_tpb = split(substance.Item("fuentes_tpb"),",")
 							for i=0 to ubound(array_tpb)
-								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
+								response.write "<li>" & get_definition(trim(array_tpb(i)), "es")&"</li>"
 							next
 						end if
 						if trim(substance.Item("fuente_tpb")) <> "" then
 							array_tpb = split(substance.Item("fuente_tpb"),",")
 							for i=0 to ubound(array_tpb)
-								response.write "<li>"&dame_definicion(trim(array_tpb(i)))&"</li>"
+								response.write "<li>" & get_definition(trim(array_tpb(i)), "es")&"</li>"
 							next
 						end if
 
@@ -2211,7 +2211,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<blockquote>
 			<table>
 				<tr>
-					<td class="subtitulo3"><%=dame_definicion("REACH")%></td>
+					<td class="subtitulo3"><%= get_definition("REACH") %></td>
 
 				</tr>
 

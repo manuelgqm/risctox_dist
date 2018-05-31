@@ -567,21 +567,6 @@ function dame_id_definicion(byval cadena)
 
 end function
 
-function dame_definicion(byval cadena)
-	' Devuelve el texto de la tabla rq_definiciones de la base antigua
-	sql = "SELECT definicion FROM rq_definiciones where palabra='"&cadena&"'"
-	set objRst=objConnection.execute(sql)
-	if (objRst.eof) then
-		definicion = ""
-	else
-		definicion = objRst("definicion")
-	end if
-	objRst.close()
-	set objRst=nothing
-
-	dame_definicion=definicion
-end function
-
 function get_definition(palabra, lang)
 	Dim definition_fileld_name : definition_fileld_name = "definicion"
 	Dim definition : definition = ""
