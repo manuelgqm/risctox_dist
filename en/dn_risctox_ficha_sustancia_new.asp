@@ -3,7 +3,6 @@
 <!--#include file="../config/dbConnection.asp"-->
 <!--#include file="../lib/dn_funciones_texto_utf-8.asp"-->
 <!--#include file="../lib/dn_funciones_comunes_utf-8.asp"-->
-<!--#include file="../lib/class/SubstanceClass.asp"-->
 <!--#include file="../lib/class/SubstanceInternationalClass.asp"-->
 <!--#include file="../lib/visitsRecorder.asp"-->
 <!--#include file="../lib/urlManipulations.asp"-->
@@ -13,24 +12,14 @@ Response.ContentType = "text/html"
 Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
 Response.CodePage = 65001
 Response.CharSet = "UTF-8"
-idpagina = 627
+
+dim idpagina : idpagina = 627
 call recordVisit(idpagina)
-errores = ""
 
-id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
+dim LANG : LANG = "en"
 
-set mySubstance = new SubstanceClass
-set mySubstanceInternational = new SubstanceClassInternational
-mySubstance.find id_sustancia, "en", objConnection2
-mySubstanceInternational.obtainIdentification id_sustancia, "en", objConnection2
-Set substance = mySubstance.fields
-Set substance_international = mySubstanceInternational.fields
-if (substance.Count = 0 ) then errores = "No se ha encontrado la sustancia indicada"
-
-dim NEUROTOXICO_LISTS : NEUROTOXICO_LISTS = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-
-dim lang : lang = "en"
-
+dim id_sustancia : id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
+dim substance : set substance = (new SubstanceClassInternational)(id_sustancia, LANG, objConnection2)
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -80,96 +69,81 @@ function toggle_texto(id_objeto, texto)
 <body>
 <div id="contenedor">
 	<div id="sombra_arriba"></div>
-  	<div id="sombra_lateral">
+	<div id="sombra_lateral">
 		<div id="caja">
-		<!--#include file="dn_cabecera.asp"-->
-		<div id="texto">
+      <!--#include file="dn_cabecera.asp"-->
+      <div id="texto">
+        <div class="texto">
+          <table width="100%" border="0">
+            <tr>
+              <td>
+                <a href="http://www.etuc.org/a/6023" target="_blank"><b>Trade Union priority list for REACH authorization</b></a>
+              </td>
+            	<td align="right">
+                <input type="button" name="volver" class="boton2" value="New search" onClick="window.location='dn_risctox_buscador.asp';">
+              </td>
+            </tr>
+            <tr>
+            	<td>
+                <p class=campo>You are in: <a href="dn_risctox_buscador.asp">Risctox</a> &gt; Substance card</p>
+              </td>
+            	<td align="right"></td>
+            </tr>
+          </table>
+          <div id="ficha">
+          	<!-- ################ Identificacion de la sustancia ###################### -->
+          	<table width="100%" cellpadding=5>
+          		<tr>
+          			<td>
+          				<a name="identificacion"></a><img src="imagenes/risctox01.gif" alt="Substance identification" width="255" height="32" />
+          			</td>
+          			<td align="right">
+          				<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
+          			</td>
+          		</tr>
+          	</table>
 
-<div class="texto">
-<!-- ################ CONTENIDO ###################### -->
+          	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
+          		<% ap1_identificacion(LANG) %>
+          	</table>
 
-<table width="100%" border="0">
-<tr>
-    <td><a href="http://www.etuc.org/a/6023" target="_blank"><b>Trade Union priority list for REACH authorization</b></a></td>
-	<td align="right"><input type="button" name="volver" class="boton2" value="New search" onClick="window.location='dn_risctox_buscador.asp';"></td>
-</tr>
-<tr>
-	<td><p class=campo>You are in: <a href="dn_risctox_buscador.asp">Risctox</a> &gt; Substance card</p></td>
-	<td align="right"></td>
-</tr>
-</table>
-<div id="ficha">
-	<!-- ################ Identificacion de la sustancia ###################### -->
-	<table width="100%" cellpadding=5>
-		<tr>
-			<td>
-				<a name="identificacion"></a><img src="imagenes/risctox01.gif" alt="Substance identification" width="255" height="32" />
-			</td>
-			<td align="right">
-				<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
-			</td>
-		</tr>
-	</table>
+          	<div style="height:3pt"></div>
+          		<%
+                ' ap2_clasificacion()
+              %>
+          	<br />
+          	<div style="height:3pt"></div>
+          	 <%
+             ap2_clasificacion_rd1272()
+             %>
 
-	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
-		<!-- ################ Identificación ###################### -->
+          	<br />
+          </div>
+          <%
+          'ap3_riesgos()
+          'ap4_normativa_ambiental()
+          'ap4_normativa_salud_laboral()
+          'ap4_normativa_restriccion_prohibicion()
+          'ap5_alternativas()
+          'ap6_sectores()
+          %>
 
-		<!-- 1.- Datos de sustancia -->
-		<% ap1_identificacion() %>
-	</table>
+          <br />
+          <center>
+            <input type="button" name="imprimir" class="boton2" value="Imprimir ficha" onClick="window.print();">
+            <input type="button" name="enviar" class="boton2" value="Enviar ficha de sustancia" onClick="onclick=window.open('dn_recomendar.asp?id=<%=id_sustancia%>','recomendar','width=500,height=230,scrollbars=yes,resizable=yes')">
+            <input type="button" name="volver" class="boton2" value="Nueva búsqueda" onClick="window.location='dn_risctox_buscador.asp';">
+          </center>
 
-	<div style="height:3pt"></div>
-		<!-- 2.1- Clasificación -->
-		<% ap2_clasificacion() %>
-
-	<br />
-	<div style="height:3pt"></div>
-
-		<!-- 2.2- Clasificación RD1272-->
-		<% ap2_clasificacion_rd1272() %>
-
-	<br />
-</div>
-<!-- fin div ficha -->
-
-<!-- 3.- Riesgos -->
-<% ap3_riesgos() %>
-
-<!-- 4.- Normativa -->
-<% ap4_normativa_ambiental() %>
-<% ap4_normativa_salud_laboral() %>
-<% ap4_normativa_restriccion_prohibicion() %>
-
-<!-- 5.- Alternativas relacionadas -->
-<% ap5_alternativas() %>
-
-<!-- 6.- Sectores en los que se utiliza -->
-<% ap6_sectores() %>
-
-<!-- ############ FIN DE CONTENIDO ################## -->
-<br />
-<center>
-<input type="button" name="imprimir" class="boton2" value="Imprimir ficha" onClick="window.print();">
-<input type="button" name="enviar" class="boton2" value="Enviar ficha de sustancia" onClick="onclick=window.open('dn_recomendar.asp?id=<%=id_sustancia%>','recomendar','width=500,height=230,scrollbars=yes,resizable=yes')">
-<input type="button" name="volver" class="boton2" value="Nueva búsqueda" onClick="window.location='dn_risctox_buscador.asp';">
-</center>
-
-<br>
-<br>
-Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una Fundación de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
-
-
-				</div>
-				<p>&nbsp;</p>
-			</div>
-
-
-			<img src="imagenes/pie_risctox.gif" width="708" border="0">
-
-
-
-    		</div>
-    	</div>
+          <br>
+          <br>
+          Esta página ha sido desarrollada por <a href="http://www.istas.ccoo.es/" target="_blank"><b>ISTAS</b></a> que es una Fundación de <a href="http://www.ccoo.es/" target="_blank"><font color="#FF0000"><b>CC.OO.</b></font></a><br>
+        </div>
+        <p>&nbsp;</p>
+      </div>
+      <img src="imagenes/pie_risctox.gif" width="708" border="0">
+		</div>
+	</div>
 	<div id="sombra_abajo"></div>
 </div>
 
@@ -265,15 +239,21 @@ function formatHtmlIcscList(icsc_nums)
   formatHtmlIcscList = result
 end function
 
-sub ap1_identificacion()
-	array_nombres = split(espaciar(substance.item("nombre")), "@")
-	nombre = array_nombres(0)
+sub ap1_identificacion(LANG)
+  Dim nombre_field_name : nombre_field_name = "nombre"
+
+  if LANG = "en" then
+    nombre_field_name = "nombre_ing"
+  end if
+
+  nombres = split(espaciar(substance.identification.item(nombre_field_name)), "@")
+	nombre = nombres(0)
 
 	sinonimos=""
-	if UBound(array_nombres) > 0 then
+	if UBound(nombres) > 0 then
 		sinonimos = "<ul>"
-		For i = LBound(array_nombres) + 1 To UBound(array_nombres)
-			sinonimos = sinonimos & "<li>" & h(espaciar(array_nombres(i))) & "</li>"
+		For i = LBound(nombres) + 1 To UBound(nombres)
+			sinonimos = sinonimos & "<li>" & h(espaciar(nombres(i))) & "</li>"
 		Next
 		sinonimos = sinonimos & "</ul>"
 	end if
@@ -316,24 +296,24 @@ sub ap1_identificacion()
 		</tr>
 	<% end if ' hay nombre comercial? %>
 
-	<% if (substance.Item("num_cas") <> "") or (substance.Item("num_ce_einecs") <> "") or (substance.Item("num_ce_elincs") <> "") then %>
+	<% if (substance.identification.Item("num_cas") <> "") or (substance.identification.Item("num_ce_einecs") <> "") or (substance.identification.Item("num_ce_elincs") <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
 				<span id="identification_numbers.label">Identification numbers:</span>
 			</td>
 			<td class="texto" valign="middle">
-				<% if (substance.Item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='cas_num.label'>CAS</span></b>:&nbsp;<span id='cas_num.value'>" & substance.Item("num_cas") & "</span><br/>" %>
-				<% if (substance.item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span cas_num_alternative'>Alternative CAS</span></b>:&nbsp;<span id='cas_num_alternatives.value'>" & substance.item("cas_alternativos") & "</span><br/>" %>
+				<% if (substance.identification.item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='cas_num.label'>CAS</span></b>:&nbsp;<span id='cas_num.value'>" & substance.identification.item("num_cas") & "</span><br/>" %>
+				<% if (substance.identification.item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span cas_num_alternative'>Alternative CAS</span></b>:&nbsp;<span id='cas_num_alternatives.value'>" & substance.identification.item("cas_alternativos") & "</span><br/>" %>
 				<%
-					if (substance.Item("num_ce_einecs") <> "") then
+					if (substance.identification.item("num_ce_einecs") <> "") then
 						'Sergio, si empieza por 4 y num_ce_elincs<>'' muestro el num_ce_elincs
-						if (mid(num_ce_einecs, 1, 1) = "4" and substance.Item("num_ce_elincs") <> "") then
-							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.Item("num_ce_elincs") & "</span><br/>"
+						if (mid(num_ce_einecs, 1, 1) = "4" and substance.identification.item("num_ce_elincs") <> "") then
+							response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.identification.item("num_ce_elincs") & "</span><br/>"
 						else
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_einecs_num.label'>EC EINECS</span></b>:&nbsp;<span id='ec_einecs_num.value'>" & substance.Item("num_ce_einecs") & "</span><br/>"
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_einecs_num.label'>EC EINECS</span></b>:&nbsp;<span id='ec_einecs_num.value'>" & substance.identification.item("num_ce_einecs") & "</span><br/>"
 						end if
-					elseif (substance.Item("num_ce_elincs") <> "") then
-						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.Item("num_ce_elincs") & "</span><br/>"
+					elseif substance.identification.item("num_ce_elincs") <> "" then
+						response.write "<a onclick=window.open('ver_definicion.asp?id=85','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='ec_elincs_num.label'>EC ELINCS</span></b>:&nbsp;<span id='ec_elincs_num.value'>" & substance.identification.item("num_ce_elincs") & "</span><br/>"
 					end if
 				%>
 			</td>
@@ -341,7 +321,7 @@ sub ap1_identificacion()
 	<% end if ' hay numeros? %>
 
 	<%
-		grupos = formatHtmlGlossaryLinksString(substance_international.item("grupos"), "grupos")
+		grupos = formatHtmlGlossaryLinksString(substance.identification.item("grupos"), "grupos")
 		if (grupos <> "") then
 	%>
 		<tr>
@@ -355,7 +335,7 @@ sub ap1_identificacion()
 	<% end if ' hay grupos? %>
 
 	<%
-		usos = formatHtmlGlossaryLinksString(substance_international.Item("applications"), "usos")
+		usos = formatHtmlGlossaryLinksString(substance.identification.item("applications"), "usos")
 		if (usos <> "") then
 	%>
 		<tr>
@@ -369,7 +349,7 @@ sub ap1_identificacion()
 	<% end if %>
 
 	<%
-		if UBound(substance_international.Item("icsc_nums")) >= 0 then
+		if UBound(substance.identification.item("icsc_nums")) >= 0 then
 	%>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
@@ -380,7 +360,7 @@ sub ap1_identificacion()
 			<td class="texto" valign="middle">
         <span id="icsc_nums.value">
         <%
-        icsc_nums_list = formatHtmlIcscList(substance_international.Item("icsc_nums"))
+        icsc_nums_list = formatHtmlIcscList(substance.identification.item("icsc_nums"))
         response.write icsc_nums_list
         %>
         </span>
@@ -391,30 +371,30 @@ sub ap1_identificacion()
 
 
 	<%
-		companias = formatHtmlCompaniesLinksString(substance.Item("compañias"))
+		'companias = formatHtmlCompaniesLinksString(substance.Item("compañias"))
 	%>
 
-	<% if (substance.Item("nombre_ing") <> "") or (substance.Item("num_rd") <> "") or (substance.Item("formula_molecular") <> "") or (substance.Item("estructura_molecular") <> "") or (substance.Item("notas_xml") <> "") or (companias <> "") then %>
+	<% if (substance.identification.item("nombre_ing") <> "") or (substance.identification.item("num_rd") <> "") or (substance.identification.item("formula_molecular") <> "") or (substance.identification.item("estructura_molecular") <> "") or (substance.identification.item("notas_xml") <> "") or (companias <> "") then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top" width="35%">
 				<span id="additional_information.label">Additional information</span>&nbsp;<% plegador "secc-masinformacion", "img-masinformacion" %>
 			</td>
 			<td class="texto" valign="middle" id="secc-masinformacion" style="display:none">
-				<% if (substance_international.Item("num_rd") <> "") then %>
+				<% if (substance.identification.item("num_rd") <> "") then %>
           <a onclick = window.open('ver_definicion.asp?id=86','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'>
           <img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>
           &nbsp;<b><span id="rd_num.label">Index No</span></b>:
-          &nbsp;<span id="rd_num.value"><%= substance_international.Item("num_rd") %></span><br/>
+          &nbsp;<span id="rd_num.value"><%= substance.identification.item("num_rd") %></span><br/>
         <% end if %>
-				<% if (substance_international.Item("molecular_formula") <> "") then %>
+				<% if (substance.identification.item("molecular_formula") <> "") then %>
           <b><span id="molecular_formula.label">Molecular formula</span></b>:
-          <span id="molecular_formula.value"><%= substance_international.Item("molecular_formula") %><br/>
+          <span id="molecular_formula.value"><%= substance.identification.item("molecular_formula") %><br/>
         <% end if %>
-				<% if (substance_international.Item("molecular_structure") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/" & substance_international.Item("molecular_structure")&"' /><br/>" %>
+				<% if (substance.identification.item("molecular_structure") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/" & substance.identification.item("molecular_structure")&"' /><br/>" %>
 
-				<% if (substance.Item("notas_xml") <> "") then %>
+				<% if (substance.identification.item("notas_xml") <> "") then %>
           <a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("ECB")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-          <b>Notas ECB</b>: <%= espaciar(substance.Item("notas_xml")) %> <br />
+          <b>Notas ECB</b>: <%= espaciar(substance.identification.item("notas_xml")) %> <br />
         <% end if %>
 
         <% if (companias <> "") then %>
@@ -426,8 +406,6 @@ sub ap1_identificacion()
 %>
 	<tr>
 		<td valign="top" colspan="2">
-			<!-- Lista negra -->
-
 			<% concern_trade_union_list(mySubstance) %>
 		</td>
 	</tr>
@@ -481,11 +459,11 @@ sub ap2_clasificacion()
 end sub ' ap2_clasificacion
 
 sub ap2_clasificacion_rd1272()
-	' Solo mostramos este apartado si hay información para él
-	if ((substance.Item("simbolos_rd1272") <> "") or (substance.Item("clasificacion_rd1272_1") <> "") or (substance.Item("clasificacion_rd1272_2") <> "") or (substance.Item("clasificacion_rd1272_3") <> "") or (substance.Item("clasificacion_rd1272_4") <> "") or (substance.Item("clasificacion_rd1272_5") <> "") or (substance.Item("clasificacion_rd1272_6") <> "") or (substance.Item("clasificacion_rd1272_7") <> "") or (substance.Item("clasificacion_rd1272_8") <> "") or (substance.Item("clasificacion_rd1272_9") <> "") or (substance.Item("clasificacion_rd1272_10") <> "") or (substance.Item("clasificacion_rd1272_11") <> "") or (substance.Item("clasificacion_rd1272_12") <> "") or (substance.Item("clasificacion_rd1272_13") <> "") or (substance.Item("clasificacion_rd1272_14") <> "") or (substance.Item("clasificacion_rd1272_15") <> "") or (substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "") ) then
+  if isEmpty(substance.identification.item("pictogramasRd1272")) and isEmpty(substance.identification.item("frasesH")) and isEmpty(substance.identification.item("concentracionEtiquetadoRd1272")) then
+    exit Sub
+  end if
 
 %>
-	<!-- ################ Clasificación ###################### -->
 	<table id="tabla_clasificacionm_rd1272" class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
     <tr><td class="celdaabajo" colspan="2" align="center">
 			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=280','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
@@ -513,7 +491,6 @@ sub ap2_clasificacion_rd1272()
   	</td></tr>
 	</table>
 <%
-	end if
 end sub ' ap2_clasificacion
 
 ' ##################################################################################
@@ -1001,71 +978,67 @@ end sub
 ' ****************
 
 sub concern_trade_union_list(mySubstance)
-  Set substance = mySubstance.fields
-
   concern_lists = array("cancer_rd", "cancer_danesa", "cancer_iarc_excepto_grupo_3", "cancer_otras", "de", "neurotoxico", "tpb", "sensibilizante", "sensibilizante_danesa", "sensibilizante_reach", "tpr", "tpr_danesa", "mutageno_rd", "mutageno_danesa", "cancer_mama", "cop")
-  if mySubstance.inLists(concern_lists) or (instr(frases_r,"R53")<>0) or (instr(frases_r,"R50-53")<>0) or (instr(frases_r,"R51-53")<>0) or (instr(frases_r,"R52-53")<>0) or (instr(frases_r,"R58")<>0) then
+  frasesR = array("R53", "R50-53", "R51-53", "R52-53", "R58")
+  if substance.inLists(concern_lists) or anyElementInArray(frasesR, substance.identification.item("frasesR")) then
 
-    ' Esta en lista negra. Aprovechamos para marcarle el bit correspondiente para que aparezca en el listado de lista negra
-    sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id="&id_sustancia
+    sqlListaNegra="UPDATE dn_risc_sustancias SET negra=1 WHERE id=" & id_sustancia
     objConnection2.execute(sqlListaNegra),,adexecutenorecords
-
-    ' OK, continuamos...
 
 		razones = ""
 
     carcinogenic_lists = array("cancer_rd", "cancer_danesa", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama")
-		if mySubstance.inLists(carcinogenic_lists) then
+		if substance.inLists(carcinogenic_lists) then
 			razones = razones & ", carcinogenic"
 		end if
 
-		if mySubstance.inList("cop") then
+		if substance.inLists("cop") then
 			razones = razones & ", POP"
 		end if
 
     mutagenic_lists = Array("mutageno_rd", "mutageno_danesa")
-    if mySubstance.inLists(mutagenic_lists) then
+    if substance.inLists(mutagenic_lists) then
 			razones = razones & ", mutagenic"
 		end if
 
-		if mySubstance.inList("de") then
+		if substance.inList("de") then
 			razones = razones & ", endocrine disrupter"
 		end if
 
-    neurotoxic_lists = Array("neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-		if mySubstance.inLists(neurotoxic_lists) then
+    dim neurotoxic_lists : neurotoxic_lists = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
+		if substance.inLists(neurotoxic_lists) then
 			razones = razones & ", neurotoxic"
 		end if
 
     sentitiser_lists = Array("sensibilizante", "sensibilizante_danesa", "sensibilizante_reach")
-    if mySubstance.inLists(sentitiser_lists) then
+    if substance.inLists(sentitiser_lists) then
 			razones = razones & ", sensitizer"
 		end if
 
     tpr_lists = Array("tpr", "tpr_danesa")
-		if mySubstance.inLists(tpr_lists) then
+		if substance.inLists(tpr_lists) then
 			razones = razones & ", toxic for reproduction"
 		end if
 
-    if stringContains(substance("frasesR"), "R58") or stringContains(substance("frasesR"),"R33") then
+    if stringContains(substance.classification.item("frasesR"), "R58") or stringContains(substance.classification.item("frasesR"),"R33") then
 			razones = razones & ", bioaccumulative"
 		end if
 
-		if stringContains(substance("frasesR"),"R58") then
+    if stringContains(substance.classification.item("frasesR"), "R58") then
 			razones = razones & ", may cause long term adverse effects on the environment"
 		end if
 
-		if mySubstance.inList("tpb") then
+		if substance.inList("tpb") then
 			razones = razones & ", toxic, persistent and bioaccumulative"
 		end if
 
     cas_nums = array("87-68-3", "133-49-3", "75-74-1")
-    if anyElementInArray(cas_nums, Array(substance("cas_num"))) then
+    if anyElementInArray(cas_nums, Array(substance.identification.item("cas_num"))) then
 			razones = razones & ", very persistent and very bioaccumulative"
 		end if
 
     r_phrases_aquatic_environment = Array("R53", "R50-53", "R51-53", "R52-53")
-    frases_r_list = split(substance("frasesR"), ", ")
+    frases_r_list = split(substance.classification.item("frasesR"), ", ")
     if anyElementInArray(r_phrases_aquatic_environment, frases_r_list) then
 			razones = razones & ", may cause long term adverse effects in the aquatic environment"
 		end if
