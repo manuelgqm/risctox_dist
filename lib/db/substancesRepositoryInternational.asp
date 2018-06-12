@@ -1,11 +1,13 @@
 <!--#include file="synonymsRepository.asp"-->
 <!--#include file="substanceListsRepository.asp"-->
 <!--#include file="substanceGroupsRepositoryInternational.asp"-->
+<!--#include file="substanceCompaniesRepository.asp"-->
 <!--#include file="substanceApplicationsRepositoryInternational.asp"-->
 <!--#include file="pictogramsRepository.asp"-->
 <!--#include file="frasesRepository.asp"-->
 <!--#include file="concentracionEtiquetadoRdRepository.asp"-->
-<!--#include file="substanceCompaniesRepository.asp"-->
+<!--#include file="notasRdRepositoryInternational.asp"-->
+<!--#include file="definitionsRepositoryInternational.asp"-->
 <%
 function findIdentification(substance_id, lang, connection)
 	dim sql_query : sql_query = composeIdentificationQuery(substance_id)
@@ -25,6 +27,27 @@ Function findClassification(substance_id, lang, connection)
 	set recordset = nothing
 
 	set findClassification = extractClassification(substance_id, result, lang, connection)
+End Function
+
+function find_health_effects(substance_id, lang, connection)
+	dim sql : sql = compose_health_effects_query(substance_id)
+	dim recordset : set recordset = connection.execute(sql)
+	dim health_effects : set health_effects = recodsetToDictionary(recordset)
+	recordset.close()
+	set recordset = nothing
+
+	set find_health_effects = extract_health_effects(substance_id, lang, health_effects, connection)
+end function
+
+function find_environment_effects(substance_id, lang, connection)
+	dim sql : sql = compose_environment_query(substance_id)
+	dim recordset : set recordset = connection.execute(sql)
+	dim environment_effects : set environment_effects = recodsetToDictionary(recordset)
+	recordset.close()
+	set recordset = nothing
+	dim substance : set substance = extract_environment_effects(substance_id, lang, environment_effects, connection)
+
+	set find_environment_effects = substance
 End Function
 
 ' PRIVATE
@@ -57,10 +80,118 @@ Function extractClassification(substance_id, classification, lang, connection)
 	result.Add "frasesR", joinFrases("R", classification)
 	result.Add "frasesH", findFrasesH(classification, connection)
 	result.Add "pictogramasRd1272", findPictograms(classification("simbolos_rd1272"), connection)
+	result.add "simbolos_rd1272", classification("simbolos_rd1272")
 	result.Add "concentracionEtiquetadoRd1272", obtainConcentracionEtiquetadoRd1272(classification)
+
+	result.add "clasificacion_rd1272_1", classification.item("clasificacion_rd1272_1")
+	result.add "clasificacion_rd1272_2", classification.item("clasificacion_rd1272_2")
+	result.add "clasificacion_rd1272_3", classification.item("clasificacion_rd1272_3")
+	result.add "clasificacion_rd1272_4", classification.item("clasificacion_rd1272_4")
+	result.add "clasificacion_rd1272_5", classification.item("clasificacion_rd1272_5")
+	result.add "clasificacion_rd1272_6", classification.item("clasificacion_rd1272_6")
+	result.add "clasificacion_rd1272_7", classification.item("clasificacion_rd1272_7")
+	result.add "clasificacion_rd1272_8", classification.item("clasificacion_rd1272_8")
+	result.add "clasificacion_rd1272_9", classification.item("clasificacion_rd1272_9")
+	result.add "clasificacion_rd1272_10", classification.item("clasificacion_rd1272_10")
+	result.add "clasificacion_rd1272_11", classification.item("clasificacion_rd1272_11")
+	result.add "clasificacion_rd1272_12", classification.item("clasificacion_rd1272_12")
+	result.add "clasificacion_rd1272_13", classification.item("clasificacion_rd1272_13")
+	result.add "clasificacion_rd1272_14", classification.item("clasificacion_rd1272_14")
+	result.add "clasificacion_rd1272_15", classification.item("clasificacion_rd1272_15")
+
+	result.add "conc_rd1272_1", classification.item("conc_rd1272_1")
+	result.add "conc_rd1272_2", classification.item("conc_rd1272_2")
+	result.add "conc_rd1272_3", classification.item("conc_rd1272_3")
+	result.add "conc_rd1272_4", classification.item("conc_rd1272_4")
+	result.add "conc_rd1272_5", classification.item("conc_rd1272_5")
+	result.add "conc_rd1272_6", classification.item("conc_rd1272_6")
+	result.add "conc_rd1272_7", classification.item("conc_rd1272_7")
+	result.add "conc_rd1272_8", classification.item("conc_rd1272_8")
+	result.add "conc_rd1272_9", classification.item("conc_rd1272_9")
+	result.add "conc_rd1272_10", classification.item("conc_rd1272_10")
+	result.add "conc_rd1272_11", classification.item("conc_rd1272_11")
+	result.add "conc_rd1272_12", classification.item("conc_rd1272_12")
+	result.add "conc_rd1272_13", classification.item("conc_rd1272_13")
+	result.add "conc_rd1272_14", classification.item("conc_rd1272_14")
+	result.add "conc_rd1272_15", classification.item("conc_rd1272_15")
+
+	result.add "eti_conc_rd1272_1", classification.item("eti_conc_rd1272_1")
+	result.add "eti_conc_rd1272_2", classification.item("eti_conc_rd1272_2")
+	result.add "eti_conc_rd1272_3", classification.item("eti_conc_rd1272_3")
+	result.add "eti_conc_rd1272_4", classification.item("eti_conc_rd1272_4")
+	result.add "eti_conc_rd1272_5", classification.item("eti_conc_rd1272_5")
+	result.add "eti_conc_rd1272_6", classification.item("eti_conc_rd1272_6")
+	result.add "eti_conc_rd1272_7", classification.item("eti_conc_rd1272_7")
+	result.add "eti_conc_rd1272_8", classification.item("eti_conc_rd1272_8")
+	result.add "eti_conc_rd1272_9", classification.item("eti_conc_rd1272_9")
+	result.add "eti_conc_rd1272_10", classification.item("eti_conc_rd1272_10")
+	result.add "eti_conc_rd1272_11", classification.item("eti_conc_rd1272_11")
+	result.add "eti_conc_rd1272_12", classification.item("eti_conc_rd1272_12")
+	result.add "eti_conc_rd1272_13", classification.item("eti_conc_rd1272_13")
+	result.add "eti_conc_rd1272_14", classification.item("eti_conc_rd1272_14")
+	result.add "eti_conc_rd1272_15", classification.item("eti_conc_rd1272_15")
+
+	result.add "clasificacion_1", classification.item("clasificacion_1")
+	result.add "clasificacion_2", classification.item("clasificacion_2")
+	result.add "clasificacion_3", classification.item("clasificacion_3")
+	result.add "clasificacion_4", classification.item("clasificacion_4")
+	result.add "clasificacion_5", classification.item("clasificacion_5")
+	result.add "clasificacion_6", classification.item("clasificacion_6")
+	result.add "clasificacion_7", classification.item("clasificacion_7")
+	result.add "clasificacion_8", classification.item("clasificacion_8")
+	result.add "clasificacion_9", classification.item("clasificacion_9")
+	result.add "clasificacion_10", classification.item("clasificacion_10")
+	result.add "clasificacion_11", classification.item("clasificacion_11")
+	result.add "clasificacion_12", classification.item("clasificacion_12")
+	result.add "clasificacion_13", classification.item("clasificacion_13")
+	result.add "clasificacion_14", classification.item("clasificacion_14")
+	result.add "clasificacion_15", classification.item("clasificacion_15")
+
+	result.Add "notas_rd1272", obtainNotasRd1272(classification.item("notas_rd1272"), lang, connection)
 
 	set extractClassification = result
 End Function
+
+function extract_health_effects(substanceId, lang, substanceDic, connection)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim featuredLists : featuredLists = obtainFeaturedLists(substanceId, connection)
+	dim substanceGroupsRecordset
+	set substanceGroupsRecordset = getRecordsetSubstanceGroupsInternational(substanceId, lang, connection)
+	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
+	substance.add "comentarios_sl", substanceDic("comentarios_sl")
+	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
+	substance.add "volumen_iarc", substanceDic("volumen_iarc")
+	substance.add "notas_iarc", substanceDic("notas_iarc")
+	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), lang, connection)
+	substance.add "efecto_neurotoxico", obtainEfectosNeurotoxico(substanceDic("efecto_neurotoxico"), featuredLists, lang, connection)
+	substance.add "fuente_neurotoxico", obtainFuentesNeurotoxico(substanceDic("fuente_neurotoxico"), featuredLists, lang, connection)
+	dim nivel_neurotoxico_key
+	nivel_neurotoxico_key = obtainNivelNeurotoxicoKey(substanceDic("nivel_neurotoxico"))
+	substance.add "nivel_neurotoxico", obtainDefinitions(nivel_neurotoxico_key, lang, connection)
+	substance.add "nivel_tpr", obtainNivelTpr(substanceDic, connection)
+	substance.add "categoria_cancer_otras", substanceDic("categoria_cancer_otras")
+	substance.add "fuente", substanceDic("fuente")
+
+	set extract_health_effects = substance
+end function
+
+function extract_environment_effects(substance_id, lang, substanceDic, connection)
+	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+	dim substanceGroupsRecordset : set substanceGroupsRecordset = getRecordsetSubstanceGroupsInternational(substance_id, lang, connection)
+	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	substanceGroupsRecordset.close()
+	set substanceGroupsRecordset = nothing
+	substance.add "anchor_tpb", substanceDic("anchor_tpb")
+	substance.add "enlace_tpb", substanceDic("enlace_tpb")
+	substance.add "fuentes_tpb", obtainDefinitions(substanceDic("fuentes_tpb"), lang, connection)
+	substance.add "directiva_aguas", substanceDic("directiva_aguas")
+	substance.add "clasif_mma", obtainClasifMma(substanceDic("clasif_mma"), lang, connection)
+	substance.add "sustancia_prioritaria", substanceDic("sustancia_prioritaria")
+
+	set extract_environment_effects = substance
+end function
 
 Function composeClassificationQuery(substance_id)
 	composeClassificationQuery = _
@@ -100,6 +231,46 @@ function composeIdentificationQuery(substance_id)
 			"dn_risc_sustancias " &_
 		"WHERE " &_
 			"id = " & substance_id
+end function
+
+function compose_health_effects_query(id_sustancia)
+	dim sql
+sql = _
+		"SELECT " &_
+			"sus.id, sus.comentarios as comentarios_sl, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, " &_
+			"neurodis.nivel_disruptor, neurodis.efecto_neurotoxico, neurodis.fuente_neurotoxico, neurodis.nivel_neurotoxico, cancer_otras.categoria_cancer_otras, cancer_otras.fuente, " &_
+			"sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, " &_
+			"sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, " &_
+			"sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15 " &_
+		"FROM " &_
+			"dn_risc_sustancias as sus " &_
+		"LEFT JOIN " &_
+			"dn_risc_sustancias_iarc as iarc " &_
+				"ON sus.id = iarc.id_sustancia " &_
+		"LEFT JOIN " &_
+			"dn_risc_sustancias_neuro_disruptor as neurodis " &_
+				"ON sus.id = neurodis.id_sustancia " &_
+		"LEFT JOIN " &_
+			"dn_risc_sustancias_cancer_otras as cancer_otras " &_
+				"ON sus.id = cancer_otras.id_sustancia " &_
+		"WHERE " &_
+			"sus.id = " & id_sustancia
+
+	compose_health_effects_query = sql
+end function
+
+function compose_environment_query(substanceId)
+	dim sql
+	sql = _
+		"SELECT " &_
+			"anchor_tpb, enlace_tpb, fuentes_tpb, mpmb, " &_
+			"directiva_aguas, clasif_mma, sustancia_prioritaria " &_
+		"FROM " &_
+			"dn_risc_sustancias_ambiente " &_
+		"WHERE " &_
+			"id_sustancia = " & substanceId
+
+	compose_environment_query = sql
 end function
 
 function obtainNombre(nombre, lang)
@@ -257,5 +428,110 @@ function formatFrases(byval c, tipo)
 '	response.write "<br />"&c&" se convierte en "&c2
 
 	formatFrases=c2
+end function
+
+function extractGrupoIarc(grupo)
+	extractGrupoIarc = grupo
+	if isNull(grupo) then
+		exit function
+	end if
+	extractGrupoIarc = ""
+	extractGrupoIarc = _
+		trim( _
+			replace( _
+				ucase(grupo), "GRUPO", "") _
+			)
+end function
+
+function obtainEfectosNeurotoxico(byVal efectosSrz, featuredLists, lang, connection)
+	obtainEfectosNeurotoxico = efectosSrz
+	if isNull(efectosSrz) then _
+		exit function
+	obtainEfectosNeurotoxico = obtainDefinitions( _
+		replace(efectosSrz, "/", ",") _
+		, lang, connection)
+	dim efectos : efectos = split(efectosSrz, "/")
+	if not( _
+		inArray("neurotoxico_rd", featuredLists) _
+		or inArray("neurotoxico_danesa", featuredLists) _
+		) then exit function
+	if not inArray("SNC", efectos) then _
+		arrayPush efectos, "SNC"
+
+	obtainEfectosNeurotoxico = obtainDefinitions( _
+		join(efectos, ",") _
+		, lang, connection )
+end function
+
+function obtainFuentesNeurotoxico(fuentesSrz, featuredLists, lang, connection)
+	obtainFuentesNeurotoxico = obtainDefinitions(fuentesSrz, lang, connection)
+	if isNull(fuentesSrz) then _
+		exit function
+	dim fuentes : fuentes = split(fuentesSrz)
+	if not( _
+		inArray("neurotoxico_rd", featuredLists) _
+		or inArray("neurotoxico_danesa", featuredLists) _
+		) then exit function
+	if not inArray("363", fuentes) then _
+		arrayPush fuentes, "363"
+	if not inArray("EPA-R67", featuredLists) then _
+		arrayPush fuentes, "EPA-R67"
+
+	obtainFuentesNeurotoxico = obtainDefinitions( _
+		join(fuentes, ",") _
+		, lang, connection )
+end function
+
+function obtainNivelNeurotoxicoKey(nivel)
+	obtainNivelNeurotoxicoKey = nivel
+	if isNull(nivel) or nivel = "" then _
+		exit function
+
+	obtainNivelNeurotoxicoKey = "Nivel " &  nivel
+end function
+
+function obtainNivelTpr(substanceDic, connection)
+	set obtainNivelTpr = Server.CreateObject("Scripting.Dictionary")
+	dim clasificaciones : clasificaciones = _
+		substanceDic("clasificacion_1") &_
+		substanceDic("clasificacion_2") &_
+		substanceDic("clasificacion_3") &_
+		substanceDic("clasificacion_4") &_
+		substanceDic("clasificacion_5") &_
+		substanceDic("clasificacion_6") &_
+		substanceDic("clasificacion_7") &_
+		substanceDic("clasificacion_8") &_
+		substanceDic("clasificacion_9") &_
+		substanceDic("clasificacion_10") &_
+		substanceDic("clasificacion_11") &_
+		substanceDic("clasificacion_12") &_
+		substanceDic("clasificacion_13") &_
+		substanceDic("clasificacion_14") &_
+		substanceDic("clasificacion_15")
+	clasificaciones = replace(clasificaciones, " ", "")
+	dim posicion : posicion = instr(clasificaciones, "Repr.Cat.")
+	if posicion = 0 then _
+		exit function
+
+	obtainNivelTpr = obtainDefinitions( "TR" &_
+		replace( _
+			replace( _
+				replace( _
+					mid(clasificaciones, posicion + 9, 1), "1", "1A" _
+				), "2", "1B"_
+			), "3", "2" _
+		) _
+	, lang, connection)
+end function
+
+function obtainClasifMma(byVal clasif, lang, connection)
+	dim key : key = ""
+	obtainClasifMma = ""
+	if not isNumeric(clasif) then _
+		exit function
+	if (0 < clasif < 4 ) then _
+		key = clasif + "."
+
+	obtainClasifMma = obtainDefinitions(key, lang, connection)
 end function
 %>

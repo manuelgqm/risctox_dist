@@ -105,10 +105,31 @@ function isEmpty(value)
 	isEmpty = true
 	if isNull(value) then _
 		exit function
+	if varType(value) = vbArray + vbVariant then _
+		if ubound(value) = -1 then _
+			exit function
 	if value = "" then _
 		exit function
 
 	isEmpty = false
+end function
+
+function is_empty(value)
+	is_empty = true
+	select case varType(value)
+		case vbEmpty
+			exit function
+		case vbNull
+			exit function
+		case vbArray + vbVariant
+			if ubound(value) = -1 then _
+				exit function
+		case vbString
+			if trim(value) = "" then _
+				exit function
+	end select
+
+	is_empty = false
 end function
 
 function collectSubstanceTables()

@@ -15,9 +15,21 @@ Class SubstanceClassInternational
 		set classification = m_classification
 	End property
 
-	Public default function init(substance_id, lang, connection_string)
-		set m_identification = findIdentification(substance_id, lang, connection_string)
-		set m_classification = findClassification(substance_id, lang, connection_string)
+	Private m_health_effects
+	Public property Get health_effects()
+		set health_effects = m_health_effects
+	End property
+
+	Private m_environment_effects
+	Public property Get environment_effects()
+		set environment_effects = m_environment_effects
+	End property
+
+	Public default function init(substance_id, lang, connection)
+		set m_identification = findIdentification(substance_id, lang, connection)
+		set m_classification = findClassification(substance_id, lang, connection)
+		set m_health_effects = find_health_effects(substance_id, lang, connection)
+		set m_environment_effects = find_environment_effects(substance_id, lang, connection)
 
 		set init = Me
 	End function

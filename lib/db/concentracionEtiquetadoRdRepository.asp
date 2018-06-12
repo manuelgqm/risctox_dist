@@ -139,7 +139,7 @@ function obtainConcentracionEtiquetado(etiquetado, concentracion)
 		set obtainConcentracionEtiquetado = etiConc
 		exit function
 	end if
-	if concentracion <> "" and etiquetado <> "" Then
+	if concentracion <> "" or etiquetado <> "" Then
 		concentracionFormated = replace(concentracion, ":", "")
 		concentracionFormated = encodeHTMLEntities(concentracion)
 		etiquetadoFormated = encodeHTMLEntities(etiquetado)

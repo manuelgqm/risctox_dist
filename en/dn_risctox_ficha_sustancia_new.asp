@@ -17,6 +17,52 @@ dim idpagina : idpagina = 627
 call recordVisit(idpagina)
 
 dim LANG : LANG = "en"
+Dim CARCINOGENIC_LISTS : CARCINOGENIC_LISTS = Array( _
+  "cancer_rd", _
+  "cancer_danesa", _
+  "cancer_iarc", _
+  "cancer_otras", _
+  "cancer_mama" _
+)
+dim MUTAGENIC_LISTS: MUTAGENIC_LISTS = Array( _
+  "mutageno_rd", _
+  "mutageno_danesa" _
+)
+dim NEUROTOXIC_LISTS : NEUROTOXIC_LISTS = array( _
+  "neurotoxico", _
+  "neurotoxico_rd", _
+  "neurotoxico_danesa", _
+  "neurotoxico_nivel" _
+)
+dim SENTITISER_LISTS : SENTITISER_LISTS = Array( _
+  "sensibilizante", _
+  "sensibilizante_danesa", _
+  "sensibilizante_reach" _
+)
+dim TPR_LISTS : TPR_LISTS = Array("tpr", "tpr_danesa")
+dim HEALTH_EFFECTS_LISTS : HEALTH_EFFECTS_LISTS = array( _
+  "cancer_rd", _
+  "cancer_danesa", _
+  "cancer_iarc", _
+  "cancer_otras", _
+  "cancer_mama", _
+  "de", _
+  "sensibilizante", _
+  "sensibilizante_reach", _
+  "sensibilizante_danesa", _
+  "tpr", _
+  "tpr_danesa", _
+  "eepp", _
+  "mutageno_rd", _
+  "mutageno_danesa", _
+  "salud", _
+  "prohibidas_embarazadas", _
+  "prohibidas_lactantes", _
+  "neurotoxico", _
+  "neurotoxico_rd", _
+  "neurotoxico_danesa", _
+  "neurotoxico_nivel" _
+)
 
 dim id_sustancia : id_sustancia = obtainSanitizedQueryParameter("id_sustancia")
 dim substance : set substance = (new SubstanceClassInternational)(id_sustancia, LANG, objConnection2)
@@ -120,7 +166,7 @@ function toggle_texto(id_objeto, texto)
           	<br />
           </div>
           <%
-          'ap3_riesgos()
+          ap3_riesgos()
           'ap4_normativa_ambiental()
           'ap4_normativa_salud_laboral()
           'ap4_normativa_restriccion_prohibicion()
@@ -439,7 +485,7 @@ sub ap2_clasificacion()
 					<% ap2_clasificacion_frases_r(substance) %>
 					<%
 
-		        if mySubstance.hasFrasesRdanesa() then
+		        if substance.hasFrasesRdanesa() then
 		          ap2_clasificacion_frases_r_danesa(substance)
 		        end if
 		      %>
@@ -456,10 +502,10 @@ sub ap2_clasificacion()
 	</table>
 <%
 	end if
-end sub ' ap2_clasificacion
+end sub
 
 sub ap2_clasificacion_rd1272()
-  if isEmpty(substance.identification.item("pictogramasRd1272")) and isEmpty(substance.identification.item("frasesH")) and isEmpty(substance.identification.item("concentracionEtiquetadoRd1272")) then
+  if is_empty(substance.classification.item("pictogramasRd1272")) and is_empty(substance.classification.item("frasesH")) and is_empty(substance.classification.item("concentracionEtiquetadoRd1272")) then
     exit Sub
   end if
 
@@ -524,12 +570,12 @@ end sub ' ap2_clasificacion_simbolos
 ' ##################################################################################
 
 sub ap2_clasificacion_simbolos_rd1272()
-	if (substance.Item("simbolos_rd1272") = "") then
+	if is_empty(substance.classification.item("pictogramasRd1272")) then
     exit sub
   end if
 
-  substance.Item("simbolos") = replace(substance.Item("simbolos_rd1272"), ",", ";")
-	array_simbolos = split(substance.Item("simbolos"), ";")
+  simbolos = replace(substance.classification.Item("simbolos_rd1272"), ",", ";")
+	array_simbolos = split(simbolos, ";")
   symbols_html = ""
 	for i=0 to ubound(array_simbolos)
 		simbolo = trim(array_simbolos(i))
@@ -574,36 +620,30 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_frases_h()
-	' Muestra las frases H segun clasificacion_rd1272_1 hasta clasificacion_rd1272_15
-
-	' Montamos frases H
-	frases_h = monta_frases("H", substance.Item("clasificacion_rd1272_1"), substance.Item("clasificacion_rd1272_2"), substance.Item("clasificacion_rd1272_3"), substance.Item("clasificacion_rd1272_4"), substance.Item("clasificacion_rd1272_5"), substance.Item("clasificacion_rd1272_6"), substance.Item("clasificacion_rd1272_7"), substance.Item("clasificacion_rd1272_8"), substance.Item("clasificacion_rd1272_9"), substance.Item("clasificacion_rd1272_10"), substance.Item("clasificacion_rd1272_11"), substance.Item("clasificacion_rd1272_12"), substance.Item("clasificacion_rd1272_13"), substance.Item("clasificacion_rd1272_14"), substance.Item("clasificacion_rd1272_15"))
-
-	if frases_h = "" then
+	if is_empty(substance.classification.item("frasesH")) then _
     exit sub
-  end if
   %>
 	<p id="ap2_clasificacion_frases_r_titulo" class="ficha_titulo_2" style="margin-bottom: -10px;"><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Frases H")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> H-phrases</p>
   <span id="H_phrases">
   <%
-	muestra_clasificacion 1, substance.Item("clasificacion_rd1272_1")
-	muestra_clasificacion 2, substance.Item("clasificacion_rd1272_2")
-	muestra_clasificacion 3, substance.Item("clasificacion_rd1272_3")
-	muestra_clasificacion 4, substance.Item("clasificacion_rd1272_4")
-	muestra_clasificacion 5, substance.Item("clasificacion_rd1272_5")
-	muestra_clasificacion 6, substance.Item("clasificacion_rd1272_6")
-	muestra_clasificacion 7, substance.Item("clasificacion_rd1272_7")
-	muestra_clasificacion 8, substance.Item("clasificacion_rd1272_8")
-	muestra_clasificacion 9, substance.Item("clasificacion_rd1272_9")
-	muestra_clasificacion 10, substance.Item("clasificacion_rd1272_10")
-	muestra_clasificacion 11, substance.Item("clasificacion_rd1272_11")
-	muestra_clasificacion 12, substance.Item("clasificacion_rd1272_12")
-	muestra_clasificacion 13, substance.Item("clasificacion_rd1272_13")
-	muestra_clasificacion 14, substance.Item("clasificacion_rd1272_14")
-	muestra_clasificacion 15, substance.Item("clasificacion_rd1272_15")
+	muestra_clasificacion 1, substance.classification.item("clasificacion_rd1272_1")
+	muestra_clasificacion 2, substance.classification.Item("clasificacion_rd1272_2")
+	muestra_clasificacion 3, substance.classification.Item("clasificacion_rd1272_3")
+	muestra_clasificacion 4, substance.classification.Item("clasificacion_rd1272_4")
+	muestra_clasificacion 5, substance.classification.Item("clasificacion_rd1272_5")
+	muestra_clasificacion 6, substance.classification.Item("clasificacion_rd1272_6")
+	muestra_clasificacion 7, substance.classification.Item("clasificacion_rd1272_7")
+	muestra_clasificacion 8, substance.classification.Item("clasificacion_rd1272_8")
+	muestra_clasificacion 9, substance.classification.Item("clasificacion_rd1272_9")
+	muestra_clasificacion 10, substance.classification.Item("clasificacion_rd1272_10")
+	muestra_clasificacion 11, substance.classification.Item("clasificacion_rd1272_11")
+	muestra_clasificacion 12, substance.classification.Item("clasificacion_rd1272_12")
+	muestra_clasificacion 13, substance.classification.Item("clasificacion_rd1272_13")
+	muestra_clasificacion 14, substance.classification.Item("clasificacion_rd1272_14")
+	muestra_clasificacion 15, substance.classification.Item("clasificacion_rd1272_15")
 
 	' 23/06/2014 - SPL - Por indicación de Tatiana se pone esta definición.
-	if (trim(substance.Item("clasificacion_rd1272_1"))="Expl., ****;") then
+	if (trim(substance.classification.Item("clasificacion_rd1272_1"))="Expl., ****;") then
 		%>
 		<p><b>Explosive</b>: Physical hazards that need to be confirmed by testing</p>
 		<%
@@ -822,18 +862,16 @@ end sub
 ' ##################################################################################
 
 sub ap2_clasificacion_notas_rd1272()
-	dim notas_rd1272LastId : notas_rd1272LastId = Ubound( substance.Item("notas_rd1272") )
-	if notas_rd1272LastId < 0 then
+	if is_empty(substance.classification.item("notas_rd1272")) then _
 		exit sub
-	end if
 	%>
 	<p id="ap2_clasificacion_notas_titulo" class="ficha_titulo_2">Notes&nbsp;
 	<p class="texto" >
 		<blockquote id="secc-notas-rd1272">
     <span id="rd1272_notes">
 		<%
-		for i = 0 to notas_rd1272LastId
-			set nota = substance.Item("notas_rd1272")(i)
+		for i = 0 to ubound(substance.classification.item("notas_rd1272"))
+			set nota = substance.classification.Item("notas_rd1272")(i)
 		%>
 			<b><%= replace(nota.item("key"), "Nota", "Note") %></b>&nbsp;
 			<% if nota.item("id")<>""then %>
@@ -891,9 +929,8 @@ end sub
 
 sub ap2_clasificacion_etiquetado_rd1272()
 
-	if not ((substance.Item("conc_rd1272_1") <> "") or (substance.Item("eti_conc_rd1272_1") <> "") or (substance.Item("conc_rd1272_2") <> "") or (substance.Item("eti_conc_rd1272_2") <> "") or (substance.Item("conc_rd1272_3") <> "") or (substance.Item("eti_conc_rd1272_3") <> "") or (substance.Item("conc_rd1272_4") <> "") or (substance.Item("eti_conc_rd1272_4") <> "") or (substance.Item("conc_rd1272_5") <> "") or (substance.Item("eti_conc_rd1272_5") <> "") or (substance.Item("conc_rd1272_6") <> "") or (substance.Item("eti_conc_rd1272_6") <> "") or (substance.Item("conc_rd1272_7") <> "") or (substance.Item("eti_conc_rd1272_7") <> "") or (substance.Item("conc_rd1272_8") <> "") or (substance.Item("eti_conc_rd1272_8") <> "") or (substance.Item("conc_rd1272_9") <> "") or (substance.Item("eti_conc_rd1272_9") <> "") or (substance.Item("conc_rd1272_10") <> "") or (substance.Item("eti_conc_rd1272_10") <> "") or (substance.Item("conc_rd1272_11") <> "") or (substance.Item("eti_conc_rd1272_11") <> "") or (substance.Item("conc_rd1272_12") <> "") or (substance.Item("eti_conc_rd1272_12") <> "") or (substance.Item("conc_rd1272_13") <> "") or (substance.Item("eti_conc_rd1272_13") <> "") or (substance.Item("conc_rd1272_14") <> "") or (substance.Item("eti_conc_rd1272_14") <> "") or (substance.Item("conc_rd1272_15") <> "") or (substance.Item("eti_conc_rd1272_15") <> "")) then
+  if is_empty(substance.classification.item("concentracionEtiquetadoRd1272")) then _
     exit sub
-  end if
 
   %>
 	<span id="ap2_clasificacion_etiquetado_titulo" class="ficha_titulo_2"><a onclick=window.open('ver_definicion.asp?id=279','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>&nbsp;Labeling&nbsp;</span>
@@ -901,10 +938,10 @@ sub ap2_clasificacion_etiquetado_rd1272()
   <fieldset id="secc-etiquetado_rd1272" style="margin: 15px 45px;">
   <span id="rd1272_labeling">
    <%
-  	if not isEmpty(substance.Item("conc_rd1272_1")) or not isEmpty(substance.Item("conc_rd1272_2")) then
-  		if (substance.Item("conc_rd1272_1")) = "" then
-  			if substance.Item("eti_conc_rd1272_1") <> "" then
-  			   response.write "Factor " & substance.Item("eti_conc_rd1272_1")
+  	if not isEmpty(substance.classification.Item("conc_rd1272_1")) or not isEmpty(substance.classification.Item("conc_rd1272_2")) then
+  		if (substance.classification.Item("conc_rd1272_1")) = "" then
+  			if substance.classification.Item("eti_conc_rd1272_1") <> "" then
+  			   response.write "Factor " & substance.classification.Item("eti_conc_rd1272_1")
   			end if
   		end if
 
@@ -914,27 +951,27 @@ sub ap2_clasificacion_etiquetado_rd1272()
     			<th class="subtitulo3 celdaabajo">Concentration</th><th class="subtitulo3 celdaabajo">Labeling</th>
     		</tr>
       <%
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_1"), substance.Item("eti_conc_rd1272_1")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_2"), substance.Item("eti_conc_rd1272_2")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_3"), substance.Item("eti_conc_rd1272_3")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_4"), substance.Item("eti_conc_rd1272_4")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_5"), substance.Item("eti_conc_rd1272_5")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_6"), substance.Item("eti_conc_rd1272_6")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_7"), substance.Item("eti_conc_rd1272_7")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_8"), substance.Item("eti_conc_rd1272_8")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_9"), substance.Item("eti_conc_rd1272_9")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_10"), substance.Item("eti_conc_rd1272_10")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_11"), substance.Item("eti_conc_rd1272_11")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_12"), substance.Item("eti_conc_rd1272_12")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_13"), substance.Item("eti_conc_rd1272_13")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_14"), substance.Item("eti_conc_rd1272_14")
-    	ap2_clasificacion_etiquetado_fila	"h", substance.Item("conc_rd1272_15"), substance.Item("eti_conc_rd1272_15")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_1"), substance.classification.Item("eti_conc_rd1272_1")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_2"), substance.classification.Item("eti_conc_rd1272_2")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_3"), substance.classification.Item("eti_conc_rd1272_3")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_4"), substance.classification.Item("eti_conc_rd1272_4")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_5"), substance.classification.Item("eti_conc_rd1272_5")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_6"), substance.classification.Item("eti_conc_rd1272_6")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_7"), substance.classification.Item("eti_conc_rd1272_7")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_8"), substance.classification.Item("eti_conc_rd1272_8")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_9"), substance.classification.Item("eti_conc_rd1272_9")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_10"), substance.classification.Item("eti_conc_rd1272_10")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_11"), substance.classification.Item("eti_conc_rd1272_11")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_12"), substance.classification.Item("eti_conc_rd1272_12")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_13"), substance.classification.Item("eti_conc_rd1272_13")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_14"), substance.classification.Item("eti_conc_rd1272_14")
+    	ap2_clasificacion_etiquetado_fila	"h", substance.classification.Item("conc_rd1272_15"), substance.classification.Item("eti_conc_rd1272_15")
       %>
   	</table>
     <%
   	else
-  		if substance.Item("eti_conc_rd1272_1")<>"" then
-  			response.write "Factor " & substance.Item("eti_conc_rd1272_1")
+  		if substance.classification.Item("eti_conc_rd1272_1")<>"" then
+  			response.write "Factor " & substance.classification.Item("eti_conc_rd1272_1")
   		end if
   	end if
     %>
@@ -986,9 +1023,14 @@ sub concern_trade_union_list(mySubstance)
     objConnection2.execute(sqlListaNegra),,adexecutenorecords
 
 		razones = ""
-
-    carcinogenic_lists = array("cancer_rd", "cancer_danesa", "cancer_iarc_excepto_grupo_3", "cancer_otras", "cancer_mama")
-		if substance.inLists(carcinogenic_lists) then
+    Dim carcinogenic_trade_union_lists : carcinogenic_trade_union_lists = Array( _
+      "cancer_rd", _
+      "cancer_danesa", _
+      "cancer_iarc_excepto_grupo_3", _
+      "cancer_otras", _
+      "cancer_mama" _
+    )
+		if substance.inLists(carcinogenic_trade_union_lists) then
 			razones = razones & ", carcinogenic"
 		end if
 
@@ -996,8 +1038,7 @@ sub concern_trade_union_list(mySubstance)
 			razones = razones & ", POP"
 		end if
 
-    mutagenic_lists = Array("mutageno_rd", "mutageno_danesa")
-    if substance.inLists(mutagenic_lists) then
+    if substance.inLists(MUTAGENIC_LISTS) then
 			razones = razones & ", mutagenic"
 		end if
 
@@ -1005,18 +1046,15 @@ sub concern_trade_union_list(mySubstance)
 			razones = razones & ", endocrine disrupter"
 		end if
 
-    dim neurotoxic_lists : neurotoxic_lists = array("neurotoxico", "neurotoxico_rd", "neurotoxico_danesa", "neurotoxico_nivel")
-		if substance.inLists(neurotoxic_lists) then
+		if substance.inLists(NEUROTOXIC_LISTS) then
 			razones = razones & ", neurotoxic"
 		end if
 
-    sentitiser_lists = Array("sensibilizante", "sensibilizante_danesa", "sensibilizante_reach")
-    if substance.inLists(sentitiser_lists) then
+    if substance.inLists(SENTITISER_LISTS) then
 			razones = razones & ", sensitizer"
 		end if
 
-    tpr_lists = Array("tpr", "tpr_danesa")
-		if substance.inLists(tpr_lists) then
+		if substance.inLists(TPR_LISTS) then
 			razones = razones & ", toxic for reproduction"
 		end if
 
@@ -1064,17 +1102,11 @@ end sub
 ' ###################################################################################
 
 sub ap3_riesgos()
-	' SALUD
-
-	'Sergio
-	sql = "select comentarios from dn_risc_sustancias_salud where id_sustancia="&id_sustancia
-	set objRstq=objConnection2.execute(sql)
-	if(not objRstq.eof) then
-		comentarios_sl = objrstq("comentarios")
-	end if
-
-
-	if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama") or mySubstance.inList("de") or mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" or mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_reach") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") or mySubstance.inList("eepp") or mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") or mySubstance.inList("salud") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or comentarios_sl <> "") then
+	sql = "select comentarios from dn_risc_sustancias_salud where id_sustancia=" & id_sustancia
+	set objRstq = objConnection2.execute(sql)
+  if substance.inLists(HEALTH_EFFECTS_LISTS) or _
+    not is_empty(substance.health_effects.item("efecto_neurotoxico")) or _
+    not is_empty(substance.health_effects.item("comentarios_sl")) then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -1092,43 +1124,36 @@ sub ap3_riesgos()
 		</table>
 
 <%
-		if (mySubstance.inList("cancer_rd") or mySubstance.inList("cancer_danesa") or mySubstance.inList("cancer_iarc") or mySubstance.inList("cancer_otras") or mySubstance.inList("cancer_mama")) then
+		if substance.inLists(CARCINOGENIC_LISTS) then
       ap3_riesgos_tabla("Cancerígeno")
     end if
 
-		if (mySubstance.inList("mutageno_rd") or mySubstance.inList("mutageno_danesa") ) then
+		if substance.inLists(MUTAGENIC_LISTS) then
       ap3_riesgos_tabla("Mutágeno")
     end if
 
-		if mySubstance.inList("de") then
+		if substance.inList("de") then
       ap3_riesgos_tabla("Disruptor endocrino")
     end if
 
-		if mySubstance.inNeurotoxicosLists() or substance.Item("efecto_neurotoxico")="OTOTÓXICO" then
+		if substance.inLists(NEUROTOXIC_LISTS) or _
+      not is_empty(substance.health_effects.item("efecto_neurotoxico")) then
       ap3_riesgos_tabla("Neurotóxico")
     end if
 
-    if mySubstance.inList("sensibilizante") or mySubstance.inList("sensibilizante_danesa") or mySubstance.inList("sensibilizante_reach") then
+    if substance.inLists(SENTITISER_LISTS) then
       ap3_riesgos_tabla("Sensibilizante")
     end if
 
-    if mySubstance.inList("tpr") or mySubstance.inList("tpr_danesa") then
+    if substance.inLists(TPR_LISTS) then
       ap3_riesgos_tabla("Tóxico para la reproducción")
     end if
 
-    if mySubstance.inList("eepp") then
-      ap3_riesgos_enfermedades()
-    end if
-
-  	if mySubstance.inList("salud") then
+  	if substance.inList("salud") then
       ap7_salud()
     end if
-%>
-
-		<%
-
-			if comentarios_sl <> "" then
-		%>
+		if not is_empty(substance.health_effects.item("comentarios_sl")) then
+		  %>
 			<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
 				<tr>
 					<td class="celdaabajo" colspan="2" align="center">
@@ -1144,108 +1169,101 @@ sub ap3_riesgos()
 					</td>
 				</tr>
 				<tr>
-
 					<td id="secc-mas_informacion_salud_laboral" style="display:none">
-
-
 						<ul>
 							<li>
-							<%= comentarios_sl %>
+							<%= substance.health_effects.item("comentarios_sl") %>
 							</li>
 						</ul>
-
 					</td>
 				</tr>
 			</table>
 			<br />
-		<%
+	    <%
 			end if
-		%>
-
+     %>
 		</div>
-		<!-- ################ Fin Riesgos para la salud ################## -->
-<%
+  <%
 	end if ' salud
-%>
-
-<% ' MEDIO AMBIENTE %>
-<%
-if (mySubstance.inList("tpb") or mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana") or mySubstance.inList("sustancias_prioritarias")  or mySubstance.inList("ozono") or mySubstance.inList("clima") or mySubstance.inList("aire") or mySubstance.inList("cop") or substance.Item("comentarios_medio_ambiente") <>"" or mySubstance.inList("suelos")) then %>
-
-		<!-- ################ Riesgos para el medio ambiente ###################### -->
-		<br />
-		<div id="ficha">
-		<table width="100%" cellpadding=5>
-			<tr>
-				<td>
-                        <a name="identificacion"></a><img src="imagenes/risctox03.gif" alt="Riesgos específicos para el medio ambiente" />
-
-				</td>
-				<td align="right">
-					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
-				</td>
-			</tr>
-		</table>
-<%
-		if mySubstance.inList("tpb") then
-			ap3_riesgos_tabla("Tóxica, Persistente y Bioacumulativa")
-		end if
-		' SPL (16/06/20014)
-'		if num_cas="87-68-3" or num_cas="133-49-3" or num_cas="75-74-1" then
-		if mySubstance.inMpmbList() then
-			ap3_riesgos_tabla("mPmB")
-		end if
-		if (mySubstance.inList("directiva_aguas") or mySubstance.inList("alemana")) then ap3_riesgos_tabla("Tóxica para el agua") end if
-		if (mySubstance.inList("suelos")) then ap3_riesgos_tabla("Contaminante de suelos") end if
-		if (mySubstance.inList("ozono") or mySubstance.inList("clima") or mySubstance.inList("aire")) then ap3_riesgos_tabla("Contaminante del aire") end if
-
-		if (mySubstance.inList("cop")) then ap3_riesgos_tabla("Contaminante Orgánico Persistente (COP)") end if
-%>
-
-		<%
-		if (substance.Item("comentarios_medio_ambiente") <>"") then
-		%>
-			<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
-				<tr>
-					<td class="celdaabajo" colspan="2" align="center">
-						<table cellpadding=0 cellspacing=0 width="100%" border="0">
-							<tr>
-								<td width="100%" class="titulo3" align="left">
-
-							Más información en medio ambiente
-							<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
-			        			</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-
-					<td id="secc-mas_informacion_medio_ambiente" style="display:none">
-
-
-						<ul>
-							<li>
-							<%=substance.Item("comentarios_medio_ambiente") %>
-							</li>
-						</ul>
-
-					</td>
-				</tr>
-			</table>
-			<br />
-
-		<%
+  Dim environment_effects_lists : environment_effects_lists = Array( _
+    "tpb", _
+    "directiva_aguas", _
+    "alemana", _
+    "sustancias_prioritarias", _
+    "ozono", _
+    "clima", _
+    "aire", _
+    "cop", _
+    "suelos" _
+  )
+  if substance.inLists(environment_effects_lists) _
+    or not is_empty(substance.health_effects.item("comentarios_medio_ambiente")) _
+  then
+    %>
+  	<br />
+  	<div id="ficha">
+  	<table width="100%" cellpadding=5>
+  		<tr>
+  			<td>
+          <a name="identificacion"></a><img src="imagenes/risctox03.gif" alt="Riesgos específicos para el medio ambiente" />
+  			</td>
+  			<td align="right">
+  				<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
+  			</td>
+  		</tr>
+  	</table>
+    <%
+  	if substance.inList("tpb") then
+  		ap3_riesgos_tabla("Tóxica, Persistente y Bioacumulativa")
+  	end if
+  	if not is_empty(substance.environment_effects.item("mpmb")) then
+  		ap3_riesgos_tabla("mPmB")
+  	end if
+  	if substance.inList("directiva_aguas") or substance.inList("alemana") then
+      ap3_riesgos_tabla("Tóxica para el agua")
+    end if
+  	if substance.inList("suelos") then
+      ap3_riesgos_tabla("Contaminante de suelos")
+    end if
+  	if substance.inList("ozono") or substance.inList("clima") or substance.inList("aire") then
+      ap3_riesgos_tabla("Contaminante del aire")
+    end if
+  	if substance.inList("cop") then
+      ap3_riesgos_tabla("Contaminante Orgánico Persistente (COP)")
+    end if
+  	if not is_empty(substance.environment_effects.Item("comentarios_medio_ambiente")) then
+  		%>
+  		<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
+  			<tr>
+  				<td class="celdaabajo" colspan="2" align="center">
+  					<table cellpadding=0 cellspacing=0 width="100%" border="0">
+  						<tr>
+  							<td width="100%" class="titulo3" align="left">
+      						Más información en medio ambiente
+      						<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+          			</td>
+  						</tr>
+  					</table>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td id="secc-mas_informacion_medio_ambiente" style="display:none">
+  					<ul>
+  						<li>
+  						<%= substance.environment_effects.Item("comentarios_medio_ambiente") %>
+  						</li>
+  					</ul>
+  				</td>
+  			</tr>
+  		</table>
+  		<br />
+  		<%
 		end if
 		%>
 		</div>
-		<!-- ################ Fin Riesgos para el medio ambiente ################## -->
-<%
+    <%
 	end if ' medio ambiente
 end sub ' ap3_riesgos
-
-
-' ###################################################################################
 
 sub ap3_riesgos_tabla(byval tipo)
 
@@ -1439,7 +1457,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
     <%
     case "Cancerígeno":
-		  if (mySubstance.inList("cancer_rd")) then
+		  if (substance.inList("cancer_rd")) then
         %>
   			<fieldset>
   				<legend class="subtitulo3"><strong><span id="carcinogen_rd1272.label">According to R. 1272/2008</span></strong></legend>
@@ -1447,18 +1465,17 @@ sub ap3_riesgos_tabla_contenidos(tipo)
           <span id="carcinogen_rd1272.value">
           <%
   				nivel_cancerigeno_rd = dame_nivel_cancerigeno_rd()
-  				' Tatiana - 01/8/2012 - Las categorías sustituir 1 por 1A, 2 por 1B y 3 por 2.
   				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd, "1", "1A")
   				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "2", "1B")
   				nivel_cancerigeno_rd_txt = replace(nivel_cancerigeno_rd_txt, "3", "2")
 
   				if (nivel_cancerigeno_rd <> "") then
-  				    response.write "<strong>Carcinogen level:</strong> " & nivel_cancerigeno_rd_txt
-              Response.Write "<a onclick=window.open('ver_definicion.asp?id=" & dame_id_definicion("C") & nivel_cancerigeno_rd_txt & "','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>"
+				    response.write "<strong>Carcinogen level:</strong> " & nivel_cancerigeno_rd_txt
+            Response.Write "&nbsp;<a onclick=window.open('ver_definicion.asp?id=" & dame_id_definicion("C") & nivel_cancerigeno_rd_txt & "','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>"
   				end if
 
-          if (trim(substance.Item("notas_cancer_rd")) <> "") then
-            Response.Write "<br/><strong>Notas:</strong> " & substance.Item("notas_cancer_rd")
+          if not is_empty(substance.health_effects.Item("notas_cancer_rd")) then
+            Response.Write "<br/><strong>Notas:</strong> " & substance.health_effects.Item("notas_cancer_rd")
   				end if
           %>
           </span>
@@ -1468,7 +1485,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			end if
 
 				' Lista danesa ---------------------------------------------------------------
-				if (mySubstance.inList("cancer_danesa")) then
+				if (substance.inList("cancer_danesa")) then
 		%>
 					<fieldset>
 						<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_cancer", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
@@ -1485,9 +1502,9 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		%>
 
 		<%
-					if (trim(substance.Item("notas_cancer_rd")) <> "") then
+					if (trim(substance.health_effects.Item("notas_cancer_rd")) <> "") then
 		%>
-						<br/><strong>Notas:</strong> <%=substance.Item("notas_cancer_rd")%>
+						<br/><strong>Notas:</strong> <%=substance.health_effects.Item("notas_cancer_rd")%>
 		<%
 					end if
 		%>
@@ -1500,44 +1517,46 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		<%
 				end if
 
-        if (mySubstance.inList("cancer_iarc")) then
+        if (substance.inList("cancer_iarc")) then
 		      %>
 					<fieldset>
 						<legend class="subtitulo3"><strong><span id="carcinogen_iarc">According to IARC </span><a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("IARC")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 	          <%
-						if (trim(substance.Item("grupo_iarc")) <> "") or (trim(substance.Item("volumen_iarc")) <> "") or (trim(substance.Item("notas_iarc")) <> "") then
+						if not is_empty(substance.health_effects.item("grupo_iarc")) or _
+              not is_empty(substance.health_effects.Item("volumen_iarc")) or _
+              not is_empty(substance.health_effects.Item("notas_iarc")) then
 	          %>
 							<blockquote>
 							<table>
               <%
-							if (trim(substance.Item("grupo_iarc")) <> "") then
+							if not is_empty(substance.health_effects.Item("grupo_iarc")) then
 	            %>
 								<tr>
                   <td class="subtitulo3">Group:</td>
                   <td>
                       <span id="carcinogen_iarc_group">
-                        <%= trim(replace(ucase(substance.Item("grupo_iarc")), "GRUPO", ""))%>
+                        <%= substance.health_effects.Item("grupo_iarc")%>
                       </span>
-                      &nbsp;<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(substance.Item("grupo_iarc")))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+                      &nbsp;<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(trim(substance.health_effects.Item("grupo_iarc")))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
                   </td>
                 </tr>
               <%
 							end if
 
-							if (trim(substance.Item("volumen_iarc")) <> "") then
+							if not is_empty(substance.health_effects.Item("volumen_iarc")) then
               %>
 								<tr>
                   <td class="subtitulo3">Volume:</td>
-                  <td><span id="carcinogen_iarc_volume"><%= substance.Item("volumen_iarc") %></span></td>
+                  <td><span id="carcinogen_iarc_volume"><%= substance.health_effects.Item("volumen_iarc") %></span></td>
                 </tr>
               <%
 							end if
 
-							if (trim(substance.Item("notas_iarc")) <> "") then
+							if not is_empty(substance.health_effects.Item("notas_iarc")) then
 	            %>
 								<tr>
                   <td class="subtitulo3">Notes:</td>
-                  <td><span id="carcinogen_iarc_notes"><%= substance.Item("notas_iarc") %></span></td>
+                  <td><span id="carcinogen_iarc_notes"><%= substance.health_effects.Item("notas_iarc") %></span></td>
                 </tr>
               <%
 							end if
@@ -1552,21 +1571,21 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 				end if
 
 				' ntes
-				if (mySubstance.inList("cancer_otras")) then
+				if substance.inList("cancer_otras") then
 		    %>
 		    <fieldset>
 				  <legend class="subtitulo3"><strong>According to other sources</strong></legend>
           <%
-		      if (isNull(substance.Item("categoria_cancer_otras"))) then
-		        substance.Item("categoria_cancer_otras") = ""
+		      if is_empty(substance.health_effects.Item("categoria_cancer_otras")) then
+		        substance.health_effects.Item("categoria_cancer_otras") = ""
 		      end if
 
-		      if (isNull(substance.Item("fuente"))) then
-		        substance.Item("fuente") = ""
+		      if is_empty(substance.health_effects.Item("fuente")) then
+		        substance.health_effects.Item("fuente") = ""
 		      end if
 
-					array_categorias=split(substance.Item("categoria_cancer_otras"), ",")
-					array_fuentes=split(substance.Item("fuente"), ",")
+					array_categorias=split(substance.health_effects.Item("categoria_cancer_otras"), ",")
+					array_fuentes=split(substance.health_effects.Item("fuente"), ",")
 
 					' Damos por hecho que hay el mismo numero de categorias y fuentes y que coinciden en orden
           Dim fuente : fuente = ""
@@ -1606,11 +1625,11 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		    ' Cancer mama
 
-		    if (mySubstance.inList("cancer_mama")) then
+		    if (substance.inList("cancer_mama")) then
 
-		      if (isNull(substance.Item("cancer_mama_fuente"))) then
+		      if (isNull(substance.health_effects.Item("cancer_mama_fuente"))) then
 
-		        substance.Item("cancer_mama_fuente") = ""
+		        substance.health_effects.Item("cancer_mama_fuente") = ""
 
 		      end if
 
@@ -1620,7 +1639,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 						<legend class="subtitulo3"><strong>Según SSI (cáncer de mama) <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("SSI")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
 						<blockquote>
 						<table>
-							<tr><td class="subtitulo3"><strong>Fuente:</strong><br /><a href="<%= substance.Item("cancer_mama_fuente") %>" target="_blank"><%= replace(substance.Item("cancer_mama_fuente"), "http://", "") %></a></td></tr>
+							<tr><td class="subtitulo3"><strong>Fuente:</strong><br /><a href="<%= substance.health_effects.Item("cancer_mama_fuente") %>" target="_blank"><%= replace(substance.health_effects.Item("cancer_mama_fuente"), "http://", "") %></a></td></tr>
 						</table>
 						</blockquote>
 					</fieldset>
@@ -1631,7 +1650,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		case "Mutágeno":
       ' MUTAGENO RD -------------------------------------------------------------
-      if (mySubstance.inList("mutageno_rd")) then
+      if (substance.inList("mutageno_rd")) then
 %>
 			<fieldset>
 				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
@@ -1657,7 +1676,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
       ' MUTAGENO DANESA -------------------------------------------------------------
-      if (mySubstance.inList("mutageno_danesa")) then
+      if (substance.inList("mutageno_danesa")) then
 %>
 			<fieldset>
 				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_mutageno", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>.</strong></legend>
@@ -1688,15 +1707,15 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 			<blockquote>
 			<table>
-			<% if (substance.Item("nivel_disruptor") <> "") then %>
+			<% if not is_empty(substance.health_effects.item("nivel_disruptor")) then %>
 				<tr>
-					<td class="subtitulo3" valign="top">Fuente:</td>
+					<td class="subtitulo3" valign="top">Source:</td>
 					<td>
 					<%
-					array_niveles=split(substance.Item("nivel_disruptor"), ",")
-					for i=0 to ubound(array_niveles)
-						nivel=get_definition(trim(array_niveles(i)), "en")
-						response.write nivel&"<br /><br />"
+					endocrine_disrupter_levels = substance.health_effects.item("nivel_disruptor")
+					for i = 0 to ubound(endocrine_disrupter_levels)
+            set endocrine_disrupter_level = endocrine_disrupter_levels(i)
+						response.write endocrine_disrupter_level.item("description") & "<br /><br />"
 					next
 					%>
 					</td>
@@ -1706,84 +1725,53 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			</blockquote>
 <%
 		case "Neurotóxico":
-
-
-        if mySubstance.inList("neurotoxico_rd") or mySubstance.inList("neurotoxico_danesa") then
-          ' Añadimos SNC a efecto neurotoxico si no existía ya
-          if (substance.Item("efecto_neurotoxico") = "") or (IsNull(substance.Item("efecto_neurotoxico"))) then
-            substance.Item("efecto_neurotoxico")="SNC"
-          else
-            if (not (inStr(substance.Item("efecto_neurotoxico"), "SNC") > 0)) then
-              substance.Item("efecto_neurotoxico") = substance.Item("efecto_neurotoxico") & "/SNC"
-            end if
-          end if
-        end if
-
-        if mySubstance.inList("neurotoxico_rd") then
-          if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
-            substance.Item("fuente_neurotoxico") = "363"
-          else
-            substance.Item("fuente_neurotoxico") = substance.Item("fuente_neurotoxico") & ",363"
-          end if
-        end if
-
-        if mySubstance.inList("neurotoxico_danesa") then
-          if (substance.Item("fuente_neurotoxico") = "") or (IsNull(substance.Item("fuente_neurotoxico"))) then
-            substance.Item("fuente_neurotoxico") = "EPA-R67"
-          else
-            substance.Item("fuente_neurotoxico") = substance.Item("fuente_neurotoxico") & ",EPA-R67"
-          end if
-        end if
+      if not is_empty(substance.health_effects.Item("efecto_neurotoxico")) or _
+        not is_empty(substance.health_effects.Item("nivel_neurotoxico")) or _
+        not is_empty(substance.health_effects.Item("fuente_neurotoxico")) then
       %>
-
-
-      <% if ((substance.Item("efecto_neurotoxico") <> "") or (substance.Item("nivel_neurotoxico") <> "") or (substance.Item("fuente_neurotoxico") <> "")) then %>
 			<blockquote>
 			<table>
-			<%	if (substance.Item("efecto_neurotoxico") <> "") then %>
+			<%	if not is_empty(substance.health_effects.Item("efecto_neurotoxico")) then %>
 				<tr>
-					<td class="subtitulo3" valign="top">Efecto:</td>
+					<td class="subtitulo3" valign="top">Effect:</td>
 					<td>
 						<%
-							' Separamos el efecto neurotoxico por "/". Ejemplo: "SNC/NEUROTOXICO/OTOTOXICO" se convierte en 3 definiciones, cada una con su ayuda.
-							array_neurotoxico = split(substance.Item("efecto_neurotoxico"), "/")
-							for i=0 to ubound(array_neurotoxico)
-								efecto = trim(array_neurotoxico(i))
-                efecto = ucase(efecto)
-						%>
-
-						<%= efecto %> <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(efecto)%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-
-						<%
-							next
+						neurotoxic_effects = substance.health_effects.Item("efecto_neurotoxico")
+						for i = 0 to ubound(neurotoxic_effects)
+              set neurotoxic_effect = neurotoxic_effects(i)
+			        %>
+			        <%= neurotoxic_effect.item("key") %> <a onclick=window.open('ver_definicion.asp?id=<%= neurotoxic_effect.item("id")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+			        <%
+						next
 						%>
 					</td>
 				</tr>
-			<% end if %>
-			<% if (substance.Item("nivel_neurotoxico") <> "") then %>
+        <%
+			end if
+			if not is_empty(substance.health_effects.Item("nivel_neurotoxico")) then
+        dim neurotoxic_level
+        set neurotoxic_level = substance.health_effects.Item("nivel_neurotoxico")(0)
+        %>
 				<tr>
-					<td class="subtitulo3" valign="top">Nivel:</td><td><%=substance.Item("nivel_neurotoxico")%>
-
-					 <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("Nivel "&substance.Item("nivel_neurotoxico"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-
+					<td class="subtitulo3" valign="top">Level:</td><td><%= replace(neurotoxic_level.item("key"), "Level ", "") %>
+					 <a onclick=window.open('ver_definicion.asp?id=<%= neurotoxic_level.item("id")%> ','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
 					</td>
-			</tr>
-			<% end if %>
-			<% if (substance.Item("fuente_neurotoxico") <> "") then %>
+        </tr>
+        <%
+      end if
+        if not is_empty(substance.health_effects.Item("fuente_neurotoxico")) then
+        %>
 				<tr>
-					<td class="subtitulo3" valign="top">Fuente:</td>
+					<td class="subtitulo3" valign="top">Source:</td>
 					<td>
 					<%
-					array_fuentes=split(substance.Item("fuente_neurotoxico"), ",")
-					for i=0 to ubound(array_fuentes)
-          				response.write get_definition(trim(array_fuentes(i)), "en")
-
-
-			%>
-          <%
-            		if (i < ubound(array_fuentes)) then
-              			response.write "<br><br> "
-           			 end if
+          dim neurotoxic_sources
+          neurotoxic_sources = substance.health_effects.item("fuente_neurotoxico")
+					for i = 0 to ubound(neurotoxic_sources)
+            response.write neurotoxic_sources(i).item("description")
+        		if i < ubound(neurotoxic_sources) then
+        			response.write "<br><br> "
+            end if
 					next
 					%>
 					</td></tr>
@@ -1796,17 +1784,17 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		case "Sensibilizante":
 		      response.write "<ul>"
 					' Indicamos si es por lista RD o por lista danesa
-		      if mySubstance.inList("sensibilizante") then
-		        response.write "<li class='subtitulo3'>Sensibilizante según R. 1272/2008</li>"
+		      if substance.inList("sensibilizante") then
+		        response.write "<li class='subtitulo3'>Sensitizer according to Regulation 1272/2008</li>"
 		      end if
 
-			  if mySubstance.inList("sensibilizante_reach") then
-		        response.write "<li class='subtitulo3'>Alérgeno REACH &nbsp;<a href='http://www.istas.net/web/abreenlace.asp?idenlace=6340' target='_blank'>Ver documento</a></li>"
+			  if substance.inList("sensibilizante_reach") then
+		        response.write "<li class='subtitulo3'>REACH allergen &nbsp;<a href='http://www.istas.net/web/abreenlace.asp?idenlace=6340' target='_blank'>Ver documento</a></li>"
 		      end if
 
-		      if mySubstance.inList("sensibilizante_danesa") then
+		      if substance.inList("sensibilizante_danesa") then
 		      %>
-		        <li class='subtitulo3'>Sensibilizante según <% plegador_texto "frases_r_danesa_sensibilizante", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></li>
+		        <li class='subtitulo3'>Sensitiser according to Danish EPA's<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>  <% plegador_texto "frases_r_danesa_sensibilizante", "R phrases", "subtitulo3" %></li>
 		      <%
 
 
@@ -1823,7 +1811,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 		case "Tóxico para la reproducción":
 	      ' TPR SEGUN RD -------------------------------------------------------------
-	      if (mySubstance.inList("tpr")) then
+	      if (substance.inList("tpr")) then
 	%>
 	    			<fieldset>
 	  				<legend class="subtitulo3"><strong>Según R. 1272/2008</strong></legend>
@@ -1848,7 +1836,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 
 	      ' TPR SEGUN LISTA DANESA ---------------------------------------------------
-	      if (mySubstance.inList("tpr_danesa")) then
+	      if (substance.inList("tpr_danesa")) then
 	%>
 	    			<fieldset>
 	  				<legend class="subtitulo3"><strong>Según <% plegador_texto "frases_r_danesa_tpr", "frases R", "subtitulo3" %> en la clasificación de la EPA danesa <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion("EPA Danesa")%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a></strong></legend>
@@ -1874,7 +1862,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 	case "Prohibida para trabajadoras embarazadas":
 
-      if (mySubstance.inList("prohibidas_embarazadas")) then
+      if (substance.inList("prohibidas_embarazadas")) then
 %>
   				<blockquote>
   					<strong>Fuente:</strong> Real Decreto 298/2009
@@ -1884,7 +1872,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 
 	case "Prohibida para trabajadoras lactantes":
 
-      if (mySubstance.inList("prohibidas_lactantes")) then
+      if (substance.inList("prohibidas_lactantes")) then
 %>
   				<blockquote>
   					<strong>Fuente:</strong> Real Decreto 298/2009
@@ -1899,19 +1887,19 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<table>
 				<tr>
 					<td class="subtitulo3">Más información (en inglés):</td>
-					<td><a href="<%= substance.Item("enlace_tpb") %>"><%= corta(substance.Item("anchor_tpb"), 70, "puntossuspensivos") %></a></td>
+					<td><a href="<%= substance.health_effects.Item("enlace_tpb") %>"><%= corta(substance.health_effects.Item("anchor_tpb"), 70, "puntossuspensivos") %></a></td>
 				</tr>
 				<tr>
 					<td class="subtitulo3" valign="top">Fuente/s:</td>
 					<td class="subtitulo3"><%
-						if trim(substance.Item("fuentes_tpb")) <> "" then
-							array_tpb = split(substance.Item("fuentes_tpb"),",")
+						if trim(substance.health_effects.Item("fuentes_tpb")) <> "" then
+							array_tpb = split(substance.health_effects.Item("fuentes_tpb"),",")
 							for i=0 to ubound(array_tpb)
 								response.write "<li>" & get_definition(trim(array_tpb(i)), "en")&"</li>"
 							next
 						end if
-						if trim(substance.Item("fuente_tpb")) <> "" then
-							array_tpb = split(substance.Item("fuente_tpb"),",")
+						if trim(substance.health_effects.Item("fuente_tpb")) <> "" then
+							array_tpb = split(substance.health_effects.Item("fuente_tpb"),",")
 							for i=0 to ubound(array_tpb)
 								response.write "<li>" & get_definition(trim(array_tpb(i)), "en")&"</li>"
 							next
@@ -1968,7 +1956,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 		case "Tóxica para el agua":
 			response.write "<table>"
-			if (substance.Item("directiva_aguas") or mySubstance.inList("directiva_aguas")) then
+			if (substance.Item("directiva_aguas") or substance.inList("directiva_aguas")) then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">· Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
@@ -1976,7 +1964,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 			end if
 
-			if (mySubstance.inList("sustancias_prioritarias")) then
+			if (substance.inList("sustancias_prioritarias")) then
 %>
 				<tr>
 					<td class="subtitulo3" colspan="2">· Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a></td>
@@ -2013,7 +2001,7 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 %>
 				<table>
 <%
-				if (substance.Item("dano_calidad_aire") or mySubstance.inList("aire")) then
+				if (substance.Item("dano_calidad_aire") or substance.inList("aire")) then
 %>
 					<tr>
 						<td class="subtitulo3">Calidad del aire:</td>
@@ -2149,91 +2137,8 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 	end select
 end sub
 
-' ###################################################################################
-
-sub ap3_riesgos_enfermedades()
-
-	' Se agrupan por listado, cada listado en una ficha blanca y dentro cada enfermedad
-	sql_enf = "select distinct enf.id, enf.listado, enf.nombre, enf.sintomas, enf.actividades FROM dn_risc_enfermedades AS enf LEFT OUTER JOIN dn_risc_grupos_por_enfermedades AS gpe ON enf.id = gpe.id_enfermedad LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpe.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_enfermedades AS spe ON spe.id_enfermedad = enf.id WHERE spg.id_sustancia="&id_sustancia&" OR spe.id_sustancia="&id_sustancia&" ORDER BY enf.listado, enf.nombre"
-	set objRstEnf=objConnection2.execute(sql_enf)
-	if (not objRstEnf.eof) then
-		listado_antiguo = ""
-		do while (not objRstEnf.eof)
-			' Para mostrar agrupados por listado, solo escribimos la cabecera si el listado es nuevo
-			if (listado_antiguo <> objRstEnf("listado")) then
-
-				' Si el listado antiguo no es vacío, es que ya habiamos abierto antes uno así que primero cerramos el anterior
-				if (listado_antiguo <> "") then
-%>
-			</td>
-		</tr>
-	</table>
-	<br />
-<%
-				end if
-%>
-	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
-   	<tr>
-			<td class="celdaabajo" colspan="2" align="center">
-				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a href="index.asp?idpagina=617"><img src="imagenes/ayuda.gif" align="absmiddle" border="0" /></a> <%=objRstEnf("listado")%>  <% plegador "secc-enf"&objRstEnf("listado"), "img-enf"&objRstEnf("listado") %></td></tr></table>
-			</td>
-		</tr>
-		<tr id="secc-enf<%= aplana(objRstEnf("listado")) %>" style="display:none">
-			<td>
-<%
-				listado_antiguo = objRstEnf("listado")
-			end if
-				if objRstEnf("nombre")<>"" then
-%>
-				<fieldset style="padding:10px;">
-				<!-- Tabla enfermedad -->
-				<table cellspacing=1 cellpadding=1 border=0>
-					<tr>
-						<td class="subtitulo3" colspan=2><%=objRstEnf("nombre")%></td>
-					</tr>
-				<%
-					if (objRstEnf("sintomas") <> "") then
-				%>
-					<tr>
-						<td class="subtitulo3" align="right" valign="top" width='10%' nowrap style='padding-top:10px'>Síntomas:</td><td align="left" style'padding-top:10px'><%=replace(objRstEnf("sintomas"), vbcrlf, "<br>")%></td>
-					</tr>
-				<%
-					end if
-				%>
-				<%
-					if (objRstEnf("actividades") <> "") then
-				%>
-					<tr>
-						<td class="subtitulo3" align="right" valign="top" width="10%" nowrap style='padding-top:10px'>Actividades:</td><td align="left"  style='padding-top:10px'><%=replace(objRstEnf("actividades"), vbcrlf, "<br>")%></td>
-					</tr>
-				<%
-					end if
-				%>
-				</table>
-				<!-- Fin tabla enfermedad -->
-                </fieldset>
-                <br />
-
-<%
-			end if
-			objRstEnf.movenext
-		loop
-		' Tras el bucle siempre cerramos la tabla
-%>
-			</td>
-		</tr>
-	</table>
-	<br />
-<%
-	end if
-	objRstEnf.close()
-	set objRstEnf=nothing
-end sub
-
-' ###################################################################################
-
 sub ap4_normativa_ambiental()
-	if mySubstance.inList("cov") or mySubstance.inList("residuos") or mySubstance.inList("vertidos") or mySubstance.inList("lpcic")  or mySubstance.inList("accidentes") or mySubstance.inList("emisiones") then
+	if substance.inList("cov") or substance.inList("residuos") or substance.inList("vertidos") or substance.inList("lpcic")  or substance.inList("accidentes") or substance.inList("emisiones") then
 %>
 
 		<!-- ################ Normativa ambiental ###################### -->
@@ -2254,14 +2159,14 @@ sub ap4_normativa_ambiental()
 ' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuántos hay en total.
 total = 0
 
-if mySubstance.inList("cov") then total = total +1 end if
-if mySubstance.inList("vertidos") then total = total +1 end if
-if mySubstance.inList("lpcic-agua") then total = total +1 end if
-if mySubstance.inList("lpcic-aire") then total = total +1 end if
-if mySubstance.inList("lpcic-suelo") then total = total +1 end if
-if mySubstance.inList("residuos") then total = total +1 end if
-if mySubstance.inList("accidentes") then total = total +1 end if
-if mySubstance.inList("emisiones") then total = total +1 end if
+if substance.inList("cov") then total = total +1 end if
+if substance.inList("vertidos") then total = total +1 end if
+if substance.inList("lpcic-agua") then total = total +1 end if
+if substance.inList("lpcic-aire") then total = total +1 end if
+if substance.inList("lpcic-suelo") then total = total +1 end if
+if substance.inList("residuos") then total = total +1 end if
+if substance.inList("accidentes") then total = total +1 end if
+if substance.inList("emisiones") then total = total +1 end if
 
 mitad = round(total / 2)
 ' Ajustamos la mitad para arriba si es impar
@@ -2279,7 +2184,7 @@ llevo = 0
 %>
 
 <%
-		if mySubstance.inList("cov") then
+		if substance.inList("cov") then
 			ap3_riesgos_tabla("COV")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2288,7 +2193,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("vertidos") then
+		if substance.inList("vertidos") then
 			ap3_riesgos_tabla("Vertidos")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2297,7 +2202,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("lpcic-agua") then
+		if substance.inList("lpcic-agua") then
 			ap3_riesgos_tabla("IPPC (PRTR Agua)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2306,7 +2211,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("lpcic-aire") then
+		if substance.inList("lpcic-aire") then
 			ap3_riesgos_tabla("IPPC (PRTR Aire)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2315,7 +2220,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("lpcic-suelo") then
+		if substance.inList("lpcic-suelo") then
 			ap3_riesgos_tabla("IPPC (PRTR Suelo)")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2324,7 +2229,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("residuos") then
+		if substance.inList("residuos") then
 			ap3_riesgos_tabla("Residuos Peligrosos")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2333,7 +2238,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("accidentes") then
+		if substance.inList("accidentes") then
 			ap3_riesgos_tabla("Accidentes Graves")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2342,7 +2247,7 @@ llevo = 0
 			end if
 		end if
 
-		if mySubstance.inList("emisiones") then
+		if substance.inList("emisiones") then
 			ap3_riesgos_tabla("Emisiones Atmosféricas")
 			llevo = llevo +1
 			if llevo >= mitad then
@@ -2367,7 +2272,7 @@ end sub ' ap4_normativa_salud_laboral
 
 
 sub ap4_normativa_restriccion_prohibicion()
-	if mySubstance.inList("prohibidas") or mySubstance.inList("restringidas") or mySubstance.inList("candidatas_reach") or mySubstance.inList("autorizacion_reach") or mySubstance.inList("biocidas_autorizadas") or mySubstance.inList("biocidas_prohibidas") or mySubstance.inList("pesticidas_autorizadas") or mySubstance.inList("pesticidas_prohibidas") or mySubstance.inList("prohibidas_embarazadas") or mySubstance.inList("prohibidas_lactantes") or mySubstance.inList("corap") then
+	if substance.inList("prohibidas") or substance.inList("restringidas") or substance.inList("candidatas_reach") or substance.inList("autorizacion_reach") or substance.inList("biocidas_autorizadas") or substance.inList("biocidas_prohibidas") or substance.inList("pesticidas_autorizadas") or substance.inList("pesticidas_prohibidas") or substance.inList("prohibidas_embarazadas") or substance.inList("prohibidas_lactantes") or substance.inList("corap") then
 %>
 
 		<!-- ################ Normativa salud laboral ###################### -->
@@ -2388,37 +2293,37 @@ sub ap4_normativa_restriccion_prohibicion()
 			<tr>
 				<td valign="top">
 <%
-		if mySubstance.inList("prohibidas") then
+		if substance.inList("prohibidas") then
 			ap3_riesgos_tabla("Sustancia prohibida")
 		end if
 
-		if mySubstance.inList("restringidas") then
+		if substance.inList("restringidas") then
 			ap3_riesgos_tabla("Sustancia restringida")
 		end if
 
-		if mySubstance.inList("prohibidas_embarazadas") then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
+		if substance.inList("prohibidas_embarazadas") then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
 
-		if mySubstance.inList("prohibidas_lactantes") then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
+		if substance.inList("prohibidas_lactantes") then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
 
-		if mySubstance.inList("candidatas_reach") then
+		if substance.inList("candidatas_reach") then
 			ap3_riesgos_tabla("Sustancia candidata REACH")
 		end if
-		if mySubstance.inList("autorizacion_reach") then
+		if substance.inList("autorizacion_reach") then
 			ap3_riesgos_tabla("Sustancia REACH sujeta a autorización")
 		end if
-		if mySubstance.inList("biocidas_autorizadas") then
+		if substance.inList("biocidas_autorizadas") then
 			ap3_riesgos_tabla("Sustancia biocida autorizada")
 		end if
-		if mySubstance.inList("biocidas_prohibidas") then
+		if substance.inList("biocidas_prohibidas") then
 			ap3_riesgos_tabla("Sustancia biocida prohibida")
 		end if
-		if mySubstance.inList("pesticidas_autorizadas") then
+		if substance.inList("pesticidas_autorizadas") then
 			ap3_riesgos_tabla("Sustancia pesticida autorizada")
 		end if
-		if mySubstance.inList("pesticidas_prohibidas") then
+		if substance.inList("pesticidas_prohibidas") then
 			ap3_riesgos_tabla("Sustancia pesticida prohibida")
 		end if
-		if mySubstance.inList("corap") then
+		if substance.inList("corap") then
 			ap3_riesgos_tabla("Sustancia bajo evaluación. CoRAP")
 		end if
 
@@ -2598,8 +2503,6 @@ sub ap7_salud()
     piel_sentidos = objRst("piel_sentidos")
     neuro_toxicos = objRst("neuro_toxicos")
 
-	comentarios_sl = objrst("comentarios")
-
     if (cardiocirculatorio OR respiratorio OR reproductivo OR musculo_esqueletico OR sistema_inmunitario OR higado_gastrointestinal OR sistema_endocrino) then
 %>
         <td valign="top">
@@ -2654,7 +2557,7 @@ end sub
 ' Obtiene el nivel cancerígeno de los campos de clasificación
 function dame_nivel_cancerigeno_rd()
 	' Juntamos todas las clasificaciones
-	clasificacion_rd = substance.Item("clasificacion_1") & substance.Item("clasificacion_2") & substance.Item("clasificacion_3") & substance.Item("clasificacion_4") & substance.Item("clasificacion_5") & substance.Item("clasificacion_6") & substance.Item("clasificacion_7") & substance.Item("clasificacion_8") & substance.Item("clasificacion_9") & substance.Item("clasificacion_10") & substance.Item("clasificacion_11") & substance.Item("clasificacion_12") & substance.Item("clasificacion_13") & substance.Item("clasificacion_14") & substance.Item("clasificacion_15")
+	clasificacion_rd = substance.classification.Item("clasificacion_1") & substance.classification.Item("clasificacion_2") & substance.classification.Item("clasificacion_3") & substance.classification.Item("clasificacion_4") & substance.classification.Item("clasificacion_5") & substance.classification.Item("clasificacion_6") & substance.classification.Item("clasificacion_7") & substance.classification.Item("clasificacion_8") & substance.classification.Item("clasificacion_9") & substance.classification.Item("clasificacion_10") & substance.classification.Item("clasificacion_11") & substance.classification.Item("clasificacion_12") & substance.classification.Item("clasificacion_13") & substance.classification.Item("clasificacion_14") & substance.classification.Item("clasificacion_15")
 
 	' Sustituimos "Carc. Cat." por "Carc.Cat." para unificar
 	clasificacion_rd = replace(clasificacion_rd, "Carc. Cat.", "Carc.Cat.")
@@ -2786,7 +2689,7 @@ sub plegador_texto(byval id_bloque, byval texto, byval clase)
   ' Solo se emplea para el plegador de frases R danesas, en caso de que no se hayan mostrado ya.
   id_bloque=aplana(id_bloque)
 
-  if (mySubstance.hasFrasesRdanesa()) then
+  if (substance.hasFrasesRdanesa()) then
 %>
   <%=texto%>
 <%
