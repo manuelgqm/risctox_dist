@@ -160,10 +160,7 @@ function extract_health_effects(substanceId, lang, health_effects, connection)
 	set health_effects = addSubstanceGroupsAssociatedFields(health_effects, substanceGroupsRecordset)
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
-	result.add "comentarios", choose_comentarios_sl( _
-		health_effects("comentarios"), health_effects("comentarios_ing"), _
-		lang _
-	)
+
 	result.add "grupo_iarc", extractGrupoIarc(health_effects("grupo_iarc"))
 	result.add "volumen_iarc", health_effects("volumen_iarc")
 	result.add "notas_iarc", health_effects("notas_iarc")
@@ -176,6 +173,22 @@ function extract_health_effects(substanceId, lang, health_effects, connection)
 	result.add "nivel_tpr", obtainNivelTpr(health_effects, connection)
 	result.add "categoria_cancer_otras", health_effects("categoria_cancer_otras")
 	result.add "fuente", health_effects("fuente")
+
+	result.add "cardiocirculatorio", health_effects("cardiocirculatorio")
+	result.add "respiratorio", health_effects("respiratorio")
+	result.add "reproductivo", health_effects("reproductivo")
+	result.add "musculo_esqueletico", health_effects("musculo_esqueletico")
+	result.add "higado_gastrointestinal", health_effects("higado_gastrointestinal")
+	result.add "sistema_endocrino", health_effects("sistema_endocrino")
+	result.add "embrion", health_effects("embrion")
+	result.add "cancer", health_effects("cancer")
+	result.add "rinyon", health_effects("rinyon")
+	result.add "piel_sentidos", health_effects("piel_sentidos")
+	result.add "neuro_toxicos", health_effects("neuro_toxicos")
+	result.add "comentarios", choose_comentarios_sl( _
+		health_effects("comentarios"), health_effects("comentarios_ing"), _
+		lang _
+	)
 
 	set extract_health_effects = result
 end function

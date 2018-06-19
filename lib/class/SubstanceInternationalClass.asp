@@ -42,5 +42,24 @@ Class SubstanceClassInternational
 		inList = inArray(listName, m_identification.Item("featuredLists"))
 	end function
 
+	Public Function has_health_effects()
+		has_health_effects = False
+		if _
+			m_health_effects.item("cardiocirculatorio") OR _
+			m_health_effects.item("rinyon") OR _
+			m_health_effects.item("respiratorio") OR _
+			m_health_effects.item("reproductivo") OR _
+			m_health_effects.item("piel_sentidos") OR _
+			m_health_effects.item("neuro_toxicos") OR _
+			m_health_effects.item("musculo_esqueletico") OR _
+			m_health_effects.item("sistema_inmunitario") OR _
+			m_health_effects.item("higado_gastrointestinal") OR _
+			m_health_effects.item("sistema_endocrino") OR _
+			m_health_effects.item("embrion") OR _
+			m_health_effects.item("cancer") _
+		then _
+			has_health_effects = True
+	End Function
+
 End Class
 %>

@@ -470,7 +470,7 @@ sub ap2_clasificacion()
   <tr>
 		<td class="celdaabajo" colspan="2" align="center">
 			<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a onclick=window.open('ver_definicion.asp?id=87','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a> CLASIFICACIÓN (RD 363/1995)
-			<a href="javascript:toggle('secc-clasificacion-363', 'img-mas_clasificacion-363');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-363" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+			<a href="javascript:toggle('secc-clasificacion-363', 'img-mas_clasificacion-363');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_clasificacion-363" alt="Click for more information" title="Click for more information" /></a>
 			</td></tr></table>
 		</td>
 	</tr>
@@ -1106,7 +1106,7 @@ sub ap3_riesgos()
 	set objRstq = objConnection2.execute(sql)
   if substance.inLists(HEALTH_EFFECTS_LISTS) or _
     not is_empty(substance.health_effects.item("efecto_neurotoxico")) or _
-    not is_empty(substance.health_effects.item("comentarios_sl")) then
+    not is_empty(substance.health_effects.item("comentarios")) then
 %>
 
 		<!-- ################ Riesgos para la salud ###################### -->
@@ -1149,10 +1149,6 @@ sub ap3_riesgos()
       ap3_riesgos_tabla("Tóxico para la reproducción")
     end if
 
-  	if substance.inList("salud") then
-      ap7_salud()
-    end if
-
     if substance.inList("eepp") then
       ap3_riesgos_enfermedades()
     end if
@@ -1162,7 +1158,7 @@ sub ap3_riesgos()
     end if
 
 
-		if not is_empty(substance.health_effects.item("comentarios_sl")) then
+		if not is_empty(substance.health_effects.item("comentarios")) then
 		  %>
 			<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
 				<tr>
@@ -1170,10 +1166,9 @@ sub ap3_riesgos()
 						<table cellpadding=0 cellspacing=0 width="100%" border="0">
 							<tr>
 								<td width="100%" class="titulo3" align="left">
-
-							Más información en salud laboral
-							<a href="javascript:toggle('secc-mas_informacion_salud_laboral', 'img-mas_informacion_salud_laboral');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_salud_laboral" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
-			        			</td>
+                  More information on occupational health
+    							<a href="javascript:toggle('secc-mas_informacion_salud_laboral', 'img-mas_informacion_salud_laboral');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_salud_laboral" alt="Click for more information" title="Click for more information" /></a>
+	        			</td>
 							</tr>
 						</table>
 					</td>
@@ -1182,7 +1177,7 @@ sub ap3_riesgos()
 					<td id="secc-mas_informacion_salud_laboral" style="display:none">
 						<ul>
 							<li>
-							<%= substance.health_effects.item("comentarios_sl") %>
+							<%= substance.health_effects.item("comentarios") %>
 							</li>
 						</ul>
 					</td>
@@ -1250,7 +1245,7 @@ sub ap3_riesgos()
   						<tr>
   							<td width="100%" class="titulo3" align="left">
       						Más información en medio ambiente
-      						<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+      						<a href="javascript:toggle('secc-mas_informacion_medio_ambiente', 'img-mas_informacion_medio_ambiente');"><img src="../imagenes/desplegar.gif" align="absmiddle" id="img-mas_informacion_medio_ambiente" alt="Click for more information" title="Click for more information" /></a>
           			</td>
   						</tr>
   					</table>
@@ -2559,88 +2554,111 @@ end sub
 ' #############################################################################################
 
 sub ap7_salud()
-
-	sql="SELECT cardiocirculatorio, rinyon, respiratorio, reproductivo, piel_sentidos, neuro_toxicos, musculo_esqueletico, sistema_inmunitario, higado_gastrointestinal, sistema_endocrino, embrion, cancer, comentarios FROM dn_risc_sustancias_salud WHERE id_sustancia="&id_sustancia&" AND (cardiocirculatorio=1 OR rinyon=1 OR respiratorio=1 OR reproductivo=1 OR piel_sentidos=1 OR neuro_toxicos=1 OR musculo_esqueletico=1 OR sistema_inmunitario=1 OR higado_gastrointestinal=1 OR sistema_endocrino=1 OR embrion=1 OR cancer=1)"
-
-	set objRst=objConnection2.execute(sql)
-	if (not objRst.eof) then
-%>
+  if not substance.has_health_effects() then
+    exit sub
+  end if
+  %>
 	<!-- Efectos para la salud -->
 	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
    	<tr>
 			<td class="celdaabajo" colspan="2" align="center">
-				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">Otras alteraciones para la salud y sistemas y órganos afectados <% plegador "secc-salud", "img-salud" %></td></tr></table>
+				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left">Other health adverse effects and affected organs <% plegador "secc-salud", "img-salud" %></td></tr></table>
 			</td>
 		</tr>
 		<tr id="secc-salud" style="display:none">
 			<td>
       <table border="0" width="100%">
         <tr>
-<%
-	' Mostramos los efectos
-	if (not objRst.eof) then
-    cardiocirculatorio = objRst("cardiocirculatorio")
-    respiratorio = objRst("respiratorio")
-    reproductivo = objRst("reproductivo")
-    musculo_esqueletico = objRst("musculo_esqueletico")
-    sistema_inmunitario = objRst("sistema_inmunitario")
-    higado_gastrointestinal = objRst("higado_gastrointestinal")
-    sistema_endocrino = objRst("sistema_endocrino")
+        <%
+        cardiocirculatorio = substance.health_effects.item("cardiocirculatorio")
+        respiratorio = substance.health_effects.item("respiratorio")
+        reproductivo = substance.health_effects.item("reproductivo")
+        musculo_esqueletico = substance.health_effects.item("musculo_esqueletico")
+        higado_gastrointestinal = substance.health_effects.item("higado_gastrointestinal")
+        sistema_endocrino = substance.health_effects.item("sistema_endocrino")
+        embrion = substance.health_effects.item("embrion")
+        cancer = substance.health_effects.item("cancer")
+        rinyon = substance.health_effects.item("rinyon")
+        piel_sentidos = substance.health_effects.item("piel_sentidos")
+        neuro_toxicos = substance.health_effects.item("neuro_toxicos")
+        comentarios_sl = substance.health_effects.item("comentarios")
 
-    embrion = objRst("embrion")
-    cancer = objRst("cancer")
-    rinyon = objRst("rinyon")
-    piel_sentidos = objRst("piel_sentidos")
-    neuro_toxicos = objRst("neuro_toxicos")
+        if _
+          cardiocirculatorio OR _
+          respiratorio OR _
+          reproductivo OR _
+          musculo_esqueletico OR _
+          sistema_inmunitario OR _
+          higado_gastrointestinal OR _
+          sistema_endocrino _
+        then
+          %>
+          <td valign="top">
+            <strong>- Affected systems:</strong><br/>
+            <ul>
+            <%
+            if cardiocirculatorio then
+              response.write "<li>Cardiovascular</li>"
+            end if
+            if respiratorio then
+              response.write "<li>Respiratory</li>"
+            end if
+            if reproductivo then
+              response.write "<li>Reproductive</li>"
+            end if
+            if musculo_esqueletico then
+              response.write "<li>Musculoskeletal</li>"
+            end if
+            if sistema_inmunitario then
+              response.write "<li>Immune</li>"
+            end if
+            if higado_gastrointestinal then
+              response.write "<li>Gastrointestinal - liver</li>"
+            end if
+            if sistema_endocrino then
+              response.write "<li>Endocrine</li>"
+            end if
+            %>
+            </ul>
+          </td>
+          <%
+        end if
 
-    if (cardiocirculatorio OR respiratorio OR reproductivo OR musculo_esqueletico OR sistema_inmunitario OR higado_gastrointestinal OR sistema_endocrino) then
-%>
-        <td valign="top">
-        <strong>- Sistemas a los que afecta:</strong><br/>
-        <ul>
-<%
-          if (cardiocirculatorio) then response.write "<li>Cardiocirculatorio</li>" end if
-          if (respiratorio) then response.write "<li>Respiratorio</li>" end if
-          if (reproductivo) then response.write "<li>Reproductivo</li>" end if
-          if (musculo_esqueletico) then response.write "<li>Musculoesquelético</li>" end if
-          if (sistema_inmunitario) then response.write "<li>Inmunitario</li>" end if
-          if (higado_gastrointestinal) then response.write "<li>Gastrointestinal - Hígado</li>" end if
-          if (sistema_endocrino) then response.write "<li>Endocrino</li>" end if
-%>
-        </ul>
-        </td>
-<%
-    end if
-
-    if (embrion OR cancer OR rinyon OR piel_sentidos OR neuro_toxicos) then
-%>
-        <td valign="top">
-        <strong>- Otros efectos:</strong><br />
-        <ul>
-<%
-          if (embrion) then response.write "<li>Daños en el embrión</li>" end if
-          if (cancer) then response.write "<li>Cáncer</li>" end if
-          if (rinyon) then response.write "<li>Daños en el riñón</li>" end if
-          if (piel_sentidos) then response.write "<li>Piel y mucosas</li>" end if
-          if (neuro_toxicos) then response.write "<li>Efectos neurotóxicos</li>" end if
-%>
-        </ul>
-        </td>
-<%
-    end if
-	end if
-%>
+        if embrion OR cancer OR rinyon OR piel_sentidos OR neuro_toxicos then
+          %>
+          <td valign="top">
+            <strong>- Other effects:</strong><br />
+            <ul>
+              <%
+              if embrion then
+                response.write "<li>Damage to the embryo</li>"
+              end if
+              if cancer then
+                response.write "<li>Cancer</li>"
+              end if
+              if rinyon then
+                response.write "<li>Kidney damage</li>"
+              end if
+              if piel_sentidos then
+                response.write "<li>Skin and mucous</li>"
+              end if
+              if neuro_toxicos then
+                response.write "<li>Neurotoxic Effects</li>"
+              end if
+              %>
+            </ul>
+          </td>
+          <%
+        end if
+        %>
         </tr>
       </table>
-			</td>
-		</tr>
-	</table>
-  <br />
-	<!-- Fin salud -->
+    </td>
+  </tr>
+</table>
+<br />
+<!-- Fin salud -->
 <%
-	end if
-	objRst.close()
-	set objRst = nothing
 end sub
 
 ' #############################################################################################
@@ -2768,7 +2786,7 @@ sub plegador(byval id_bloque, byval id_imagen)
   id_imagen=aplana(id_imagen)
 %>
   <a href="javascript:toggle('<%= id_bloque %>', '<%= id_imagen %>');"
-     class="toggler"><img src="../imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Pulse para desplegar la información" title="Pulse para desplegar la información" /></a>
+     class="toggler"><img src="../imagenes/desplegar.gif" align="absmiddle" id="<%= id_imagen %>" alt="Click for more information" title="Click for more information" /></a>
 <%
 end sub
 
