@@ -152,29 +152,32 @@ Function extractClassification(substance_id, classification, lang, connection)
 	set extractClassification = result
 End Function
 
-function extract_health_effects(substanceId, lang, substanceDic, connection)
-	dim substance : set substance = Server.CreateObject("Scripting.Dictionary")
+function extract_health_effects(substanceId, lang, health_effects, connection)
+	dim result : set result = Server.CreateObject("Scripting.Dictionary")
 	dim featuredLists : featuredLists = obtainFeaturedLists(substanceId, connection)
 	dim substanceGroupsRecordset
 	set substanceGroupsRecordset = getRecordsetSubstanceGroupsInternational(substanceId, lang, connection)
-	set substanceDic = addSubstanceGroupsAssociatedFields(substanceDic, substanceGroupsRecordset)
+	set health_effects = addSubstanceGroupsAssociatedFields(health_effects, substanceGroupsRecordset)
 	substanceGroupsRecordset.close()
 	set substanceGroupsRecordset = nothing
-	substance.add "comentarios_sl", substanceDic("comentarios_sl")
-	substance.add "grupo_iarc", extractGrupoIarc(substanceDic("grupo_iarc"))
-	substance.add "volumen_iarc", substanceDic("volumen_iarc")
-	substance.add "notas_iarc", substanceDic("notas_iarc")
-	substance.add "nivel_disruptor", obtainDefinitions(substanceDic("nivel_disruptor"), lang, connection)
-	substance.add "efecto_neurotoxico", obtainEfectosNeurotoxico(substanceDic("efecto_neurotoxico"), featuredLists, lang, connection)
-	substance.add "fuente_neurotoxico", obtainFuentesNeurotoxico(substanceDic("fuente_neurotoxico"), featuredLists, lang, connection)
+	result.add "comentarios", choose_comentarios_sl( _
+		health_effects("comentarios"), health_effects("comentarios_ing"), _
+		lang _
+	)
+	result.add "grupo_iarc", extractGrupoIarc(health_effects("grupo_iarc"))
+	result.add "volumen_iarc", health_effects("volumen_iarc")
+	result.add "notas_iarc", health_effects("notas_iarc")
+	result.add "nivel_disruptor", obtainDefinitions(health_effects("nivel_disruptor"), lang, connection)
+	result.add "efecto_neurotoxico", obtainEfectosNeurotoxico(health_effects("efecto_neurotoxico"), featuredLists, lang, connection)
+	result.add "fuente_neurotoxico", obtainFuentesNeurotoxico(health_effects("fuente_neurotoxico"), featuredLists, lang, connection)
 	dim nivel_neurotoxico_key
-	nivel_neurotoxico_key = obtainNivelNeurotoxicoKey(substanceDic("nivel_neurotoxico"))
-	substance.add "nivel_neurotoxico", obtainDefinitions(nivel_neurotoxico_key, lang, connection)
-	substance.add "nivel_tpr", obtainNivelTpr(substanceDic, connection)
-	substance.add "categoria_cancer_otras", substanceDic("categoria_cancer_otras")
-	substance.add "fuente", substanceDic("fuente")
+	nivel_neurotoxico_key = obtainNivelNeurotoxicoKey(health_effects("nivel_neurotoxico"))
+	result.add "nivel_neurotoxico", obtainDefinitions(nivel_neurotoxico_key, lang, connection)
+	result.add "nivel_tpr", obtainNivelTpr(health_effects, connection)
+	result.add "categoria_cancer_otras", health_effects("categoria_cancer_otras")
+	result.add "fuente", health_effects("fuente")
 
-	set extract_health_effects = substance
+	set extract_health_effects = result
 end function
 
 function extract_environment_effects(substance_id, lang, substanceDic, connection)
@@ -237,11 +240,16 @@ function compose_health_effects_query(id_sustancia)
 	dim sql
 sql = _
 		"SELECT " &_
-			"sus.id, sus.comentarios as comentarios_sl, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, " &_
+			"sus.id, iarc.grupo_iarc, iarc.notas_iarc, iarc.volumen_iarc, " &_
 			"neurodis.nivel_disruptor, neurodis.efecto_neurotoxico, neurodis.fuente_neurotoxico, neurodis.nivel_neurotoxico, cancer_otras.categoria_cancer_otras, cancer_otras.fuente, " &_
 			"sus.clasificacion_1, sus.clasificacion_2, sus.clasificacion_3, sus.clasificacion_4, sus.clasificacion_5, " &_
 			"sus.clasificacion_6, sus.clasificacion_7, sus.clasificacion_8, sus.clasificacion_9, sus.clasificacion_10, " &_
-			"sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15 " &_
+			"sus.clasificacion_11, sus.clasificacion_12, sus.clasificacion_13, sus.clasificacion_14, sus.clasificacion_15, " &_
+			"sus_salud.cardiocirculatorio, sus_salud.rinyon, sus_salud.respiratorio, " &_
+			"sus_salud.reproductivo, sus_salud.piel_sentidos, sus_salud.neuro_toxicos, " &_
+			"sus_salud.musculo_esqueletico, sus_salud.sistema_inmunitario, " &_
+			"sus_salud.higado_gastrointestinal, sus_salud.sistema_endocrino, sus_salud.embrion, " &_
+			"sus_salud.cancer, sus_salud.comentarios, sus_salud.comentarios_ing " &_
 		"FROM " &_
 			"dn_risc_sustancias as sus " &_
 		"LEFT JOIN " &_
@@ -253,6 +261,9 @@ sql = _
 		"LEFT JOIN " &_
 			"dn_risc_sustancias_cancer_otras as cancer_otras " &_
 				"ON sus.id = cancer_otras.id_sustancia " &_
+		"LEFT JOIN " &_
+			"dn_risc_sustancias_salud as sus_salud " &_
+				"ON sus.id = sus_salud.id_sustancia " &_
 		"WHERE " &_
 			"sus.id = " & id_sustancia
 
@@ -534,4 +545,11 @@ function obtainClasifMma(byVal clasif, lang, connection)
 
 	obtainClasifMma = obtainDefinitions(key, lang, connection)
 end function
+
+Function choose_comentarios_sl(comentarios_es, comentarios_en, lang)
+	choose_comentarios_sl = comentarios_es
+	if lang = "en" then
+		choose_comentarios_sl = comentarios_en
+	end if
+End Function
 %>

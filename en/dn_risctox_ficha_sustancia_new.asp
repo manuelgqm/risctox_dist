@@ -1152,6 +1152,16 @@ sub ap3_riesgos()
   	if substance.inList("salud") then
       ap7_salud()
     end if
+
+    if substance.inList("eepp") then
+      ap3_riesgos_enfermedades()
+    end if
+
+  	if substance.inList("salud") then
+      ap7_salud()
+    end if
+
+
 		if not is_empty(substance.health_effects.item("comentarios_sl")) then
 		  %>
 			<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
@@ -2135,6 +2145,86 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			</blockquote>
 <%
 	end select
+end sub
+
+sub ap3_riesgos_enfermedades()
+
+	' Se agrupan por listado, cada listado en una ficha blanca y dentro cada enfermedad
+	sql_enf = "select distinct enf.id, enf.listado_ing, enf.nombre, enf.nombre_ing, enf.sintomas_ing, enf.actividades_ing FROM dn_risc_enfermedades AS enf LEFT OUTER JOIN dn_risc_grupos_por_enfermedades AS gpe ON enf.id = gpe.id_enfermedad LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON gpe.id_grupo = spg.id_grupo LEFT OUTER JOIN dn_risc_sustancias_por_enfermedades AS spe ON spe.id_enfermedad = enf.id WHERE spg.id_sustancia="&id_sustancia&" OR spe.id_sustancia="&id_sustancia&" ORDER BY enf.listado_ing, enf.nombre_ing"
+	'response.write "<br />"&sql_enf
+	set objRstEnf=objConnection2.execute(sql_enf)
+	if (not objRstEnf.eof) then
+		listado_antiguo = ""
+		do while (not objRstEnf.eof)
+			' Para mostrar agrupados por listado, solo escribimos la cabecera si el listado es nuevo
+			if (listado_antiguo <> objRstEnf("listado_ing")) then
+
+				' Si el listado antiguo no es vacï¿½o, es que ya habiamos abierto antes uno asï¿½ que primero cerramos el anterior
+				if (listado_antiguo <> "") then
+%>
+			</td>
+		</tr>
+	</table>
+	<br />
+<%
+				end if
+%>
+	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
+   	<tr>
+			<td class="celdaabajo" colspan="2" align="center">
+				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><a href="index.asp?idpagina=617"><img src="../imagenes/ayuda.gif" align="absmiddle" border="0" /></a> <%=objRstEnf("listado_ing")%>  <% plegador "secc-enf"&objRstEnf("listado_ing"), "img-enf"&objRstEnf("listado_ing") %></td></tr></table>
+			</td>
+		</tr>
+		<tr id="secc-enf<%= aplana(objRstEnf("listado_ing")) %>" style="display:none">
+			<td>
+<%
+				listado_antiguo = objRstEnf("listado_ing")
+			end if
+				if objRstEnf("nombre_ing")<>"" then
+%>
+				<fieldset style="padding:10px;">
+				<!-- Tabla enfermedad -->
+				<table cellspacing=1 cellpadding=1 border=0>
+					<tr>
+						<td class="subtitulo3" colspan=2><%=objRstEnf("nombre_ing")%></td>
+					</tr>
+				<%
+					if (objRstEnf("sintomas_ing") <> "") then
+				%>
+					<tr>
+						<td class="subtitulo3" align="right" valign="top" width='10%' nowrap style='padding-top:10px'>Symptoms:</td><td align="left" style'padding-top:10px'><%=replace(objRstEnf("sintomas_ing"), vbcrlf, "<br>")%></td>
+					</tr>
+				<%
+					end if
+				%>
+				<%
+					if (objRstEnf("actividades_ing") <> "") then
+				%>
+					<tr>
+						<td class="subtitulo3" align="right" valign="top" width="10%" nowrap style='padding-top:10px'>Activities:</td><td align="left"  style='padding-top:10px'><%=replace(objRstEnf("actividades_ing"), vbcrlf, "<br>")%></td>
+					</tr>
+				<%
+					end if
+				%>
+				</table>
+				<!-- Fin tabla enfermedad -->
+                </fieldset>
+                <br />
+
+<%
+			end if
+			objRstEnf.movenext
+		loop
+		' Tras el bucle siempre cerramos la tabla
+%>
+			</td>
+		</tr>
+	</table>
+	<br />
+<%
+	end if
+	objRstEnf.close()
+	set objRstEnf=nothing
 end sub
 
 sub ap4_normativa_ambiental()
