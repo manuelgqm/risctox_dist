@@ -342,15 +342,24 @@ sub ap1_identificacion(LANG)
 		</tr>
 	<% end if ' hay nombre comercial? %>
 
-	<% if (substance.identification.Item("num_cas") <> "") or (substance.identification.Item("num_ce_einecs") <> "") or (substance.identification.Item("num_ce_elincs") <> "") then %>
+	<% if (substance.identification.Item("num_cas") <> "") or (substance.identification.Item("num_ce_einecs") <> "") or (substance.identification.Item("num_ce_elincs") <> "") or not is_empty(substance.identification.item("cas_num_alternatives")) then %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top">
 				<span id="identification_numbers.label">Identification numbers:</span>
 			</td>
 			<td class="texto" valign="middle">
-				<% if (substance.identification.item("num_cas") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='cas_num.label'>CAS</span></b>:&nbsp;<span id='cas_num.value'>" & substance.identification.item("num_cas") & "</span><br/>" %>
-				<% if (substance.identification.item("cas_alternativos") <> "") then response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span cas_num_alternative'>Alternative CAS</span></b>:&nbsp;<span id='cas_num_alternatives.value'>" & substance.identification.item("cas_alternativos") & "</span><br/>" %>
 				<%
+        if not is_empty(substance.identification.item("num_cas")) then
+          response.write "<a onclick=window.open('ver_definicion.asp?id=84','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a> <b><span id='cas_num.label'>CAS</span></b>:&nbsp;<span id='cas_num.value'>" & substance.identification.item("num_cas") & "</span><br/>"
+        end if
+        if not is_empty(substance.identification.item("cas_num_alternatives")) then
+          response.write _
+            "<a onclick=window.open('ver_definicion.asp?id=84', 'def', 'width=300, height=200, scrollbars=yes, resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' /></a>" &_
+          "<b>&nbsp;<span id='cas_num_alternatives.label'>Alternative CAS</span></b>:&nbsp;" &_
+          "<span id='cas_num_alternatives.value'>" &_
+            substance.identification.item("cas_num_alternatives") &_
+          "</span><br/>"
+        end if
 					if (substance.identification.item("num_ce_einecs") <> "") then
 						'Sergio, si empieza por 4 y num_ce_elincs<>'' muestro el num_ce_elincs
 						if (mid(num_ce_einecs, 1, 1) = "4" and substance.identification.item("num_ce_elincs") <> "") then
@@ -1962,10 +1971,10 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 		case "Tóxica para el agua":
 			response.write "<table>"
 			if (substance.environment_effects.item("directiva_aguas") or substance.inList("directiva_aguas")) then
-%>
-				<tr>
-					<td class="subtitulo3" colspan="2">· Según <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">modificaciones</a></td>
-				</tr>
+      %>
+      <tr>
+        <td class="subtitulo3" colspan="2">According to <a href="http://ec.europa.eu/environment/water/water-framework/index_en.html" target="_blank">Water Directive</a>, and subsequents <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">amendments</a></td>
+      </tr>
 <%
 			end if
 
@@ -1977,27 +1986,30 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 <%
 			end if
 
-			if (trim(substance.environment_effects.item("clasif_mma")) <> "") and (trim(substance.environment_effects.item("clasif_mma"))<>"nwg")then
-%>
-				<tr>
-					<td class="subtitulo3" colspan="2">
-						· Según <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministerio de Medio Ambiente de Alemania</a>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><strong>Clasificación</strong>: <%=substance.environment_effects.item("clasif_mma")%>
-					 	<a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(parche_definicion(substance.environment_effects.item("clasif_mma"), "MMA"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-					</td>
-				</tr>
-<%
+			if not is_empty(substance.environment_effects.item("clasif_mma")) then
+        %>
+        <tr>
+          <td class="subtitulo3" colspan="2">
+            According to <a href="http://www.istas.net/risctox/abreenlace.asp?idenlace=2226" target="_blank">Ministry of Environment of Germany</a>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;</td>
+          <td>
+            <strong>Classification</strong>:
+              <%=substance.environment_effects.item("clasif_mma")(0).item("key")%>
+              <%=substance.environment_effects.item("clasif_mma")(0).item("description")%>
+            <a onclick=window.open('ver_definicion.asp?id=<%=dame_id_definicion(parche_definicion(clasif_mma, "MMA"))%>','def','width=300,height=200,scrollbars=yes,resizable=yes') style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
+          </td>
+        </tr>
+        <%
 			end if
-			if (substance.environment_effects.item("sustancia_prioritaria")=1)then
-%>
-				<tr>
-					<td class="subtitulo3">Posible sustancia prioritaria </td><td></td>
-				</tr>
-<%
+			if substance.environment_effects.item("sustancia_prioritaria") = 1 then
+        %>
+  			<tr>
+  				<td class="subtitulo3">Posible sustancia prioritaria </td><td></td>
+  			</tr>
+        <%
 			end if
 			response.write "</table>"
 

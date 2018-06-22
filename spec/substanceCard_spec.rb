@@ -7,6 +7,7 @@ require_relative 'fixture/hydrogen_cyanide'
 require_relative 'fixture/carbon_disulphide'
 require_relative 'fixture/glycinato_cadmium'
 require_relative 'fixture/cadmium'
+require_relative 'fixture/zinc_chromate'
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -180,12 +181,12 @@ describe "'Glycinato_cadmium' substance card" do
 end
 
 describe "'Cadmium' substance card" do
+
   before(:all) do
     @cadmium = Cadmium.new()
     @page = PageObject.new(@browser, @cadmium.id)
     @page.go
   end
-
   it "must have valid carcinogenic classifications" do
     @page.toggle("secc-Cancerigeno")
 
@@ -198,5 +199,18 @@ describe "'Cadmium' substance card" do
 
     expect(@page.carcinogen_other_sources_category.text).to include_all @cadmium.carcinogen_other_sources_categories
     expect(@page.carcinogen_other_sources_definition.text).to include_all @cadmium.carcinogen_other_sources_definitions
+  end
+end
+
+describe "'Zinc chromate substance card'" do
+  before(:all) do
+    @zink_chromate = Zinc_chromate.new()
+    @page = PageObject.new(@browser, @zink_chromate.id)
+    @page.go
+  end
+
+  it "must have valid cas number alternatives" do
+    expect(@page.cas_num_alternatives.label).to include "Alternative CAS"
+    expect(@page.cas_num_alternatives.value).to include @zink_chromate.cas_num_alternatives
   end
 end
