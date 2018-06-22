@@ -70,8 +70,8 @@ function extractIdentification(substance_id, identification, lang, connection)
 	result.add "applications", findSubstanceApplicationsInternational(substance_id, lang, connection)
 	result.add "icsc_nums", obtainNumsIcsc(identification("num_icsc"))
 	result.add "molecular_formula", identification("formula_molecular")
-	result.add "molecular_structure", identification("estructura_molecular")
 	result.Add "featuredLists", obtainFeaturedLists(id_sustancia, connection)
+	result.Add "compañias", findSubstanceCompanies(id_sustancia, connection)
 
 	set extractIdentification = result
 end function
@@ -148,6 +148,38 @@ Function extractClassification(substance_id, classification, lang, connection)
 	result.add "clasificacion_14", classification.item("clasificacion_14")
 	result.add "clasificacion_15", classification.item("clasificacion_15")
 
+	result.add "conc_1", classification.item("conc_1")
+	result.add "conc_2", classification.item("conc_2")
+	result.add "conc_3", classification.item("conc_3")
+	result.add "conc_4", classification.item("conc_4")
+	result.add "conc_5", classification.item("conc_5")
+	result.add "conc_6", classification.item("conc_6")
+	result.add "conc_7", classification.item("conc_7")
+	result.add "conc_8", classification.item("conc_8")
+	result.add "conc_9", classification.item("conc_9")
+	result.add "conc_10", classification.item("conc_10")
+	result.add "conc_11", classification.item("conc_11")
+	result.add "conc_12", classification.item("conc_12")
+	result.add "conc_13", classification.item("conc_13")
+	result.add "conc_14", classification.item("conc_14")
+	result.add "conc_15", classification.item("conc_15")
+
+	result.add "eti_conc_1", classification.item("eti_conc_1")
+	result.add "eti_conc_2", classification.item("eti_conc_2")
+	result.add "eti_conc_3", classification.item("eti_conc_3")
+	result.add "eti_conc_4", classification.item("eti_conc_4")
+	result.add "eti_conc_5", classification.item("eti_conc_5")
+	result.add "eti_conc_6", classification.item("eti_conc_6")
+	result.add "eti_conc_7", classification.item("eti_conc_7")
+	result.add "eti_conc_8", classification.item("eti_conc_8")
+	result.add "eti_conc_9", classification.item("eti_conc_9")
+	result.add "eti_conc_10", classification.item("eti_conc_10")
+	result.add "eti_conc_11", classification.item("eti_conc_11")
+	result.add "eti_conc_12", classification.item("eti_conc_12")
+	result.add "eti_conc_13", classification.item("eti_conc_13")
+	result.add "eti_conc_14", classification.item("eti_conc_14")
+	result.add "eti_conc_15", classification.item("eti_conc_15")
+
 	result.Add "notas_rd1272", obtainNotasRd1272(classification.item("notas_rd1272"), lang, connection)
 
 	set extractClassification = result
@@ -223,9 +255,16 @@ Function composeClassificationQuery(substance_id)
 			"clasificacion_rd1272_7, clasificacion_rd1272_8, clasificacion_rd1272_9, " &_
 			"clasificacion_rd1272_10, clasificacion_rd1272_11, clasificacion_rd1272_12, " &_
 			"clasificacion_rd1272_13, clasificacion_rd1272_14, clasificacion_rd1272_15, " &_
+			"conc_1, conc_2, conc_3, conc_4, conc_5, conc_6, conc_7, conc_8, conc_9, " &_
+			"conc_10, conc_11, conc_12, conc_13, conc_14, conc_15, " &_
 			"conc_rd1272_1, conc_rd1272_2, conc_rd1272_3, conc_rd1272_4, conc_rd1272_5, " &_
 			"conc_rd1272_6, conc_rd1272_7, conc_rd1272_8, conc_rd1272_9, conc_rd1272_10, " &_
 			"conc_rd1272_11, conc_rd1272_12, conc_rd1272_13, conc_rd1272_14, conc_rd1272_15, " &_
+			"eti_conc_1, eti_conc_2, eti_conc_3, " &_
+			"eti_conc_4, eti_conc_5, eti_conc_6, " &_
+			"eti_conc_7, eti_conc_8, eti_conc_9, " &_
+			"eti_conc_10, eti_conc_11, eti_conc_12, " &_
+			"eti_conc_13, eti_conc_14, eti_conc_15, " &_
 			"eti_conc_rd1272_1, eti_conc_rd1272_2, eti_conc_rd1272_3, " &_
 			"eti_conc_rd1272_4, eti_conc_rd1272_5, eti_conc_rd1272_6, " &_
 			"eti_conc_rd1272_7, eti_conc_rd1272_8, eti_conc_rd1272_9, " &_
@@ -243,7 +282,7 @@ function composeIdentificationQuery(substance_id)
 	composeIdentificationQuery = _
 		"SELECT " &_
 			"nombre_ing as nombre, nombre_ing, num_rd, num_ce_einecs, num_ce_elincs, num_cas, " &_
-			"cas_alternativos, num_icsc, formula_molecular, estructura_molecular " &_
+			"cas_alternativos, num_icsc, formula_molecular " &_
 		"FROM " &_
 			"dn_risc_sustancias " &_
 		"WHERE " &_
