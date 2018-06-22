@@ -423,13 +423,9 @@ sub ap1_identificacion(LANG)
 		</tr>
 	<% end if %>
 
-
-
 	<%
-		'companias = formatHtmlCompaniesLinksString(substance.identification.item("compañias"))
-	%>
-
-	<% if (substance.identification.item("nombre_ing") <> "") or (substance.identification.item("num_rd") <> "") or (substance.identification.item("formula_molecular") <> "") or (substance.identification.item("estructura_molecular") <> "") or (substance.identification.item("notas_xml") <> "") or (companias <> "") then %>
+  if (substance.identification.item("nombre_ing") <> "") or (substance.identification.item("num_rd") <> "") or (substance.identification.item("formula_molecular") <> "") or (substance.identification.item("estructura_molecular") <> "") or (substance.identification.item("notas_xml") <> "") or not is_empty(substance.identification.item("compañias")) then
+  %>
 		<tr>
 			<td class="subtitulo3" align="right" valign="top" width="35%">
 				<span id="additional_information.label">Additional information</span>&nbsp;<% plegador "secc-masinformacion", "img-masinformacion" %>
@@ -445,15 +441,16 @@ sub ap1_identificacion(LANG)
           <b><span id="molecular_formula.label">Molecular formula</span></b>:
           <span id="molecular_formula.value"><%= substance.identification.item("molecular_formula") %><br/>
         <% end if %>
-				<% if (substance.identification.item("molecular_structure") <> "") then response.write "<b>Estructura molecular</b>:<br /><img src='../gestion/estructuras/" & substance.identification.item("molecular_structure")&"' /><br/>" %>
-
 				<% if (substance.identification.item("notas_xml") <> "") then %>
           <a onClick="window.open('ver_definicion.asp?id=<%=dame_id_definicion("ECB")%>', 'def', 'width=300,height=200,scrollbars=yes,resizable=yes')" style='cursor:pointer'><img src='imagenes/ayuda.gif' width=14 height=14 align='absmiddle' border='0' /></a>
-          <b>Notas ECB</b>: <%= espaciar(substance.identification.item("notas_xml")) %> <br />
+          <b>CLP Notes</b>: <%= espaciar(substance.identification.item("notas_xml")) %> <br />
         <% end if %>
 
-        <% if (companias <> "") then %>
-          <b>Compañías distribuidoras</b>: <%= companias %>
+        <% if not is_empty(substance.identification.item("compañias")) then %>
+          <b><span id="companies.label">Distribution companies</span></b>:
+          <span id="companies.value">
+            <%= formatHtmlCompaniesLinksString(substance.identification.item("compañias")) %>
+          </span>
         <% end if %>
 			</td>
 		</tr>

@@ -8,6 +8,7 @@ require_relative 'fixture/carbon_disulphide'
 require_relative 'fixture/glycinato_cadmium'
 require_relative 'fixture/cadmium'
 require_relative 'fixture/zinc_chromate'
+require_relative 'fixture/hydrogen_peroxide'
 
 browser = Watir::Browser.new :chrome, headless: true
 
@@ -187,6 +188,7 @@ describe "'Cadmium' substance card" do
     @page = PageObject.new(@browser, @cadmium.id)
     @page.go
   end
+
   it "must have valid carcinogenic classifications" do
     @page.toggle("secc-Cancerigeno")
 
@@ -212,5 +214,19 @@ describe "'Zinc chromate substance card'" do
   it "must have valid cas number alternatives" do
     expect(@page.cas_num_alternatives.label).to include "Alternative CAS"
     expect(@page.cas_num_alternatives.value).to include @zink_chromate.cas_num_alternatives
+  end
+end
+
+describe "'Hydrogen peroxide' substance card" do
+  before(:all) do
+    @hydrogen_peroxide = Hydrogen_peroxide.new()
+    @page = PageObject.new(@browser, @hydrogen_peroxide.id)
+    @page.go
+  end
+
+  it "must have valid cas number alternatives" do
+    @page.toggle("secc-masinformacion")
+    expect(@page.companies.label).to include "Distribution companies"
+    expect(@page.companies.value).to include_all @hydrogen_peroxide.companies
   end
 end

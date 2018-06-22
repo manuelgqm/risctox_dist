@@ -97,6 +97,10 @@ class PageObject
     field_element("cas_num_alternatives")
   end
 
+  def companies
+    field_element("companies")
+  end
+
   def toggle(element_id)
     script = "arguments[0].setAttribute('style', 'display:block')"
     element = @browser.element(:id => element_id)
