@@ -80,9 +80,9 @@ end function
 
 function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
 	appendNotPresentValue = valuesSrz1
-	if isEmpty(valuesSrz2) then _
+	if is_empty(valuesSrz2) then _
 		exit function
-	if isEmpty(valuesSrz1) then
+	if is_empty(valuesSrz1) then
 		appendNotPresentValue = valuesSrz2
 		exit function
 	end if
@@ -99,37 +99,6 @@ function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
 	next
 
 	appendNotPresentValue = join(values1, ", ")
-end function
-
-function isEmpty(value)
-	isEmpty = true
-	if isNull(value) then _
-		exit function
-	if varType(value) = vbArray + vbVariant then _
-		if ubound(value) = -1 then _
-			exit function
-	if value = "" then _
-		exit function
-
-	isEmpty = false
-end function
-
-function is_empty(value)
-	is_empty = true
-	select case varType(value)
-		case vbEmpty
-			exit function
-		case vbNull
-			exit function
-		case vbArray + vbVariant
-			if ubound(value) = -1 then _
-				exit function
-		case vbString
-			if trim(value) = "" then _
-				exit function
-	end select
-
-	is_empty = false
 end function
 
 function collectSubstanceTables()

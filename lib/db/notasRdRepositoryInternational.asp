@@ -1,7 +1,7 @@
 <%
 function obtainNotasRd1272(byVal notasSrz, lang, connection)
 	obtainNotasRd1272 = Array()
-	if isEmpty(notasSrz) then _
+	if is_empty(notasSrz) then _
 		exit function
 	notasSrz = removeTailSeparator(notasSrz, ".")
 	dim notas : notas = split(notasSrz, ".")

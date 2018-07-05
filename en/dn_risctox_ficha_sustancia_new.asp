@@ -661,7 +661,7 @@ end sub
 ' ##################################################################################
 
 sub muestra_clasificacion(numero, clasificacion)
-	if isEmpty(clasificacion) then
+	if is_empty(clasificacion) then
     exit sub
   end if
 
@@ -784,7 +784,7 @@ response.write frases
 end sub
 
 sub muestra_frase_clasificacion_rd1272(frase)
-  if isEmpty(frase) then
+  if is_empty(frase) then
     exit sub
   end if
 	arrFrase = split(frase, ",")
@@ -944,7 +944,7 @@ sub ap2_clasificacion_etiquetado_rd1272()
   <fieldset id="secc-etiquetado_rd1272" style="margin: 15px 45px;">
   <span id="rd1272_labeling">
    <%
-  	if not isEmpty(substance.classification.Item("conc_rd1272_1")) or not isEmpty(substance.classification.Item("conc_rd1272_2")) then
+  	if not is_empty(substance.classification.Item("conc_rd1272_1")) or not is_empty(substance.classification.Item("conc_rd1272_2")) then
   		if (substance.classification.Item("conc_rd1272_1")) = "" then
   			if substance.classification.Item("eti_conc_rd1272_1") <> "" then
   			   response.write "Factor " & substance.classification.Item("eti_conc_rd1272_1")

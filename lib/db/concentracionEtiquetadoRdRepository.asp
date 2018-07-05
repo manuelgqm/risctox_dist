@@ -53,7 +53,7 @@ function obtainConcentracionEtiquetadoRd363(substance)
 		currentEtiqueta = getField(substance, etiquetas(i))
 		currentConcentracion = getField(substance, concentraciones(i))
 		set etiConc = Server.CreateObject("Scripting.Dictionary")
-		if not isEmpty(currentEtiqueta) and not isEmpty(currentConcentracion) then
+		if not is_empty(currentEtiqueta) and not is_empty(currentConcentracion) then
 			etiConc.add "concentracion", currentConcentracion
 			etiConc.add "etiquetado", currentEtiqueta
 			obtainConcentracionEtiquetadoRd363 = arrayPushDictionary(obtainConcentracionEtiquetadoRd363, etiConc)
@@ -64,7 +64,7 @@ end function
 function getField(substance, byVal fieldName)
 	getField = ""
 	dim value : value = substance(fieldName)
-	if isEmpty(value) then _
+	if is_empty(value) then _
 		exit function
 	getField = encodeHTMLEntities( replace(value, ":", "") )
 end function
@@ -125,11 +125,11 @@ end function
 
 function obtainConcentracionEtiquetado(etiquetado, concentracion)
 	dim etiConc : set etiConc = Server.CreateObject("Scripting.Dictionary")
-	if isNull(concentracion) and isNull(etiquetado) then
-		set obtainConcentracionEtiquetado = etiConc
+	set obtainConcentracionEtiquetado = etiConc
+	if is_empty(concentracion) and is_empty(etiquetado) then
 		exit function
 	end if
-	'encodeHTMLEntities'
+
 	dim concentracionFormated : concentracionFormated = ""
 	dim etiquetadoFormated : etiquetadoFormated = ""
 	if etiquetado = "*" Then
@@ -140,21 +140,17 @@ function obtainConcentracionEtiquetado(etiquetado, concentracion)
 		exit function
 	end if
 
-	if concentracion <> "" or etiquetado <> "" Then
-		if not is_empty(concentacion) then
-			concentracionFormated = replace(concentracion, ":", "")
-			concentracionFormated = encodeHTMLEntities(concentracion)
-			etiConc.add "concentracion", concentracionFormated
-		end if
-		if not is_empty(etiquetado) then
-			etiquetadoFormated = encodeHTMLEntities(etiquetado)
-			etiConc.add "etiquetado", etiquetadoFormated
-		end if
-		set obtainConcentracionEtiquetado = etiConc
-		exit function
+	if not is_empty(concentacion) then
+		concentracionFormated = replace(concentracion, ":", "")
+		concentracionFormated = encodeHTMLEntities(concentracion)
+		etiConc.add "concentracion", concentracionFormated
+	end if
+
+	if not is_empty(etiquetado) then
+		etiquetadoFormated = encodeHTMLEntities(etiquetado)
+		etiConc.add "etiquetado", etiquetadoFormated
 	end if
 
 	set obtainConcentracionEtiquetado = etiConc
-	exit function
 end function
 %>

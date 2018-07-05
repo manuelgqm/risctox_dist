@@ -1027,7 +1027,7 @@ end function
 
 function formatEnfermedades(value)
 	formatEnfermedades = ""
-	if isEmpty(value) then _
+	if is_empty(value) then _
 		exit function
 	formatEnfermedades = capitalize( _
 		trim( _

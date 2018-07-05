@@ -55,7 +55,7 @@ function extractFrasesH(frasesHRaw, connection)
 	extractFrasesH = Array()
 	dim i, fraseH
 	For i = 0 to UBound(frasesHRaw)
-		if not isEmpty(frasesHRaw(i)) then
+		if not is_empty(frasesHRaw(i)) then
 			Set fraseH = obtainFraseH(frasesHRaw(i), connection)
 			extractFrasesH = arrayPushDictionary(extractFrasesH, fraseH)
 		end if

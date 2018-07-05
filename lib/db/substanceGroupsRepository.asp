@@ -76,9 +76,9 @@ end function
 
 function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
 	appendNotPresentValue = valuesSrz1
-	if isEmpty(valuesSrz2) then _
+	if is_empty(valuesSrz2) then _
 		exit function
-	if isEmpty(valuesSrz1) then
+	if is_empty(valuesSrz1) then
 		appendNotPresentValue = valuesSrz2
 		exit function
 	end if
@@ -89,7 +89,7 @@ function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
 	dim values2 : values2 = split(valuesSrz2, ", ")
 	for i = 0 to UBound(values2)
 		if not inArray( _
-			lcase(values2(i)) _ 
+			lcase(values2(i)) _
 			, values1LCased) then _
 				arrayPush values1, values2(i)
 	next
@@ -97,14 +97,14 @@ function appendNotPresentValue(byVal valuesSrz1, byVal valuesSrz2)
 	appendNotPresentValue = join(values1, ", ")
 end function
 
-function isEmpty(value)
-	isEmpty = true
+function is_empty(value)
+	is_empty = true
 	if isNull(value) then _
 		exit function
 	if value = "" then _
 		exit function
 
-	isEmpty = false
+	is_empty = false
 end function
 
 function collectSubstanceTables()

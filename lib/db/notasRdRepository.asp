@@ -1,7 +1,7 @@
 <%
 function obtainNotasRd1272(byVal notasSrz, connection)
 	obtainNotasRd1272 = Array()
-	if isEmpty(notasSrz) then _
+	if is_empty(notasSrz) then _
 		exit function
 	notasSrz = removeTailSeparator(notasSrz, ".")
 	dim notas : notas = split(notasSrz, ".")
@@ -12,7 +12,7 @@ end function
 
 function obtainNotasRd363(byVal notasSrz, connection)
 	obtainNotasRd363 = Array()
-	if isEmpty(notasSrz) then _
+	if is_empty(notasSrz) then _
 		exit function
 	notasSrz = removeTailSeparator(notasSrz, ".")
 	notasSrz = replace(notasSrz, ".", ",")
