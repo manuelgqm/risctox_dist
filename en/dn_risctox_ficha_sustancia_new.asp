@@ -167,9 +167,8 @@ function toggle_texto(id_objeto, texto)
           </div>
           <%
           ap3_riesgos()
-          'ap4_normativa_ambiental()
-          'ap4_normativa_salud_laboral()
-          'ap4_normativa_restriccion_prohibicion()
+          ap4_normativa_ambiental()
+          ap4_normativa_restriccion_prohibicion()
           'ap5_alternativas()
           'ap6_sectores()
           %>
@@ -1277,22 +1276,20 @@ sub ap3_riesgos()
 end sub ' ap3_riesgos
 
 sub ap3_riesgos_tabla(byval tipo)
-
-	' Muestra la tabla de riesgos con sus datos, dependiendo del tipo
-
-%>
+  %>
 	<table class="ficharisctox" width="90%" align="center" border="0" cellpadding="4" cellspacing="0">
    	<tr>
 			<td class="celdaabajo" colspan="2" align="center">
-				<table cellpadding=0 cellspacing=0 width="100%" border="0"><tr><td width="100%" class="titulo3" align="left"><% ap3_riesgos_tabla_ayuda(tipo) %><%= traduceRiesgo(tipo) %>
-
-        <% if ((tipo <> "COV") and (tipo <> "Vertidos") and (tipo <> "IPPC (PRTR Agua)") and (tipo <> "IPPC (PRTR Aire)") and (tipo <> "IPPC (PRTR Suelo)") and (tipo <> "Residuos Peligrosos") and (tipo <> "Accidentes Graves") and (tipo <> "Emisiones Atmosféricas") ) then %>
-
-        <% plegador "secc-"&tipo, "img-"&tipo %>
-
-        <% end if %>
-
-        </td></tr></table>
+				<table cellpadding=0 cellspacing=0 width="100%" border="0">
+          <tr>
+            <td width="100%" class="titulo3" align="left">
+              <% ap3_riesgos_tabla_ayuda(tipo) %><%= traduceRiesgo(tipo) %>
+              <% if ((tipo <> "COV") and (tipo <> "Vertidos") and (tipo <> "IPPC (PRTR Agua)") and (tipo <> "IPPC (PRTR Aire)") and (tipo <> "IPPC (PRTR Suelo)") and (tipo <> "Residuos Peligrosos") and (tipo <> "Accidentes Graves") and (tipo <> "Emisiones Atmosféricas") ) then %>
+                <% plegador "secc-"&tipo, "img-"&tipo %>
+              <% end if %>
+            </td>
+          </tr>
+        </table>
 			</td>
 		</tr>
 		<tr>
@@ -1940,8 +1937,8 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<blockquote>
 			<table>
 				<tr>
-					<td class="subtitulo3">
-	                    <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=restringidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
+          <td class="subtitulo3">
+	                    <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=restringidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
                     </td>
 
 				</tr>
@@ -1956,10 +1953,9 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			<blockquote>
             			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
-                    </td>
-				</tr>
+          <td class="subtitulo3">
+              <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+            </td>
 			</table>
 			</blockquote>
 
@@ -1976,11 +1972,11 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			end if
 
 			if (substance.inList("sustancias_prioritarias")) then
-%>
-				<tr>
-					<td class="subtitulo3" colspan="2">· Posible sustancia prioritaria según la <a href="http://www.istas.net/web/abreenlace.asp?idenlace=2227" target="_blank">Directiva de aguas</a>, y sus posteriores <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323" target="_blank">modificaciones</a></td>
-				</tr>
-<%
+        %>
+        <tr>
+          <td class="subtitulo3" colspan="2">Possible priority substance according to <a href="http://ec.europa.eu/environment/water/water-framework/index_en.html" target="_blank">Water Directive</a>, and subsequents <a href="http://www.istas.net/web/abreenlace.asp?idenlace=6323">amendments</a></td>
+        </tr>
+        <%
 			end if
 
 			if not is_empty(substance.environment_effects.item("clasif_mma")) then
@@ -2003,146 +1999,131 @@ sub ap3_riesgos_tabla_contenidos(tipo)
 			end if
 			if substance.environment_effects.item("sustancia_prioritaria") = 1 then
         %>
-  			<tr>
-  				<td class="subtitulo3">Posible sustancia prioritaria </td><td></td>
-  			</tr>
+        <tr>
+					<td class="subtitulo3">Possible priority substance </td><td></td>
+				</tr>
         <%
 			end if
 			response.write "</table>"
 
-
 			case "Contaminante del aire":
-%>
+      %>
 				<table>
-<%
+        <%
 				if (substance.environment_effects.item("dano_calidad_aire") or substance.inList("aire")) then
-%>
-					<tr>
-						<td class="subtitulo3">Calidad del aire:</td>
-						<td>Sustancia incluida en la <a href="abreenlace.asp?idenlace=2234" target="_blank">Directiva 96/62/CE</a> de 27 de septiembre sobre evaluación y gestión de la calidad del aire ambiente</td>
-					</tr>
-<%
+        %>
+          <tr>
+            <td class="subtitulo3">Air quality:</td>
+            <td>Substance included in the <a href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2008:152:0001:0044:EN:PDF" target="_blank">Directive 2008/50/EC</a> of 21 May 2008 on ambient air quality and cleaner air for Europe </td>
+          </tr>
+        <%
 				end if
-%>
-<%
 				if (substance.environment_effects.item("dano_ozono")) then
-%>
-					<tr>
-						<td class="subtitulo3">Capa de ozono:</td>
-						<td>Sustancia que agota la capa de ozono, según <a href="abreenlace.asp?idenlace=2229" target="_blank">Reglamento (CE) 2037/2000</a> del Parlamento Europeo y del Consejo, de 29 de junio de 2000</td>
-					</tr>
-<%
+          %>
+          <tr>
+            <td class="subtitulo3">Ozone layer:</td>
+            <td>A substance that deplete the ozone layer, according to <a href="abreenlace.asp?idenlace=2229" target="_blank">Regulation (EC) No 2037/2000</a> of the European Parliament and of the Council of 29 June 2000</td>
+          </tr>
+          <%
 				end if
-%>
-<%
+        %>
+        <%
 				if (substance.environment_effects.item("dano_cambio_clima")) then
-%>
-					<tr>
-						<td class="subtitulo3">Cambio climático:</td>
-						<td>Sustancia incluida en el listado del <a href="abreenlace.asp?idenlace=2230" target="_blank">Protocolo de Kyoto</a></td>
-					</tr>
-<%
+        %>
+        <tr>
+          <td class="subtitulo3">Climate Change:</td>
+          <td>Substance listed in the list of the <a href="abreenlace.asp?idenlace=2230" target="_blank">Kyoto Protocol</a></td>
+        </tr>
+        <%
 				end if
-%>
-
-
-
+        %>
 				</table>
-<%
+    <%
 		case "Sustancia candidata REACH":
-%>
+    %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	Fuente: <a href="https://echa.europa.eu/es/candidate-list-table" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
-                    </td>
+          <td class="subtitulo3">
+            Source: <a href="https://echa.europa.eu/en/candidate-list-table" target="_blank">European Chemicals Agency (ECHA)</a>
+          </td>
 				</tr>
 			</table>
 			</blockquote>
-
-
-<%
+    <%
 		case "Sustancia REACH sujeta a autorización":
-%>
+    %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	Fuente: <a href="https://echa.europa.eu/en/authorisation-list" target="_blank">Agencia Europea de sustancias y mezclas químicas (ECHA)</a>
-                    </td>
+          <td class="subtitulo3">
+            Source: <a href="https://echa.europa.eu/en/candidate-list-table" target="_blank">European Chemicals Agency (ECHA)</a>
+          </td>
 				</tr>
 			</table>
 			</blockquote>
-
-
-<%
+      <%
 		case "Sustancia biocida prohibida":
-%>
+    %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
-                    </td>
+          <td class="subtitulo3">
+            <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+          </td>
 				</tr>
 			</table>
 			</blockquote>
-
 
 <%
 		case "Sustancia biocida autorizada":
 %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
-                    </td>
+          <td class="subtitulo3">
+            <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=biocidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+          </td>
 				</tr>
 			</table>
 			</blockquote>
-
-
-<%
+    <%
 		case "Sustancia pesticida prohibida":
-%>
+    %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
-                    </td>
+          <td class="subtitulo3">
+              <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_prohibidas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+            </td>
 				</tr>
 			</table>
 			</blockquote>
-
-
-<%
+    <%
 		case "Sustancia pesticida autorizada":
-%>
+    %>
 			<blockquote>
-            			<table>
+			<table>
 				<tr>
-                	<td class="subtitulo3">
-                    	<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Más información</a>
-                    </td>
+          <td class="subtitulo3">
+              <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=pesticidas_autorizadas&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+            </td>
 				</tr>
 			</table>
 			</blockquote>
-<%
+    <%
 		case "Sustancia bajo evaluación. CoRAP":
-%>
+    %>
 			<blockquote>
 				<table>
 				<tr>
-					<td class="subtitulo3">
-							<a href="#" onClick="window.open('dn_mas_informacion.asp?listado=corap&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">Mas información</a>
-						</td>
+          <td class="subtitulo3">
+            <a href="#" onClick="window.open('dn_mas_informacion.asp?listado=corap&id=<%=id_sustancia%>','Informacion','width=500,height=230,scrollbars=yes,resizable=yes')">More information</a>
+          </td>
 				</tr>
 				<tr>
-					<td class="subtitulo3">
-						Fuente: <a href="http://echa.europa.eu/es/information-on-chemicals/evaluation/community-rolling-action-plan/corap-table" target="_blank">European Chemicals Agency (ECHA)</a>
+          <td class="subtitulo3">
+						Source: <a href="http://echa.europa.eu/es/information-on-chemicals/evaluation/community-rolling-action-plan/corap-table" target="_blank">European Chemicals Agency (ECHA)</a>
 					</td>
 				</tr>
 			</table>
@@ -2232,160 +2213,158 @@ sub ap3_riesgos_enfermedades()
 end sub
 
 sub ap4_normativa_ambiental()
-	if substance.inList("cov") or substance.inList("residuos") or substance.inList("vertidos") or substance.inList("lpcic")  or substance.inList("accidentes") or substance.inList("emisiones") then
-%>
+	if LANG = "en" and not substance.inList("cov") then
+    exit sub
+  end if
+  if not (substance.inList("residuos") or substance.inList("vertidos") or substance.inList("lpcic")  or substance.inList("accidentes") or substance.inList("emisiones")) then
+    exit sub
+  end if
+  %>
 
-		<!-- ################ Normativa ambiental ###################### -->
-		<br />
-		<div id="ficha">
-		<table width="100%" cellpadding=5>
-			<tr>
-				<td>
-					<a name="identificacion"></a><img src="imagenes/risctox05.gif" alt="Normativa ambiental que le afecta" />
-				</td>
-				<td align="right">
-					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
-				</td>
-			</tr>
-		</table>
+	<!-- ################ Normativa ambiental ###################### -->
+	<br />
+	<div id="ficha">
+    <table width="100%" cellpadding=5>
+      <tr>
+        <td>
+          <a name="identificacion"></a><img src="imagenes/risctox05.gif" alt="Environmental regulations" />
+        </td>
+        <td align="right">
+          <a href="#"><img src="../imagenes/subir.gif" border=0 alt=subir></a>
+        </td>
+      </tr>
+    </table>
 
+  <%
+  ' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuántos hay en total.
+  total = 0
+
+  if substance.inList("cov") then total = total +1 end if
+  if substance.inList("vertidos") and LANG = "en" then total = total +1 end if
+  if substance.inList("lpcic-agua") then total = total +1 end if
+  if substance.inList("lpcic-aire") then total = total +1 end if
+  if substance.inList("lpcic-suelo") then total = total +1 end if
+  if substance.inList("residuos") and LANG = "en" then total = total +1 end if
+  if substance.inList("accidentes") then total = total +1 end if
+  if substance.inList("emisiones") then total = total +1 end if
+
+  mitad = round(total / 2)
+  ' Ajustamos la mitad para arriba si es impar
+  if ((mitad * 2) < total) then
+  	mitad = mitad + 1
+  end if
+  %>
+
+	<table border="0" width="100%">
+		<tr>
+			<td valign="top" width="50%">
+      <%
+      ' Contaremos cuantos llevamos para ver en qué momento hay que poner la división de columnas
+      llevo = 0
+      %>
+
+      <%
+  		if substance.inList("cov") then
+  			ap3_riesgos_tabla("COV")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("vertidos") then
+  			ap3_riesgos_tabla("Vertidos")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("lpcic-agua") then
+  			ap3_riesgos_tabla("IPPC (PRTR Agua)")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("lpcic-aire") then
+  			ap3_riesgos_tabla("IPPC (PRTR Aire)")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("lpcic-suelo") then
+  			ap3_riesgos_tabla("IPPC (PRTR Suelo)")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("residuos") then
+  			ap3_riesgos_tabla("Residuos Peligrosos")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("accidentes") then
+  			ap3_riesgos_tabla("Accidentes Graves")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+
+  		if substance.inList("emisiones") then
+  			ap3_riesgos_tabla("Emisiones Atmosféricas")
+  			llevo = llevo +1
+  			if llevo >= mitad then
+  				response.write "</td><td valign='top' width='50%'>"
+  				llevo = 0 ' Lo reseteo para que no vuelva a dividir
+  			end if
+  		end if
+      %>
+			</td>
+		</tr>
+	</table>
+</div>
 <%
-' Para dividir los 7 posibles apartados en dos columnas, primero calculamos cuántos hay en total.
-total = 0
-
-if substance.inList("cov") then total = total +1 end if
-if substance.inList("vertidos") then total = total +1 end if
-if substance.inList("lpcic-agua") then total = total +1 end if
-if substance.inList("lpcic-aire") then total = total +1 end if
-if substance.inList("lpcic-suelo") then total = total +1 end if
-if substance.inList("residuos") then total = total +1 end if
-if substance.inList("accidentes") then total = total +1 end if
-if substance.inList("emisiones") then total = total +1 end if
-
-mitad = round(total / 2)
-' Ajustamos la mitad para arriba si es impar
-if ((mitad * 2) < total) then
-	mitad = mitad + 1
-end if
-%>
-
-		<table border="0" width="100%">
-			<tr>
-				<td valign="top" width="50%">
-<%
-' Contaremos cuantos llevamos para ver en qué momento hay que poner la división de columnas
-llevo = 0
-%>
-
-<%
-		if substance.inList("cov") then
-			ap3_riesgos_tabla("COV")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("vertidos") then
-			ap3_riesgos_tabla("Vertidos")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("lpcic-agua") then
-			ap3_riesgos_tabla("IPPC (PRTR Agua)")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("lpcic-aire") then
-			ap3_riesgos_tabla("IPPC (PRTR Aire)")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("lpcic-suelo") then
-			ap3_riesgos_tabla("IPPC (PRTR Suelo)")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("residuos") then
-			ap3_riesgos_tabla("Residuos Peligrosos")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("accidentes") then
-			ap3_riesgos_tabla("Accidentes Graves")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-
-		if substance.inList("emisiones") then
-			ap3_riesgos_tabla("Emisiones Atmosféricas")
-			llevo = llevo +1
-			if llevo >= mitad then
-				response.write "</td><td valign='top' width='50%'>"
-				llevo = 0 ' Lo reseteo para que no vuelva a dividir
-			end if
-		end if
-	%>
-				</td>
-			</tr>
-		</table>
-		</div>
-		<!-- ################ Fin Normativa ambiental ################## -->
-<%
-	end if
-end sub ' ap4_normativa_ambiental
-
-sub ap4_normativa_salud_laboral()
-
-end sub ' ap4_normativa_salud_laboral
-
-
+end sub
 
 sub ap4_normativa_restriccion_prohibicion()
-	if substance.inList("prohibidas") or substance.inList("restringidas") or substance.inList("candidatas_reach") or substance.inList("autorizacion_reach") or substance.inList("biocidas_autorizadas") or substance.inList("biocidas_prohibidas") or substance.inList("pesticidas_autorizadas") or substance.inList("pesticidas_prohibidas") or substance.inList("prohibidas_embarazadas") or substance.inList("prohibidas_lactantes") or substance.inList("corap") then
-%>
-
-		<!-- ################ Normativa salud laboral ###################### -->
+	if not(substance.inList("prohibidas") or substance.inList("restringidas") or substance.inList("candidatas_reach") or substance.inList("autorizacion_reach") or substance.inList("biocidas_autorizadas") or substance.inList("biocidas_prohibidas") or substance.inList("pesticidas_autorizadas") or substance.inList("pesticidas_prohibidas") or substance.inList("prohibidas_embarazadas") or substance.inList("prohibidas_lactantes") or substance.inList("corap")) then
+    exit sub
+  end if
+  %>
 		<br />
 		<div id="ficha">
-		<table width="100%" cellpadding=5>
-			<tr>
-				<td>
-					<a name="identificacion"></a><img src="imagenes/risctox04-restricciones.gif" alt="Normativa sobre restricción/prohibición de sustancias" />
-				</td>
-				<td align="right">
-					<a href="#"><img src="imagenes/subir.gif" border=0 alt=subir></a>
-				</td>
-			</tr>
-		</table>
+      <table width="100%" cellpadding=5>
+  			<tr>
+  				<td>
+  					<a name="identificacion"></a><img src="imagenes/risctox04-restricciones.gif" alt="Regulations on restriction / prohibition of substances" />
+  				</td>
+  				<td align="right">
+  					<a href="#"><img src="../imagenes/subir.gif" border=0 alt=subir></a>
+  				</td>
+  			</tr>
+  		</table>
 
 		<table border="0" width="100%">
 			<tr>
 				<td valign="top">
+          <span id="regulations">
 <%
 		if substance.inList("prohibidas") then
 			ap3_riesgos_tabla("Sustancia prohibida")
@@ -2395,9 +2374,9 @@ sub ap4_normativa_restriccion_prohibicion()
 			ap3_riesgos_tabla("Sustancia restringida")
 		end if
 
-		if substance.inList("prohibidas_embarazadas") then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
+		if substance.inList("prohibidas_embarazadas") and LANG = "es" then ap3_riesgos_tabla("Prohibida para trabajadoras embarazadas") end if
 
-		if substance.inList("prohibidas_lactantes") then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
+		if substance.inList("prohibidas_lactantes") and LANG = "es" then ap3_riesgos_tabla("Prohibida para trabajadoras lactantes") end if
 
 		if substance.inList("candidatas_reach") then
 			ap3_riesgos_tabla("Sustancia candidata REACH")
@@ -2421,19 +2400,15 @@ sub ap4_normativa_restriccion_prohibicion()
 			ap3_riesgos_tabla("Sustancia bajo evaluación. CoRAP")
 		end if
 
-%>
+        %>
+      </span>
 				</td>
 			</tr>
 		</table>
 		</div>
-		<!-- ################ Fin Normativa salud laboral ################## -->
 <%
-	end if
-end sub ' ap4_normativa_restriccion_prohibicion
+end sub
 
-
-
-' ##################################################################################
 sub ap5_alternativas()
 
 	sql="SELECT DISTINCT f.id AS id_fichero, f.titulo FROM dn_alter_ficheros AS f LEFT OUTER JOIN dn_alter_ficheros_por_sustancias AS fps ON f.id = fps.id_fichero LEFT OUTER JOIN dn_alter_ficheros_por_grupos AS fpg ON f.id = fpg.id_fichero LEFT OUTER JOIN dn_risc_grupos AS g ON fpg.id_grupo = g.id LEFT OUTER JOIN dn_risc_sustancias_por_grupos AS spg ON g.id = spg.id_grupo WHERE fps.id_sustancia="&id_sustancia&" OR spg.id_sustancia = "& id_sustancia&" ORDER BY titulo"

@@ -19,7 +19,7 @@ end
 
 describe "'hydrogen cyanide' substance card" do
   before(:all) do
-    @hydrogen_cyanide = Hydrogen_cyanide.new(953980)
+    @hydrogen_cyanide = Hydrogen_cyanide.new()
     @page = PageObject.new(@browser, @hydrogen_cyanide.id)
     @page.go
   end
@@ -85,7 +85,7 @@ end
 
 describe "'ziram' substance card" do
   before(:all) do
-    @ziram = Ziram.new(954057)
+    @ziram = Ziram.new()
     @page = PageObject.new(@browser, @ziram.id)
     @page.go
   end
@@ -152,6 +152,10 @@ describe "'ziram' substance card" do
     expect(@page.rd1272_labeling.text).to include_all @ziram.rd1272_labeling
   end
 
+  it "must have correct regulations", :regulations do
+    expect(@page.regulations.text).to include_all @ziram.regulations
+  end
+
 end
 
 describe "'carbon disulphide' substance card" do
@@ -164,6 +168,10 @@ describe "'carbon disulphide' substance card" do
   it "muts have valid rd1272 classification" do
     @page.toggle("secc-clasificacion-rd1272")
     expect(@page.rd1272_labeling.text).to include_all @carbon_disulphide.rd1272_labeling
+  end
+
+  it "must have correct regulations", :regulations do
+    expect(@page.regulations.text).to include_all @carbon_disulphide.regulations
   end
 end
 
@@ -201,6 +209,10 @@ describe "'Cadmium' substance card" do
 
     expect(@page.carcinogen_other_sources_category.text).to include_all @cadmium.carcinogen_other_sources_categories
     expect(@page.carcinogen_other_sources_definition.text).to include_all @cadmium.carcinogen_other_sources_definitions
+  end
+
+  it "must have correct regulations", :regulations do
+    expect(@page.regulations.text).to include_all @cadmium.regulations
   end
 end
 

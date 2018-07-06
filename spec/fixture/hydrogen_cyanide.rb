@@ -4,8 +4,8 @@ class Hydrogen_cyanide
   attr_reader :icsc_nums, :rd_num, :molecular_formula, :concern_trade_union_reasons
   attr_reader :rd1272_symbols, :h_phrases
 
-  def initialize(substance_id)
-    @id = substance_id
+  def initialize()
+    @id = 953980
     @name = "hydrogen cyanide"
     @synonyms = ["hydrocyanic acid"]
     @cas_num = "74-90-8"

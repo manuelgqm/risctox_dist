@@ -25,7 +25,7 @@ if (modo = "pruebas") then
   objConn1.connectionstring="Provider=SQLOLEDB; Data Source=lwda680.servidoresdns.net; Initial Catalog=qbk243; User ID=qbk243; Password=***REMOVED***"
 elseif (modo = "produccion") then
   'objConn1.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
-  'objConn1.connectionstring="Provider=SQLOLEDB; Data Source=217.13.81.22; Initial Catalog=istas_formacion; User ID=xip_web; Password=***REMOVED***"
+  'objConn1.connectionstring="Provider=SQLOLEDB; Data Source=217.13.81.22; Initial Catalog=istas_formacion; User ID=xip_web; Password=XiPmm7337"
   'objConn1.connectionstring="Provider=SQLOLEDB; Data Source=217.13.81.22; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 '  objConn1.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
 '  objConn1.connectionstring="Provider=SQLOLEDB; Data Source=NEPTUNO_HP\SQLEXPRESS; Initial Catalog=istas_risctox; User ID=spl; Password=***REMOVED***"
