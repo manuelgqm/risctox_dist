@@ -25,7 +25,7 @@ set objConnection = Server.CreateObject("ADODB.Connection")
 'objConnection.open "DRIVER=Microsoft Access Driver (*.mdb);DBQ=" & Server.MapPath("../sql.mdb")
 'OBJConnection.Open "DSN=istas.net.base;UID=qc507;PWD=sql"
 'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
-'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 
 ' ############################################################
 ' ### Base nueva (depende de pruebas o produccion)
@@ -33,15 +33,15 @@ set objConnection = Server.CreateObject("ADODB.Connection")
 set objConnection2 = Server.CreateObject("ADODB.Connection")
 
 if (modo = "pruebas") then
-  objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=lwda680.servidoresdns.net; Initial Catalog=qbk243; User ID=qbk243; Password=***REMOVED***"
+  objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=lwda680.servidoresdns.net; Initial Catalog=qbk243; User ID=qbk243; Password=***REMOVED**"
 elseif (modo = "produccion") then
   'usuario: qc507
   'contraseña: sql
   'servidor: osiris.servidoresdns.net
 
   'objConnection2.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
-  'OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-  OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+  'OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
+  OBJConnection2.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 end if
 
 'Set up testing enviroment
@@ -52,7 +52,7 @@ set wshShell = Nothing
 if localConnectionString <> "%istas_risctox_dbConnectionString%" then
 	connectionString = localConnectionString
 else
-	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 end if
 OBJConnection.connectionstring = connectionString
 OBJConnection2.connectionstring = connectionString

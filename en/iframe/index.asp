@@ -126,7 +126,7 @@ if instr(request.ServerVariables("http_host"),"risctox.istas.net")<>0 then respo
 
 	function get_url( url_id )
 		Set OBJConnection = Server.CreateObject("ADODB.Connection")
-		OBJConnection.Open "driver={sql server};server=DISOLTEC03\XIP;database=istas_web;UID=xip_web;PWD=***REMOVED***"
+		OBJConnection.Open "driver={sql server};server=DISOLTEC03\XIP;database=istas_web;UID=xip_web;PWD=***REMOVED**"
 
 		sql = "SELECT visitas,url,afiliacion FROM ENL_ENLACES WHERE id=" & url_id
 		Set objRecordset = Server.CreateObject ("ADODB.Recordset")

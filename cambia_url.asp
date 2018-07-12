@@ -18,8 +18,8 @@ FUNCTION unquote(s)
 end FUNCTION
 
 Set OBJConnection = Server.CreateObject("ADODB.Connection")
-'OBJConnection.Open "driver={sql server};server=disoltec02;database=istas_risctox;UID=xip_web;PWD=***REMOVED***"
-OBJConnection.Open "driver={sql server};server=DISOLTEC03\XIP;database=istas_risctox;UID=xip_web;PWD=***REMOVED***"
+'OBJConnection.Open "driver={sql server};server=disoltec02;database=istas_risctox;UID=xip_web;PWD=***REMOVED**"
+OBJConnection.Open "driver={sql server};server=DISOLTEC03\XIP;database=istas_risctox;UID=xip_web;PWD=***REMOVED**"
 
 url_antigua = "http://www.mtas.es/insht"
 url_nueva = "http://www.insht.es"

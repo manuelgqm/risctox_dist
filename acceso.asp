@@ -7,8 +7,8 @@
 	Set OBJConnection = Server.CreateObject("ADODB.Connection")
 	'OBJConnection.Open "driver={sql server};server=osiris.servidoresdns.net;database=qc507;UID=qc507;PWD=sql"
 	'OBJConnection.Open "DSN=istas.net.base;UID=qc507;PWD=sql"
-	'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=217.13.81.22; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+	'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=217.13.81.22; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
+	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 	OBJConnection.Open
 
 	'if session("risctox_en_webistas")="si" then session("id_ecogente") = 12471

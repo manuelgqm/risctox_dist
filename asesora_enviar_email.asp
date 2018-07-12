@@ -101,7 +101,7 @@ if destinatarios<>"" then
 	Mail.From = "jdejong@istas.net"
 	Mail.FromName = "ECOinformas" ' Opcional 
 	Mail.Username = "say5151"
-	Mail.Password = "***REMOVED***"
+	Mail.Password = "***REMOVED**"
 	Mail.AddAddress correos(i)
 	Mail.Subject = Mail.EncodeHeader(asunto)
 	Mail.Body = cuerpo

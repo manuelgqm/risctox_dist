@@ -128,7 +128,7 @@ if 1=0 then
 			Mail.From = "jdejong@istas.net"
 			Mail.FromName = "ECOinformas" ' Opcional 
 			Mail.Username = "say5151"
-			Mail.Password = "***REMOVED***"
+			Mail.Password = "***REMOVED**"
 			Mail.AddAddress email
 			Mail.Subject = Mail.EncodeHeader("Recordatorio de acceso a ECOinformas")
 			Mail.Body = cuerpo

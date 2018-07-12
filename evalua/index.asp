@@ -17,7 +17,7 @@
 	end if
 		
 	Set OBJConnection = Server.CreateObject("ADODB.Connection")
-	OBJConnection.Open "driver={sql server};server=disoltec02;database=istas_web;UID=xip_web;PWD=***REMOVED***"
+	OBJConnection.Open "driver={sql server};server=disoltec02;database=istas_web;UID=xip_web;PWD=***REMOVED**"
 
 	'usuario = request.cookies("webistas")
 	

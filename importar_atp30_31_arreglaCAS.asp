@@ -6,7 +6,7 @@
 	objConnection2.open "DRIVER=Microsoft Access Driver (*.mdb);DBQ=" & Server.MapPath("atp30_31.mdb")
 	
 	set objConnection = Server.CreateObject("ADODB.Connection")
-	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox081009; User ID=istas_sql_usuari; Password=***REMOVED***"
+	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox081009; User ID=istas_sql_usuari; Password=***REMOVED**"
 	OBJConnection.Open
 
 	sql = "select top 700 * from atp30_31 where id>700 order by id"

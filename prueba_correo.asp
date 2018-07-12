@@ -128,7 +128,7 @@ end if
 			Mail.From = "jdejong@istas.net"
 			Mail.FromName = "ECOinformas" ' Opcional 
 			Mail.Username = "say5151"
-			Mail.Password = "***REMOVED***"
+			Mail.Password = "***REMOVED**"
 			Mail.AddAddress email
 			Mail.AddCC "xip@istas.net" 
 			Mail.Subject = Mail.EncodeHeader("Recordatorio de acceso a ECOinformas")

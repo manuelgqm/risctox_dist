@@ -20,9 +20,9 @@ set objConnection = Server.CreateObject("ADODB.Connection")
 'objConnection.open "DRIVER=Microsoft Access Driver (*.mdb);DBQ=" & Server.MapPath("../sql.mdb")
 'OBJConnection.Open "DSN=istas.net.base;UID=qc507;PWD=sql"
 'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=osiris.servidoresdns.net; Initial Catalog=qc507; User ID=qc507; Password=sql"
-'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-' OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
-' OBJConnection.connectionstring="driver={sql server};server=HP-LOLO\SQLEXPRESS;database=istas_risctox;UID=istas_SQL;PWD=***REMOVED***"
+'OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=disoltec02; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
+' OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
+' OBJConnection.connectionstring="driver={sql server};server=HP-LOLO\SQLEXPRESS;database=istas_risctox;UID=istas_SQL;PWD=***REMOVED**"
 
 Set wshShell = CreateObject( "WScript.Shell" )
 localConnectionString = wshShell.ExpandEnvironmentStrings( "%istas_risctox_dbConnectionString%" )
@@ -31,7 +31,7 @@ set wshShell = Nothing
 if localConnectionString <> "%istas_risctox_dbConnectionString%" then
 	connectionString = localConnectionString
 else
-	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+	connectionString = "Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 end if
 
 OBJConnection.connectionstring = connectionString

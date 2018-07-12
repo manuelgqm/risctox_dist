@@ -92,7 +92,7 @@ else 'ENVIAR EMAIL
 			Mail.From = "inforisctox@istas.net"
 			Mail.FromName = "ETUI - ISTAS > risctox" ' Opcional
 			' Mail.Username = "inforisctox@istas.net"
-			' Mail.Password = "***REMOVED***"
+			' Mail.Password = "***REMOVED**"
 
 			Mail.AddAddress email
 			Mail.Subject = Mail.EncodeHeader(nombre & "  recommends that you visit this page")

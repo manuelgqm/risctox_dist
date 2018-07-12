@@ -118,7 +118,7 @@ end if
 			Mail.From = "xip@istas.net"
 			Mail.FromName = "Evalua lo que usas" ' Opcional 
 			'Mail.Username = "say5151"
-			'Mail.Password = "***REMOVED***"
+			'Mail.Password = "***REMOVED**"
 			Mail.AddAddress email
 			Mail.Subject = Mail.EncodeHeader("Recordatorio de acceso a Evalua lo que usas")
 			Mail.Body = cuerpo

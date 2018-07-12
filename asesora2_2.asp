@@ -53,7 +53,7 @@
 	Mail.Host = "smtp.istas.net"
 	Mail.From = "jdejong@istas.net"
 	Mail.Username = "say5151"
-	Mail.Password = "***REMOVED***"
+	Mail.Password = "***REMOVED**"
 	Mail.FromName = "Servicio de asesoramiento" ' Opcional 
 	'Mail.AddAddress "amunoa@istas.ccoo.es"
 	Mail.AddAddress "iolano@istas.ccoo.es"

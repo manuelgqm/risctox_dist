@@ -6,7 +6,7 @@
 	objConnection2.open "DRIVER=Microsoft Access Driver (*.mdb);DBQ=" & Server.MapPath("atp30_31.mdb")
 	
 	set objConnection = Server.CreateObject("ADODB.Connection")
-	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED***"
+	OBJConnection.connectionstring="Provider=SQLOLEDB; Data Source=DISOLTEC03\XIP; Initial Catalog=istas_risctox; User ID=istas_sql_usuari; Password=***REMOVED**"
 	OBJConnection.Open
 	salto = chr(10)&chr(13)
 	coinciden = 0
